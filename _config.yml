@@ -16,14 +16,17 @@ description: Demonstrations for using R for fisheries analyses.
 
 # Image to show in the navigation bar - image must be a square (width = height)
 # Remove this parameter if you don't want an image in the navbar
-avatar: "/img/fishRlogoSquareInverted.png"
+avatar: "/img/fishRlogoSquare.png"
 
 # List of links in the navigation bar
 navbar-links:
   Home: ""
-  About Me: "aboutme"
-  Contact: "contact"
-  Test: "/_pages/test"
+  Posts: "pages/posts"
+  Vignettes: "pages/"
+  Packages: "pages/"
+  Exposure: "pages/"
+  Courses: "pages/"
+  Contact: "pages/"
 
 # --- Footer options --- #
 
@@ -32,7 +35,7 @@ navbar-links:
 author:
   name: Derek H. Ogle
   email: "dogle@northland.edu"
-  facebook: fishR  # eg. daattali
+  facebook: fishr00  # eg. daattali
   github: droglenc    # eg. daattali
   twitter: fishR_ogle   # eg. daattali
 

@@ -23,6 +23,7 @@ navbar-links:
   Home: ""
   About Me: "aboutme"
   Contact: "contact"
+  Test: "_pages/test"
 
 # --- Footer options --- #
 

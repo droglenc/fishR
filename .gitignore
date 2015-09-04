@@ -1,2 +1,7 @@
+## Default jekyll .gitignore
 _site/
 .sass-cache/
+
+## RStudio project files
+.Rproj.user
+fishR.Rproj

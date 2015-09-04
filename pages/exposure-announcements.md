@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Exposure -- Announcements
+title: Announcements
 subtitle: Getting the Word Out!
 ---
 

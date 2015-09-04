@@ -1,7 +1,6 @@
 ---
 layout: page
-title: Packages
-subtitle: List of Fisheries Related R Packages
+title: Fishy Packages
 ---
 
 ## Multi-Purpose Packages

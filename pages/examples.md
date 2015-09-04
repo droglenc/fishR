@@ -1,7 +1,6 @@
 ---
 layout: page
-title: Examples
-subtitle: R in Action for Fisheries Analyses!
+title: R in Action!
 ---
 
 ## Detailed Encompassing Examples

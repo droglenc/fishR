@@ -11,5 +11,5 @@ subtitle: R in Action for Fisheries Analyses!
 ## Shorter Targeted Examples
 
 
-## Potentiall Out-Of-Date Examples
+## Potentially Out-Of-Date Examples
 * **fishR** vignettes that were precursor to IFAR book above.

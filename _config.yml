@@ -22,11 +22,11 @@ avatar: "/img/fishRlogoSquareWhite.png"
 navbar-links:
   Home: ""
   Posts: "posts"
-  Vignettes: "pages/"
-  Packages: "pages/"
-  Exposure: "pages/"
-  Courses: "pages/"
-  Contact: "pages/"
+  Vignettes: "pages/vignettes"
+  Packages: "pages/packages"
+  Exposure: "pages/exposure"
+  Courses: "pages/courses"
+  Contact: "pages/contact"
 
 # --- Footer options --- #
 

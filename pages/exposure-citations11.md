@@ -1,6 +1,6 @@
 ---
 layout: page
-title: pre-2011 Citations
+title: pre-2012 Citations
 subtitle: fishR and FSA is Being Used!!
 css: "../css/exposure-citation.css"
 ---
@@ -21,5 +21,5 @@ css: "../css/exposure-citation.css"
 1. Sulu, RJ.  2010.  Multidisciplinary appraisal of the effectiveness of customary marine tenure for coral reef finfish fisheries management in Nggela (Solomon Islands).  Doctoral Dissertation, Newcastle University.  [PDF](https://theses.ncl.ac.uk/dspace/bitstream/10443/1327/1/sulu11.pdf). [Growth -- Von Bertalanffy]
 
 1. Ogle DH.  2009.  The effect of freezing on the length and weight measurements of ruffe (*Gymnocephalus cernuus*).  Fisheries Research 99:244-247.  [Abstract](http://www.sciencedirect.com/science/article/pii/S0165783609001763).
-1. Ogle DH, Winfield IJ.  2009.  Ruﬀe length-weight relationships with a proposed standard weight equation.  North American Journal of Fisheries Management 29:850-858.  [PDF](http://www.academia.edu/attachments/108976/download_file). [Condition -- relative weight]
+1. Ogle DH, Winfield IJ.  2009.  Ruﬀe length-weight relationships with a proposed standard weight equation.  North American Journal of Fisheries Management 29:850-858.  [Abstract]http://afs.tandfonline.com/doi/abs/10.1577/M08-176.1). [Condition -- relative weight]
 

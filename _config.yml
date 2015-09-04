@@ -20,12 +20,12 @@ avatar: "/img/fishRlogoSquareWhite.png"
 
 # List of links in the navigation bar
 navbar-links:
-#  Home: ""
   Examples: "pages/examples"
   Packages: "pages/packages"
   Exposure: "pages/exposure"
   Courses: "pages/courses"
   Contact: "pages/contact"
+  Home: ""
 
 # --- Footer options --- #
 

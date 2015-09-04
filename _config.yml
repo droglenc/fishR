@@ -20,7 +20,7 @@ avatar: "/img/fishRlogoSquareWhite.png"
 
 # List of links in the navigation bar
 navbar-links:
-  Home: ""
+#  Home: ""
   Examples: "pages/examples"
   Packages: "pages/packages"
   Exposure: "pages/exposure"

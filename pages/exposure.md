@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Getting the Word Out!
+title: Get the Word Out!
 ---
 
 **fishR** gets exposure with announcements in various newsletters and through citations in journal articles.

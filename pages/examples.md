@@ -8,7 +8,7 @@ title: R in Action!
 * [Analysis and Interpretation of Freshwater Fisheries Data](http://droglenc.github.io/aiffd2007/) book (Guy and Brown, 2007) -- *scripts and detailed descriptions for many of the boxed examples (converted from SAS code)*
 
 ## Shorter Targeted Examples
-* [Working with Age Comparison Results for Individual Fish](examples/AgePrec_Details.html)
+* [Working with Age Comparison Results for Individual Fish](examples-short/AgePrec_Details.html)
 * [Two New Cumulative Sum Functions](http://rpubs.com/dogle/47172)
 * [Efficiently Adding Gabelhouse Lengths and Relative Weights to a data.frame (using dplyr)](http://rpubs.com/dogle/32746) [*somewhat out-of-date*]
 

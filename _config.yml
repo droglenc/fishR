@@ -39,7 +39,7 @@ footer-links-active:
   github: true
   twitter: true
   facebook: true
-  rss: false
+  rss: true
   linkedin: false
   stackoverflow: false
 

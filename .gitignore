@@ -5,3 +5,15 @@ _site/
 ## RStudio project files
 .Rproj.user
 fishR.Rproj
+
+## Course Files
+courses/2014_WiDNR/*.bbl
+courses/2014_WiDNR/*.log
+courses/2014_WiDNR/*.nav
+courses/2014_WiDNR/*.snm
+courses/2014_WiDNR/*.synctex.gz
+courses/2014_WiDNR/*.tex
+courses/2014_WiDNR/*.toc
+courses/2014_WiDNR/*.vrb
+courses/2014_WiDNR/cache/
+courses/2014_WiDNR/Figs/*.pdf

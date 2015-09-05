@@ -1,0 +1,81 @@
+```{r postblog, eval=FALSE, echo=FALSE}
+## Run these commands when you are ready to push out to the fishR blog.
+library(knitr)
+title <- "Visualizing Age-Length Keys"
+cats <- c('R','Fisheries Science')
+keys <- c('R','Age','Age-Length Key','Age Key','Visualization')
+setwd("C:/aaaWork/Web/fishR/BlogExamples")
+source('WPSetup.R')
+knit2wp("AgeKeyPlot.Rmd",publish=FALSE,shortcode=c(TRUE,FALSE),
+        title=title,categories=cats,mt_keywords=keys)
+#NOTE that I had to manually edit the equations in wordpress.
+```
+
+```{r setup, echo=FALSE, results='hide'}
+# Having this separate from the setup file allows one to knit this in RStudio.
+knit_hooks$set(par1 = function(before, options, envir) {
+  if (before) par(mar=c(3.5,3.5,2,2),mgp=c(2.1,0.4,0),tcl=-0.2)
+})
+opts_chunk$set(dev="png",tidy=FALSE,par1=TRUE)
+```
+
+Lately, I have been interested in methods related to age-length keys.  One aspect of this interest has been in visualizing age-length keys.  I had seen various visualizations in publications and wanted to be able to reproduce those relatively efficiently.  To do this, I have created `ageKeyPlot()` in the latest version of **FSA**.  Below are examples of the types of visualizations I have coded thusfar.  They are not flexible enough yet to be used in publications but I think they may be useful for everyday work.  Please let me know what you think and if you have any suggestions for improvements.
+
+Note that the code below requires the the latest version of **FSA** (version 0.4.6).  I am now distributing **FSA** through GitHub; see [these new install instructions](http://fishr.wordpress.com/fsa/).
+
+```{r results='hide', warning=FALSE, message=FALSE}
+library(FSA)
+```
+
+## Create an Age-Length Key ##
+The code below creates an age-length key from the `WR79` data set built into **FSA**.
+
+```{r}
+data(WR79)
+# get the age sample from the data frame
+WR.age <- Subset(WR79, !is.na(age))
+# add length categories
+WR.age.mod <- lencat(~len,data=WR.age,startcat=35,w=5)
+# create age-length key
+raw <- table(WR.age.mod$LCat, WR.age.mod$age)
+WR.key <- prop.table(raw, margin=1)
+round(WR.key,3) # round() for display only
+```
+
+## Barplot ##
+The default plot from `ageKeyPlot()` is a barplot where each portion of the bar is the propotion of fish in that length category that are of a given age.  This plot is created as follows.
+
+```{r AKbar1}
+ageKeyPlot(WR.key)
+```
+
+The age labels can be removed and a legend of sorts can be added as follows.
+```{r AKbar2}
+ageKeyPlot(WR.key,showLegend=TRUE)
+```
+
+## Stacked Area Plot ##
+A stacked area plot is similar to the barplot.  This plot, with a legend, is created with the following.
+```{r AKarea}
+ageKeyPlot(WR.key,type="area",showLegend=TRUE)
+```
+
+## Lines Plot ##
+A plot with lines that connect the proportions of one age across the various length categories is constructed with the following (also demonstrating how to make the default labels larger).
+```{r AKlines}
+ageKeyPlot(WR.key,type="lines",lbl.cex=1.5)
+```
+
+## Splines Plot ##
+A plot with lines that connect the proportions of one age across the various length categories as represented by a smoothing spline is constructed with the following.
+```{r AKsplines}
+ageKeyPlot(WR.key,type="splines",lbl.cex=1.5)
+```
+The splines are not "perfect" but they are an attempt to smooth out the lines that connect the proportions.  A lower `span=` value will reduce the curvature of the splines, which will result in fewer values either greater than 1 or less than 0.
+
+```{r AKsplines2}
+ageKeyPlot(WR.key,type="splines",span=0.2,lbl.cex=1.5)
+```
+
+## Comments ##
+Some of the plots do not work with "poorly constructed" age-length keys (e.g., lengths with no age data).  I have tried to code "catches" and "work arounds" for these issues but have likely not anticipated all problems.  So, let me know how these plots, and this function, work with your age-length keys.

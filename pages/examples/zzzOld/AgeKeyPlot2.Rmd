@@ -1,0 +1,51 @@
+```{r postblog, eval=FALSE, echo=FALSE}
+## Run these commands when you are ready to push out to the fishR blog.
+library(knitr)
+title <- "Visualizing Age-Length Keys -- More"
+cats <- c('R','Fisheries Science')
+keys <- c('R','Age','Age-Length Key','Age Key','Visualization')
+setwd("C:/aaaWork/Web/fishR/BlogExamples")
+source('WPSetup.R')
+knit2wp("AgeKeyPlot2.Rmd",publish=FALSE,shortcode=c(TRUE,FALSE),
+        title=title,categories=cats,mt_keywords=keys)
+#NOTE that I had to manually edit the equations in wordpress.
+```
+
+```{r setup, echo=FALSE, results='hide'}
+# Having this separate from the setup file allows one to knit this in RStudio.
+knit_hooks$set(par1 = function(before, options, envir) {
+  if (before) par(mar=c(3.5,3.5,2,2),mgp=c(2.1,0.4,0),tcl=-0.2)
+})
+opts_chunk$set(dev="png",tidy=FALSE,par1=TRUE)
+```
+
+I [recently posted](http://fishr.wordpress.com/2014/04/12/visualizing-age-length-keys/) on the addition of `ageKeyPlot()` to the **FSA** package for visualizing age-length keys.  Since that post, I have added one more type of plot as illustrated below.  This post should be considered as an extension of [the previous post](http://fishr.wordpress.com/2014/04/12/visualizing-age-length-keys/).
+
+The **FSA** package is loaded and the same example age-length key is constructed with the following.
+
+```{r results='hide', warning=FALSE, message=FALSE}
+library(FSA)
+```
+```{r}
+data(WR79)
+# get the age sample from the data frame
+WR.age <- Subset(WR79, !is.na(age))
+# add length categories
+WR.age.mod <- lencat(~len,data=WR.age,startcat=35,w=5)
+# create age-length key
+raw <- table(WR.age.mod$LCat, WR.age.mod$age)
+WR.key <- prop.table(raw, margin=1)
+round(WR.key,3) # round() for display only
+```
+
+## Bubble Plot ##
+A "bubble plot" of the proportion of fish in each age for a given length is constructed by including `type="bubble"` in `ageKeyPlot()`.  The resulting plot shows a circle for each age and length combination in the age-length key and the area of the circle is scaled to be proportional to the percentage of fish of that length that are that age.  An example plot is created as follows.
+
+```{r AKbubble1}
+ageKeyPlot(WR.key,type="bubble")
+```
+
+For example, 100% of the 40-mm length category were age-4, but the ages are much more spread out in the 110-mm length category.
+
+## Installing the Latest FSA ##
+Note that the code below requires the latest version of **FSA** (version 0.4.6).  I am now distributing **FSA** through GitHub; see [these new install instructions](http://fishr.wordpress.com/fsa/).

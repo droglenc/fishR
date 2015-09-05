@@ -1,0 +1,58 @@
+---
+title: Two New Cumulative Sum Functions
+author: "Derek H. Ogle"
+date: "Monday, December 8, 2014"
+output: html_document
+---
+
+```{r setup, echo=FALSE, results='hide'}
+library(knitr)
+opts_chunk$set(dev="png",tidy=FALSE,par1=TRUE)
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(FSA)
+```
+
+In fisheries analysis it is fairly common to compute the cumulative sum of values in a vector  -- i.e., all values before and including the current position in the vector.  For example, the third value in the cumulative sum would be the sum of the first, second, and third values in the original vector.  These types of cumulative sums are easily accomplished with `cumsum()` in base R.
+```{r cumsum}
+vec <- 1:10
+( cum <- cumsum(vec) )
+cum[3]
+```
+
+Some applications in fisheries science (e.g., depletion estimators) require the cumulative sum **NOT** including the current value in the vector.  For example, the third value in this case would be the sum of the first and second values in the original vector.  These values can be computed by subtracting the original vector from the vector returned by `cumsum()`.
+
+```{r pcumsum1}
+cum-vec
+```
+
+For efficiency, this simple process has been coded in `pcumsum()` in **FSA**.
+
+```{r pcumsum2}
+( pcum <- pcumsum(vec) )
+pcum[3]
+```
+
+In still other applications (e.g., proportional size distribution calculations) a cumulative sum from the **LEFT** rather than the right is required.  For example, the third value in this case would be the sum of the third, fourth, fifth, ..., last values in the original vector.  These values can be computed by reversing the order of the result from `cumsum()` that had been applied to the reverse order of the original vector.
+
+
+```{r rcumsum1}
+rev(cumsum(rev(vec)))
+```
+
+For efficiency, this simple process has been coded in `rcumsum()` in **FSA**.
+
+```{r rcumsum2}
+( rcum <- rcumsum(vec) )
+rcum[3]
+```
+
+The three types of cumulative sums are shown, along with the original vector, in the matrix below.
+```{r cumsumsum}
+cbind(vec,cum,pcum,rcum)
+```
+
+These two new functions are unlikely to change the world as we know it; however, I wanted to document them in this blog so that others could find them if needed.
+
+Directions for installing **FSA** are [found here on the fishR webpage](https://fishr.wordpress.com/fsa/).

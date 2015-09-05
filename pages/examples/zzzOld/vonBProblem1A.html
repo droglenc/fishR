@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=9" >
+
+<title>Preliminaries and Data Manipulation</title>
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 12px;
+   margin: 8px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 { 
+   font-size:2.2em; 
+}
+
+h2 { 
+   font-size:1.8em; 
+}
+
+h3 { 
+   font-size:1.4em; 
+}
+
+h4 { 
+   font-size:1.0em; 
+}
+
+h5 { 
+   font-size:0.9em; 
+}
+
+h6 { 
+   font-size:0.8em; 
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre {	
+   margin-top: 0;
+   max-width: 95%;
+   border: 1px solid #ccc;
+   white-space: pre-wrap;
+}
+
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code.r, code.cpp {
+   background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * { 
+      background: transparent !important; 
+      color: black !important; 
+      filter:none !important; 
+      -ms-filter: none !important; 
+   }
+
+   body { 
+      font-size:12pt; 
+      max-width:100%; 
+   }
+       
+   a, a:visited { 
+      text-decoration: underline; 
+   }
+
+   hr { 
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote { 
+      padding-right: 1em; 
+      page-break-inside: avoid; 
+   }
+
+   tr, img { 
+      page-break-inside: avoid; 
+   }
+
+   img { 
+      max-width: 100% !important; 
+   }
+
+   @page :left { 
+      margin: 15mm 20mm 15mm 10mm; 
+   }
+     
+   @page :right { 
+      margin: 15mm 10mm 15mm 20mm; 
+   }
+
+   p, h2, h3 { 
+      orphans: 3; widows: 3; 
+   }
+
+   h2, h3 { 
+      page-break-after: avoid; 
+   }
+}
+
+</style>
+
+<!-- Styles for R syntax highlighter -->
+<style type="text/css">
+   pre .operator,
+   pre .paren {
+     color: rgb(104, 118, 135)
+   }
+
+   pre .literal {
+     color: rgb(88, 72, 246)
+   }
+
+   pre .number {
+     color: rgb(0, 0, 205);
+   }
+
+   pre .comment {
+     color: rgb(76, 136, 107);
+   }
+
+   pre .keyword {
+     color: rgb(0, 0, 255);
+   }
+
+   pre .identifier {
+     color: rgb(0, 0, 0);
+   }
+
+   pre .string {
+     color: rgb(3, 106, 7);
+   }
+</style>
+
+<!-- R syntax highlighter -->
+<script type="text/javascript">
+var hljs=new function(){function m(p){return p.replace(/&/gm,"&amp;").replace(/</gm,"&lt;")}function f(r,q,p){return RegExp(q,"m"+(r.cI?"i":"")+(p?"g":""))}function b(r){for(var p=0;p<r.childNodes.length;p++){var q=r.childNodes[p];if(q.nodeName=="CODE"){return q}if(!(q.nodeType==3&&q.nodeValue.match(/\s+/))){break}}}function h(t,s){var p="";for(var r=0;r<t.childNodes.length;r++){if(t.childNodes[r].nodeType==3){var q=t.childNodes[r].nodeValue;if(s){q=q.replace(/\n/g,"")}p+=q}else{if(t.childNodes[r].nodeName=="BR"){p+="\n"}else{p+=h(t.childNodes[r])}}}if(/MSIE [678]/.test(navigator.userAgent)){p=p.replace(/\r/g,"\n")}return p}function a(s){var r=s.className.split(/\s+/);r=r.concat(s.parentNode.className.split(/\s+/));for(var q=0;q<r.length;q++){var p=r[q].replace(/^language-/,"");if(e[p]){return p}}}function c(q){var p=[];(function(s,t){for(var r=0;r<s.childNodes.length;r++){if(s.childNodes[r].nodeType==3){t+=s.childNodes[r].nodeValue.length}else{if(s.childNodes[r].nodeName=="BR"){t+=1}else{if(s.childNodes[r].nodeType==1){p.push({event:"start",offset:t,node:s.childNodes[r]});t=arguments.callee(s.childNodes[r],t);p.push({event:"stop",offset:t,node:s.childNodes[r]})}}}}return t})(q,0);return p}function k(y,w,x){var q=0;var z="";var s=[];function u(){if(y.length&&w.length){if(y[0].offset!=w[0].offset){return(y[0].offset<w[0].offset)?y:w}else{return w[0].event=="start"?y:w}}else{return y.length?y:w}}function t(D){var A="<"+D.nodeName.toLowerCase();for(var B=0;B<D.attributes.length;B++){var C=D.attributes[B];A+=" "+C.nodeName.toLowerCase();if(C.value!==undefined&&C.value!==false&&C.value!==null){A+='="'+m(C.value)+'"'}}return A+">"}while(y.length||w.length){var v=u().splice(0,1)[0];z+=m(x.substr(q,v.offset-q));q=v.offset;if(v.event=="start"){z+=t(v.node);s.push(v.node)}else{if(v.event=="stop"){var p,r=s.length;do{r--;p=s[r];z+=("</"+p.nodeName.toLowerCase()+">")}while(p!=v.node);s.splice(r,1);while(r<s.length){z+=t(s[r]);r++}}}}return z+m(x.substr(q))}function j(){function q(x,y,v){if(x.compiled){return}var u;var s=[];if(x.k){x.lR=f(y,x.l||hljs.IR,true);for(var w in x.k){if(!x.k.hasOwnProperty(w)){continue}if(x.k[w] instanceof Object){u=x.k[w]}else{u=x.k;w="keyword"}for(var r in u){if(!u.hasOwnProperty(r)){continue}x.k[r]=[w,u[r]];s.push(r)}}}if(!v){if(x.bWK){x.b="\\b("+s.join("|")+")\\s"}x.bR=f(y,x.b?x.b:"\\B|\\b");if(!x.e&&!x.eW){x.e="\\B|\\b"}if(x.e){x.eR=f(y,x.e)}}if(x.i){x.iR=f(y,x.i)}if(x.r===undefined){x.r=1}if(!x.c){x.c=[]}x.compiled=true;for(var t=0;t<x.c.length;t++){if(x.c[t]=="self"){x.c[t]=x}q(x.c[t],y,false)}if(x.starts){q(x.starts,y,false)}}for(var p in e){if(!e.hasOwnProperty(p)){continue}q(e[p].dM,e[p],true)}}function d(B,C){if(!j.called){j();j.called=true}function q(r,M){for(var L=0;L<M.c.length;L++){if((M.c[L].bR.exec(r)||[null])[0]==r){return M.c[L]}}}function v(L,r){if(D[L].e&&D[L].eR.test(r)){return 1}if(D[L].eW){var M=v(L-1,r);return M?M+1:0}return 0}function w(r,L){return L.i&&L.iR.test(r)}function K(N,O){var M=[];for(var L=0;L<N.c.length;L++){M.push(N.c[L].b)}var r=D.length-1;do{if(D[r].e){M.push(D[r].e)}r--}while(D[r+1].eW);if(N.i){M.push(N.i)}return f(O,M.join("|"),true)}function p(M,L){var N=D[D.length-1];if(!N.t){N.t=K(N,E)}N.t.lastIndex=L;var r=N.t.exec(M);return r?[M.substr(L,r.index-L),r[0],false]:[M.substr(L),"",true]}function z(N,r){var L=E.cI?r[0].toLowerCase():r[0];var M=N.k[L];if(M&&M instanceof Array){return M}return false}function F(L,P){L=m(L);if(!P.k){return L}var r="";var O=0;P.lR.lastIndex=0;var M=P.lR.exec(L);while(M){r+=L.substr(O,M.index-O);var N=z(P,M);if(N){x+=N[1];r+='<span class="'+N[0]+'">'+M[0]+"</span>"}else{r+=M[0]}O=P.lR.lastIndex;M=P.lR.exec(L)}return r+L.substr(O,L.length-O)}function J(L,M){if(M.sL&&e[M.sL]){var r=d(M.sL,L);x+=r.keyword_count;return r.value}else{return F(L,M)}}function I(M,r){var L=M.cN?'<span class="'+M.cN+'">':"";if(M.rB){y+=L;M.buffer=""}else{if(M.eB){y+=m(r)+L;M.buffer=""}else{y+=L;M.buffer=r}}D.push(M);A+=M.r}function G(N,M,Q){var R=D[D.length-1];if(Q){y+=J(R.buffer+N,R);return false}var P=q(M,R);if(P){y+=J(R.buffer+N,R);I(P,M);return P.rB}var L=v(D.length-1,M);if(L){var O=R.cN?"</span>":"";if(R.rE){y+=J(R.buffer+N,R)+O}else{if(R.eE){y+=J(R.buffer+N,R)+O+m(M)}else{y+=J(R.buffer+N+M,R)+O}}while(L>1){O=D[D.length-2].cN?"</span>":"";y+=O;L--;D.length--}var r=D[D.length-1];D.length--;D[D.length-1].buffer="";if(r.starts){I(r.starts,"")}return R.rE}if(w(M,R)){throw"Illegal"}}var E=e[B];var D=[E.dM];var A=0;var x=0;var y="";try{var s,u=0;E.dM.buffer="";do{s=p(C,u);var t=G(s[0],s[1],s[2]);u+=s[0].length;if(!t){u+=s[1].length}}while(!s[2]);if(D.length>1){throw"Illegal"}return{r:A,keyword_count:x,value:y}}catch(H){if(H=="Illegal"){return{r:0,keyword_count:0,value:m(C)}}else{throw H}}}function g(t){var p={keyword_count:0,r:0,value:m(t)};var r=p;for(var q in e){if(!e.hasOwnProperty(q)){continue}var s=d(q,t);s.language=q;if(s.keyword_count+s.r>r.keyword_count+r.r){r=s}if(s.keyword_count+s.r>p.keyword_count+p.r){r=p;p=s}}if(r.language){p.second_best=r}return p}function i(r,q,p){if(q){r=r.replace(/^((<[^>]+>|\t)+)/gm,function(t,w,v,u){return w.replace(/\t/g,q)})}if(p){r=r.replace(/\n/g,"<br>")}return r}function n(t,w,r){var x=h(t,r);var v=a(t);var y,s;if(v){y=d(v,x)}else{return}var q=c(t);if(q.length){s=document.createElement("pre");s.innerHTML=y.value;y.value=k(q,c(s),x)}y.value=i(y.value,w,r);var u=t.className;if(!u.match("(\\s|^)(language-)?"+v+"(\\s|$)")){u=u?(u+" "+v):v}if(/MSIE [678]/.test(navigator.userAgent)&&t.tagName=="CODE"&&t.parentNode.tagName=="PRE"){s=t.parentNode;var p=document.createElement("div");p.innerHTML="<pre><code>"+y.value+"</code></pre>";t=p.firstChild.firstChild;p.firstChild.cN=s.cN;s.parentNode.replaceChild(p.firstChild,s)}else{t.innerHTML=y.value}t.className=u;t.result={language:v,kw:y.keyword_count,re:y.r};if(y.second_best){t.second_best={language:y.second_best.language,kw:y.second_best.keyword_count,re:y.second_best.r}}}function o(){if(o.called){return}o.called=true;var r=document.getElementsByTagName("pre");for(var p=0;p<r.length;p++){var q=b(r[p]);if(q){n(q,hljs.tabReplace)}}}function l(){if(window.addEventListener){window.addEventListener("DOMContentLoaded",o,false);window.addEventListener("load",o,false)}else{if(window.attachEvent){window.attachEvent("onload",o)}else{window.onload=o}}}var e={};this.LANGUAGES=e;this.highlight=d;this.highlightAuto=g;this.fixMarkup=i;this.highlightBlock=n;this.initHighlighting=o;this.initHighlightingOnLoad=l;this.IR="[a-zA-Z][a-zA-Z0-9_]*";this.UIR="[a-zA-Z_][a-zA-Z0-9_]*";this.NR="\\b\\d+(\\.\\d+)?";this.CNR="\\b(0[xX][a-fA-F0-9]+|(\\d+(\\.\\d*)?|\\.\\d+)([eE][-+]?\\d+)?)";this.BNR="\\b(0b[01]+)";this.RSR="!|!=|!==|%|%=|&|&&|&=|\\*|\\*=|\\+|\\+=|,|\\.|-|-=|/|/=|:|;|<|<<|<<=|<=|=|==|===|>|>=|>>|>>=|>>>|>>>=|\\?|\\[|\\{|\\(|\\^|\\^=|\\||\\|=|\\|\\||~";this.ER="(?![\\s\\S])";this.BE={b:"\\\\.",r:0};this.ASM={cN:"string",b:"'",e:"'",i:"\\n",c:[this.BE],r:0};this.QSM={cN:"string",b:'"',e:'"',i:"\\n",c:[this.BE],r:0};this.CLCM={cN:"comment",b:"//",e:"$"};this.CBLCLM={cN:"comment",b:"/\\*",e:"\\*/"};this.HCM={cN:"comment",b:"#",e:"$"};this.NM={cN:"number",b:this.NR,r:0};this.CNM={cN:"number",b:this.CNR,r:0};this.BNM={cN:"number",b:this.BNR,r:0};this.inherit=function(r,s){var p={};for(var q in r){p[q]=r[q]}if(s){for(var q in s){p[q]=s[q]}}return p}}();hljs.LANGUAGES.cpp=function(){var a={keyword:{"false":1,"int":1,"float":1,"while":1,"private":1,"char":1,"catch":1,"export":1,virtual:1,operator:2,sizeof:2,dynamic_cast:2,typedef:2,const_cast:2,"const":1,struct:1,"for":1,static_cast:2,union:1,namespace:1,unsigned:1,"long":1,"throw":1,"volatile":2,"static":1,"protected":1,bool:1,template:1,mutable:1,"if":1,"public":1,friend:2,"do":1,"return":1,"goto":1,auto:1,"void":2,"enum":1,"else":1,"break":1,"new":1,extern:1,using:1,"true":1,"class":1,asm:1,"case":1,typeid:1,"short":1,reinterpret_cast:2,"default":1,"double":1,register:1,explicit:1,signed:1,typename:1,"try":1,"this":1,"switch":1,"continue":1,wchar_t:1,inline:1,"delete":1,alignof:1,char16_t:1,char32_t:1,constexpr:1,decltype:1,noexcept:1,nullptr:1,static_assert:1,thread_local:1,restrict:1,_Bool:1,complex:1},built_in:{std:1,string:1,cin:1,cout:1,cerr:1,clog:1,stringstream:1,istringstream:1,ostringstream:1,auto_ptr:1,deque:1,list:1,queue:1,stack:1,vector:1,map:1,set:1,bitset:1,multiset:1,multimap:1,unordered_set:1,unordered_map:1,unordered_multiset:1,unordered_multimap:1,array:1,shared_ptr:1}};return{dM:{k:a,i:"</",c:[hljs.CLCM,hljs.CBLCLM,hljs.QSM,{cN:"string",b:"'\\\\?.",e:"'",i:"."},{cN:"number",b:"\\b(\\d+(\\.\\d*)?|\\.\\d+)(u|U|l|L|ul|UL|f|F)"},hljs.CNM,{cN:"preprocessor",b:"#",e:"$"},{cN:"stl_container",b:"\\b(deque|list|queue|stack|vector|map|set|bitset|multiset|multimap|unordered_map|unordered_set|unordered_multiset|unordered_multimap|array)\\s*<",e:">",k:a,r:10,c:["self"]}]}}}();hljs.LANGUAGES.r={dM:{c:[hljs.HCM,{cN:"number",b:"\\b0[xX][0-9a-fA-F]+[Li]?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+(?:[eE][+\\-]?\\d*)?L\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+\\.(?!\\d)(?:i\\b)?",e:hljs.IMMEDIATE_RE,r:1},{cN:"number",b:"\\b\\d+(?:\\.\\d*)?(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\.\\d+(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"keyword",b:"(?:tryCatch|library|setGeneric|setGroupGeneric)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\.",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\d+(?![\\w.])",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\b(?:function)",e:hljs.IMMEDIATE_RE,r:2},{cN:"keyword",b:"(?:if|in|break|next|repeat|else|for|return|switch|while|try|stop|warning|require|attach|detach|source|setMethod|setClass)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"literal",b:"(?:NA|NA_integer_|NA_real_|NA_character_|NA_complex_)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"literal",b:"(?:NULL|TRUE|FALSE|T|F|Inf|NaN)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"identifier",b:"[a-zA-Z.][a-zA-Z0-9._]*\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"<\\-(?!\\s*\\d)",e:hljs.IMMEDIATE_RE,r:2},{cN:"operator",b:"\\->|<\\-",e:hljs.IMMEDIATE_RE,r:1},{cN:"operator",b:"%%|~",e:hljs.IMMEDIATE_RE},{cN:"operator",b:">=|<=|==|!=|\\|\\||&&|=|\\+|\\-|\\*|/|\\^|>|<|!|&|\\||\\$|:",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"%",e:"%",i:"\\n",r:1},{cN:"identifier",b:"`",e:"`",r:0},{cN:"string",b:'"',e:'"',c:[hljs.BE],r:0},{cN:"string",b:"'",e:"'",c:[hljs.BE],r:0},{cN:"paren",b:"[[({\\])}]",e:hljs.IMMEDIATE_RE,r:0}]}};
+hljs.initHighlightingOnLoad();
+</script>
+
+
+<!-- MathJax scripts -->
+<script type="text/javascript" src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+</head>
+
+<body>
+<p><a href="http://fishr.wordpress.com/2013/11/19/a-problem-fitting-the-von-bertalanffy-growth-model-with-nls/">In my last post</a>, I suggested that the Francis parameterization of the von Bertalanffy growth model may be used in cases where the typical parameterization did not converge (likely due to issues related to highly correlated parameters and data with lengths that are highly variable within ages and the full curvature of the model is not readily apparent because the data are truncated for some reason (e.g., high mortality rates, size-selective gear)).  A follow-up question to <a href="http://fishr.wordpress.com/2013/11/19/a-problem-fitting-the-von-bertalanffy-growth-model-with-nls/">that post</a> is how to compare parameter estimates between sexes when using the Francis parameterization.  This is largely the same as the demonstration for the typical parameterization in the <a href="http://fishr.wordpress.com/vignettes/">Von Bertalanffy Growth - Intro Vignette</a> on the <a href="http://fishr.wordpress.com/">fishR</a> page except, of course, that the user must write out the more bulky Francis parameterization.  This post is a demonstration of the required code (with few comments as most of this is generally described in the <a href="http://fishr.wordpress.com/vignettes/">Von Bertalanffy Growth - Intro Vignette</a>).</p>
+
+<h2>Preliminaries and Data Manipulation</h2>
+
+<p>Begin by loading the <strong>FSA</strong> package, &hellip;</p>
+
+<pre><code class="r">library(FSA)
+</code></pre>
+
+<p>the data (note that the working direction would have been set before <code>read.csv()</code>), &hellip;</p>
+
+<pre><code class="r">df &lt;- read.csv(&quot;BKData.csv&quot;,header=TRUE)
+str(df)
+</code></pre>
+
+<pre><code>## &#39;data.frame&#39;:    55 obs. of  12 variables:
+##  $ Primary_Code        : Factor w/ 3 levels &quot;SH091613BK&quot;,&quot;SH091813BK&quot;,..: 3 3 3 3 3 1 1 1 1 1 ...
+##  $ Location            : Factor w/ 1 level &quot;SH&quot;: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ Date                : Factor w/ 3 levels &quot;16-Oct-12&quot;,&quot;16-Sep-13&quot;,..: 1 1 1 1 1 2 2 2 2 2 ...
+##  $ Transect            : Factor w/ 6 levels &quot;SHWPBTEF03&quot;,&quot;SHWPHONT02&quot;,..: 1 1 1 1 1 3 3 6 6 6 ...
+##  $ Replicate           : int  NA NA NA NA NA 1 1 1 1 1 ...
+##  $ Species             : Factor w/ 1 level &quot;CHC&quot;: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ Length              : int  526 227 214 226 508 501 486 732 630 588 ...
+##  $ Weight              : int  1519 86 70 85 1223 1156 993 3655 2326 1528 ...
+##  $ ID_Code             : Factor w/ 50 levels &quot;A1&quot;,&quot;A10&quot;,&quot;A11&quot;,..: 5 6 7 8 1 6 9 19 21 22 ...
+##  $ Age                 : int  7 1 1 1 10 7 10 16 10 9 ...
+##  $ Sex                 : Factor w/ 3 levels &quot;&quot;,&quot;Female&quot;,&quot;Male&quot;: 1 1 1 1 2 2 2 2 2 2 ...
+##  $ Collection_Technique: Factor w/ 2 levels &quot;BTEF&quot;,&quot;HONT&quot;: 1 1 1 1 1 2 2 2 2 2 ...
+</code></pre>
+
+<pre><code class="r">levels(df$Sex)
+</code></pre>
+
+<pre><code>## [1] &quot;&quot;       &quot;Female&quot; &quot;Male&quot;
+</code></pre>
+
+<p>and remove the four unknown sex individuals &hellip;</p>
+
+<pre><code class="r">df1 &lt;- Subset(df,Sex!=&quot;&quot;)
+dim(df1)
+</code></pre>
+
+<pre><code>## [1] 51 12
+</code></pre>
+
+<h2>Model Preparation</h2>
+
+<p>Declare all possible models, &hellip;</p>
+
+<pre><code class="r">frGen &lt;- Length~L1[Sex]+(L3[Sex]-L1[Sex])*(1-((L3[Sex]-L2[Sex])/(L2[Sex]-L1[Sex]))^(2*(Age-t1)/(t3-t1)))/(1-((L3[Sex]-L2[Sex])/(L2[Sex]-L1[Sex]))^2)
+fr12 &lt;- Length~L1[Sex]+(L3-L1[Sex])*(1-((L3-L2[Sex])/(L2[Sex]-L1[Sex]))^(2*(Age-t1)/(t3-t1)))/(1-((L3-L2[Sex])/(L2[Sex]-L1[Sex]))^2)
+fr13 &lt;- Length~L1[Sex]+(L3[Sex]-L1[Sex])*(1-((L3[Sex]-L2)/(L2-L1[Sex]))^(2*(Age-t1)/(t3-t1)))/(1-((L3[Sex]-L2)/(L2-L1[Sex]))^2)
+fr23 &lt;- Length~L1+(L3[Sex]-L1)*(1-((L3[Sex]-L2[Sex])/(L2[Sex]-L1))^(2*(Age-t1)/(t3-t1)))/(1-((L3[Sex]-L2[Sex])/(L2[Sex]-L1))^2)
+fr1 &lt;- Length~L1[Sex]+(L3-L1[Sex])*(1-((L3-L2)/(L2-L1[Sex]))^(2*(Age-t1)/(t3-t1)))/(1-((L3-L2)/(L2-L1[Sex]))^2)
+fr2 &lt;- Length~L1+(L3-L1)*(1-((L3-L2[Sex])/(L2[Sex]-L1))^(2*(Age-t1)/(t3-t1)))/(1-((L3-L2[Sex])/(L2[Sex]-L1))^2)
+fr3 &lt;- Length~L1+(L3[Sex]-L1)*(1-((L3[Sex]-L2)/(L2-L1))^(2*(Age-t1)/(t3-t1)))/(1-((L3[Sex]-L2)/(L2-L1))^2)
+frCom &lt;- Length~L1+(L3-L1)*(1-((L3-L2)/(L2-L1))^(2*(Age-t1)/(t3-t1)))/(1-((L3-L2)/(L2-L1))^2)
+</code></pre>
+
+<p>choose the youngest (<code>t1</code>) and oldest (<code>t3</code>) ages to use in the models, &hellip;</p>
+
+<pre><code class="r">t1 &lt;- 5
+t3 &lt;- 12
+</code></pre>
+
+<p>find starting values for the &ldquo;all parameters in common&#39;&#39; model, &hellip;</p>
+
+<pre><code class="r">( svCom &lt;- vbStarts(Length~Age,data=df1,type=&quot;Francis&quot;,tFrancis=c(t1,t3),methEV=&quot;poly&quot;) )
+</code></pre>
+
+<pre><code>## $L1
+## [1] 443.8
+## 
+## $L2
+## [1] 542.2
+## 
+## $L3
+## [1] 602.7
+</code></pre>
+
+<p>and expand those starting values for use with each possible model &hellip;</p>
+
+<pre><code class="r">svGen &lt;- lapply(svCom,rep,2)
+sv12 &lt;- mapply(rep,svCom,c(2,2,1))
+sv13 &lt;- mapply(rep,svCom,c(2,1,2))
+sv23 &lt;- mapply(rep,svCom,c(1,2,2))
+sv1 &lt;- mapply(rep,svCom,c(2,1,1))
+sv2 &lt;- mapply(rep,svCom,c(1,2,1))
+sv3 &lt;- mapply(rep,svCom,c(1,1,2))
+</code></pre>
+
+<h2>Fit All Models</h2>
+
+<p>Fit the general, one parameter in common, two parameters in common, and all parameters in common models declared above to the data &hellip;</p>
+
+<pre><code class="r">fitGen &lt;- nls(frGen,data=df1,start=svGen) 
+fit12 &lt;- nls(fr12,data=df1,start=sv12) 
+fit13 &lt;- nls(fr13,data=df1,start=sv13) 
+fit23 &lt;- nls(fr23,data=df1,start=sv23) 
+fit1 &lt;- nls(fr1,data=df1,start=sv1) 
+fit2 &lt;- nls(fr2,data=df1,start=sv2) 
+fit3 &lt;- nls(fr3,data=df1,start=sv3) 
+fitCom &lt;- nls(frCom,data=df1,start=svCom) 
+</code></pre>
+
+<h2>Model Comparisons</h2>
+
+<p>Compare each pair of &quot;one parameter in common&rdquo; models &hellip;</p>
+
+<pre><code class="r">anova(fit12,fitGen)
+</code></pre>
+
+<pre><code>## Analysis of Variance Table
+## 
+## Model 1: Length ~ L1[Sex] + (L3 - L1[Sex]) * (1 - ((L3 - L2[Sex])/(L2[Sex] - L1[Sex]))^(2 * (Age - t1)/(t3 - t1)))/(1 - ((L3 - L2[Sex])/(L2[Sex] - L1[Sex]))^2)
+## Model 2: Length ~ L1[Sex] + (L3[Sex] - L1[Sex]) * (1 - ((L3[Sex] - L2[Sex])/(L2[Sex] - L1[Sex]))^(2 * (Age - t1)/(t3 - t1)))/(1 - ((L3[Sex] - L2[Sex])/(L2[Sex] - L1[Sex]))^2)
+##   Res.Df Res.Sum Sq Df Sum Sq F value Pr(&gt;F)
+## 1     46     243467                         
+## 2     45     239038  1   4429    0.83   0.37
+</code></pre>
+
+<pre><code class="r">anova(fit13,fitGen)
+</code></pre>
+
+<pre><code>## Analysis of Variance Table
+## 
+## Model 1: Length ~ L1[Sex] + (L3[Sex] - L1[Sex]) * (1 - ((L3[Sex] - L2)/(L2 - L1[Sex]))^(2 * (Age - t1)/(t3 - t1)))/(1 - ((L3[Sex] - L2)/(L2 - L1[Sex]))^2)
+## Model 2: Length ~ L1[Sex] + (L3[Sex] - L1[Sex]) * (1 - ((L3[Sex] - L2[Sex])/(L2[Sex] - L1[Sex]))^(2 * (Age - t1)/(t3 - t1)))/(1 - ((L3[Sex] - L2[Sex])/(L2[Sex] - L1[Sex]))^2)
+##   Res.Df Res.Sum Sq Df Sum Sq F value Pr(&gt;F)  
+## 1     46     268444                           
+## 2     45     239038  1  29406    5.54  0.023 *
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+</code></pre>
+
+<pre><code class="r">anova(fit23,fitGen)
+</code></pre>
+
+<pre><code>## Analysis of Variance Table
+## 
+## Model 1: Length ~ L1 + (L3[Sex] - L1) * (1 - ((L3[Sex] - L2[Sex])/(L2[Sex] - L1))^(2 * (Age - t1)/(t3 - t1)))/(1 - ((L3[Sex] - L2[Sex])/(L2[Sex] - L1))^2)
+## Model 2: Length ~ L1[Sex] + (L3[Sex] - L1[Sex]) * (1 - ((L3[Sex] - L2[Sex])/(L2[Sex] - L1[Sex]))^(2 * (Age - t1)/(t3 - t1)))/(1 - ((L3[Sex] - L2[Sex])/(L2[Sex] - L1[Sex]))^2)
+##   Res.Df Res.Sum Sq Df Sum Sq F value Pr(&gt;F)
+## 1     46     248698                         
+## 2     45     239038  1   9660    1.82   0.18
+</code></pre>
+
+<p>From this it is seen that there is no difference in the L3 or \( L_{1} \) parameters but there may be in the L2 parameter.  The model with L3 in common (i.e., <code>fit12</code>) fits slightly better (lower RSS) then the model with \( L_{1} \) in common, so the following tests will compare the two two parameter in common models that also have L3 in common to the model with only L3 in common &hellip;</p>
+
+<pre><code class="r">anova(fit1,fit12)
+</code></pre>
+
+<pre><code>## Analysis of Variance Table
+## 
+## Model 1: Length ~ L1[Sex] + (L3 - L1[Sex]) * (1 - ((L3 - L2)/(L2 - L1[Sex]))^(2 * (Age - t1)/(t3 - t1)))/(1 - ((L3 - L2)/(L2 - L1[Sex]))^2)
+## Model 2: Length ~ L1[Sex] + (L3 - L1[Sex]) * (1 - ((L3 - L2[Sex])/(L2[Sex] - L1[Sex]))^(2 * (Age - t1)/(t3 - t1)))/(1 - ((L3 - L2[Sex])/(L2[Sex] - L1[Sex]))^2)
+##   Res.Df Res.Sum Sq Df Sum Sq F value Pr(&gt;F)  
+## 1     47     269584                           
+## 2     46     243467  1  26117    4.93  0.031 *
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+</code></pre>
+
+<pre><code class="r">anova(fit2,fit12)
+</code></pre>
+
+<pre><code>## Analysis of Variance Table
+## 
+## Model 1: Length ~ L1 + (L3 - L1) * (1 - ((L3 - L2[Sex])/(L2[Sex] - L1))^(2 * (Age - t1)/(t3 - t1)))/(1 - ((L3 - L2[Sex])/(L2[Sex] - L1))^2)
+## Model 2: Length ~ L1[Sex] + (L3 - L1[Sex]) * (1 - ((L3 - L2[Sex])/(L2[Sex] - L1[Sex]))^(2 * (Age - t1)/(t3 - t1)))/(1 - ((L3 - L2[Sex])/(L2[Sex] - L1[Sex]))^2)
+##   Res.Df Res.Sum Sq Df Sum Sq F value Pr(&gt;F)  
+## 1     47     260197                           
+## 2     46     243467  1  16730    3.16  0.082 .
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+</code></pre>
+
+<p>These results suggest that L2 differs between sexes and, perhaps, that \( L_{1} \) also differs between sexes depending on the level of alpha that one is using.  It is probably reasonable to use an alpha of 0.1 with this type of data because of the high degree of variability in lengths and the likely interest in whether there is even a slight difference between sexes.  Of course, alpha should have been set way before this stage (i.e., way before looking at the results).  I will continue assuming that alpha was 0.05 and that these results show that only L2 differs between sexes.</p>
+
+<p>Now compare the model with \( L_{1} \) and L3, but not L2, in common to the model with no differences between sexes to confirm that L2 differs between the sexes &hellip;</p>
+
+<pre><code class="r">anova(fitCom,fit2)
+</code></pre>
+
+<pre><code>## Analysis of Variance Table
+## 
+## Model 1: Length ~ L1 + (L3 - L1) * (1 - ((L3 - L2)/(L2 - L1))^(2 * (Age - t1)/(t3 - t1)))/(1 - ((L3 - L2)/(L2 - L1))^2)
+## Model 2: Length ~ L1 + (L3 - L1) * (1 - ((L3 - L2[Sex])/(L2[Sex] - L1))^(2 * (Age - t1)/(t3 - t1)))/(1 - ((L3 - L2[Sex])/(L2[Sex] - L1))^2)
+##   Res.Df Res.Sum Sq Df Sum Sq F value Pr(&gt;F)
+## 1     48     272966                         
+## 2     47     260197  1  12769    2.31   0.14
+</code></pre>
+
+<p>This model suggests that all parameters in common is a better model.  This, however, is inconsistent with what was seen above.  Perhaps the inconsistency comes from the fact that both L1 and L2 should be allowed to differ.  Thus, try comparing the model with separate L1 and L2 parameters to the model with all parameters in common.</p>
+
+<pre><code class="r">anova(fitCom,fit12)
+</code></pre>
+
+<pre><code>## Analysis of Variance Table
+## 
+## Model 1: Length ~ L1 + (L3 - L1) * (1 - ((L3 - L2)/(L2 - L1))^(2 * (Age - t1)/(t3 - t1)))/(1 - ((L3 - L2)/(L2 - L1))^2)
+## Model 2: Length ~ L1[Sex] + (L3 - L1[Sex]) * (1 - ((L3 - L2[Sex])/(L2[Sex] - L1[Sex]))^(2 * (Age - t1)/(t3 - t1)))/(1 - ((L3 - L2[Sex])/(L2[Sex] - L1[Sex]))^2)
+##   Res.Df Res.Sum Sq Df Sum Sq F value Pr(&gt;F)  
+## 1     48     272966                           
+## 2     46     243467  2  29499    2.79  0.072 .
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+</code></pre>
+
+<p>There is some, but not significant evidence, for a difference in the L1 and L2 parameters between the sexes.  Thus, this ultimately shows that a single model would best fit both sexes.</p>
+
+<p>The AIC results suggest that the \( L_{1} \) and L2 parameters differ between the sexes &hellip;</p>
+
+<pre><code class="r">AIC(fitGen,fit12,fit13,fit23,fit1,fit2,fit3,fitCom)
+</code></pre>
+
+<pre><code>##        df   AIC
+## fitGen  7 589.8
+## fit12   6 588.7
+## fit13   6 593.7
+## fit23   6 589.8
+## fit1    5 591.9
+## fit2    5 590.1
+## fit3    5 592.6
+## fitCom  4 590.6
+</code></pre>
+
+<p>Thus, the AIC results suggest (though not stronlgy) that the mean length of males and females differs at age-8.5, potentially differ at age-5, but do not differ at age-12.  The coefficient results from the best-fit model(s) give an indication of the difference in mean lengths at </p>
+
+<pre><code class="r">summary(fit12)
+</code></pre>
+
+<pre><code>## 
+## Formula: Length ~ L1[Sex] + (L3 - L1[Sex]) * (1 - ((L3 - L2[Sex])/(L2[Sex] - 
+##     L1[Sex]))^(2 * (Age - t1)/(t3 - t1)))/(1 - ((L3 - L2[Sex])/(L2[Sex] - 
+##     L1[Sex]))^2)
+## 
+## Parameters:
+##     Estimate Std. Error t value Pr(&gt;|t|)    
+## L11    389.8       46.0    8.48  5.9e-11 ***
+## L12    466.8       19.1   24.47  &lt; 2e-16 ***
+## L21    502.6       17.4   28.85  &lt; 2e-16 ***
+## L22    548.8       14.3   38.45  &lt; 2e-16 ***
+## L3     576.0       19.4   29.73  &lt; 2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 72.8 on 46 degrees of freedom
+## 
+## Number of iterations to convergence: 12 
+## Achieved convergence tolerance: 8e-06
+</code></pre>
+
+<p>The two model fits can be visualized with &hellip;</p>
+
+<pre><code class="r">xlbl &lt;- &quot;Age (yrs)&quot;
+ylbl &lt;- &quot;Total Length (mm)&quot;
+xlmt &lt;- c(5,19)
+ylmt &lt;- c(300,750)
+
+plot(Length~Age,data=Subset(df1,Sex==&quot;Female&quot;),pch=16,xlab=xlbl,ylab=ylbl,
+     main=&quot;No differences&quot;,xlim=xlmt,ylim=ylmt)
+points(Length~Age,data=Subset(df1,Sex==&quot;Male&quot;),pch=16,col=&quot;red&quot;)
+legend(&quot;bottomright&quot;,c(&quot;Female&quot;,&quot;Male&quot;),pch=16,col=c(&quot;black&quot;,&quot;red&quot;),cex=0.75)
+vbF &lt;- vbFuns(&quot;Francis&quot;)
+curve(vbF(x,L1=coef(fitCom),t1=t1,t3=t3),from=5,to=12,lwd=2,col=&quot;blue&quot;,add=TRUE)
+
+plot(Length~Age,data=Subset(df1,Sex==&quot;Female&quot;),pch=16,xlab=xlbl,ylab=ylbl,
+     main=&quot;L1 and L2 differ&quot;,xlim=xlmt,ylim=ylmt)
+points(Length~Age,data=Subset(df1,Sex==&quot;Male&quot;),pch=16,col=&quot;red&quot;)
+legend(&quot;bottomright&quot;,c(&quot;Female&quot;,&quot;Male&quot;),pch=16,col=c(&quot;black&quot;,&quot;red&quot;),cex=0.75)
+vbF &lt;- vbFuns(&quot;Francis&quot;)
+curve(vbF(x,L1=coef(fit12)[c(1,3,5)],t1=t1,t3=t3),from=5,to=12,lwd=2,add=TRUE)
+curve(vbF(x,L1=coef(fit12)[c(2,4,5)],t1=t1,t3=t3),from=5,to=12,lwd=2,col=&quot;red&quot;,add=TRUE)
+</code></pre>
+
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASAAAAEgCAMAAAAjXV6yAAAAw1BMVEX9/v0AAAAAADkAAGUAAP8AOWUAOY8AZo8AZrU5AAA5ADk5AGU5OWU5OY85ZmU5ZrU5j485j7U5j9plAABlADllAGVlOQBlOTllOY9lZgBlZjllZmVlZrVlj9pltbVltf2POQCPOTmPOWWPZgCPZo+PjzmPj9qPtY+P27WP29qP2/21ZgC1Zjm1ZmW1jzm1tWW124+1/rW1/tq1/v3ajznaj2Xa24/a/rXa/tra/v39tWX924/929r9/rX9/tr9/v3/AAAOYGIGAAAAQXRSTlP///////////////////////////////////////////////////////////////////////////////////8A/45z/jgAAAAJcEhZcwAACxIAAAsSAdLdfvwAAAt4SURBVHic7Z0Lm6O2FYbDeON40mya4M12m23LTC5t1t42aU23Na7N/P9fVV0Ag5B0JBBIgvM9+8wahGR4fXR0F5+VKK0+830DoQsBAZoX0HWfZGV5e9qcZGHb83VPQi6PycOB/Zn13hSaHdD2rAHEPhwpRPYnBM0OKEkrQHlCP3PdnpLkL9yC/kU+Jp+/JX8IL3pNRoMfvqcG1Rxufk0SmgaNx2BXIdT6Ehn94Zob0OaPmxMDdEyoduw0fU5GRADEr0l5uHBI4/IPTWIp+wEYWXeaHdBvjykFdHkkFnHdcz9zeSQPmSeVD2qy2OWxyo8ExK7sHKZlQS5n8ciVTQj74FazAzodHz6QRymY8eTc07CDxkk3gApmFyRvkSx2KIVDenlR5dEmhFlQ5FnsdN1/MRoQuYoD4lm0CWE+yG3xNz8g6lAtshgVB9Q6rABV8dJuznJbAHoARFyIxkm3AFXXbM8cUOuwAiQ4aUoscZ3HPAAiOUJWzH/Ty2IcCfO/3NKawwoQO9Owo8eUkNsKJjY1AA0AlCxc4wHZR4lJCAgQAgKEgAAhIEAICBACAoSAACEgQAgIEAIChIAAISBAawLUa5obReoeLhmQpPPCJFb3EAH1YnUPEVAvVvdwyYDQB00iBAQIAQGyBsQH41qjcQioo9tTxv4vmtFdBNTR9btT538EJAgtCBKftYU+aHAKSxMCAoTFPCB00oBGFvODGshRCS0IEBbzgLAUA4SAAFk7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" alt="plot of chunk VBGMfit3"/> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASAAAAEgCAMAAAAjXV6yAAAAvVBMVEX9/v0AAAAAADkAAGUAOWUAOY8AZo8AZrU5AAA5ADk5AGU5OTk5OWU5OY85ZmU5ZrU5j485j7U5j9plAABlADllAGVlOQBlOTllOY9lZjllZmVlZrVlj9pltbVltf2POQCPOTmPOWWPZgCPZo+PjzmPj9qPtY+P27WP29qP2/21ZgC1Zjm1ZmW1jzm1tWW1/rW1/tq1/v3ajznaj2Xa24/a/rXa/tra/v39tWX924/929r9/rX9/tr9/v3/AAAEolGCAAAAP3RSTlP/////////////////////////////////////////////////////////////////////////////////AP8wAG7oAAAACXBIWXMAAAsSAAALEgHS3X78AAAMHElEQVR4nO2di3bjthGGQyuu3DSbJtJ2u9m2snNrIm2T1uy2pirJ7/9YxYUXAQRmAJAQQHL+s2dtEQREfB7M4EbyswsJ1GepLyB3ESBEtwR0fLh/aX9dQ2eetvLMLsehKFbP6gmnLTtyfCju9uK/KJecChCrrh8glkEh1JzAEnb1f5GUAtD5sfhDC6hiNWd//vPj6jeJgKUWf9MAnbZ3e3ZcYmhOYBb0L/Zr8fk79h87r2Q/djz57tsRDSoJoKd91QA6bQtRPV7rgttV/YsKSPw8yFq3J2iAhJEVG5netuXBSuSDqusmxp0Jq9aGHb1/OT4wMyoL3QddRKI8Vp8gfFDbxMSpzA55SWDz9VR6QNyGeLWYfXDPIlL6TprlqJtNe4IKqBIGVPCmOKrDTg2IBaBCAmK1BQCVrVtZGKCStSzeaFpA5iZWdiEMamJckwZU+9ErQPIPfwVIc9Iyh3TlMopdO+krQLInINz9rADxem3KYtcCEgC+3qqA6vbThfmve01MEhL5JwtokgoAVMxcwwH5Z5mSCBAiAoSIACEiQIgIECIChIgAISJAiAgQIgKEiAAhIkCIlgSoNzR3yqR+nDMgw+SFSy71IwHq5VI/EqBeLvXjnAGRD4oiAoSIACHyBlSvTXWbcwiQovOjXK6r2mVjAqTo9Kdn5ScB0kQWhKneOEA+KLSEuYkAIaIwj4icNKKBYT5ogDwpkQUhojCPiKIYIgKEyNtJbzdwCXOTfxT7UbvZiAAp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" alt="plot of chunk VBGMfit3"/> </p>
+
+</body>
+
+</html>
+

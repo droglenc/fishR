@@ -1,0 +1,96 @@
+```{r postblog, eval=FALSE, echo=FALSE}
+## Run these commands when you are ready to push out to the fishR blog.
+library(knitr)
+title <- "Age Precision and Bias -- Changes to FSA"
+cats <- c('R','Fisheries Science')
+keys <- c('R','Age','Age Comparisons","Age Bias","Precision')
+setwd("C:/aaaWork/Web/fishR/BlogExamples")
+source('WPSetup.R')
+knit2wp("AgeComparisons.Rmd",publish=FALSE,shortcode=c(TRUE,FALSE),
+        title=title,categories=cats,mt_keywords=keys)
+#NOTE that I had to manually edit the equations in wordpress.
+```
+
+```{r setup, echo=FALSE, results='hide'}
+# Having this separate from the setup file allows one to knit this in RStudio.
+knit_hooks$set(par1 = function(before, options, envir) {
+  if (before) par(mar=c(3.5,3.5,2,2),mgp=c(2.1,0.4,0),tcl=-0.2)
+})
+opts_chunk$set(dev="png",tidy=FALSE,par1=TRUE)
+```
+
+Last week I taught part of a workshop for the Minnesota Chapter of the American Fisheries Society on "Analyzing Age Data in R" (materials are [here](http://fishr.wordpress.com/courses/analyzing-age-data-with-r/)).  I like doing these workshops because they give me ideas for improving the **FSA** package and [fishR](http://fishr.wordpress.com/).  One of several things that came out of this workshop was a realization that the measures of precision for multiple age assignments on individual fish (think two or more "readers" assigning an age to each fish) that I had coded in `ageComp()` was restricted to only two age assignments.  The methods as described in the literature generalize to two or more age assignments.  My code had to change!
+
+The latest version of the **FSA** package now has two new functions, `ageBias()` and `agePrecision()`, which replace `ageComp()` (`ageComp()` currently remains in **FSA** but will be removed in future versions, so you should begin changing your usage now).  I have not yet updated the "Age Comparisons Vignette" on [fishR](http://fishr.wordpress.com/) (I want to make major changes to all of the content in that vignette, not just the R part), so I will briefly demonstrate the new functions in this post.
+
+Obviously, I need to load the **FSA** package.
+
+```{r results='hide', warning=FALSE, message=FALSE}
+library(FSA)
+```
+
+I will use the information in the `WhitefishLC` data frame which has age assignments for three structures (otoliths, finrays, and scales) made by two readers (1 and 2).  The readers also came to a concensus age (labeled with a "C").
+
+```{r}
+data(WhitefishLC)
+str(WhitefishLC)
+```
+
+## Measures of Precision ##
+Measures of precision are now computed with `agePrecision()` which uses formula notation with all variables on the right-hand-side of the formula and separated by "plus"es.  Of course, with the formula notation the `data=` argument is required.  [Note that the measures of precision here are not that useful because of potential bias between the structures; however, these data can be used to illustrate the use of more than two age assignments.]
+
+```{r}
+ap3 <- agePrecision(~otolithC+finrayC+scaleC,data=WhitefishLC)
+```
+
+The overall measures of precision (mean APE, mean CV, and percent total agreement for all structures) are then computed with
+```{r}
+summary(ap3,what="precision")
+```
+
+The percentages of fish by absolute difference in age assignment for each pair of measures are obtained with
+```{r}
+summary(ap3,what="agreement")
+```
+
+The example above demonstrated the new functionality for more than two age assignments.  Of course, two age assignments can still be used
+```{r}
+ap2 <- agePrecision(~otolith1+otolith2,data=WhitefishLC)
+summary(ap2,what="precision")
+summary(ap2,what="agreement")
+```
+
+
+## Age Bias ##
+The new code for assessing age bias uses `ageBias()` with the same arguments used in the original `ageComp()` -- i.e., a formula with the age assignments thought to be "more correct" on the left-hand-side, the other age assignment on the right-hand-side, the `data=` argument, and column and row labels in `col.lab=` and `row.lab=`, respectively.  The `ageBias()` function still only works with two sets of age assignments.
+```{r}
+ab1 <- ageBias(otolithC~scaleC,data=WhitefishLC,
+               col.lab="Otolith Age",row.lab="Scale Age")
+```
+
+The overall age agreement table and Bowker's test for symmetry are computed with
+```{r}
+summary(ab1,what="symmetry")
+```
+
+The summary statistics, t-test results, and confidence intervals for the "other" (row) age assignments at each age of the "more correct" (column) age assignments are obtained with
+```{r}
+summary(ab1,what="bias")
+```
+
+The default age-bias plot is provided with
+```{r agebiasplot1}
+plot(ab1)
+```
+I changed the code for the age-bias plot so that confidence intervals are not computed for ages with "small" sample sizes.  The definition of small can be controlled with `min.n.CI=` (which defaults to 5) in the `ageBias()` call.  For example, the default age-bias plot from the original `ageComp()` is constructed with
+```{r agebiasplot2}
+ab2 <- ageBias(otolithC~scaleC,data=WhitefishLC,min.n.CI=2,
+               col.lab="Otolith Age",row.lab="Scale Age")
+plot(ab2)
+```
+This is, of course, quite ugly.  I also modified the code to more sensibly handle controlling the axes in situations like this.  For example,
+```{r agebiasplot3}
+plot(ab2,ylim=c(0,23))
+```
+
+More details are in the help files for `ageBias()` and `agePrecision()`.  Let me know if you have any questions or comments.

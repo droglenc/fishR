@@ -1,0 +1,136 @@
+---
+title: "Modified lencat() -- Increased Flexibility with dplyr (update)"
+author: "Derek H. Ogle"
+date: "Sunday, September 28, 2014"
+output: html_document
+---
+
+```{r setup, echo=FALSE, results='hide'}
+library(knitr)
+# Having this separate from the setup file allows one to knit this in RStudio.
+knit_hooks$set(par1 = function(before, options, envir) {
+  if (before) par(mar=c(3.5,3.5,2,2),mgp=c(2.1,0.4,0),tcl=-0.2)
+})
+opts_chunk$set(dev="png",tidy=FALSE,par1=TRUE)
+```
+
+## Note
+**I am [reposting this from before](http://fishr.wordpress.com/2014/04/21/modified-lencat-increased-flexibility-with-dplyr/), but updated with the new pipe operator from dplyr (i.e., `%>%` rather than `%.%`).**
+
+
+## Introduction
+One of the first functions in the **[FSA](http://fishr.wordpress.com/fsa/)** package was `lencat()`, which served me well over the years.  However, I have been bothered by the use of a formula and `data=` to identify a single column to be "transformed" and that an "automatic" determination of `startcat=` was not coded.  Additionally, `lencat()` did not work well with **dplyr**, which I recently discovered ([see my introduction](http://rpubs.com/dogle/31773)).  Thus, I have reworked `lencat()` in the latest **[FSA](http://fishr.wordpress.com/fsa/)** to handle these issues while maintaining the original functionality.
+
+The modified `lencat()` behaves slightly differently depending on how the user supplies the fish lengths.  If the user provides a formula and `data=`, then `lencat()` will return a data.frame with the new variable appended.  This is the exact same behavior as the original `lencat()`.  However, if the user supplies a vector as the first argument, then `lencat()` will now return a single vector of the length categorization values.  Additionally, in both uses, the user can leave `startcat=` blank and a reasonable starting value (i.e., a value just below the minimum observed value that "makes sense" given `w=`) will be used.
+
+The new functionality of `lencat()` is demonstrated below.  First, I loaded the **FSA** and **dplyr** packages.
+```{r results='hide', warning=FALSE, message=FALSE}
+library(FSA)
+library(dplyr)
+```
+
+Smallmouth Bass length data from a lake in Minnesota will be used and for the sake of simplicity, all variables related to measurements on the scales of the fish (i.e., all variables containing "anu" and "radcap") and the species and lake (because they were constant at "SMB" and "WB") were removed.
+```{r}
+data(SMBassWB)
+smb1 <- SMBassWB %.% 
+  select(-contains("anu"),-radcap,-species,-lake)
+smb3 <- smb2 <- smb1 # copies for later use 
+str(smb1)
+```
+
+Note that the length measurements are in the `lencap` variable.
+
+## Introductory Example of New Functionality
+As a foundational example, `lencat()` is used below to create a new vector of 10-mm length categories for the lengths.  Only the first 12 length-categories are shown (using `head()`) to save space.
+```{r}
+tmp <- lencat(smb1$lencap,w=10)
+head(tmp,n=12)
+```
+
+These length categories can be added to the data frame as follows.
+```{r}
+smb1$LCat10 <- lencat(smb1$lencap,w=10)
+head(smb1)
+```
+
+The same variable can be added using ``mutate()`` from **dplyr** as follows.
+
+```{r}
+smb1 <- mutate(smb1,LCat10=lencat(lencap,w=10))
+head(smb1)
+```
+
+The advantage of using **dplyr** in this way is that you can string together multiple data manipulations.  For example, one could create the variable as above but then order the rows of the data.frame in ascending length category values as follows.
+
+```{r}
+smb1 <- smb1 %>%
+  mutate(LCat10=lencat(lencap,w=10)) %>%
+  arrange(LCat10)
+head(smb1)
+```
+
+## Extended Example of New Functionality
+In the examples above, the 10-mm length categories were created without the use of `startcat=`.  The `lencat()` function found the first even 10-mm length category (`r min(smb1$LCat10)`) below the minimum observed value (`r min(smb1$lencap)`) and created length categories from that.  One can still set the value for the starting category with `startcat=` as follows.
+
+```{r}
+smb1 <- smb1 %>%
+  mutate(LCat10=lencat(lencap,w=10,startcat=55)) %>%
+  arrange(LCat10)
+head(smb1)
+```
+
+However, the automatic `startcat=` seems to be a useful feature for a wide variety of different values of `w=` as demonstrated below.
+
+```{r}
+smb1 <- smb1 %>%
+  mutate(LCat5=lencat(lencap,w=5)) %>%
+  mutate(LCat10=lencat(lencap,w=10)) %>%
+  mutate(LCat25=lencat(lencap,w=25)) %>%
+  arrange(lencap)
+head(smb1,n=10)
+```
+
+The default type returned by `lencat()` is numeric.  This can result in "missing categories" in length frequency distributions.  For example, the length frequency distribution for 25-mm length categories shown below is missing the 375- and 400-mm categories.
+```{r}
+xtabs(~LCat25,data=smb1)
+```
+
+The problem with missing length categories can be corrected by having the values returned as a factor rather than a numeric.  The return values are forced to be a factor by including `as.fact=TRUE` to `lencat()` as shown below.
+```{r}
+smb1 <- smb1 %>% 
+  mutate(LCat25f=lencat(lencap,w=25,as.fact=TRUE))
+xtabs(~LCat25f,data=smb1)
+```
+
+Finally, one can still use `breaks=` to set specific and potentially unequally-spaced values for the length categories.  The example below finds the Gabelhouse five-cell length categories for Smallmouth Bass and then creates two new variables from these values -- one that will show the length values and one that shows the category name values.  To further exhibit the use of **dplyr** I also removed (i.e., use `filter()`) all fish that were less than "stock" size (i.e., the `zero` category).
+
+```{r}
+( brks <- psdVal("Smallmouth Bass",units="mm") )
+smb2 <- smb2 %>%
+  mutate(LCatPSD1=lencat(lencap,breaks=brks)) %>%
+  mutate(LCatPSD2=lencat(lencap,breaks=brks,use.names=TRUE)) %.%
+  arrange(lencap) %>%
+  filter(LCatPSD2 != "zero")
+head(smb2,n=10)
+xtabs(~LCatPSD1,data=smb2)
+xtabs(~LCatPSD2,data=smb2)
+```
+
+Note that the categories without any fish are still shown in the last table.  This can be adjusted with `droplevels()` as follows.
+```{r}
+smb2 <- mutate(smb2,LCatPSD2=droplevels(LCatPSD2))
+xtabs(~LCatPSD2,data=smb2)
+```
+
+## The Old Functionality Is Still There
+The "old" functional of `lencat()` still exists so that your old code with `lencat()` is not broken (with the minor exception that `use.catnames=` is now `use.names=`).
+
+```{r}
+smb3 <- lencat(~lencap,data=smb3,w=10)
+smb3 <- lencat(~lencap,data=smb3,w=25,vname="LenCat25")
+smb3 <- lencat(~lencap,data=smb3,breaks=psdVal("Smallmouth Bass"),
+               vname="LenPsd")
+smb3 <- lencat(~lencap,data=smb3,breaks=psdVal("Smallmouth Bass"),
+               vname="LenPsd2",use.names=TRUE,drop.levels=TRUE)
+head(smb3,n=10)
+```

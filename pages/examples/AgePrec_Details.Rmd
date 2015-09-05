@@ -1,0 +1,51 @@
+---
+title: Working with Age Comparison Results for Individual Fish
+author: "Derek H. Ogle"
+date: "Friday, September 4, 2015"
+output: html_document
+---
+
+```{r setup, echo=FALSE, results='hide'}
+library(knitr)
+opts_chunk$set(dev="png",tidy=FALSE,par1=TRUE)
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(FSA)
+library(dplyr)
+```
+
+A **FSA** user recently asked me if there was a way to see and work with the age comparison results for individual fish.  In particular, this user wanted to identify each fish for which the individual CV values from comparing two independent age estimates was greater than 10.  It turns out that this is fairly easy to do once you realize how the results are returned from `agePrecision()`.  Here is an example using the `WhitefishLC` data found in the **FSA** package.
+
+The data are loaded and `agePrecision()` is called to compare the ages assigned to otoliths by two different readers.
+```{r}
+data(WhitefishLC)
+ap1 <- agePrecision(~otolith1+otolith2,data=WhitefishLC)
+```
+
+Examining the structure of the saved object reveals several items returned in a list
+```{r}
+str(ap1)
+```
+
+For this problem, the user wants to focus on the results in the `detail` oject.  This object is a data.frame that contains intermediate calculations for each individual fish.
+```{r}
+headtail(ap1$detail)
+```
+
+This object can be treated like any other data.frame.  For example, it can be sorted by ascending order of the CV value (using `arrange()` from `dplyr`)
+```{r}
+tmp <- ap1$detail %>% arrange(ACV)
+headtail(tmp)
+```
+
+The CV values can be plotted.
+```{r}
+hist(~ACV,data=ap1$detail,xlab="Coefficient of Variation")
+```
+
+Or, to the user's interest, the individuals with a CV greater than 10 can be isolated.
+```{r}
+tmp <- ap1$detail %>% filter(ACV>10)
+headtail(tmp)
+```

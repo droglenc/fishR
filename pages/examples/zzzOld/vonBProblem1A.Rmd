@@ -1,0 +1,155 @@
+```{r postblog, eval=FALSE, echo=FALSE}
+## Run these commands when you are ready to push out to the fishR blog.
+library(knitr)
+title <- "Comparison Among Groups with Francis Parameterization"
+cats <- c('R','Fisheries Science')
+keys <- c('R','Growth','von Bertalanffy')
+setwd("C:/aaaWork/Web/fishR/BlogExamples")
+source('WPSetup.R')
+knit2wp("vonBProblem1A.Rmd",publish=FALSE,shortcode=c(TRUE,FALSE),
+        title=title,categories=cats,mt_keywords=keys)
+#NOTE that I had to manually edit the equations in wordpress.
+```
+
+```{r setup, echo=FALSE, results='hide'}
+# Having this separate from the setup file allows one to knit this in RStudio.
+knit_hooks$set(par1 = function(before, options, envir) {
+  if (before) par(mar=c(3.5,3.5,1,1),mgp=c(2.1,0.4,0),tcl=-0.2)
+})
+opts_chunk$set(dev="png",tidy=FALSE,par1=TRUE)
+```
+
+[In my last post](http://fishr.wordpress.com/2013/11/19/a-problem-fitting-the-von-bertalanffy-growth-model-with-nls/), I suggested that the Francis parameterization of the von Bertalanffy growth model may be used in cases where the typical parameterization did not converge (likely due to issues related to highly correlated parameters and data with lengths that are highly variable within ages and the full curvature of the model is not readily apparent because the data are truncated for some reason (e.g., high mortality rates, size-selective gear)).  A follow-up question to [that post](http://fishr.wordpress.com/2013/11/19/a-problem-fitting-the-von-bertalanffy-growth-model-with-nls/) is how to compare parameter estimates between sexes when using the Francis parameterization.  This is largely the same as the demonstration for the typical parameterization in the [Von Bertalanffy Growth - Intro Vignette](http://fishr.wordpress.com/vignettes/) on the [fishR](http://fishr.wordpress.com/) page except, of course, that the user must write out the more bulky Francis parameterization.  This post is a demonstration of the required code (with few comments as most of this is generally described in the [Von Bertalanffy Growth - Intro Vignette](http://fishr.wordpress.com/vignettes/)).
+
+## Preliminaries and Data Manipulation ##
+Begin by loading the **FSA** package, ...
+
+```{r results='hide', warning=FALSE, message=FALSE}
+library(FSA)
+```
+
+the data (note that the working direction would have been set before `read.csv()`), ...
+
+```{r}
+df <- read.csv("BKData.csv",header=TRUE)
+str(df)
+levels(df$Sex)
+```
+
+and remove the four unknown sex individuals ...
+
+```{r}
+df1 <- Subset(df,Sex!="")
+dim(df1)
+```
+
+
+## Model Preparation ##
+Declare all possible models, ...
+```{r}
+frGen <- Length~L1[Sex]+(L3[Sex]-L1[Sex])*(1-((L3[Sex]-L2[Sex])/(L2[Sex]-L1[Sex]))^(2*(Age-t1)/(t3-t1)))/(1-((L3[Sex]-L2[Sex])/(L2[Sex]-L1[Sex]))^2)
+fr12 <- Length~L1[Sex]+(L3-L1[Sex])*(1-((L3-L2[Sex])/(L2[Sex]-L1[Sex]))^(2*(Age-t1)/(t3-t1)))/(1-((L3-L2[Sex])/(L2[Sex]-L1[Sex]))^2)
+fr13 <- Length~L1[Sex]+(L3[Sex]-L1[Sex])*(1-((L3[Sex]-L2)/(L2-L1[Sex]))^(2*(Age-t1)/(t3-t1)))/(1-((L3[Sex]-L2)/(L2-L1[Sex]))^2)
+fr23 <- Length~L1+(L3[Sex]-L1)*(1-((L3[Sex]-L2[Sex])/(L2[Sex]-L1))^(2*(Age-t1)/(t3-t1)))/(1-((L3[Sex]-L2[Sex])/(L2[Sex]-L1))^2)
+fr1 <- Length~L1[Sex]+(L3-L1[Sex])*(1-((L3-L2)/(L2-L1[Sex]))^(2*(Age-t1)/(t3-t1)))/(1-((L3-L2)/(L2-L1[Sex]))^2)
+fr2 <- Length~L1+(L3-L1)*(1-((L3-L2[Sex])/(L2[Sex]-L1))^(2*(Age-t1)/(t3-t1)))/(1-((L3-L2[Sex])/(L2[Sex]-L1))^2)
+fr3 <- Length~L1+(L3[Sex]-L1)*(1-((L3[Sex]-L2)/(L2-L1))^(2*(Age-t1)/(t3-t1)))/(1-((L3[Sex]-L2)/(L2-L1))^2)
+frCom <- Length~L1+(L3-L1)*(1-((L3-L2)/(L2-L1))^(2*(Age-t1)/(t3-t1)))/(1-((L3-L2)/(L2-L1))^2)
+```
+
+choose the youngest (`t1`) and oldest (`t3`) ages to use in the models, ...
+```{r}
+t1 <- 5
+t3 <- 12
+```
+
+find starting values for the ``all parameters in common'' model, ...
+```{r}
+( svCom <- vbStarts(Length~Age,data=df1,type="Francis",tFrancis=c(t1,t3),methEV="poly") )
+```
+
+and expand those starting values for use with each possible model ...
+```{r}
+svGen <- lapply(svCom,rep,2)
+sv12 <- mapply(rep,svCom,c(2,2,1))
+sv13 <- mapply(rep,svCom,c(2,1,2))
+sv23 <- mapply(rep,svCom,c(1,2,2))
+sv1 <- mapply(rep,svCom,c(2,1,1))
+sv2 <- mapply(rep,svCom,c(1,2,1))
+sv3 <- mapply(rep,svCom,c(1,1,2))
+```
+
+## Fit All Models ##
+Fit the general, one parameter in common, two parameters in common, and all parameters in common models declared above to the data ...
+```{r}
+fitGen <- nls(frGen,data=df1,start=svGen) 
+fit12 <- nls(fr12,data=df1,start=sv12) 
+fit13 <- nls(fr13,data=df1,start=sv13) 
+fit23 <- nls(fr23,data=df1,start=sv23) 
+fit1 <- nls(fr1,data=df1,start=sv1) 
+fit2 <- nls(fr2,data=df1,start=sv2) 
+fit3 <- nls(fr3,data=df1,start=sv3) 
+fitCom <- nls(frCom,data=df1,start=svCom) 
+```
+
+## Model Comparisons ##
+Compare each pair of "one parameter in common" models ...
+```{r}
+anova(fit12,fitGen)
+anova(fit13,fitGen)
+anova(fit23,fitGen)
+```
+From this it is seen that there is no difference in the L3 or $latex L_{1}$ parameters but there may be in the L2 parameter.  The model with L3 in common (i.e., `fit12`) fits slightly better (lower RSS) then the model with $latex L_{1}$ in common, so the following tests will compare the two two parameter in common models that also have L3 in common to the model with only L3 in common ...
+```{r}
+anova(fit1,fit12)
+anova(fit2,fit12)
+```
+These results suggest that L2 differs between sexes and, perhaps, that $latex L_{1}$ also differs between sexes depending on the level of alpha that one is using.  It is probably reasonable to use an alpha of 0.1 with this type of data because of the high degree of variability in lengths and the likely interest in whether there is even a slight difference between sexes.  Of course, alpha should have been set way before this stage (i.e., way before looking at the results).  I will continue assuming that alpha was 0.05 and that these results show that only L2 differs between sexes.
+
+Now compare the model with $latex L_{1}$ and L3, but not L2, in common to the model with no differences between sexes to confirm that L2 differs between the sexes ...
+```{r}
+anova(fitCom,fit2)
+```
+This model suggests that all parameters in common is at least as good of a model as the model where L2 differs.  This, however, is inconsistent with what was seen above.  Perhaps the inconsistency comes from the fact that both L1 and L2 should be allowed to differ.  Thus, try comparing the model with separate L1 and L2 parameters to the model with all parameters in common.
+
+```{r}
+anova(fitCom,fit12)
+```
+There is some, but not significant evidence, for a difference in the L1 and L2 parameters between the sexes.  Thus, this ultimately shows that a single model would best fit both sexes.
+
+
+The AIC results suggest that the $latex L_{1}$ and L2 parameters differ between the sexes ...
+```{r}
+AIC(fitGen,fit12,fit13,fit23,fit1,fit2,fit3,fitCom)
+```
+
+Thus, the AIC results suggest (though not stronlgy) that the mean length of males and females differs at age-`r (t1+t3)/2`, potentially differ at age-`r t1`, but do not differ at age-`r t3`.  The coefficient results from the best-fit model(s) give an indication of the difference in mean lengths at 
+
+```{r}
+summary(fit12)
+```
+
+The two model fits can be visualized with ...
+
+```{r VBGMfit3, fig.width=4, fig.height=4, fig.show='hold'}
+xlbl <- "Age (yrs)"
+ylbl <- "Total Length (mm)"
+xlmt <- c(5,19)
+ylmt <- c(300,750)
+
+plot(Length~Age,data=Subset(df1,Sex=="Female"),pch=16,xlab=xlbl,ylab=ylbl,
+     main="No differences",xlim=xlmt,ylim=ylmt)
+points(Length~Age,data=Subset(df1,Sex=="Male"),pch=16,col="red")
+legend("bottomright",c("Female","Male"),pch=16,col=c("black","red"),cex=0.75)
+vbF <- vbFuns("Francis")
+curve(vbF(x,L1=coef(fitCom),t1=t1,t3=t3),from=5,to=12,lwd=2,col="blue",add=TRUE)
+
+plot(Length~Age,data=Subset(df1,Sex=="Female"),pch=16,xlab=xlbl,ylab=ylbl,
+     main="L1 and L2 differ",xlim=xlmt,ylim=ylmt)
+points(Length~Age,data=Subset(df1,Sex=="Male"),pch=16,col="red")
+legend("bottomright",c("Female","Male"),pch=16,col=c("black","red"),cex=0.75)
+vbF <- vbFuns("Francis")
+curve(vbF(x,L1=coef(fit12)[c(1,3,5)],t1=t1,t3=t3),from=5,to=12,lwd=2,add=TRUE)
+curve(vbF(x,L1=coef(fit12)[c(2,4,5)],t1=t1,t3=t3),from=5,to=12,lwd=2,col="red",add=TRUE)
+```
+

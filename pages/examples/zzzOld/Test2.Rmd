@@ -1,0 +1,27 @@
+```{r postblog, eval=FALSE, echo=FALSE}
+## Run these commands when you are ready to push out to the fishR blog.
+library(knitr)
+title <- "Testing"
+cats <- c('Test')
+keys <- c('Test')
+setwd("C:/aaaWork/Web/fishR/BlogExamples")
+source('WPSetup.R')
+knit2wp("Test2.Rmd",publish=FALSE,shortcode=c(TRUE,FALSE),
+        title=title,categories=cats,mt_keywords=keys)
+#NOTE that I had to manually edit the equations in wordpress.
+```
+
+```{r setup, echo=FALSE, results='hide'}
+# Having this separate from the setup file allows one to knit this in RStudio.
+knit_hooks$set(par1 = function(before, options, envir) {
+  if (before) par(mar=c(3.5,3.5,2,2),mgp=c(2.1,0.4,0),tcl=-0.2)
+})
+opts_chunk$set(dev="png",par1=TRUE)
+```
+
+hi there
+
+```{r test}
+1:10
+summary(lm(y~x,data=data.frame(x=1:10,y=rnorm(10))))
+```

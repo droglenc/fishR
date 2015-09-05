@@ -92,7 +92,7 @@ The CV values can be plotted.
 hist(~ACV,data=ap1$detail,xlab="Coefficient of Variation")
 {% endhighlight %}
 
-![plot of chunk AgePrecCVHist](/../figures/AgePrecCVHist-1.png) 
+![plot of chunk AgePrecCVHist](../figures/AgePrecCVHist-1.png) 
 
 Or, to the user's interest, the individuals with a CV greater than 10 can be isolated.
 

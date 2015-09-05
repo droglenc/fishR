@@ -14,14 +14,9 @@ rmd2md <- function(file,path_site="C:/aaaWork/Web/GitHub/fishR") {
   render_jekyll(highlight = "pygments")
   ## Set the output format to markdown
   opts_knit$set(out.format='markdown')
-  ## Set the directory for the figures ... BEWARE ... don't set
-  ## base.dir!! it caused problems because "base.dir is never
-  ## used when composing the URL of the figures; it is only
-  ## used to save the figures to a different directory.  The
-  ## URL of an image is always base.url + fig.path.
-  ## See https://groups.google.com/forum/#!topic/knitr/18aXpOmsumQ
-#  opts_knit$set(base.url = "/")
-  opts_chunk$set(fig.path = "../figures/")
+  ## Set the directory for the figures
+  opts_knit$set(base.url = "../",base.dir=path_site)
+  opts_chunk$set(fig.path = "figures/")
   ## Actually knit the RMD file
   knit(text=content, output=outFile)
   invisible()

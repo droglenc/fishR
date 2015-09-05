@@ -18,6 +18,7 @@ avatar: "/img/fishRlogoSquareWhite.png"
 # List of links in the navigation bar
 navbar-links:
   Examples: "pages/examples"
+  Blog: "blog"
   Packages: "pages/packages"
   Exposure: "pages/exposure"
   Courses: "pages/courses"

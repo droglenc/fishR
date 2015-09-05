@@ -2,7 +2,10 @@
 #' @param file A base filename without an extension (assumed to be '.Rmd').
 #' @param path_site Path to the local root storing the site files.
 #' @return nothing.
-#' @author Jason Bryer <jason@bryer.org> edited by Andy South and by Derek Ogle
+#' @author I heavily modified the code provided by Andy South (http://andysouth.github.io/blog-setup/) who modified the code of Jason Bryer
+#' @example
+#' rmd2md("2015-09-05-Age-Comparison-Results-for-Individual-Fish")
+#'
 rmd2md <- function(file,path_site="C:/aaaWork/Web/GitHub/fishR") {
   ## Get knitr
   require(knitr, quietly=TRUE, warn.conflicts=FALSE)

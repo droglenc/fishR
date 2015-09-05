@@ -40,7 +40,7 @@ headtail(tmp)
 ```
 
 The CV values can be plotted.
-```{r}
+```{r AgePrecCVHist}
 hist(~ACV,data=ap1$detail,xlab="Coefficient of Variation")
 ```
 

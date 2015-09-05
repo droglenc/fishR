@@ -1,7 +1,7 @@
 ---
 title: Two New Cumulative Sum Functions
 author: "Derek H. Ogle"
-date: "Monday, December 8, 2014"
+date: "Sunday, September 6, 2015"
 output: html_document
 ---
 

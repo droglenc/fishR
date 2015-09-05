@@ -54,5 +54,3 @@ cbind(vec,cum,pcum,rcum)
 ```
 
 These two new functions are unlikely to change the world as we know it; however, I wanted to document them in this blog so that others could find them if needed.
-
-Directions for installing **FSA** are [found here on the fishR webpage](https://fishr.wordpress.com/fsa/).

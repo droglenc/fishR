@@ -9,7 +9,7 @@ title: R in Action!
 
 ## Shorter Targeted Examples
 * [Working with Age Comparison Results for Individual Fish](short-examples/AgePrec_Details.html)
-* [Two New Cumulative Sum Functions](http://rpubs.com/dogle/47172)
+* [Two New Cumulative Sum Functions](short-examples/cumsum.html)
 * [Efficiently Adding Gabelhouse Lengths and Relative Weights to a data.frame (using dplyr)](http://rpubs.com/dogle/32746) [*somewhat out-of-date*]
 
 ## Potentially Out-Of-Date Examples

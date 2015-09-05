@@ -1,9 +1,8 @@
 # --- Serving options --- #
-
-# url is the full website URL
-# baseurl is the website's URL without the hostname
 # If you are building a GitHub project page then use these settings:
+# url is the full website URL
 url: "http://droglenc.github.io/fishR"
+# baseurl is the website's URL without the hostname
 baseurl: "/fishR"
 
 # Name of website
@@ -13,9 +12,7 @@ title: fishR
 description: Demonstrations for using R for fisheries analyses.
 
 # --- Navigation bar options --- #
-
 # Image to show in the navigation bar - image must be a square (width = height)
-# Remove this parameter if you don't want an image in the navbar
 avatar: "/img/fishRlogoSquareWhite.png"
 
 # List of links in the navigation bar
@@ -28,15 +25,12 @@ navbar-links:
   Home: ""
 
 # --- Footer options --- #
-
-# Change all these values or delete the ones you don't want.
-# Important: you must keep the "name" parameter, everything else you can remove
 author:
   name: Derek H. Ogle
   email: "dogle@northland.edu"
-  facebook: fishr00  # eg. daattali
-  github: droglenc    # eg. daattali
-  twitter: fishR_ogle   # eg. daattali
+  facebook: fishr00
+  github: droglenc
+  twitter: fishR_ogle
 
 # Select which links to show in the footer
 footer-links-active:
@@ -49,25 +43,18 @@ footer-links-active:
   stackoverflow: false
 
 # How to display the link to the website in the footer
-# Remove this if you don't want a link in the footer
 url-pretty: "droglenc.github.io/fishR/"
 
-# --- Misc --- #
-
-# Fill in your Disqus shortname (NOT the userid) if you want to support Disqus comments
-#disqus: ""
-
-# Fill in your Google Analytics ID to track your website using GA
-#google_analytics: ""
+# --- Pagination options --- #
+paginate: 5
+paginate_path: "/blog/page:num/"
 
 # --- Don't need to touch anything below here (but you can if you want) --- #
-
 # Output options (more information on Jekyll's site)
 timezone: "America/Chicago"
 markdown: kramdown
 highlighter: pygments
 permalink: /:year-:month-:day-:title
-paginate: 5
 
 # Default YAML values (more information on Jekyll's site)
 defaults:
@@ -100,4 +87,3 @@ prose:
     - /css
     - /img
     - /js
-

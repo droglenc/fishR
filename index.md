@@ -1,6 +1,8 @@
 ---
 layout: page
 title: R for Fisheries
+redirect_from:
+  - derekogle.com/fishr/
 ---
 
 [R is an environment](https://www.r-project.org/) for statistical analyses and graphics that is rapidly gaining popularity with fisheries scientists.  The **fishR** website provides resources for and examples of fisheries-related analyses performed in R.  It is my hope that the resources here will inspire or motivate you to either use R or expand your knowledge of R for fisheries-related analyses.  Take a look around!!

@@ -44,11 +44,15 @@ footer-links-active:
   stackoverflow: false
 
 # How to display the link to the website in the footer
-url-pretty: "droglenc.github.io/fishR/"
+url-pretty: "derekogle.com/fishR/"
 
 # --- Pagination options --- #
 paginate: 5
 paginate_path: "/blog/page:num/"
+
+# --- Trying a re-direct --- #
+gems:
+  - jekyll-redirect-from
 
 # --- Don't need to touch anything below here (but you can if you want) --- #
 # Output options (more information on Jekyll's site)

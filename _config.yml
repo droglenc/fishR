@@ -13,7 +13,7 @@ description: Demonstrations for using R for fisheries analyses.
 
 # --- Navigation bar options --- #
 # Image to show in the navigation bar - image must be a square (width = height)
-avatar: "/img/fishRlogoSquareWhite.png"
+#avatar: "/img/fishRlogoSquareWhite.png"
 
 # List of links in the navigation bar
 navbar-links:
@@ -49,10 +49,6 @@ url-pretty: "derekogle.com/fishR/"
 # --- Pagination options --- #
 paginate: 5
 paginate_path: "/blog/page:num/"
-
-# --- Trying a re-direct --- #
-gems:
-  - jekyll-redirect-from
 
 # --- Don't need to touch anything below here (but you can if you want) --- #
 # Output options (more information on Jekyll's site)

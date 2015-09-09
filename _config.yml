@@ -22,7 +22,6 @@ navbar-links:
   Packages: "packages"
   Exposure: "exposure"
   Courses: "courses"
-  Contact: "contact"
   Home: ""
 
 # --- Footer options --- #

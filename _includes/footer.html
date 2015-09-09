@@ -13,17 +13,17 @@
             </a>
           </li>
           {% endif %}
-      {% if site.author.facebook and site.footer-links-active.facebook %}
-          <li>
-            <a href="https://www.facebook.com/{{ site.author.facebook }}" title="Facebook">
-              <span class="fa-stack fa-lg">
-                <i class="fa fa-circle fa-stack-2x"></i>
-                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
-              </span>
-            </a>
-          </li>
-          {% endif %}
-          {% if site.author.github and site.footer-links-active.github %}
+		  {% if site.footer-links-active.rss %}
+    		  <li>
+		      	<a href="{{ '/feed.xml' | prepend: site.baseurl }}" title="RSS">
+      			  <span class="fa-stack fa-lg">
+			        	<i class="fa fa-circle fa-stack-2x"></i>
+        				<i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+			        </span>
+    			</a>
+		    </li>
+        {% endif %}
+      {% if site.author.github and site.footer-links-active.github %}
           <li>
             <a href="https://github.com/{{ site.author.github }}" title="GitHub">
               <span class="fa-stack fa-lg">
@@ -53,6 +53,16 @@
             </a>
           </li>
           {% endif %}
+      {% if site.author.facebook and site.footer-links-active.facebook %}
+          <li>
+            <a href="https://www.facebook.com/{{ site.author.facebook }}" title="Facebook">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          {% endif %}
 		  {% if site.author.stackoverflow and site.footer-links-active.stackoverflow %}
           <li>
             <a href="https://stackoverflow.com/{{ site.author.stackoverflow }}" title="StackOverflow">
@@ -62,16 +72,6 @@
               </span>
             </a>
           </li>
-          {% endif %}
-		  {% if site.footer-links-active.rss %}
-		  <li>
-			<a href="{{ '/feed.xml' | prepend: site.baseurl }}" title="RSS">
-			  <span class="fa-stack fa-lg">
-				<i class="fa fa-circle fa-stack-2x"></i>
-				<i class="fa fa-rss fa-stack-1x fa-inverse"></i>
-			  </span>
-			</a>
-		  </li>
           {% endif %}
         </ul>
         <p class="copyright text-muted">

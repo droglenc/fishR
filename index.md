@@ -2,11 +2,11 @@
 layout: page
 ---
 
-<div style="text-align:center">
-  <img src="img/fishRlogoTight.jpg" alt="fishR logo">
+<div style="text-align:center; width=autho; max-width:510px">
+  <img src="img/fishRlogoTight.jpg" alt="fishR logo" width="100%">
   <p style="font-size=x-large; font-weight:bold; font-style:italic;">Using R for Fisheries Analyses</p>
 </div>
 
-[R is an environment](https://www.r-project.org/) for statistical analyses and graphics that is rapidly gaining popularity with fisheries scientists.  The **fishR** website provides resources for and examples of fisheries-related analyses performed in R.  It is my hope that the resources here will inspire or motivate you to either use R or expand your knowledge of R for fisheries-related analyses.  Take a look around!!
+The **fishR** website provides examples and resources for fisheries-related analyses performed in [R](https://www.r-project.org/).  It is my hope that these resources will help you to either use R or expand your knowledge of [R](https://www.r-project.org/) for fisheries-related analyses.  Take a look around!!
 
-See [Inside-R](http://www.inside-r.org/what-is-r) and [R-project](https://www.r-project.org/about.html) for two descriptions of R.
+[R is an environment](https://www.r-project.org/) for statistical analyses and graphics that is rapidly gaining popularity with fisheries scientists.  See [Inside-R](http://www.inside-r.org/what-is-r) and [R-project](https://www.r-project.org/about.html) for two descriptions of R.

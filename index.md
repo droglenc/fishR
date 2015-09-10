@@ -2,7 +2,7 @@
 layout: page
 ---
 
-<div style="width=auto; max-width:510px; margin-left:auto; margin-right:auto;">
+<div style="width=auto; max-width:450px; margin-left:auto; margin-right:auto;text-align:center">
   <img src="img/fishRlogoTight.jpg" alt="fishR logo" width="100%">
   <p style="font-size=x-large; font-weight:bold; font-style:italic;">Using R for Fisheries Analyses</p>
 </div>

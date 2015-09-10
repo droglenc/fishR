@@ -19,4 +19,4 @@ subtitle: Getting the Word Out!
 * [My poster from User2007](http://user2007.org/program/posters/ogle.pdf)
 
 ## Blog Posts
-* [Rvolutions -- "Some basics for base graphs"](http://blog.revolutionanalytics.com/2015/01/some-basics-for-base-graphics.html)
+* [Revolutions -- "Some basics for base graphs"](http://blog.revolutionanalytics.com/2015/01/some-basics-for-base-graphics.html)

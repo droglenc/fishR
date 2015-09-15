@@ -42,8 +42,8 @@ title: Fishy Packages
 
 ## Packages to Access Online Databases
 * [DATRAS](http://www.rforge.net/DATRAS/Tutorial.html) -- *Read and manipulate trawl survey data from the [DATRAS database](http://www.ices.dk/marine-data/data-portals/Pages/DATRAS.aspx)*
-* [rfishbase](http://cran.r-project.org/web/packages/rfishbase/) -- *A programmatic interface to [fishbase.org](http://fishbase.org/)*
-* [rfisheries](http://ropensci.org/packages/rfisheries.html) -- *A programmatic interface to [OpenFisheries.org](http://openfisheries.org/)*
+* [rfishbase](https://github.com/ropensci/rfishbase) -- *A programmatic interface to [fishbase.org](http://fishbase.org/)*
+* [rfisheries](https://ropensci.org/tutorials/rfisheries_tutorial.html) -- *A programmatic interface to [OpenFisheries.org](http://openfisheries.org/)*
 
 ## Collections of Code that are Not Yet a Package
 * [Hoenig's Collection](http://fluke.vims.edu/hoenig/useful_functions_in_R.htm)

@@ -1,4 +1,5 @@
 ---
+layout: post
 title: Two New Cumulative Sum Functions
 author: "Derek H. Ogle"
 date: "Sunday, September 6, 2015"

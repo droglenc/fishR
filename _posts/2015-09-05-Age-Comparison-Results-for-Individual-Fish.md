@@ -2,8 +2,9 @@
 layout: post
 title: Age Comparison Results for Individual Fish
 date: "Saturday, September 5, 2015"
-tags: [rstats, R, FSA, age]
+tags: [R, FSA, Age]
 ---
+
 
 
 

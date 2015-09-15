@@ -2,7 +2,7 @@
 layout: post
 title: Two New Cumulative Sum Functions
 date: "Sunday, September 6, 2015"
-tags: [rstats, R, FSA]
+tags: [R, FSA]
 ---
 
 

@@ -5,7 +5,6 @@ author: "Derek H. Ogle"
 date: "Saturday, September 5, 2015"
 output: html_document
 tags: R FSA age
-comments: true
 ---
 
 

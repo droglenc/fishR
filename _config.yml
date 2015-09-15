@@ -50,6 +50,14 @@ url-pretty: "derekogle.com/fishR/"
 paginate: 5
 paginate_path: "/blog/page:num/"
 
+# --- Misc --- #
+
+# Fill in your Disqus shortname (NOT the userid) if you want to support Disqus comments
+disqus: "fishrogle"
+
+# Fill in your Google Analytics ID to track your website using GA
+#google_analytics: ""
+
 # --- Don't need to touch anything below here (but you can if you want) --- #
 # Output options (more information on Jekyll's site)
 timezone: "America/Chicago"

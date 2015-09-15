@@ -5,7 +5,7 @@ title: Fishy Packages
 
 ## Multi-Purpose Packages
 * [FSA: Fisheries Stock Assessment](https://github.com/droglenc/FSA#readme)
-* [FLR: Fisheries Library in R](http://www.flr-project.org/index.html#readme)
+* [FLR: Fisheries Library in R](http://www.flr-project.org/index.html)
 * [fishmethods: Fisheries Methods and Models in R](https://cran.r-project.org/web/packages/fishmethods/index.html)
 * [fishdynr: Fisheries Science Related Population Dynamics Models](https://github.com/marchtaylor/fishdynr#readme)
 

@@ -1,11 +1,16 @@
 ---
 layout: post
 title: Two New Cumulative Sum Functions
-author: "Derek H. Ogle"
 date: "Sunday, September 6, 2015"
-output: html_document
-tags: R FSA
+tags: [rstats, R, FSA]
 ---
+```{r eval=FALSE, echo=FALSE}
+## FOR COMPILING FOR THE WEBSITE
+## Make sure to setwd to source file location
+source("rmd2md.R")
+rmd2md("2015-09-06-Two-New-Cumulative-Sums")
+```
+
 
 ```{r setup, echo=FALSE, results='hide'}
 library(knitr)

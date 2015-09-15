@@ -1,10 +1,8 @@
 ---
 layout: post
 title: Age Comparison Results for Individual Fish
-author: "Derek H. Ogle"
 date: "Saturday, September 5, 2015"
-output: html_document
-tags: R FSA age
+tags: [rstats, R, FSA, age]
 ---
 
 

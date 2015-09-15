@@ -1,3 +1,8 @@
+---
+layout: page
+title: What's New!
+---
+
 <h2>{{page.title}}</h2>
 
 {% capture tags %}

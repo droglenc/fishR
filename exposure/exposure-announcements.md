@@ -20,3 +20,4 @@ subtitle: Getting the Word Out!
 
 ## Blog Posts
 * [Revolutions -- "Some basics for base graphs"](http://blog.revolutionanalytics.com/2015/01/some-basics-for-base-graphics.html)
+* [Beautiful-Jekyll -- "Featured Users"](https://github.com/daattali/beautiful-jekyll#featured-users)

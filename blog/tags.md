@@ -1,9 +1,7 @@
 ---
 layout: page
-title: What's New!
+title: Blog Tags
 ---
-
-<h2>{{page.title}}</h2>
 
 {% capture tags %}
   {% for tag in site.tags %}

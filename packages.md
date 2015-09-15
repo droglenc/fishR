@@ -4,10 +4,10 @@ title: Fishy Packages
 ---
 
 ## Multi-Purpose Packages
-* [FSA: Fisheries Stock Assessment](https://github.com/droglenc/FSA)
-* [FLR: Fisheries Library in R](http://www.flr-project.org/index.html)
+* [FSA: Fisheries Stock Assessment](https://github.com/droglenc/FSA#readme)
+* [FLR: Fisheries Library in R](http://www.flr-project.org/index.html#readme)
 * [fishmethods: Fisheries Methods and Models in R](https://cran.r-project.org/web/packages/fishmethods/index.html)
-* [fishdynr](https://github.com/marchtaylor/fishdynr)
+* [fishdynr: Fisheries Science Related Population Dynamics Models](https://github.com/marchtaylor/fishdynr#readme)
 
 ## Single-Purpose Packages
 * [ALKr](http://cran.r-project.org/web/packages/ALKr/index.html) -- *age-length keys*

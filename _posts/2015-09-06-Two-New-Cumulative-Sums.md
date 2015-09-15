@@ -4,6 +4,7 @@ author: "Derek H. Ogle"
 date: "Sunday, September 6, 2015"
 output: html_document
 tags: R FSA
+comments: true
 ---
 
 

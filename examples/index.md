@@ -15,4 +15,4 @@ title: R in Action!
 * [Two New Cumulative Sum Functions]({{ site.baseurl }}/2015-09-06-Two-New-Cumulative-Sums/)
 
 ## Potentially Out-Of-Date Examples
-* [**fishR** vignettes that were precursors to IFAR book above](oldFishRVignettes).
+* [**fishR** vignettes that were precursors to IFAR book above](oldFishRVignettes.html).

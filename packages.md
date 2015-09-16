@@ -11,6 +11,8 @@ title: Fishy Packages
 
 ## Single-Purpose Packages
 * [ALKr](http://cran.r-project.org/web/packages/ALKr/index.html) -- *age-length keys*
+* [Bioenergetics 4.0](https://bioenergetics4.shinyapps.io/bioenergetics4/) -- *a shiny app for bioenergetics modeling*
+* [Bioenergetics at ISEMP](http://www.isemp.org/action.php?chi=14) -- *bioenergetics modeling as part of the Integrated Status and Monitoring Program*
 * [CatDyn](https://cran.r-project.org/web/packages/CatDyn/index.html) -- *population parameters from catch dynamics data*
 * [FSAWs](https://github.com/droglenc/FSAWs) -- *construct and validate standard weight (Ws) equations*
 * [fishMod](https://cran.r-project.org/web/packages/fishMod/index.html) -- *Fits models to catch and effort data*

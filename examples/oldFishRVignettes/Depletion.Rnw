@@ -1,0 +1,399 @@
+\documentclass[a4paper]{article}
+\input{c:/aaaWork/zGnrlLatex/GnrlPreamble}
+\usepackage[toc,page]{appendix}
+\input{c:/aaaWork/zGnrlLatex/JustRPreamble}
+\hypersetup{pdftitle = fishR Vignette -- Depletion Estimates}
+
+\begin{document}
+\titleFishR{Depletion Methods for Estimating Abundance}
+
+<<setup, echo=FALSE, include=FALSE>>=
+## Start time for keeping track of process time
+ stime <- proc.time()
+## load common knitr setup
+source("../knitr_Common.r")
+@
+
+The number of individuals in a population at some initial time, called \emph{initial population size}, can be estimated by the sum of sequential catches required to remove all fish from the population.  However, the removal of all fish from a population is costly, in monetary, human, and natural resource terms.  Fortunately, estimates of the initial population size can be made by examining how the removals of fish, either through the catch of a fishery or by experimental monitoring, affect the relative abundance of fish remaining in the population \citep{HilbornWalters1992}.  These methods are generally called depletion or removal methods as they rely on observing populations where the stock of fish is being depleted by removals of fish.  In this vignette, three depletion methods used for estimating the population size are developed for a \textbf{closed population} with no mortality, recruitment, immigration, or emigration.
+
+The Leslie, DeLury, and general K-Pass removal methods are described in \sectref{sect:AbundanceDepletionLeslie}, \sectref{sect:AbundanceDepletionDeLury}, and \sectref{sect:AbundanceDepletionKPass}, respectively.
+
+This vignette requires functions in the \R{FSA} package maintained by the author.  This package is loaded into R with
+<<echo=-1, results='hide', warning=FALSE, message=FALSE>>=
+rqrd <- c("FSA")
+library(FSA)
+@
+
+\section{Leslie Method} \label{sect:AbundanceDepletionLeslie}
+\subsection{Background}
+The initial number of fish in a population is denoted by $N_{0}$.  The number of fish remaining in the closed population at the start of the $t$th removal is the initial population size minus the cumulative catch prior to the $t$th removal, $K_{t-1}$.  Thus,
+
+\begin{equation}  \label{eqn:AbundanceLesliePopnModel}
+  N_{t} = N_{0} - K_{t-1}
+\end{equation}
+
+where $K_{t-1}$ is
+
+\[ K_{t-1} = C_{1} + C_{2} + \ldots + C_{t-1} = \Sum_{i=1}^{t-1} C_{i} \]
+
+where $C_{i}$ is the catch for the $i$th removal and $t>1$ and $K_{0}=0$.  In addition, assume that catch-per-unit-effort (CPUE or CPE) in the $t$th removal event, $\frac{C_{t}}{f_{t}}$, is proportional to the extant population at the time of the $t$th removal event, $N_{t}$, i.e., 
+
+\begin{equation} \label{eqn:AbundanceDepletionCPEDefn}
+  \frac{C_{t}}{f_{t}} = qN_{t}
+\end{equation}
+
+where $f_{t}$ is the level of effort for the $t$th removal and $q$ is a proportionality constant typically defined as the \emph{catchability coefficient}.  The catchability coefficent represents the fraction of the population that is removed by one unit of fishing effort.  The Leslie method model is derived by substituting \eqref{eqn:AbundanceLesliePopnModel} into \eqref{eqn:AbundanceDepletionCPEDefn} for $N_{t}$ and simplifying,
+
+\begin{equation} \label{eqn:AbundanceLeslieModel1}
+  \begin{split}
+    \frac{C_{t}}{f_{t}} &= q(N_{0} - K_{t-1}) \\
+    \frac{C_{t}}{f_{t}} &= qN_{0} - qK_{t-1} \\
+  \end{split}
+\end{equation} 
+
+The last expression of \eqref{eqn:AbundanceLeslieModel1} is in the form of a linear model \figrefp{fig:LeslieModel} where $\frac{C_{t}}{f_{t}}$ is the response variable, $K_{t-1}$ is the explanatory variable, $q$ is a constant (i.e., the slope), and $qN_{0}$ is a constant (i.e., the intercept) because it is the product of two constants.  Thus, the \emph{negative of the slope} of this model is an estimate of the catchability coefficient, $\hat{q}$.  The estimated initial population size, $\hat{N_{0}}$, is found by dividing the estimated intercept by  $\hat{q}$.  Visually, $\hat{N_{0}}$ is the intercept of the regression line with the \emph{x-axis}, or in words, the total cumulative catch such that the CPE is equal to zero \figrefp{fig:LeslieModel}.
+
+<<LeslieModel, echo=FALSE, fig.width=3.5, fig.height=3.5, fig.cap="Idealized plot of the decline in the index of abundance with increasing cumulative catch.  Visual representations of the catchability coefficient, $q$, and initial population size, $N_{0}$ are shown.">>=
+par(xaxt="n", yaxt="n")
+t <- seq(1:10)                                          # number of sampling times
+q <- 0.1                                                # catchability coefficient
+f <- rnorm(10,1,0.05)                                   # effort per sampling times -- slightly random for now
+E <- rep(0,length(t))                                   # cumulative effort
+N <- rep(10,length(t))                                  # population size
+K <- rep(0,length(t))                                   # cumulative catch
+C <- rep(q*f[1]*N[1],length(t))                         # catch in the time period
+K1 <- rep(C[1]/2,length(t))                             # modified cumulative catch
+
+for (i in 2:length(t)) {                                # fill the vectors
+  N[i] <- N[i-1] - C[i-1]                               # population declines by catch
+  K[i] <- K[i-1] + C[i-1]                               # cum catch increases by catch
+  E[i] <- E[i-1] + f[i-1]                               # cum effort increases by effort
+  C[i] <- q*f[i]*N[i]                                   # catch for period i
+  K1[i] <- K[i] + C[i]/2                                # modified cum catch increaase by half of current catch
+  df <- data.frame(N=N,C=C,f=f,CPE=C/f,K=K,K1=K1,E=E)   # make a conglomerative data.frame
+}
+rm(N); rm(C); rm(f); rm(K); rm(K1); rm(E); rm(t); rm(q)
+lm.leslie1 <- lm(CPE~K,data=df)  # Traditional Method
+q <- -coef(lm.leslie1)[2]
+qN0 <- coef(lm.leslie1)[1]
+N0 <- qN0/q
+plot(CPE~K,data=df,ylim=c(0,1.1*max(df$CPE)),xlim=c(0,1.1*N0),ylab="CPE",xlab=expression(Cumulative~~Catch~~(K[t-1])),pch=16)
+abline(lm.leslie1,lwd=2,col="blue")
+text(0,max(df$CPE),expression(qN[0]),xpd=TRUE,col="red",pos=2,offset=1)
+text(N0,0,expression(N[0]),xpd=TRUE,col="red",pos=1,offset=1)
+p1 <- predict(lm.leslie1,data.frame(K=3))
+p2 <- predict(lm.leslie1,data.frame(K=4))
+lines(c(3,3,4),c(p1,p2,p2),lwd=2,col="red")
+text(3.5,p2,"1",col="red",pos=1,offset=1)
+text(3,p2+(p1-p2)/2,"q",col="red",offset=1,pos=2)
+text(0,0,"0",pos=1,offset=1,xpd=TRUE); text(0,0,"0",pos=2,offset=1,xpd=TRUE)
+@
+
+\cite{HilbornWalters1992} note that the index of abundance for the Leslie method can be either catch or CPE.  Furthermore, they note that the data used as an index of abundance in the Leslie method can be independent of the data used to measure cumulative catch.  Thus, for example, the index of abundance could be derived from acoustic surveys whereas the cumulative catch could be recorded from fishing trapnets.
+
+Confidence intervals for $q$ and $N_{0}$ can be derived from the regression results.  The confidence interval for $q$ is a straightforward calculation of the confidence interval for the slope.  However, the confidence interval for $N_{0}$ is not straightforward as it is estimated by the ratio of two random variables.  However, \cite{Krebs1999}[p.82] provides a formula for computing the standard error of $\hat{N_{0}}$,
+
+\begin{equation} \label{eqn:AbundanceDepletionNOSE}
+  SE(\hat{N_{0}}) = \frac{s_{y|x}}{\hat{q}}\sqrt{\left[\frac{1}{n}+\frac{(\hat{N_{0}}-\bar{K})^2}{(n-1)s^{2}_{K}}\right]}
+\end{equation}
+
+where $\bar{K}$ is the mean cumulative catch, $s^{2}_{K}$ is the variance of the cumulative catch, and $s_{y|x}$ is the standard deviation about the regression line.  Thus, with these standard error formulas, confidence intervals for $q$ and $N_{0}$ are computed in the standard way assuming normal distributions.
+
+\cite{Ricker1975} suggested a modification to \eqref{eqn:AbundanceLeslieModel1} such that $K_{t-1}$ is replaced with $K_{t}$, where $K_{t}$ is equal to $K_{t-1}$ plus half of the current catch, $C_{t}$, or
+
+\[ K_{t} = K_{t-1} + \frac{C_{t}}{2} \]
+
+Thus, \eqref{eqn:AbundanceLeslieModel1} becomes
+
+\begin{equation} \label{eqn:AbundanceLeslieModel2}
+  \frac{C_{t}}{f_{t}} = qN_{0} - qK_{t}
+\end{equation}
+
+and $q$, $qN_{0}$, and $N_{0}$ are estimated with regression methods as with \eqref{eqn:AbundanceLeslieModel1}.  This modification will typically (but not always) result in slightly higher estimates of $N_{0}$.
+
+
+\subsection{Leslie Method in R -- Step-by-Step Regression}
+The Leslie method will be illustrated with the data from \cite{Maceinaetal1993}, who reported on the results of a catch depletion technique that used electrofishing to estimate the population density of age-0 largemouth bass (\textit{Micropterus salmoides}) in stands of Eurasian milfoil (\textit{Myriophyllum spicatum}).  In this study in Lake Guntersville, AL, four 0.11 ha enclosures were created.  Fish were collected in six consecutive samples using 10-mins of electrofishing each.  The total number of age-0 bass recorded in one of the enclosures in the six samples was 7, 7, 4, 1, 2, and 1.  Because of equipment difficulties the fifth sample in this enclosure was collected with only 6 minutes of electrofishing.  These results were used to estimate the density of bass using the commands below.
+
+The catch and effort data were entered into a data frame with
+<<>>=
+mac <- data.frame(catch=c(7,7,4,1,2,1),effort=c(10,10,10,10,6,10))
+@
+The CPE was computed and added to the data frame with
+<<>>=
+mac$cpe <- mac$catch/mac$effort
+mac
+@
+
+The Leslie method requires computing a vector that contains the cumulative catch.  The cumulative sum in a vector is computed with \R{cumsum()}.  However, this function accumulates all prior values plus the current value, whereas the cumulative catch in the Leslie method should not include the current value.  Thus, the correct cumulative catch is computed by subtracting the vector of cumulative catches from the cumulative sum created by default with \R{cumsum()}.  Thus, the correct cumulative catch is added to the data frame with\footnote{Note that if the modification proposed by Ricker was being used that only one-half of the catch vector would be subtracted -- i.e., \R{mac\$K <- cumsum(mac\$catch)-mac\$catch/2}.}
+<<>>=
+mac$K <- cumsum(mac$catch)-mac$catch
+mac
+@
+
+The appropriate regression for the Leslie method is fit and stored to an object with
+<<>>=
+lm1 <- lm(cpe~K,data=mac)
+@
+The slope and intercept estimates are then extracted with
+<<>>=
+coef(lm1)
+@
+
+However, the estimates of $q$ and $N_{0}$ are computed from those results with
+<<>>=
+( q.hat <- -coef(lm1)[2] )
+( N0.hat <- coef(lm1)[1]/q.hat )
+@
+
+Thus, there is an estimated \Sexpr{formatC(N0.hat,format="f",digits=0)} age-0 largemouth bass in this enclosure.
+
+\subsection{Leslie Method in R -- \R{depletion()} Function}
+The Leslie method calculations of $\hat{q}$ and $\hat{N_{0}}$ can be made efficiently with \R{depletion()}.  The first two arguments to \R{depletion()} are the vectors of catch data and the corresponding effort data.  The modification proposed by Ricker can be used by including the \R{ricker.mod=TRUE} argument.  The results of \R{depletion()} should be stored in an object which can then be submitted to various extractor functions.  The estimates of $q$ and $N_{0}$ are extracted with \R{summary()} or \R{coef()}, confidence intervals for $q$ and $N_{0}$ are extracted with \R{confint()}, and a plot of $log(cpe)$ versus cumulative catch with the best-fit line and parameter estimates superimposed is constructed with \R{plot()}.
+
+Estimates of the catchability and initial population size, along with SEs and confidence intervals, for age-0 largemouth bass in the enclosure are computed, using the Ricker modification of the Leslie method, with
+
+<<>>=
+lm2 <- with(mac,depletion(catch,effort,ricker.mod=TRUE))
+summary(lm2)
+confint(lm2)
+@
+
+The plot of the model fit \figrefp{fig:LeslieModelLMB1} is constructed with
+<<LeslieModelLMB1, fig.cap="Plot of CPE versus the Ricker-adjusted cumulative catch for age-0 largemouth bass in a Lake Gunterville enclosure.">>=
+plot(lm2)
+@
+
+Thus, there appears to be between \Sexpr{formatC(confint(lm2)["No",1],format="f",digits=0)} and \Sexpr{formatC(confint(lm2)["No",2],format="f",digits=0)} age-0 largemouth bass in this enclosure and the catchability coefficient is between \Sexpr{formatC(confint(lm2)["q",1],format="f",digits=3)} and \Sexpr{formatC(confint(lm2)["q",2],format="f",digits=3)}.  The data appear to have a slight curvature, implying that the Leslie method model may not adequately fit these data \figrefp{fig:LeslieModelLMB1}; however, it would be difficult to make this conclusion with such a small sample size.
+
+\subsection{Assumptions}
+The Leslie method for estimating the initial population size is built upon six assumptions related to the fish and fishery.  These assumptions are
+
+\begin{Enumerate}
+  \item the population is closed (i.e., closed to sources of animals such as recruitment and immigration and losses of animals due to natural mortality and emigration),
+  \item catchability is constant over the period of removals,
+  \item enough fish must be removed to substantially reduce the catch-per-unit-effort,
+  \item the catches remove more than 2\% of the population,
+  \item all fish are equally vulnerable to the method of capture -- sources of error may include gear saturation and trap-happy or trap-shy individuals, and
+  \item the units of effort are independent - i.e., the individual units of the method of capture (i.e., nets, traps, etc) do not compete with each other.
+\end{Enumerate}
+
+In addition, the usual assumptions of simple linear regression also apply.
+
+The two most likely assumption violations are that the population is not closed and the catchability is not constant.  Any recruitment, natural mortality, immigration, or emigration will likely introduce serious errors to the abundance estimate \citep{Seber1982}.  Influxes (e.g., recruitment and immigration) tend to dampen the decline of CPE with cumulative catch resulting in an underestimated catchability coefficient and overestimated initial population size.  In contrast, natural ``removals'' (e.g., mortality and emigration) tend to steepen the decline of CPE with cumulative catch, resulting in an overestimated catchability and underestimated initial population size.  Errors associated with an open population are typically minimized by concentrating on small, relatively confined areas (e.g., bays, confined stretches of streams) or, more commonly, short periods of time.  Unfortunately, violations of the closed population assumption are not readily detectable from catch and effort data.
+
+If the population is thought to be closed, then inconstant catchability is probably the greatest potential source of error in applying the Leslie method \citep{Ricker1975}.  Catchability may change with time because the individuals that are more readily captured have already been captured and animals with lower individual catchabilities remain in the population \citep{HilbornWalters1992}, or because of some environmental factor (e.g., increases in movements due to temperature, etc.; \cite{Seber1982}).  \cite{HilbornWalters1992} suggest that lowering catchability with time will result in an overestimate of catchability and an underestimate of the initial population size.  The presence of large numbers of animals with low catchability may be indicated by a flattening of the CPE versus cumulative catch plot; i.e., a non-linear relationship between CPE and cumulative catch.
+
+Violations of the other assumptions will result in the Leslie model not fitting or being inappropriate for the collected data.  For example, if not all fish are equally vulnerable or the units of effort are dependent, then CPE will not be directly proportional to $N_{t}$ (i.e., \eqref{eqn:AbundanceDepletionCPEDefn} is inappropriate).  Alternatively, if too few fish are caught such that the CPE is not substantially reduced, then the relationship between CPE and $N_{t}$ will likely not exist.
+
+In situations where fewer than 2\% of the population will be removed by the catches, then the DeLury method in \sectref{sect:AbundanceDepletionDeLury} should be used.  In most situations, it is unlikely that it will be known in advance whether 2\% of the population will be removed or not.  Thus, it is common to fit both the Leslie and DeLury methods to the data.  The resultant estimates of $q$ and $N_{0}$ should be compared; if the estimates are substantially different then potential reasons for the differences should be explored (including what proportion of the population was removed).
+
+\section{DeLury Method} \label{sect:AbundanceDepletionDeLury}
+\subsection{Background}
+When the fraction of the stock removed by a unit of fishing effort is small (less than 0.02), then $q$ can be thought of as an instantaneous rate.  Furthermore, if the population is closed, such that the only source of change in the population is due to this fishing effort, then the fraction of the population remaining at the time of the $t$th removal is
+
+\begin{equation}  \label{eqn:AbundanceDeluryPopnFrac}
+  \frac{N_{t}}{N_{0}} = e^{-qE_{t-1}}
+\end{equation}
+
+where $E_{t-1}$ is the cumulative effort prior to time $t$,
+
+\[ E_{t-1} = f_{1} + f_{2} + \ldots + f_{t-1} = \Sum_{i=1}^{t-1} f_{i} \]
+
+Rearranging \eqref{eqn:AbundanceDeluryPopnFrac} expresses $N_{t}$ as a function of $N_{0}$\footnote{This equation is derived from a continuous exponential population growth model where $rt$ in the exponent is actually a mortality rate (due to the closed population assumption and the extraction of fish by the catches) that is related to the catchability $q$ and amount of effort expended $E_{t=1}$.},
+
+\begin{equation}  \label{eqn:AbundanceDeluryPopnModel}
+  N_{t} = N_{0}e^{-qE_{t-1}}
+\end{equation}
+
+Substituting \eqref{eqn:AbundanceDeluryPopnModel} into \eqref{eqn:AbundanceDepletionCPEDefn} yields,
+
+\begin{equation} \label{eqn:AbundanceDeluryModel1}
+  \frac{C_{t}}{f_{t}} = qN_{0}e^{-qE_{t-1}}
+\end{equation}
+
+Logarithms of both sides of \eqref{eqn:AbundanceDeluryModel1} gives,
+
+\begin{equation} \label{eqn:AbundanceDeluryModel2}
+  \begin{split}
+    log\left(\frac{C_{t}}{f_{t}}\right) &= log(qN_{0}) + log\left(e^{-qE_{t-1}}\right) \\
+    log\left(\frac{C_{t}}{f_{t}}\right) &= log(qN_{0}) - qE_{t-1} \\
+  \end{split}
+\end{equation}
+
+The last expression of \eqref{eqn:AbundanceDeluryModel2} is in the form of a linear model \figrefp{fig:DeluryModel} where $log\left(\frac{C_{t}}{f_{t}}\right)$ is the response variable, $E_{t-1}$ is the explanatory variable, $-q$ is a constant (i.e., the slope), and $log(qN_{0})$ is the log of the product of two constants and, thus, is a constant (i.e., the intercept).  Thus, the \emph{negative of the slope} of this model is an estimate of the catchability coefficient, $\hat{q}$.  The estimated initial population size, $\hat{N_{0}}$, is derived by using the intercept as the power of $e$ (i.e., $e^{intercept}$) and dividing by $\hat{q}$.
+
+<<DeluryModel, echo=FALSE, fig.cap="Idealized plot of the decline in the natural logarithm of CPE with increasing cumulative effort.  Visual representations of the catchability coefficient, $q$, and model intercept are shown.">>=
+par(xaxt="n", yaxt="n")
+lm.delury1 <- lm(log(CPE)~E,data=df)  # Traditional Method
+q <- -coef(lm.delury1)[2]
+qN0 <- exp(coef(lm.delury1)[1])
+N0 <- qN0/q
+plot(log(CPE)~E,data=df,ylab="log(CPE)",xlab=expression(Cumulative~~Effort~~(E[t-1])),ylim=c(min(log(CPE)),0.05),pch=16)
+abline(lm.delury1,lwd=2,col="blue")
+text(0,max(log(df$CPE)),expression(log(qN[0])),xpd=TRUE,col="red",pos=2,offset=0.6)
+p1 <- predict(lm.delury1,data.frame(E=3))
+p2 <- predict(lm.delury1,data.frame(E=4))
+lines(c(3,3,4),c(p1,p2,p2),lwd=2,col="red")
+text(3.5,p2,"1",col="red",pos=1,offset=1)
+text(3,p2+(p1-p2)/2,"q",col="red",pos=2,offset=1)
+text(0,-1,"0",pos=1,xpd=TRUE,offset=1)
+@
+
+As with the Leslie method, \cite{Ricker1975} suggested a modification to \eqref{eqn:AbundanceDeluryModel2}, namely that $E_{t-1}$ be replaced with $E_{t}$, where $E_{t}$ is equal to $E_{t-1}$ plus half of the effort expended at time $t$, $f_{t}$, or
+
+\[ E_{t} = E_{t-1} + \frac{f_{t}}{2} \]
+
+Thus, \eqref{eqn:AbundanceDeluryModel2} is replaced with
+
+\begin{equation} \label{eqn:AbundanceDeluryModel3}
+  log\left(\frac{C_{t}}{f_{t}}\right) = log(qN_{0}) - qE_{t} \\
+\end{equation}
+
+Ricker's correction usually results in slightly higher estimates of $N_{0}$.
+
+The assumptions of the DeLury method are the same as the assumptions for the Leslie method except that the DeLury method is used when the removals are less than 2\% of the population.  If the catches remove more that 2\% of the population, then it is best to use the Leslie method as it is more flexible (e.g., CPE estimates need not be from the same fishing gear as the cumulative catches).
+
+\subsection{DeLury Method in R -- Step-by-Step Regression}
+The DeLury method for estimating catchability and the initial population size can also be illustrated with the age-0 largemouth bass data.  The cumulative effort, using the Ricker modification, and the natural log of CPE were added to the data frame with
+<<>>=
+mac$E1 <- cumsum(mac$effort)-(mac$effort/2)  # Uses Ricker modification
+mac$logcpe <- log(mac$cpe)
+mac
+@
+
+The required linear model was fit and coefficient estimates and estimates of the catchability and initial population size were extracted with
+<<>>=
+lm3 <- lm(logcpe~E1,data=mac)
+coef(lm3)
+( q.hat <- -coef(lm3)[2] )
+( N0.hat <- exp(coef(lm3)[1])/q.hat )
+@
+
+Thus, there is an estimated \Sexpr{formatC(N0.hat,format="f",digits=0)} largemouth bass in this enclosure.
+
+\subsection{Delury Method in R -- \R{depletion()} Function}
+As with the Leslie method, the calculations of the DeLury method have been made easier with \R{depletion()}.  The arguments to and results returned from \R{depletion()} are exactly the same as those described for the Leslie method, except that the \R{type=} argument\footnote{Note that this defaults to \R{type="Leslie"}.} must be \R{"Delury"}.  Thus, estimates of catchability and initial population size for the age-0 largemouth bass data were assessed with the DeLury method including the Ricker modification with
+<<>>=
+lm4 <- with(mac,depletion(catch,effort,"Delury",ricker.mod=TRUE))
+summary(lm4)
+confint(lm4)
+@
+
+The plot of $log(CPE)$ versus cumulative effort \figrefp{fig:DeluryModelLMB1} is constructed with
+<<DeluryModelLMB1, fig.cap="Plot of log(CPE) versus Ricker-adjusted cumulative effort for age-0 largemouth bass in a Lake Gunterville enclosure.">>=
+plot(lm4)
+@
+
+Thus, there appears to be between \Sexpr{formatC(confint(lm4)["No",1],format="f",digits=0)} and \Sexpr{formatC(confint(lm4)["No",2],format="f",digits=0)} largemouth bass in this enclosure and the catchability coefficient is between \Sexpr{formatC(confint(lm4)["q",1],format="f",digits=3)} and \Sexpr{formatC(confint(lm4)["q",2],format="f",digits=3)}.  The DeLury method model appears to adequately fit these data \figrefp{fig:DeluryModelLMB1}.  It should be noted, however, that the DeLury method is theoretically inappropriate for these data as it appears that more than 2\% of the population was captured in the depletion samples.
+
+
+\section{K-Pass Removal} \label{sect:AbundanceDepletionKPass}
+\subsection{Background}
+Another depletion method for estimating population size is the ``k-pass'' removal method.  In this method, a closed population is repeatedly sampled $k$ times\footnote{This should not be confused with $K$, the cumulative catch, in the Leslie method} with the same amount of effort.  On each sampling ``pass,'' the number of individuals captured are recorded, and the individuals are physically removed from the population.  With certain assumptions, the overall population size can be estimated from the number of animals successively removed.
+
+Under the assumptions that the population is closed (except for the removal of animals at each pass) and that the probability of capture for an animal (defined as $p$) is constant for all animals and from sample to sample, then the likelihood function for the vector of successive catches, $\vec{C}$, given the population size, $N_{0}$, and probability of capture is
+
+\[ L(\vec{C}|N_{0},p) = \frac{N_{0}!p^{T}q^{kN_{0}-X-T}}{(N_{0}-T)!\prod_{i=1}^{k}C_{i}!} \]
+
+where $q=1-p$ is the probability of escape, $C_{i}$ is the number of animals captured in the $i$th removal period, $k$ is the total number of removal periods, $T=\Sum_{i=1}^{k}C_{i}$ is the total number of individuals captured, and $X=\Sum_{i=1}^{k}(k-i)C_{i}$ \citep{CarleStrub1978}.  Unfortunately, the maximization of this likelihood function is not ``neat'' and is beyond the scope of this vignette.  Fortunately, \cite{Zippin1956,Zippin1958} showed a method for iteratively solving for $q$ and $N_{0}$.  \cite{CarleStrub1978} later showed a slight modification of Zippin's method where the smallest $N_{0}\geq T$ that solves
+
+\begin{equation} \label{eqn:AbundanceKPassIteration}
+  \left(N_{0}+\frac{1}{2}\right)\left(kN_{0}-X-T\right)^{k} - \left(N_{0}-T+\frac{1}{2}\right)\left(kN_{0}-X\right)^{k} \geq 0
+\end{equation}
+
+is the maximum likelihood estimate.
+
+Once $N_{0}$ is found by iteratively solving \eqref{eqn:AbundanceKPassIteration} then,
+
+\[ SE_{\widehat{N_{0}}} = \sqrt{\frac{\widehat{N_{0}}\left(1-q^{k}\right)q^{k}}{\left(1-q^{k}\right)^{2}-(pk)^{2}q^{k-1}}} \]
+\[ \hat{p} = \frac{T}{kN_{0}-X} \]
+\[ SE_{\hat{p}} = \frac{(qp)^{2}\left(1-q^{k}\right)}{\widehat{N_{0}}\left[q\left(1-q^{k}\right)^{2}-(pk)^{2}q^{k}\right]} \]
+
+\cite{CarleStrub1978} note that the general k-pass removal method will fail to provide an appropriate estimate of population size if $X\leq\frac{T(k-1)}{2}$.  This failure criterion is equal to $X\leq T$ or, for example, $C_{1}\leq C_{3}$ when $k=3$.  Thus, the method outlined above will fail if the number of fish removed on the last pass is greater than or equal to the number of fish removed on the first pass.  In other words, similar to the Leslie and DeLury methods, the k-pass removal methods will perform appropriately only if the catches are substantially reduced by prior removals.
+
+An alternative iterative method that will not fail and has lower bias and standard error was proposed by \cite{CarleStrub1978}.  This method takes a Bayesian approach and ``weights'' the likelihood function by a prior beta distribution (with parameters $\alpha$ and $\beta$).  Their method reduces to finding the smallest $N_{0}\geq T$ that solves
+
+\begin{equation} \label{eqn:AbundanceKPassIterationCS}
+  \frac{N_{0}+1}{N_{0}-T+1}\prod_{i=1}^{k}\frac{kN_{0}-X-T+\beta+k-i}{kN_{0}-X+\alpha+\beta+k-i} \leq 1
+\end{equation}
+
+Once $N_{0}$ is found by iteratively solving the equation above then,
+
+\[ SE_{\widehat{N_{0}}} = \sqrt{\frac{\widehat{N_{0}}T(\widehat{N_{0}}-T)}{T^{2}-\widehat{N_{0}}(\widehat{N_{0}}-T)\frac{(kp)^{2}}{q}}} \]
+
+and $\hat{p}$ and $SE_{\hat{p}}$ as defined above.  Typically, if no prior information about $p$ exists then $\alpha=\beta=1$ is used.
+
+Finally, it should be noted that all of the k-pass removal methods are highly susceptible to the common violation of the equal catchability assumption.  \cite{Seber1982} notes that ``if there is considerable variability in catchability, the more catchable individuals will be caught first, so that the average probability of capture will decrease from one trapping to the next and [$\widehat{N_{0}}$] will underestimate [$N_{0}$].''
+
+
+\subsection{K-Pass Removal in R -- Step-by-Step MLE}
+The K-pass removal methods will be illustrated with the following example.  Fish ladders are often constructed on streams to let migrating salmonids pass around man-made dams.  The Bonneville Power Administration (BPA) operates dams on the Hood River in Oregon.  In 1992, a commission agreed in principle to the construction of the Pelton ladder on the Hood River.  The BPA needed to conduct an environmental impact statement (EIS) prior to construction, however.  One part of data collection for preparing that EIS consisted of estimating the abundance of two size groups of native rainbow/steelhead trout in the vicinity of the proposed ladder.  Several sections of tributary streams were blocked off by 3-mm mesh netting (effectively closing the population) and three electrofishing passes were made through each stretch.  A total of 187, 77, and 35 rainbow trout less than 85 mm were captured on the three passes through the Lake Branch of the West Fork of the Hood River on 21Sep94 \citep{Olsenetal1996}.
+
+The three catches were entered into a vector with
+<<>>=
+( ct <- c(187,77,35) )
+@
+The values for $k$, $T$, and $X$ were then computed with
+<<>>=
+( k <- length(ct) )     # number of removals
+( T <- sum(ct) )        # total catch
+i <- seq(1,k)           # needed to compute X below
+( X <- sum((k-i)*ct) )
+@
+
+A short helper function, expressed as a function of $N_{0}$, containing the left-hand side of \eqref{eqn:AbundanceKPassIteration} can then be written as
+<<>>=
+mle <- function(N0) { (N0+0.5)*((k*N0-X-T)^k) - (N0-T+0.5)*((k*N0-X)^k) }
+@
+
+A variety of trial values of $N_{0}$ are substituted into this function until the first value where the function becomes negative is found, e.g., 
+<<>>=
+mle(300) # must start >T
+mle(330) # arbitrarily picked this
+mle(320) # between 320 and 330
+mle(325) # between 320 and 325
+mle(322) # between 322 and 325
+mle(323) # first negative >T, done
+@
+
+Thus, there appears to be 323 rainbow/steelhead trout less than 85 mm in this stretch of stream.
+
+\subsection{K-Pass Removal in R -- \R{removal()} function}
+The code necessary to iteratively solve for $N_{0}$ in \eqref{eqn:AbundanceKPassIteration} and \eqref{eqn:AbundanceKPassIterationCS} is implemented with \R{removal()}.  This function  requires the vector containing the catches made during the removal passes as the first argument.  The \R{removal()} function defaults to using the Zippin method, i.e., iteratively solving \eqref{eqn:AbundanceKPassIteration}.  However, the Carle-Strub method, i.e., iteratively solving \eqref{eqn:AbundanceKPassIterationCS}, can be used by including the \R{type="CarleStrub"} argument.  If \R{type="CarleStrub"} is used, then values for $\alpha$ and $\beta$ can be included in the \R{alpha=} and \R{beta=} arguments, respectively\footnote{The defaults are \R{alpha=1} and \R{beta=1}.}.  The results of \R{removal()} should be saved to an object so that summary results can be extracted with \R{summary()} and confidence intervals constructed with \R{confint()}.
+
+The population size and probability of capture for the Hood River steelhead example, using the Zippin method, are estimated with
+<<>>=
+pr1 <- removal(ct)
+summary(pr1)
+confint(pr1)
+@
+
+Thus, there appears to be between \Sexpr{formatC(confint(pr1)["No",1],format="f",digits=0)} and \Sexpr{formatC(confint(pr1)["No",2],format="f",digits=0)} rainbow/steelhead trout less than 85 mm in this stretch of stream.
+
+The same values are estimated using the Carle-Strub method with
+<<>>=
+pr2 <- removal(ct,type="CarleStrub")
+summary(pr2)
+confint(pr2)
+@
+
+Thus, there appears, with the Carle-Strub method, to be between \Sexpr{formatC(confint(pr2)["No",1],format="f",digits=0)} and \Sexpr{formatC(confint(pr2)["No",2],format="f",digits=0)} rainbow/steelhead trout less than 85 mm in this stretch of stream.
+
+
+%BIBLIOGRAPHY ------------------------------------------------------------------
+\cleardoublepage
+\phantomsection    %not sure why, this is needed so that TOC entry will point to right start page
+\addcontentsline{toc}{section}{References}    %Add a TOC entry
+\bibliography{c:/aaaWork/zGnrlLatex/DHO_bib}    %make the bibliography
+
+<<echo=FALSE, results='asis'>>=
+## will add the reproducibility information
+et <- proc.time() - stime
+swvFinish(rqrdPkgs=rqrd,newPage=FALSE,elapsed=et["user.self"]+et["sys.self"])
+@
+<<echo=FALSE, results='hide', include=FALSE>>=
+## Will create the script file
+swvCode(moreItems=c("source","rqrd","stime"))
+@
+\end{document} 

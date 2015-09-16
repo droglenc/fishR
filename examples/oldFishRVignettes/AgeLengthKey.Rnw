@@ -1,0 +1,192 @@
+\documentclass[a4paper]{article}
+\input{c:/aaaWork/zGnrlLatex/GnrlPreamble}
+\usepackage[toc,page]{appendix}
+\usepackage{longtable}
+\input{c:/aaaWork/zGnrlLatex/JustRPreamble}
+\hypersetup{pdftitle = fishR Vignette -- Age-Length Keys}
+
+\begin{document}
+\titleFishR{Age-Length Keys to Assign Age from Lengths}
+
+<<setup, echo=FALSE, include=FALSE>>=
+## Start time for keeping track of process time
+ stime <- proc.time()
+## load common knitr setup
+source("../knitr_Common.r")
+@
+
+The assessment of ages for a large number of fish is very time-consuming, whereas measuring the length of a large number of fish is relatively easy.  The age structure for a large number of fish can be estimated by summarizing the relationship between age and length for a relatively small subsample of fish and then applying this summary to the entire sample of fish.  This summary is called an \emph{age-length key}.  The construction and application of an age-length key and the use of this key to assign ages to individual fish as described in \cite{IsermannKnight2005} is the focus of this vignette.
+
+\sectref{sec:Background} contains background information for age-length keys in general and the use of the methods described in \cite{IsermannKnight2005} for assigning ages to un-aged fish.  \sectref{sec:AgeLengthKey} shows how to construct an age-length key and \sectref{sec:AssignAges} shows how to use this age-length key to assign ages to individual fish.  \sectref{sec:Further} contains additional thoughts on age-length key methods.
+
+This vignette requires functions from the \R{FSA} and \R{FSAdata} packages maintained by the author.  These packages are loaded into R with
+<<echo=-1, results='hide', warning=FALSE, message=FALSE>>=
+rqrd <- c("FSA","FSAdata","plotrix")
+library(FSA)
+library(FSAdata)  # for datafile
+library(plotrix)  # for histStack
+@
+
+All analyses in this document use the Lake Ontario Rock Bass (\emph{Ambloplites rupestris}) data set from \cite{Wolfert1980} which is loaded into R and the first and last six rows are viewed with
+<<>>=
+data(RockBassLO2)
+head(RockBassLO2)  # note that ages are assigned
+tail(RockBassLO2)  # note that ages are not assigned
+@
+
+\section{Background} \label{sec:Background}
+\subsection{Constructing Age-Length Keys}
+A subsample of $n$ fish to be aged is selected from the entire sample of fish by randomly selecting fish \emph{from each length interval} (rather than a simple random selection of all fish).  The number of fish in each interval can either be fixed at a constant number or proportional to the total number of fish in that length interval. \cite{Kimura1977} notes that proportional selection produces statistically ``better'' results.  However, proportional selection is uncommon in the field as the length of all fish must be known before taking the subsample.  Thus, it is much more common, in practice, to subsample a set number of fish per length interval.  More importantly, the range of lengths in the subsample must cover the entire range of lengths in the original sample.  This subsample of fish is called the \emph{age sample}, because the relationship between age and length will be determined from this group of fish only.
+
+The measured length and assessed age is recorded for all fish in the age sample.  In addition, the length category to which each fish belongs is also recorded.  For example, if 5-mm length categories are created that begin on the ``0'' and ``5'' units, then a 117 mm fish will be recorded as being in the 115-119 mm length category.  Generally, all length categories are of the same width; thus, for simplicity, only the beginning length in the length category is recorded (e.g., ``115'' mm).
+
+The assigned length category and the assessed age for the fish in the age sample is summarized with a two-way contingency table where the length categories form the rows and age categories form the columns.  In other words, the number of fish in the age sample in each length category and age combination is determined.  An example of this summary is shown below (with row and column labels to aid interpretation).
+
+\begin{center}
+\begin{tabular}{ccc}
+ & $A_{1}$ & $A_{2}$ \\
+$L_{1}$ & 6 & 2 \\
+$L_{2}$ & 3 & 3 \\
+$L_{3}$ & 1 & 4 \\
+\end{tabular}
+\end{center}
+
+In this example, six fish in the age sample belong to the first length category and the first age.  Similarly, one fish belongs to the last length category and the first age.
+
+The portion of the entire sample of fish that was not part of the age sample (i.e., fish for which only a length measurement was obtained) is called the \emph{length sample}.  Age is ``assigned'' to fish in the length sample based on the fish's length category and the proportion of fish of that length category of each age as determined by the fish in the age sample.  For example, a fish in the length sample that belongs to the first length category has, based on the summary from the age sample, a 75\% chance (i.e., $\frac{6}{8}$) of being of the first age and a 25\% chance of being of the second age.  Furthermore, if there were 20 fish in the length sample in the first length category, then we would expect 15 (i.e., $20*0.75$) to be of the first age and five (i.e., $20*0.25$) to be of the second age.
+
+Thus, assignment of ages to fish in the length sample is based on the ``probability'' of each age given the length category that the fish belongs to, as derived from the age-sample.  The required conditional probabilities from the age sample are derived from the summary contingency table by dividing each cell of the table by the total number of fish in that length cateogry (i.e., each cell is divided by the sum of its row; thus, a ``row-proportions'' table is computed).  The row-proportions table derived from the summary contingency table shown above is shown below.
+
+\begin{center}
+\begin{tabular}{ccc}
+ & $A_{1}$ & $A_{2}$ \\
+$L_{1}$ & 0.75 & 0.25 \\
+$L_{2}$ & 0.50 & 0.50 \\
+$L_{3}$ & 0.20 & 0.80 \\
+\end{tabular}
+\end{center}
+
+This row-proportions table is the so-called \emph{age-length key}, because it relates the conditional probability of an age given a particular length category.
+
+\subsection{Age Assignment to Individuals}  \label{sec:ALKeyAssignment}
+An age-length key can be used to develop a summary frequency of ages for the length sample.  In addition, methods have been developed to find the mean length-at-age for the length sample or the CPE for each age from fish in the length sample \citep{BettoliMiranda2001}.  However, these methods cannot be used to calculate measures of variability for these summaries \citep{IsermannKnight2005}.  Thus, it is beneficial to use the age-length key to assign an age to each fish in the length sample and then to summarize those results \citep{IsermannKnight2005}.  There are two methods for using the age-length key to assign ages to specific fish in the length sample: semi-random and completely random methods.  The semi-random method is discussed in this section and the completely random method is shown in \sectref{sec:ALKeyCompRand}.
+
+In the semi-random method of assigning ages to individual fish, the exact expected number of fish with a given length interval of a given age will be assigned that age, with exceptions for fractionality discussed below.  For example, given the age-length key from above, assume that there are 24 fish in the length sample that are in the first length category.  In this case, 75\% or eighteen (i.e., $24*0.75$) would be assigned the first age and six (i.e., $24*0.25$) would be assigned the second age.  Which of the 24 fish would be assigned the specific ages is determined randomly, but the number to be assigned each age is set at eighteen and six, respectively.
+
+One difficulty that is soon apparent is that the expected number of individuals in a given length interval assigned a certain age may contain a fraction.  For example, supposed that 23 fish in the length sample are in the second length category.  In this case, the expected number of fish for each age is 11.5 (i.e., $23*0.5$ for each age).  Clearly, a half of a fish cannot be assigned to a given age category.  This difficulty was called \emph{fractionality} by \cite{IsermannKnight2005}.
+
+Fractionality is handled by first assigning the closest integer \emph{\textbf{smaller}} then the expected number of fish to the age-group.  In the example above, eleven fish would be assigned each of the two ages.  The remaining fish is then randomly assigned an age with a probabilistic weight equal to the expected proportion of fish in each age category.  For example, the fish would be assigned the first age with a probability of 0.50 and would be assigned the second age with a probability of 0.50.  In other words, in this example, it is essentially a coin-flip which age the ``extra'' fish is assigned.  If the coin flip determines that the ``extra'' fish should be in the second age, then eleven fish would be assigned the first age and twelve would be assigned the second age.  Again, the specific age to be assigned to each individual fish is determined randomly; but eleven fish would be assigned the first age and twelve would be assigned the second age as determined above.
+
+To complete the example, suppose that fourteen fish in the length sample are in the third length category.  Given the age-length key above, two fish will be assigned the first age (i.e., $14*0.2$) and eleven fish will be assigned the second age (i.e., $14*0.8$).  The ``extra'' fish (i.e., $14-2-11$) will be assigned an age with a probability of being the first age of 0.2 and a probability of being the second age of 0.8.  Thus, it is four times more likely that the ``extra'' fish will be assigned the second age than the first age. 
+
+
+\section{Construction of an Age-Length Key in R} \label{sec:AgeLengthKey}
+In most situations, one data file will contain the lengths of all fish in the sample with corresponding ages only for those fish in the age sample.  The ages for the fish not in the age sample will have \R{NA} in their place which is how R denotes ``missing data'' (i.e., \R{NA} stands for ``not available'').  With this type of data file, the first step in constructing and applying the age-length key is to separate the data file into the age sample of fish with assigned ages and the length sample of fish without assigned ages.  This separation requires \R{Subset()} and \R{is.na()}.  The \R{Subset()} function, which requires two arguments, creates a new data frame from an existing data frame based on some condition.  The first argument is the original data frame from which a subset or part of the data frame should be returned.  The second argument is a conditional statement on how that subset should be determined.  The \R{is.na()} function is used to identify positions in a vector where ``NA''s occur.  This function is used to create the condition for separating the original data frame into age and length samples (i.e., fish with ``NA''s in the age variable will be in the length sample, all others will be in the age sample).  For example, the age and length samples are constructed for the Lake Ontario Rock Bass data with
+
+<<>>=
+rb.age <- Subset(RockBassLO2,!is.na(age))      # get fish without NAs in age variable
+str(rb.age)
+rb.len <- Subset(RockBassLO2,is.na(age))       # get fish with NAs in age variable
+str(rb.len)
+@
+
+From this, note that the age sample consists of \Sexpr{nrow(rb.age)} fish with assigned ages and the length sample consists of \Sexpr{nrow(rb.len)} fish without assigned ages.
+
+The next step in constructing the age-length key is to create a variable in the age sample that identifies the length category to which each fish belongs.  This variable is constructed, with default name \var{LCat}, and appended to the data frame containing the age-sample with \R{lencat()}.  In this context, \R{lencat()} requires the following four arguments:
+
+\begin{itemize}
+  \item a formula of the form \verb"~"\R{len} where \R{len} generically represents the variable in the data frame containing the lengths to be categorized,
+  \item the data frame containing the age-sample in \R{data=},
+  \item a numeric value identifying the starting length measurement category in \R{startcat=}, and
+  \item a numeric value identifying the width of the length measurement categories in \R{w}.
+\end{itemize}
+
+The \R{lencat()} function returns a data frame that consists of the original data frame plus a variable containing the length interval categories for each fish.  The default name of the new variable (\var{LCat}) can be changed with the \R{vname=} argument.  The \R{lencat()} function result must be assigned to an object, preferably named differently from the original age sample.
+
+The starting category for 10-mm length categories for the Lake Ontario Rock Bass is determined by finding the minimum length in the age sample with
+<<>>=
+Summarize(~tl,data=rb.age,digits=1)
+@
+and then starting the categories with the even-number 10-mm interval just below this value.  Construction of the length category variable is completed and the first six rows are viewed with\footnote{Notice the new name of the augmented data frame.}
+<<>>=
+rb.age1 <- lencat(~tl,data=rb.age,startcat=110,w=10)
+head(rb.age1)
+@
+
+Once the length category variable has been added to the age sample data frame, \R{table()} is used to construct the summary contingency table of numbers of fish in each combined length and age category.  The row variable (length category) is the first and the column variable (age) is the second argument to this function.  The results of \R{table()} should be assigned to an object and then submitted as the first argument to \R{prop.table()} along with \R{margin=1} as a second argument\footnote{The \R{margin=1} indicates ``rows'', whereas as \R{margin=2} would indicate ``columns.''} to construct a row-proportions table.  The resulting row-proportions table is the actual age-length key determined from the age sample and is ready to be applied to the length sample.  The summary contingency table and the row-proportion table (i.e., the age-length key) are constructed with
+
+<<>>=
+rb.raw <- with(rb.age1,table(LCat,age))
+rb.key <- prop.table(rb.raw,margin=1)
+round(rb.key,2)     # rounded for display purposes only
+@
+
+\section{Assigning Ages to Individuals with the Age-Length Key in R} \label{sec:AssignAges}
+\subsection{Age Assignment}
+The semi-random age assignment method described in \sectref{sec:ALKeyAssignment} is implemented with \R{ageKey()}.  This function requires the numeric matrix containing the age-length key (e.g., as constructed with \R{prop.table()}) as the first argument, a formula of the form \verb"~"\R{len} or  \R{age}\verb"~"\R{len} as the second argument, and the name of the age sample data frame in \R{data=}.  If the age-sample data frame contains a variable to receive the ages then use \R{age}\verb"~"\R{len}.  Alternatively, if the age-sample data frame does not contain a variable to receive the ages then use \verb"~"\R{len} and the function will create a new variable called \var{age} by default.
+
+The \R{ageKey()} function will determine the length categories to construct based on the age-length key sent in the first argument.  The \R{ageKey()} function returns a data frame that has the same number of rows as the original length sample, but with each fish assigned an age according to the semi-random method.  The results of \R{ageKey()} should be assigned to an object, preferably with a name different from the original length sample.  For example, semi-random ages were assigned to the un-aged fish in the length sample with
+<<>>=
+rb.len1 <- ageKey(rb.key,age~tl,data=rb.len)
+head(rb.len1)
+@
+
+The original (not modified) age sample data frame and the modified length sample data frame (i.e., now containing the ages assigned via the age-length key) can then be row-bound together to construct a data frame that consists of lengths and ages for all fish in the original sample.  For example, the original age sample and the modified length sample for the Rock Bass sample are combined to form a complete data frame with
+<<>>=
+rb.comb <- rbind(rb.age,rb.len1)
+head(rb.comb)
+@
+
+\subsection{Summary Computations}
+The assigned ages in the \R{rb.comb} data frame can then be summarized with\footnote{The ``extra'' parenthese around this command force R to print the result at the same time it is being assigned to an object.}
+<<>>=
+( rb.sum <- Summarize(tl~age,data=rb.comb,digits=2) )
+@
+In this summary, note that the \var{age} and \var{n} columns represent an age-frequency and the \var{age} and \var{mean} columns represent the mean length-at-age for ALL individuals in the entire sample.  A plot of the age frequency \figrefp{fig:AgeFreq} is constructed with\footnote{Note that my figures may look different than yours as I have changed the default settings for the graphics with \R{par()}.  In particular, I used \R{par(mar=c(3.5,3.5,1,1),mgp=c(2.1,0.4,0),tcl=-0.2)} for most graphics.  See the ``Basic Plotting in R'' vignette.}
+<<AgeFreq, fig.cap="Age frequency for Lake Ontario Rock Bass.">>=
+hist(~age,data=rb.comb,breaks=3:11,xlim=c(2,12),xlab="Age (yrs)",main="")
+@
+
+A plot \figrefp{fig:LengthAtAge} of the length-at-age for ALL individuals in the sample\footnote{The \R{jitter()} function adds a small amount of random noise go the discrete age values so that multiple fish with the same length and age are not plotted directly on top of each other.  This makes it easier to visualize the density of fish that have similar age and length values.} with connected mean lengths-at-age superimposed\footnote{The \var{age} variable in the results from \R{Summarize()} is a factor variable.  To make this plot, the levels must be converted to numeric values with \R{fact2num()}.} can be constructed with
+<<LengthAtAge, fig.cap="Length-at-age for Lake Ontario Rock Bass with mean lengths-at-age connected by the blue line.">>=
+plot(tl~jitter(age),data=rb.comb,ylab="Total Length (mm)",xlab="Age (jittered)")
+lines(mean~fact2num(age),data=rb.sum,col="blue",lwd=2)
+@
+
+Finally, one can produce a visual summary of the combined age and length frequencies with \R{histStack()} from the \R{plotrix} package.  This function requires a formula of the form \R{quant}\verb"~"\R{factor} where \R{quant} generically represents a quantitative variable that will form the x-axis of the histogram and \R{factor} generically represents a categorical variable that will form the ``stacks'' in the bars.  The data frame containing these two variables must be included in \R{data=}.  The sequence of breaks to be used in the histogram can be sent to \R{breaks=}.  The user may also control the x-axis label with \R{xlab=} and may change the color palette with \R{pal=} (to, for example, \R{"gray"} to form a gray-scale plot).  An example \figrefp{fig:AgeLengthFreq}, for the Rock Bass data was created with
+<<AgeLengthFreq, fig.cap="Length frequency for Lake Ontario Rock Bass with different colors for different ages within each length category.">>=
+histStack(tl~age,data=rb.comb,breaks=seq(110,280,10),xlab="Total Length (mm)")
+@
+
+
+\section{Further Thoughts} \label{sec:Further}
+\subsection{Completely Random Age Assignment with Age-Length Key} \label{sec:ALKeyCompRand}
+In the completely random method of assigning ages to individual fish, the age assigned to a fish is randomly assigned with probabilistic weights proportional to the proportion of fish in each age for fish on the age-length key of the same length category.  This is essentially the same rule used to assign age to the ``exra'' fish (from fractionality) in the semi-random method.  For example, suppose that 50\% of the fish in a length interval in the age-sample were age-1, 25\% were age-2, and 25\% were age-3.  A single fish in the same length interval in the length sample would then have a 50\% chance of being assigned an age of 1, a 25\% chance of being assigned an age of 2, and a 25\% chance of being assigned an age of 3.  The specific age it is assigned depends completely on randomness.  Thus, in this example, we would expect 11 of 22 fish in this length category in the length-sample to be assigned an age of 1 but in actuality it could be more or it could be less.  In the semi-random method, which fish get which age is random but the number of fish that get each age is (primarily) not random.  In the completely random method, both the number of fish that get each age and which fish get each age is random.
+
+The completely random method of assigning ages to individual fish is also implemented with \R{ageKey()}.  The arguments to the function are exactly the same as they were for the semi-random method except that a \R{type="CR"} argument must be included.  Use of the completely random method of assigning ages and summary results are computed with
+<<>>=
+rb.len2 <- ageKey(rb.key,age~tl,data=rb.len,type="CR")
+rb.comb2 <- rbind(rb.age,rb.len2)
+Summarize(tl~age,data=rb.comb2,digits=2)
+@
+
+The semi-random method of assigning ages to individual fish is the preferred method, especially when the age-length key is used to extrapolate the ages of fish in a single length sample.  The completely random method is used primarily when studying the theoretical sources of variability inherent in an age-length key analysis.  In other words, the semi-random method is the method most often used by the practicing biologist.
+
+ 
+%BIBLIOGRAPHY -----------------------------------------------------------------------------------
+%\cleardoublepage %not sure why, this is needed so that TOC entry will point to right start page
+\phantomsection   %not sure why, this is needed so that TOC entry will point to right start page
+\addcontentsline{toc}{section}{References}    %Add a TOC entry
+\bibliography{c:/aaaWork/zGnrlLatex/DHO_bib}    %make the bibliography
+
+<<echo=FALSE, results='asis'>>=
+## will add the reproducibility information
+et <- proc.time() - stime
+swvFinish(rqrdPkgs=rqrd,newPage=FALSE,elapsed=et["user.self"]+et["sys.self"])
+@
+<<echo=FALSE, results='hide', include=FALSE>>=
+## Will create the script file
+swvCode(moreItems=c("source","rqrd","stime"))
+@
+
+\end{document} 

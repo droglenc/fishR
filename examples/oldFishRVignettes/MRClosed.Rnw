@@ -1,0 +1,656 @@
+\documentclass[a4paper]{article}
+\input{c:/aaaWork/zGnrlLatex/GnrlPreamble}
+\usepackage[toc,page]{appendix}
+\input{c:/aaaWork/zGnrlLatex/JustRPreamble}
+\hypersetup{pdftitle = fishR Vignette -- Closed Mark-Recapture}
+
+\begin{document}
+\titleFishR{Closed Mark-Recapture Abundance Estimates}
+
+<<setup, echo=FALSE, include=FALSE>>=
+## Start time for keeping track of process time
+ stime <- proc.time()
+## load common knitr setup
+source("../knitr_Common.r")
+@
+
+The size of a population can be estimated by capturing and marking individuals from the population, extracting another sample from the population at a later time, and determining the fraction of individuals in the second sample that had the mark from the first sample.  This idea was first used to estimate the population of humans in London in 1662 \citep{Krebs1999}, but was popularized in fisheries examinations by C.G.J. Petersen in 1896 \citep{Ricker1975}.  The method was used by \cite{Lincoln1930} for estimating duck populations and by \cite{Jackson1933} for estimating tsetse fly populations.  Thus, this method is variously referred to as the Petersen method, the Lincoln-Petersen method, or the Lincoln-Petersen-Jackson method. The ``Petersen method'' will be used in this vignette.
+
+The Petersen single-census method, which relies on only one sample of potentially marked fish, can be extended to a series of samples.  These extended methods, called the Schnabel and Schumacker-Eschmeyer methods, require at least one sample where fish are marked and then multiple samples of potentially marked fish.  However, these methods are most often used when the unmarked fish in the subsequent samples are marked and returned, along with the previously marked fish, to the population.  Thus, these methods can be used with multiple marking and multiple ``recapturing'' samples.
+
+Use of the capture history form of data recording will be discussed in \sectref{sect:DataMarkCaptureHistory}.  The Petersen and related methods are developed and implemented in \sectref{sect:MRClosed1} and the Schnabel and Schumacher-Escymeyer methods are described in \sectref{sect:MRClosed2}.  This vignette requires functions in the \R{FSA} and \R{FSAdata} package maintained by the author.  These packages are loaded into R with
+<<echo=-1, results='hide', warning=FALSE, message=FALSE>>=
+rqrd <- c("FSA","FSAdata")
+library(FSA)
+library(FSAdata)
+@
+
+\section{Individual Capture Histories} \label{sect:DataMarkCaptureHistory}
+\subsection{Data Format}
+For individually tagged fish, \cite{Pollocketal1990} recommended that the capture and recapture information be recorded in the individual capture history format.  In the individual capture history format, a data file has as many rows as the number of unique fish that were observed at least once and as many columns as sampling (or capture) periods.  For each fish and sampling period cell of the file, a ``0'' is recorded if that fish was \emph{not} seen in that sample or a ``1'' is recorded if that fish was seen in that sample.
+
+The capture histories for a hypothetical sample of four fish over five sampling periods is shown in \tabref{tab:DataMarkCaptureHistoryHyp1}.  For example, the first fish was captured in the first sample, not captured in the second sample, recaptured in the third sample, and then not captured in either the fourth or fifth samples.  The second fish was captured in the first two samples and then not captured again.  The fourth fish was not captured in the first four samples and was captured for the first time in the fifth sample.
+
+\begin{table}[hbp]
+  \centering
+  \caption{Hypothetical example of the capture histories of four fish from five sample
+  periods.}\label{tab:DataMarkCaptureHistoryHyp1}
+  \begin{tabular}{c|ccccc}
+    \hline\hline
+    \widen{0}{5}{} & \multicolumn{5}{c}{Sample Period} \\
+    \cline{2-6}
+    \widen{-2}{0}{Fish} & 1 & 2 & 3 & 4 & 5 \\
+    \hline
+    \widen{0}{5}{1} & 1 & 0 & 1 & 0 & 0 \\
+    \widen{0}{0}{2} & 1 & 1 & 0 & 0 & 0 \\
+    \widen{0}{0}{3} & 0 & 1 & 0 & 1 & 0 \\
+    \widen{-2}{0}{4} & 0 & 0 & 0 & 0 & 1 \\
+    \hline\hline
+  \end{tabular}
+\end{table}
+
+The capture histories considered in this vignette will only consist of ``0''s and ``1''s as discussed above.  However, more advanced applications will also use a ``-1'' for fish that were accidentally killed in the sampling operation and were not returned to the population.  For example, a capture history of $(1,0,-1,0,0)$ would be recorded for a fish that was captured in the first sample and recaptured in the third sample but accidentally killed before it could be returned to the population.  The recording of accidentally killed specimens is important as most multiple mark-recapture methods rely on knowing or estimating the number of extant marks in the population.  Recording that a fish was accidentally killed assures that it will not be included in the number of extant marks.
+
+Several subsequent analyses of the individual capture histories requires counting the frequency of individuals with each capture history.  These frequencies are typically symbolized with a lower-case ``n'' with the capture history as a subscript.  For example, $n_{10100}$ represents the number of fish that were captured in the first and third sample periods but not in any other sample period.
+
+This terminology can be extended to represent other frequencies by including a ``dot'' (i.e., $\cdot$) in the place of any part of the subscript that is ``summed across.''  For example, $n_{\cdot\cdot1\cdot\cdot}$ represents the frequency of fish that were captured in the third sample (i.e., a ``1'' in the third sample position) and either were or were not captured in any of the other samples.  In other words, $n_{\cdot\cdot1\cdot\cdot}$ represents the total number of fish captured in the third sample.  Traditionally, this value would also be referred to as $n_{3}$ where the subscript now represents the sample number and not a capture history type.  As another example, $n_{\cdot101\cdot}$ represents the number of fish captured in the fourth sample that were \emph{last} captured in the second sample.  These and other specific situations will have specific symbols in the context of specific methods later in this vignette.
+
+\subsection{Summarizing Capture Histories in R} \label{sect:DataMarkCaptureHistoryR}
+A variety of useful summaries of capture history data can be obtained with \R{capHistSum()}.  This function requires a matrix or data frame that contains the raw capture history data.  This matrix or data frame must contain only the capture history data and no other data (e.g., a column with the fish identification number must NOT be included).  The \R{cols=} argument can be used to identify just the columns containing the capture history information.  For example, if the capture history information is contained in columns two through seven then \R{cols=2:7} should be used.  Alternatively, if the capture history is contained in all columns except for the first three then \R{cols=-c(1:3)} should be used.  If the matrix or data frame contains just the capture history information then the \R{cols=} argument can be ignored.
+
+The \R{capHistSum()} function returns a list of four parts, the following two of which are used in this vignette:
+  \begin{Itemize}
+    \item \R{caphist}: A vector summarizing the frequency of fish with each unique capture history.
+    \item \R{sum}: A data frame containing the number of fish captured in each sample (\var{n}), the number of previously marked fish captured in each sample (\var{m}), the number of marked fish returned to the population following the sample (\var{R}), and the number of marked fish in the population just prior to the sample (\var{M}).  This summary is used in the Schnabel method for estimating population abundance (see \sectref{sect:MRClosed2}).
+  \end{Itemize}
+
+The items in the list returned by \R{capHistSum()} can be individually accessed by assigning the results of the function to an object and then appending the name of the item in the list to that object separated by a dollar sign.
+
+The use of \R{capHistSum()} is illustrated with the capture histories of northern pike (\textit{Esox lucius}) from Buckthorn Marsh that were recorded over four days in April by \cite{NYPA2004}.  The individual capture histories were recorded in \R{PikeNYPartial1} distributed in the \R{FSAdata} package which is loaded with the \R{FSA} package.  This data file is loaded into R and the structure observed with
+<<>>=
+data(PikeNYPartial1)
+str(PikeNYPartial1)
+@
+
+The first six fish from the data frame are seen with
+<<>>=
+head(PikeNYPartial1)
+@
+From this it is seen that the capture history information is contained in columns two through five, and that the first column contains a unique fish identification number that should be ignored when summarizing the capture histories.  The capture history summaries for the capture history information recorded in columns two through five is obtained with
+<<>>=
+pikech1 <- capHistSum(PikeNYPartial1,cols=2:5)
+@
+
+The capture history summary and the Schnabel summary table can then be extracted with
+<<>>=
+pikech1$caphist
+pikech1$sum
+@
+
+Some researchers record capture history information in capture-by-event rather than in capture history format.  In capture-by-event format, each line of the data file contains the event (usually the date or sample number) and the unique identification number for each captured fish.  Capture-by-event format data should be converted to capture history format data so that it can be efficiently summarized with \R{capHistSum()}.  This conversion is a rather complex process that is simplified with \R{capHistConvert()}.  The \R{capHistConvert()} function requires the data frame with the capture-by-event data as the first argument, the name of the column containing the ``events'' in the \R{event=} argument, and the unique identification number in the \R{id=} argument.  In addition, if the event labels are characters, rather than numbers, then the correct order of the level names should be included in the \R{event.ord=} argument.
+
+The data in \R{PikeNYPartial2} is the same as in \R{PikeNYPartial1} except that it is recorded in capture-by-event format.  This data frame can be loaded into R and the structure and the first six individuals viewed with
+<<>>=
+data(PikeNYPartial2)
+str(PikeNYPartial2)
+head(PikeNYPartial2)
+@
+From this it is seen that \var{sample} contains the events, \var{id} contains the unique identification number, and that \var{sample} is a factor such that we will have to control the order of the events.  With this information, the conversion to capture history format is accomplished with
+<<>>=
+PikeNYPartial2a <- capHistConvert(PikeNYPartial2,event="sample",id="id",
+event.ord=c("first","second","third","fourth"))
+str(PikeNYPartial2a)
+head(PikeNYPartial2a)
+@
+
+The capture history summaries are then obtained with \R{capHistSum()} as
+<<>>=
+pikech2 <- capHistSum(PikeNYPartial2a,cols=2:5)
+pikech2$caphist
+@
+
+The summaries returned by \R{capHistSum()} will allow for quick summarization of capture histories to be used in the methods in \sectref{sect:MRClosed1} and \sectref{sect:MRClosed2}.
+
+
+\section{Single Census Mark-Recapture Methods}  \label{sect:MRClosed1}
+\subsection{Petersen Method}  \label{sect:AbundanceMRPetersen}
+The Petersen method consists of two samples from a closed population and is, thus, the simplest of the broad array of mark-recapture techniques for estimating animal abundance.  The population and sampling scheme for the two samples ($i=1,2$) of the Petersen method are represented in \figref{fig:AbundancePetersenScheme}.  The large squares just to the left of the ``i='' vertical lines represent the population just before the $i$th sample is taken.  The large square just after the ``i=1'' vertical line represents the population just after the first sample was taken.  Thus, under the assumption that the population is closed, the population immediately after the first sample is the same as the population immediately before the second sample.  The samples are represented by the small grey boxes just above each ``i='' vertical line.
+
+\begin{figure}[hbtp]
+  \centering
+    \includegraphics[width=3.5in]{Figs/Petersen_Scheme.jpg}
+  \caption{Schematic representation of the two samples ($i=1,2$) in a Petersen mark-recapture study.  See the text for detailed description and \tabref{tab:AbundanceMarkPetersenNotation} for definitions of notation.}
+  \label{fig:AbundancePetersenScheme}
+\end{figure}
+
+The population initially consists of all unmarked animals.  All fish in the first sample are then marked and returned to the population.  The first sample does not necessarily need to be a random sample of the population although the assumptions for the second sample are more likely to be met if it is.  In addition, the fish can receive a batch mark, i.e., each fish does not need to be uniquely identified\footnote{However, as mentioned in \sectref{sect:DataMarkCaptureHistory} it is generally beneficial to uniquely tag each fish.}.  The second sample must be a random sample from the entire population of marked and unmarked  individuals such that each fish, whether marked or unmarked, has the same chance of being captured.  This also implies that the marked fish mix randomly with the unmarked fish in the population \figrefp{fig:AbundancePetersenScheme}.  Each fish in this second sample is examined to determine if it has the mark from the first sample or not.
+
+The summary data for a Petersen estimate can be shown in the format of capture histories \tabrefp{tab:AbundanceMarkPetersenDataMatrix}\footnote{An understanding of the notation used in capture histories is useful for using specialized computer programs indicated at the end of the vignette.}.  However, the more traditional notation of $N=n_{\cdot\cdot}$, $M=n_{1\cdot}$, $n=n_{\cdot 1}$, and $m=n_{11}$ for ease of comparison to other sources will be used throughout this vignette\footnote{The most traditional notation uses $C=n_{\cdot 1}$, and $R=n_{11}$.  We do not use this notation in order to maintain continuity with subsequent mark-recapture methods.}.  Remember that the capitalized symbols refer to the population (i.e., $N$ is number of fish in the population, $M$ is the number of marked fish in the population) whereas the lower-case letters refer to the second sample (i.e., $n$ is the number of fish captured in the second sample, $m$ is the number of marked fish captured in the second sample).  The meaning of the symbols used in the Petersen method are shown in \tabref{tab:AbundanceMarkPetersenNotation}.
+
+\begin{table}[hbtp]
+  \centering
+  \caption{Summary data matrix for the two samples in a Petersen mark-recapture framework.  Note that a zero indicates the fish were not captured in that sample and a one indicates that the fish were captured in that sample.}  \label{tab:AbundanceMarkPetersenDataMatrix}
+  \begin{tabular}{cc|c|c|c|}
+    \widen{-2}{4}{} & \multicolumn{1}{c}{} & \multicolumn{2}{c}{Second Sample} & \multicolumn{1}{c}{} \\
+    \cline{3-4}
+    \widen{-2}{7}{} &  & Not Captured (0) & Captured (1) & \multicolumn{1}{c}{Total} \\
+    \cline{2-5}
+    \multicolumn{1}{c|}{\widen{-2}{7}{First}} & Not Captured (0) & $n_{00}$ & $n_{01}$ & $n_{0\cdot}$ \\
+    \cline{2-5}
+    \multicolumn{1}{c|}{\widen{-2}{7}{Sample}} & Captured (1) & $n_{10}$ & $n_{11}$ & $n_{1\cdot}$ \\
+    \cline{2-5}
+    \widen{-2}{7}{} & Total & $n_{\cdot 0}$ & $n_{\cdot 1}$ & $n_{\cdot\cdot}$ \\
+    \cline{3-5}
+  \end{tabular}
+\end{table}
+
+\begin{table}[hbtp]
+  \centering
+  \caption{Summary of notation used in the Petersen method.}  \label{tab:AbundanceMarkPetersenNotation}
+  \begin{tabular}{cl}
+    \hline\hline
+    \widen{-2}{7}{Symbol} & \multicolumn{1}{c}{Meaning} \\
+    \hline
+    \widen{-1}{6}{$N$} & The unknown size of the population just prior to the first sample. \\
+    & \widen{0}{5}{The number of fish from the first sample that were marked and} \\
+    \rb{1.5}{$M$} & \widen{-1}{0}{     returned to the population.} \\
+    \widen{-1}{6}{$n$} & The number of fish in the second sample. \\
+    \widen{-1}{6}{$m$} & The number of marked fish in the second sample. \\
+    \widen{-2}{7}{$\widehat{N}$} & The estimated size of the population just prior to the first sample. \\
+    \hline\hline
+  \end{tabular}
+\end{table}
+
+The Petersen estimate of abundance can be derived\footnote{The Petersen estimate of abundance can also be derived from other starting points.  Alternative derivations are shown in \appref{appsect:PetersenMLE}.} from the initial assumption that if the second sample is a random sample of the population of marked and unmarked animals, then the proportion of marked animals in the second sample should equal the proportion of marked animals in the population, i.e.,
+
+\[ \frac{m}{n} = \frac{M}{N} \]
+
+A rearrangement of this equality gives an estimate\footnote{This re-arrangement derives a method-of-moments estimateor of $N$.  This is also the maximum likelihood estimates as shown in \appref{appsect:PetersenMLE}.} of the size of the population, i.e.,
+
+\begin{equation} \label{eqn:AbundanceMarkPetersen}
+  \hat{N} = \frac{Mn}{m}
+\end{equation}
+
+Thus, the total population size can be estimated from the number of marked animals, the number of animals observed in the second sample, and the number of animals in the second sample that had the mark.
+
+
+Approximate confidence intervals for $N$ are often used\footnote{Exact confidence intervals for $N$ can generally be derived from the underlying distribution of the likelihood function (see \appref{appsect:PetersenMLE}).  Unfortunately, there is no simple cumulative distribution for the hypergeometric distribution.}, with the specific form of the approximation depending on characteristics of the number of marked and recaptured fish.  \cite{Seber1982} suggests the following sequential ``rules'' (i.e., stop at the step where you answer ``yes'') for choosing the method for approximating the confidence interval for $N$ in the Petersen method when sampling without replacement:
+
+\begin{Enumerate}
+  \item Is the fraction of marked fish in the second sample ``large'' (i.e., $\frac{m}{n}>0.10$)? -- Use the \textbf{binomial} approximation?
+  \item Is the number of marked fish in the second sample ``large'' (i.e., $m>50$)? -- Use the \textbf{normal} approximation?
+  \item Use the \textbf{Poisson} approximation.
+\end{Enumerate}
+
+Both the binomial and normal approximation methods identify a confidence interval for the ratio of marked fish in the second sample (i.e., $\frac{m}{n}$) and then the endpoints of these intervals are substituted into the modified Petersen equation,
+
+\[ \hat{N} = \frac{Mn}{m} = \frac{M}{\frac{m}{n}} \]
+
+to derive endpoints of the confidence interval for $N$.  The binomial approximation method constructs the interval for $\frac{m}{n}$ with computer algorithms of the binomial distribution.  The normal approximation is considered a large-sample method where the standard error for $\frac{m}{n}$ is estimated with
+
+\[ SE_{\frac{m}{n}} = \sqrt{\left(1-\frac{m}{M}\right)\frac{\frac{m}{n}\left(1-\frac{m}{n}\right)}{n-1}} + \frac{1}{2n} \]
+
+The confidence interval is then constructed in the usual way with $\frac{m}{n}\pm Z^{*}SE_{\frac{m}{n}}$.
+
+The Poisson approximation operates similarly, except that it uses computer algorithms of the Poisson distribution to construct a confidence interval for $m$, the endpoints of which are then substituted back into \eqref{eqn:AbundanceMarkPetersen} to derive the confidence interval for $N$.
+
+\subsection{Modifications of the Petersen Method}  \label{sect:AbundanceMRPetersenMod}
+The Petersen method of estimating abundance is the best asymptotically normal estimator as $N$ approaches infinity but, unfortunately, it is biased, especially for small samples.  \cite{Chapman1951} showed that when $M+n \geq N$ that
+
+\begin{equation} \label{eqn:AbundanceMarkChapman}
+  \hat{N} = \frac{(M+1)(n+1)}{(m+1)}-1
+\end{equation}
+
+is an exactly unbiased estimator of $N$\footnote{\cite{Ricker1975} modified the Chapman estimator by ignoring the ``-1'' at the end of the right-hand-side of \eqref{eqn:AbundanceMarkChapman}.  His argument was that subtracting one is of no practical importance in the estimate.  While this argument is understandable, subtracting one to get the exact result proposed by Chapman is not onerous.  Therefore, we suggest using the full estimator as proposed by \cite{Chapman1951}.}.  If $M+n < N$, then \cite{RobsonRegier1964} showed that the bias of \eqref{eqn:AbundanceMarkChapman} is less than 2\% if $\frac{Mn}{N}>4$.  Unfortunately, $N$ is usually unknown.  However, \cite{RobsonRegier1964} note that if $m\geq7$ then there is a 95\% chance that $\frac{Mn}{N}>4$ and the bias of \eqref{eqn:AbundanceMarkChapman} can be considered negligible \citep{Seber1982}.  Thus, a given study should be designed so that enough fish are marked and the second sample is large enough to ensure that more than seven marked fish are recaptured.
+
+A final modification was proposed by \cite{Bailey1951,Bailey1952}.  Bailey's method is appropriate if the second sample of fish is collected with replacement (i.e., an individual may be counted more than once).  This type of sampling happens most often if the tagged fish are simply observed rather than captured.  Bailey showed that \eqref{eqn:AbundanceMarkPetersen} is biased under these conditions and that his modified estimator,
+
+\begin{equation} \label{eqn:AbundanceMarkBailey}
+  \hat{N} = \frac{(M)(n+1)}{(m+1)}
+\end{equation}
+
+is nearly unbiased if $m\geq7$.
+
+Confidence intervals for $N$ from these modified estimators use techniques similar to those described for the Petersen method.  However, the binomial and normal confidence intervals for the ratio $\frac{m}{n}$ must be converted to a confidence interval for $m$ by multiplying the endpoints by $n$.  The endpoints of the confidence interval for $m$ are then substituted into \eqref{eqn:AbundanceMarkChapman} or \eqref{eqn:AbundanceMarkBailey} to obtain confidence intervals for $N$.
+
+
+\subsection{Petersen and Related Methods in R}
+The Petersen mark-recapture calculation can be made with \R{mrClosed()} with values of $M$, $n$, and $m$ as the first three arguments (in that order).  The  Chapman and Bailey methods can be used by changing the \R{type=} argument in \R{mrClosed()} to \R{"Chapman"} or \R{"Bailey"}, respectively.  The results of this function should be saved to an object so that point estimates and confidence intervals for $N$ can be extracted with \R{summary()} and \R{confint()}, respectively. The confidence intervals constructed by \R{confint()} will follow the suggestions of \cite{Seber1982}\footnote{The automatic choice of confidence interval type can be over-ridden, however, by including a specific method in the \R{type=} argument to \R{confint()}.  For example, to force calculation of confidence intervals with the binomial distribution use \R{type="binomial"}.}.  These methods will be illustrated for the following situation.
+
+Concern over increases in the harvest of northern pike in Harding Lake prompted the Alaska Department of Fish and Game to study this stock in 1990 \citep{Burkholder1991}.  One part of the study included capturing northern pike, marking the fish with numbered floy tags and a partial pelvic fin clip, releasing the fish back to the lake, and then recapturing these fish approximately one week later.  The analysis only used northern pike larger than 449 mm because of the selectivity of the gear used.  The data were recorded in \R{PikeHL} and can be loaded and viewed with
+<<>>=
+data(PikeHL)
+head(PikeHL)
+@
+The recorded capture histories, located in all but the first column of \R{PikeHL}, are then summarized with
+<<>>=
+ch <- capHistSum(PikeHL,cols=-1)
+ch$caphist
+@
+These results show that there were $M=297+49=346$ total fish captured, marked, and returned to the population from the first sample, $n=135+49$$=184$ fish captured in the second sample, and $m=49$ recaptured marked fish in the second sample.  The population estimate, with corresponding confidence interval, is then constructed with\footnote{As a convenience, the object from \R{capHistSum()} can be sent solely to \R{mrClosed()} -- i.e., \R{mrClosed(ch)} -- to produce the same results.}
+<<>>=
+mr.p <- mrClosed(346,184,49)
+summary(mr.p)
+confint(mr.p)
+@
+Thus, there appears to be between \Sexpr{formatC(confint(mr.p)[1],format="f",digits=0)} and \Sexpr{formatC(confint(mr.p)[2],format="f",digits=0)} northern pike in Harding Lake in 1990.
+
+As an illustrative example, the estimated number of northern pike in Harding Lake in 1990 is computed using the Chapman method with
+<<>>=
+mr.c <- mrClosed(346,184,49,type="Chapman")
+summary(mr.c)
+confint(mr.c)
+@
+
+
+\subsection{Assumptions of Petersen \& Related Methods}  \label{sect:AbundanceMRPetersenAssumptions}
+Before specifically adressing the assumptions of the Petersen and related methods it is important to note that these estimates refer only to the catchable portion or the portion of the population fully recruited to the gear.  For example, if the population of northern pike studied was restricted to that part of the population longer than 450 mm because of the gear used to capture the samples, then the estimates of abundance refer only to that part of the population larger than 450 mm.  In general, the population estimate only refers to the population extant at the time of the first sample, except under very specific conditions which are outlined below.
+
+The Petersen and related methods depend on meeting five assumptions \citep{Seber1982}:
+
+\begin{Enumerate}
+  \item The population is closed (so that $N$ is constant).
+  \item All fish have the same chance of being caught in the second sample.
+  \item Tagging individuals does not affect their catchability.
+  \item Fish do not lose their tags between the first and second sample.
+  \item All tags are reported upon discovery in the second sample.
+\end{Enumerate}
+
+Fisheries personnel attempt to control the first assumption by having a very short period between the first and second samples.  However, there are several ways in which the first assumption can be violated without adversely affecting the usability of the Petersen estimate \citep{Seber1982}.  If fish die while being marked and before being released, then the Petersen estimate will refer to the size of the population \textbf{after} the marked fish from the first sample are released.  Mortality between the first and second sample will not affect the Petersen estimate of initial population size if the rate of mortality is the \textbf{same} for both marked and unmarked individuals (i.e., so the proportion of marked animals in the population is not affected).  Recruitment of new individuals to the population will completely invalidate the Petersen method as an estimator of the initial population size.  However, if there is no mortality along with the recruitment, then the Petersen method will provide a valid estimate of the population size at the time of the \textbf{second} sample.  \cite{Seber1982} [p.73] provides a statistical test to detect recruitment between the two samples.
+
+The second assumption is difficult to assure because it is impossible to take a strict random sample in most real situations.  If all fish are equally catchable then a random sample can be approximated by sampling areas at random with constant effort \citep{Krebs1999}.  Systematic sampling is often used to select animals but this relies on the assumption that marked and unmarked animals mix uniformly through the population.
+
+Unequal catchability between marked and unmarked fish may arise from three general causes \citep{Eberhardt1969}:
+
+\begin{Enumerate}
+  \item The behavior of individuals in the vicinity of the trap.
+  \item Learning by animals already caught (i.e., trap-shy or trap-happiness).
+  \item Unequal opportunity to be caught because of trap positions.
+\end{Enumerate}
+
+Statistical tests exist (see \cite{Krebs1999}) to identify certain forms of unequal catchability, but all of these tests rely on more than two samples from the population.  Thus, in a Petersen type study, the biologist must take care to design fish collections that minimize these difficulties.
+
+Finally, violations of the last two assumptions result in the possible underestimation of the proportion of marked animals in the second sample which leads to overestimation of the population size.  The fourth assumption can be tested by ``double-marking'' a portion of the marked animals.  For example, the northern pike in Harding Lake were marked with a numbered floy tag and a partial fin-clip.  The proportion of lost-tags can be estimated from the recaptured fish and a correction applied to the population estimate.
+
+
+\section{Multiple Census Closed Population Mark-Recapture} \label{sect:MRClosed2}
+\subsection{Background}
+The population and sampling scheme for multiple sample methods on a closed population is shown in \figref{fig:AbundanceSchnabelScheme}.  The setup of this figure is the same as that for the Petersen method \figrefp{fig:AbundancePetersenScheme}, except that it is extended for more than two samples.  Note in this scheme that the population immediately after the $i$th sample is the same as the population immediately before the $(i+1)$th sample because the population is assumed closed.
+
+For each sample period ($i$) a total of $n_{i}$ fish are captured.  Each of the captured fish must be observed to have a mark or not.  The total number of marked fish in the $i$th sample is denoted with $m_{i}$, whereas the number of unmarked fish is $u_{i}$.  Immediately following the extraction of the $i$th sample, a total of $R_{i}$ marked fish are returned to the population.  The $R_{i}$ marked fish consists of the $m_{i}$ previously marked fish plus the $u_{i}$ previously unmarked but now newly marked fish, minus any accidental deaths of fish captured in the $i$th sample.  The accidental deaths should be kept negligible as it is assumed, with these methods, that the population is closed.  Thus, $R_{i}$ is typically equal to $m_{i}+u_{i}$.  A summary of the notation used in these methods is shown in \tabref{tab:AbundanceMarkSchnabelNotation}.
+
+\begin{figure}[hbtp]
+  \centering
+    \includegraphics[width=6.25in]{Figs/Schnabel_Scheme.jpg}
+  \caption{Schematic representation of a hypothetical four samples ($i=1,2,3,4$) in a Schnabel or Shumacher-Eschmeyer mark-recapture study.  See the text for detailed description and \tabref{tab:AbundanceMarkSchnabelNotation} for definitions of notation.}
+  \label{fig:AbundanceSchnabelScheme}
+\end{figure}
+
+
+\begin{table}[hbtp]
+  \centering
+  \caption{Summary of notation used in the Schnabel and Schumacher-Eschmeyer methods.} \label{tab:AbundanceMarkSchnabelNotation}
+  \begin{tabular}{cl}
+    \hline\hline
+    \widen{-2}{7}{Symbol} & \multicolumn{1}{c}{Meaning} \\
+    \hline
+    \widen{-1}{6}{$N$}     & The unknown size of the population just prior to the first sample. \\
+    \widen{-1}{6}{$k$}     & The number of samples in the entire study (i.e., $i=1\ldots k$) \\
+    \widen{-1}{6}{$n_{i}$} & The number of fish captured in the $i$th sample. \\
+    \widen{-1}{6}{$m_{i}$} & The number of marked fish in the $i$th sample.  $m_{1}=0$\\
+    \widen{-1}{6}{$u_{i}$} & The number of unmarked fish in the $i$th sample. \\
+              & \widen{0}{5}{The number of marked fish returned to the population after} \\
+    \rb{1.5}{$R_{i}$} & \widen{-1}{0}{      the $i$th sample.  $R_{k}=0$} \\
+              & \widen{0}{5}{The number of marked fish in the population just prior to} \\
+    \rb{1.5}{$M_{i}$} & \widen{-1}{0}{      the $i$th sample.  $M_{1}=0$} \\
+    \widen{-2}{7}{$\widehat{N}$} & The estimated size of the population just prior to the first sample. \\
+    \hline\hline
+  \end{tabular}
+\end{table}
+
+The two multiple-sample closed population methods to be discussed also rely on determining the number of marked fish extant in the population just prior to taking the $i$th sample, $M_{i}$.  Because these methods assume a closed population, this task is as simple as accumulating the number of previously unmarked fish returned to the population as marked fish prior to the $i$th sample.  Thus, $M_{i}=\Sum_{j=1}^{i-1}u_{j}$, or if there is the possibility of some accidental deaths, $M_{i}=\Sum_{j=1}^{i-1}\left(R_{j}-m_{j}\right)$.  By definition, $M_{1}=0$ because there are no marked fish in the population just prior to the first sample, .
+
+These summary values -- $n_{i}$, $m_{i}$, $u_{i}$, $R_{i}$, and $M_{i}$ -- may be recorded directly from each sample or they may be deciphered from summaries of individual capture histories.  For example, suppose that the frequencies of fish in each possible capture history is,
+
+\begin{Verbatim}[xleftmargin=5mm]
+Capture history  001 010 011 100 101 110 111
+Number of Fish   198 171  73  54   4  15   2
+\end{Verbatim}
+
+and there were no recorded accidental deaths.  From this summary of capture histories, the required summary statistics can be calculated.  For example,
+
+\begin{Itemize}
+  \item the number of fish captured in the first sample is
+     \[n_{1} = n_{1\cdot\cdot} = n_{100}+n_{101}+n_{110}+n_{111} = 54+4+15+2 = 75 \]
+  \item the number of fish captured in the second sample is
+     \[n_{2} = n_{\cdot 1\cdot} = n_{010}+n_{011}+n_{110}+n_{111} = 171+73+15+2 = 261 \]
+  \item the number of already marked fish captured in the second sample is
+     \[m_{2} = n_{11\cdot} = n_{110}+n_{111} = 15+2 = 17 \]
+  \item the total number of marked fish released immediately after the first sample is
+     \[R_{1} = m_{1}+u_{1}-\text{``accidental deaths''} = 0+75-0 = 75 \]
+  \item the total number of marked fish released immediately after the second sample is
+     \[R_{2} = m_{2}+u_{2}-\text{``accidental deaths''} = 17+244-0 = 261 \]
+  \item the number of marked fish just before the second sample is taken
+     \[M_{2} = M_{1}+\left(R_{1}-m_{1}\right) = 0+(75-0) = 75 \]
+  \item the number of marked fish just before the third sample is taken
+     \[M_{3} = M_{2}+\left(R_{2}-m_{2}\right) = 75+(261-17) = 319 \]
+\end{Itemize}
+
+These calculations, along with the remaining calculations not shown (i.e., $n_{3}$ and $m_{3}$) and the default values ($m_{1}=0$, $R_{3}=0$, and $M_{1}=0$), can be summarized in the following table,
+
+\begin{Verbatim}[xleftmargin=5mm]
+        ni mi  Ri  Mi
+first   75  0  75   0
+second 261 17 261  75
+third  277 79 277 319
+\end{Verbatim}
+
+It should be noted that $R_{i}=n_{i}$ only if there are no accidental deaths reported as was the case with this example. Again, it is possible for $R_{i} < n_{i}$, but $R_{i}$ should not be substantially lower than $n_{i}$.
+
+\subsection{Schnabel Method}
+The Schnabel equation for estimating $N$, derived in \appref{appsect:Schnabel}, is 
+
+\begin{equation} \label{eqn:AbundanceMarkSchnabel}
+  \hat{N} = \frac{\Sum_{i=1}^{k}n_{i}M_{i}}{\Sum_{i=1}^{k}m_{i}}
+\end{equation}
+
+The Schnabel estimation formula is very similar in form to \eqref{eqn:AbundanceMarkPetersen}.  In fact, \cite{Krebs1999} noted that \eqref{eqn:AbundanceMarkSchnabel} is basically a weighted average of individual Petersen estimates.
+
+\cite{Chapman1954} noted that \eqref{eqn:AbundanceMarkSchnabel} provides a slightly biased estimate of $N$.  Therefore, he suggested that \eqref{eqn:AbundanceMarkSchnabel} be modified with the inclusion of a 1 in the denominator,
+
+\begin{equation} \label{eqn:AbundanceMarkSchnabelChapman}
+  \hat{N} = \frac{\Sum_{i=1}^{k}n_{i}M_{i}}{\left(\Sum_{i=1}^{k}m_{i}\right)+1}
+\end{equation}
+
+\cite{Krebs1999} suggested that the Chapman modification of the Schnabel method should be used if the proportion of the total population caught in each sample (i.e., $\frac{n_{i}}{\hat{N}}$) is less than 0.1 and if the proportion of the population that is marked ($\frac{M_{i}}{\hat{N}}$) is always less than 0.1.  As a default, we suggest that the Chapman modification should be used at all times.
+
+\cite{Ricker1975} and \cite{Krebs1999} suggest two possible methods for constructing confidence intervals for $N$ with the Schnabel method.  First, if $\sum m_{i}$ is small (i.e., $<50$) then a Poisson approximation for constructing a confidence interval for $\sum m_{i}$ is used and the endpoints substituted into \eqref{eqn:AbundanceMarkSchnabel} or \eqref{eqn:AbundanceMarkSchnabelChapman} to construct confidence endpoints for $N$ (note that the confidence interval for $\sum m_{i}$ is constructed in the same manner as the confidence interval for $m$ in the Petersen method).  Alternatively, when $\sum m_{i}$ is large then a confidence interval is constructed for $\frac{1}{N}$ using standard confidence interval methods and
+
+\[ SE_{\frac{1}{\hat{N}}} = \sqrt{\frac{\Sum_{i=1}^{k}m_{i}}{\left(\Sum_{i=1}^{k}n_{i}M_{i}\right)^{2}}}  \]
+
+with $df=n-2$.
+
+
+\subsection{Schumacher-Eschmeyer Method}
+\cite{SchumacherEschmeyer1943} provided a separate estimation function for $N$,
+
+\begin{equation} \label{eqn:AbundanceMarkSchumEsch}
+  \hat{N} = \frac{\Sum_{i=1}^{k}n_{i}M_{i}^{2}}{\Sum_{i=1}^{k}m_{i}M_{i}}
+\end{equation}
+
+that is based on minimizing the weighted sum-of-squares between the the proportion of marked animals in a sample (i.e., $\frac{m_{i}}{n_{i}}$) and the unknown proportion of marked animals in the population (the proof is given in \apprefp{appsect:SchumacherEschmeyer}).
+
+The standard error of the reciprocal of this estimate is,
+
+\[ SE_{\frac{1}{\hat{N}}} = \sqrt{\frac{\sum\frac{m_{i}^{2}}{n_{i}}-\frac{\left(\sum m_{i}M_{i}\right)^{2}}{\sum n_{i}M_{i}^{2}}}{(k-2)\sum n_{i}M_{i}^{2}}}  \]
+
+where all of the summations extend from $i=1$ to $i=k$ and $k$ is the number of samples.  The confidence interval for $N$ is constructed by inverting the endpoints of the confidence interval for $\frac{1}{N}$ computed as usual with the standard error shown here.
+
+
+
+\subsection{Schnabel \& Schumacher-Eschmeyer Methods in R}
+The \R{mrClosed()} function can be used to efficiently estimate $N$ and construct associated confidence intervals for the Schnabel method.  The \R{mrClosed()} function is a flexible function that requires the $n_{i}$ and $m_{i}$ information and either the $M_{i}$ or $R_{i}$ information.  If this summary information is already known, then it can be sent as indivdual vectors in the \R{n=}, \R{m=}, \R{M=}, or \R{R=} arguments of \R{mrClosed()}.  Alternatively this information can be extracted from the \R{sum} component of the object saved from \R{capHistSum()}.  Even more simply, if the object from \R{capHistSum()} is sent as the first argument of \R{mrClosed()}, then the required information will be automatically extracted.  The Schnabel method is chosen by including \R{type="Schnabel"}.  Additionally, the Chapman modification can be selected with the \R{chapman.mod=TRUE} argument (which is the default).  The results of this function should be saved to an object which can then be submitted to \R{summary()} to extract the abundance estimate or \R{confint()} to extract the confidence interval for $N$.  The use of this function is illustrated in the following example.
+
+The New York Power Authority conducted a detailed study of the Buckthorn Marsh Restoration Project area to determine if the area was being used by northern pike as a spawning ground \citep{NYPA2004}.  Part of the study included tagging age-1 and older pike captured in fyke nets and by electrofishing with PIT tags and coded wire tags.  The PIT tags were uniquely numbered and the CWT were used to assess tag retention.  Overall, fish were captured on 21 days between March 28 and May 2.  The capture history of the fish captured from April 1-4 are recorded in \R{PikeNYPartial1}.  The data are loaded into R and viewed with
+<<>>=
+data(PikeNYPartial1)
+head(PikeNYPartial1)
+@
+From this it is seen that the captured histories are in all columns except for the first which contains the unique fish identification numbers.  Thus, the capture histories can be summarized using \R{capHistSum()} and making sure to exclude the first column from the analysis, as such,
+<<>>=
+ch1 <- capHistSum(PikeNYPartial1,cols=-1)
+ch1$sum
+@
+
+The estimated number of northern pike in the Buckthorn Marsh Restoration Project, with 95\% confidence interval, is then estimated using the Chapman modification of the Schnabel method by with
+<<>>=
+mr1 <- mrClosed(ch1,type="Schnabel")
+summary(mr1)
+confint(mr1)
+@
+
+Thus, there appears to be between \Sexpr{formatC(confint(mr1)[1],format="f",digits=0)} and \Sexpr{formatC(confint(mr1)[2],format="f",digits=0)} age-1 or older northern pike in Buckthorn Marsh.
+
+To illustrate using \R{mrClosed()} with summary information, one can use the summary values for the complete collection (not just the partial collection used above) of northern pike in the Buckthorn Marsh Restoration Project \citep{NYPA2004} found in \R{PikeNY}.  These data are loaded and viewed with
+<<>>=
+data(PikeNY)
+head(PikeNY)
+@
+From this, one can see that the data file contains the $n_{i}$, $m_{i}$, and $R_{i}$ information in the \var{n}, \var{m}, and \var{R} variables.  Thus, the number of northern pike in the Buckthorn Marsh Restoration Project, with 95\% confidence interval, was estimated using the Chapman modification of the Schnabel method with
+<<>>=
+mr2 <- with(PikeNY,mrClosed(n=n,m=m,R=R,type="Schnabel"))
+summary(mr2)
+confint(mr2)
+@
+Thus, there appears to be between \Sexpr{formatC(confint(mr2)[1],format="f",digits=0)} and \Sexpr{formatC(confint(mr2)[2],format="f",digits=0)} age-1 or older northern pike in Buckthorn Marsh.
+
+The calculations of the Schumacher-Eschmeyer method can be made with \R{mrClosed()} by including the \R{type="Schumacher"} argument.  The other arguments are exactly the same as those described for the Schnabel method except that the \R{chapman.mod=} argument is ignored.  The number of northern pike in the Buckthorn Marsh Restoration Project, with 95\% confidence interval, was estimated using the Schumacher-Eschmeyer method with
+<<>>=
+mr3 <- with(PikeNY,mrClosed(n=n,m=m,R=R,type="Schumacher"))
+summary(mr3)
+confint(mr3)
+@
+Thus, there appears to be between \Sexpr{formatC(confint(mr3)[1],format="f",digits=0)} and \Sexpr{formatC(confint(mr3)[2],format="f",digits=0)} age-1 or older northern pike in Buckthorn Marsh.
+
+The plot of $\frac{m_{i}}{n_{i}}$ against $M_{i}$ can be used to assess assumptions (see next section).  This plot is constructed by sending the object saved from \R{mrClosed()} to \R{plot()}.  A loess smoother, which may help highlight curvature in the plot, can be added to the plot by including the \R{loess=TRUE} argument.  For example, the plot for the entire collection of pike from Buckthorn Marsh \figrefp{fig:AbundanceSchnabelEx1} is constructed with
+
+<<SchnabelEx1, fig.cap="Plot of the proportion of marks in each sample versus the number of marked fish prior to the sample for the Buckthorn Marsh Northern Pike dataset.">>=
+plot(mr3,loess=TRUE)
+@
+
+It is clear from the curved nature of this plot that all of the assumptions for either the Schnabel or Schumacher-Eschmeyer methods have not been met.  Thus, the results shown in the previous two examples from these data should be interpreted with caution as they may be invalid.
+
+
+\subsection{Assumptions of Schnabel \& Schumacher-Eschmeyer Methods}
+The Schnabel and Schumacher-Eschmeyer methods rest on the same assumptions as the Petersen method.  Thus, the discussion of the effect of violating assumptions of the Petersen method (see \sectref{sect:AbundanceMRPetersenAssumptions}) pertains also to the Schnabel and Schumacher-Eschmeyer methods.  One advantage of these multiple census methods is that violations of the assumptions are more easily detected because of the multiple samples.  The primary diagnostic tool for these methods is the plot of $\frac{m_{i}}{n_{i}}$ against $M_{i}$.  If this plot is not linear then one or more of the assumptions of the Schnabel and Schumacher-Eschmeyer methods has been violated.  Unfortunately, the shape of the graph is not an indication of which assumption is violated (thus, the conclusion is that an assumption has been violated but it is not clear which one).
+
+
+
+
+%BIBLIOGRAPHY ------------------------------------------------------------------
+\phantomsection    %not sure why, this is needed so that TOC entry will point to right start page
+\addcontentsline{toc}{section}{References}       %Add a TOC entry
+\bibliography{c:/aaaWork/zGnrlLatex/DHO_bib}    %make the bibliography
+
+
+\newpage
+\begin{appendices}
+\section{Petersen Abundance Estimate is MLE}  \label{appsect:PetersenMLE}
+\subsection*{Sampling Without Replacement}
+The Petersen method can also be cast as a Bernoulli process.  After the marked fish are returned to the population then the population consists of two types of fish -- those that are marked and those that are not.  The removal of a single fish, which has probability $\frac{M}{N}$ of being marked, and the recording of whether it was marked (i.e., ``success'') or not is the start of a Bernoulli process.  If successive fish removed from the population in the second sample are independent of each other then we have a true Bernoulli process and the total number of marked fish found in the second sample (i.e., $m$) is a random variable that follows a binomial distribution.  If successive fish removed from the population in the second sample are not independent then the total number of marked fish in the second sample follows a hypergeometric distribution.  Strictly speaking, the removal of the fish in the second sample are not independent, except in circumstances where the fish are simply observed rather then removed in the second sample.  However, if the population is large, the number of marked fish is large, and the size of the second sample is relatively small then the assumption of independent fish is not grossly violated and the binomial distribution may be used.
+
+The likelihood functions for $N$ can be constructed from the theory discussed in the previous paragraph.  If fish removed from the population in the second sample are not independent then the likelihood function follows a hypergeometric distribution, i.e.,
+
+\begin{equation} \label{eqn:AbundanceMarkLHHypergeom}
+L(N|M,n,n) = \frac{
+    \left(\begin{array}[pos]{c}
+    M\\
+    m\end{array}\right)\left(\begin{array}[pos]{c}
+    N-M\\
+    n-m\end{array}\right)}{\left(\begin{array}[pos]{c}
+    N\\
+    n\end{array}\right)}
+\end{equation}
+
+The following is a proof, following that of \cite{Feller1968} (as shown in \cite{Tuckwell1995}), that the Petersen estimate of abundance (i.e., \eqref{eqn:AbundanceMarkPetersen}) maximizes this likelihood function.
+
+This proof begins by creating the ratio of the likelihood function at two consecutive values of the population size $N$, i.e., $N$ and $N-1$,
+
+\[ \frac{L(N|M,n,m)}{L(N-1|M,n,m)} =
+  \frac{\frac{
+    \left(\begin{array}[pos]{c}
+    M\\
+    m\end{array}\right)\left(\begin{array}[pos]{c}
+    N-M\\
+    n-m\end{array}\right)}{\left(\begin{array}[pos]{c}
+    N\\
+    n\end{array}\right)}}
+    {\frac{
+    \left(\begin{array}[pos]{c}
+    M\\
+    m\end{array}\right)\left(\begin{array}[pos]{c}
+    N-1-M\\
+    n-m\end{array}\right)}{\left(\begin{array}[pos]{c}
+    N-1\\
+    n\end{array}\right)}}
+\]
+
+It is immediately seen that the first term in the numerators of both the numerator and denominator above cancel.  In addition, if the fraction in the denominator is flipped, multiplied times the numerator, and the whole expression rearranged then the above expression, simplifies to,
+
+\begin{equation} \label{eqn:AbundanceMRPetersenMLEint1}
+  \frac{L(N|M,n,m)}{L(N-1|M,n,m)} =
+  \frac{\left(\begin{array}[pos]{c}
+    N-1\\
+    n\end{array}\right)
+  }
+  {\left(\begin{array}[pos]{c}
+    N\\
+    n\end{array}\right)
+  } \bullet
+  \frac{\left(\begin{array}[pos]{c}
+    N-M\\
+    n-m\end{array}\right)
+  }
+  {\left(\begin{array}[pos]{c}
+    N-M-1\\
+    n-m\end{array}\right)
+  }
+\end{equation}
+
+A fundamental property of combinatorics states that
+
+\[\frac{\left(\begin{array}[pos]{c}
+    A-1\\
+    B\end{array}\right)
+  }
+  {\left(\begin{array}[pos]{c}
+    A\\
+    B\end{array}\right)
+  }
+  =
+  \frac{A-B}{A} \]
+
+Thus, the two fractions in \eqref{eqn:AbundanceMRPetersenMLEint1} can be simplified as,
+
+\begin{equation}  \label{eqn:AbundanceMRPetersenMLEint2}
+ \begin{split}
+  \frac{L(N|M,n,m)}{L(N-1|M,n,m)} &=
+  \frac{N-n}{N}\bullet\frac{N-M}{N-M-n+m} \\
+  &= \frac{N^{2}-NM-Nn+Mn}{N^{2}-NM-Nn+Nm}
+ \end{split}
+\end{equation}
+
+This ratio is equal to 1 if $Mn=Nm$ or, equivalently, if $N=\frac{Mn}{m}$.  In addition, the ratio is less than 1 if $Mn<Nm$ or $N<\frac{Mn}{m}$ and is greater than 1 if $Mn>Nm$ or $N>\frac{Mn}{m}$.  Therefore, the sequence of $L(N|M,n,m)$ for $N=1,2,\ldots$ is increasing when $N<\frac{Mn}{m}$ and is decreasing when $N>\frac{Mn}{m}$ and, $L(N|M,n,m)$ is maximized when $N=\frac{Mn}{m}$.  This shows that the Petersen estimate of abundance (i.e., \eqref{eqn:AbundanceMarkPetersen}) is a maximum likelihood estimator when the underlying distribution is hypergeometric.
+
+\subsection*{Sampling With Replacement}
+Alternatively, as discussed in the previous section, if the fish removed can be considered independent then the likelihood function follows a binomial distribution, i.e.,
+
+\begin{equation} \label{eqn:AbundanceMarkLHBinomial}
+L(N|M,n,m) = \left(\begin{array}[pos]{c}
+    n\\
+    m\end{array}\right) \left(\frac{M}{N}\right)^{m}\left(1-\frac{M}{N}\right)^{n-m}
+\end{equation}
+
+The following is a proof that the Petersen estimate of abundance (i.e., \eqref{eqn:AbundanceMarkPetersen}) maximizes this likelihood function.
+
+This proof begins by noting that the combination in the binomial likelihood function (i.e., in \eqref{eqn:AbundanceMarkLHBinomial}) does not contain $N$ and can, thus, be dropped from this maximizing procedure.  Thus, the function to maximize is,
+
+\[ L(N|M,n,m) \varpropto \left(\frac{M}{N}\right)^{m}\left(1-\frac{M}{N}\right)^{n-m} \]
+
+This is converted (and simplified) to a log-likelihood,
+
+\[ \begin{split}
+ lnL(N|M,n,m) &\varpropto mln(M)-N_{1}log(N)+(n - m)log(N-M)-(n - m)log(N) \\
+ &\varpropto mln(M)+(n-m)log(N-M)-nln(N)
+\end{split} \]
+
+The derivative of the log-likelihood with regard to $N$ is (recall that the derivative for all terms in the log-likelihood not involving $N$ is zero),
+
+\[ \frac{\partial lnL(N|M,n,m)}{\partial N} \varpropto \frac{n-m}{N-M} - \frac{n}{N} \]
+
+This derivative is then set equal to zero and solved for $N$,
+
+\[ \begin{split}
+\frac{n-m}{N-M} - \frac{n}{N} &= 0 \\
+\frac{n-m}{N-M} &= \frac{n}{N} \\
+Nn-Nm &= nN-nM \\
+nM - Nm &= 0 \\
+N &= \frac{nM}{m}
+\end{split} \]
+
+Therefore, $L(N|M,n,m)$ is maximized when $N=\frac{Mn}{m}$.  This shows that the Petersen estimate of abundance (i.e., \eqref{eqn:AbundanceMarkPetersen}) is a maximum likelihood estimator when the underlying distribution is binomial.
+
+
+\section{Schnabel Estimate of $N$}  \label{appsect:Schnabel}
+After the initial sample, the probability that a marked fish is captured is equal to the ratio of the number of marked fish extant in the population to the size of the population (i.e., $\frac{M_{i}}{N}$).  Under the assumption of sampling with replacement, the sampling process will be a Bernoulli process and the total number of successes (i.e., marks) in a sample will follow a binomial distribution.  Thus, the probability of observing $m_{i}$ marked and $u_{i}$ unmarked fish in the $i$th sample is given, by the binomial distribution, as
+
+\[ f(m_{i}|M_{i},n_{i},m_{i})= \left(\begin{array}[pos]{c}
+      n_{i}\\
+      m_{i}\end{array}\right) \left(\frac{M_{i}}{N}\right)^{m_{i}}\left(1-\frac{M_{i}}{N}\right)^{u_{i}}
+\]
+
+If the multiple samples are independent of each other then it follows that the likelihood function based on the observed catches is
+
+\[ L(N|M_{i},n_{i},m_{i}) = \prod_{i=1}^{k}f(m_{i}|M_{i},n_{i},m_{i}) = \prod_{i=1}^{k}\left(\begin{array}[pos]{c}
+      n_{i}\\
+      m_{i}\end{array}\right) \left(\frac{M_{i}}{N}\right)^{m_{i}}\left(1-\frac{M_{i}}{N}\right)^{u_{i}}
+\]
+
+This likelihood function is complicated, with $k$ roots, but \cite{Schnabel1938} showed that the positive real root of
+
+\begin{equation} \label{eqn:AbundanceMarkSchnabelSolution1}
+  \Sum_{i=1}^{k}\frac{n_{i}M_{i}-m_{i}N}{N-M_{i}}
+\end{equation}
+
+is an approximate estimate of $N$.  Furthermore, if $M_{i}$ is small relative to $N$ then the denominator of \eqref{eqn:AbundanceMarkSchnabelSolution1} is approximately $N$.  Thus, after substituting $N$ for $N-M_{i}$ in the denominator, straightforward algebraic manipulation of \eqref{eqn:AbundanceMarkSchnabelSolution1} yields \eqref{eqn:AbundanceMarkSchnabel}.
+
+\cite{Schnabel1938} also derived \eqref{eqn:AbundanceMarkSchnabel} beginning with a Poisson-based likelihood function and from an argument based on the expected number of recaptures from a Poisson distribution.
+
+
+\section{Schumacher-Eschmeyer Estimate of $N$}  \label{appsect:SchumacherEschmeyer}
+\cite{SchumacherEschmeyer1943} noted that $\hat{N}$ is the value of $N$ that minimizes the weighted least-squares criterion,
+
+\begin{equation} \label{eqn:AbundanceMarkSchumEschProof1}
+  L(N) = \Sum_{i=1}^{k}n_{i}\left(\frac{m_{i}}{n_{i}}-\frac{M_{i}}{N}\right)^{2}
+\end{equation}
+
+The first step in this proof is to re-write \eqref{eqn:AbundanceMarkSchumEschProof1},
+
+\[
+  \begin{split}
+    L(N) &= \Sum_{i=1}^{k}n_{i}\left(\frac{m_{i}^{2}}{n_{i}^{2}}-2\frac{m_{i}M_{i}}{n_{i}N}+\frac{M_{i}^{2}}{N^{2}}\right)\\
+    &= \Sum_{i=1}^{k}\left(\frac{m_{i}^{2}}{n_{i}}-2\frac{m_{i}M_{i}}{N}+\frac{n_{i}M_{i}^{2}}{N^{2}}\right)
+  \end{split}
+\]
+
+The derivative of this function with respect to $N$ yields,
+
+\[
+  \begin{split}
+    \frac{\partial L(N)}{\partial N} &= \Sum_{i=1}^{k}\left(0+2\frac{m_{i}M_{i}}{N^{2}}-2\frac{n_{i}M_{i}^{2}}{N^{3}}\right) \\
+    &= \frac{2}{N^{2}}\Sum_{i=1}^{k}m_{i}M_{i} - \frac{2}{N^{3}}\Sum_{i=1}^{k}n_{i}M_{i}^{2}
+  \end{split}
+\]
+
+which is then set equal to 0 and $N$ is solved for,
+
+\[
+  \begin{split}
+     \frac{2}{N^{2}}\Sum_{i=1}^{k}m_{i}M_{i} - \frac{2}{N^{3}}\Sum_{i=1}^{k}n_{i}M_{i}^{2} &= 0 \\
+     \frac{2}{N^{2}}\Sum_{i=1}^{k}m_{i}M_{i} &= \frac{2}{N^{3}}\Sum_{i=1}^{k}n_{i}M_{i}^{2} \\
+     N &= \frac{\Sum_{i=1}^{k}n_{i}M_{i}^{2}}{\Sum_{i=1}^{k}m_{i}M_{i}}
+  \end{split}
+\]
+
+\end{appendices}
+
+<<echo=FALSE, results='asis'>>=
+## will add the reproducibility information
+et <- proc.time() - stime
+swvFinish(rqrdPkgs=rqrd,newPage=TRUE,elapsed=et["user.self"]+et["sys.self"])
+@
+<<echo=FALSE, results='hide', include=FALSE>>=
+## Will create the script file
+swvCode(moreItems=c("source","rqrd","stime"))
+@
+\end{document} 

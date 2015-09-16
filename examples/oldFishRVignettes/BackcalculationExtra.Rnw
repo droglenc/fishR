@@ -1,0 +1,301 @@
+\documentclass[a4paper]{article}
+\input{c:/aaaWork/zGnrlLatex/GnrlPreamble}
+\usepackage[toc,page]{appendix}
+\usepackage{longtable}
+\input{c:/aaaWork/zGnrlLatex/JustRPreamble}
+\hypersetup{pdftitle = fishR Vignette -- Back-Calculation Extra}
+
+\begin{document}
+\titleFishR{Back-Calculation, Vigliola and Meekan's Formulations}
+<<setup, echo=FALSE, include=FALSE>>=
+## Start time for keeping track of process time
+ stime <- proc.time()
+## load common knitr setup
+source("../knitr_Common.r")
+@
+
+This vignette attempts to fit the models and apply the back-calculation models that are detailed in Appendix 1 of \cite{VigliolaMeekan2009}.  As with the main back-calculation vignette, this vignette requires functions in the \R{FSA} package maintained by the author and the \R{lattice} and \R{doBy} packages.  These packages are loaded into R with
+<<echo=-1, results='hide', warning=FALSE, message=FALSE>>=
+rqrd <- c("FSA","lattice","doBy")
+library(FSA)
+library(lattice)  # for pairs
+library(doBy)     # for summaryBy
+@
+
+All analyses in this document use the West Bearskin Lake smallmouth bass (\emph{Micropterus dolomieu}) data set used in \cite{Weisberg1993}.  The West Bearskin Lake smallmouth bass data are found in the \R{SMBassWB} data file of the \R{FSAdata} package and can be read into R with,
+
+<<>>=
+data(SMBassWB)
+@
+
+For the purposes of this example the analysis will focus on only those fish captured in 1990 as found from the year-at-capture and age-at-capture with,
+
+<<>>=
+SMBassWByearclass <- SMBassWB$yearcap-SMBassWB$agecap
+wb90 <- Subset(SMBassWB,yearcap==1990)
+@
+
+
+
+\section{Fitting the Various Linear Models}
+
+<<>>=
+wb90$logR <- log(wb90$radcap)
+wb90$logL <- log(wb90$lencap)
+@
+
+<<>>=
+# 0 forces not fitting intercept
+f1 <- g1 <- lm(lencap~0+radcap,data=wb90)
+f2 <- lm(radcap~lencap,data=wb90)
+f3 <- lm(radcap~lencap+agecap,data=wb90)
+f4 <- lm(logR~logL,data=wb90)
+## next model does not converge with these data
+f4n <- nls(radcap~B*radcap^C,data=wb90,start=list(B=exp(coef(f4)[1]),C=coef(f4)[2]),
+  control=list(maxiter=500,warnOnly=TRUE))
+##
+f5 <- nls(radcap~((lencap-a)/b)^(1/c),data=wb90,start=list(a=0,b=exp(coef(f4)[1]/
+    coef(f4)[2]),c=1/coef(f4)[2]))
+f6 <- lm(radcap~poly(lencap,2,raw=TRUE),data=wb90)
+# f7 is demonstrated with a cubic polynomial
+f7 <- lm(radcap~poly(lencap,3,raw=TRUE),data=wb90)
+f8 <- lm(radcap~logL,data=wb90)
+
+g2 <- lm(lencap~radcap,data=wb90)
+g3 <- lm(lencap~radcap+agecap,data=wb90)
+g4 <- lm(logL~logR,data=wb90)
+g4n <- nls(lencap~b*radcap^c,data=wb90,start=list(b=exp(coef(g4)[1]),c=coef(g4)[2]))
+g5 <- nls(lencap~a+b*radcap^c,data=wb90,start=list(a=0,b=exp(coef(g4)[1]),c=coef(g4)[2]))  
+g6 <- lm(lencap~poly(radcap,2,raw=TRUE),data=wb90)
+# g7 is demonstrated with a cubic polynomial
+g7 <- lm(lencap~poly(radcap,3,raw=TRUE),data=wb90)
+g8lin <- lm(logL~radcap,data=wb90)
+g8 <- nls(lencap~exp(a+b*radcap),data=wb90,start=list(a=coef(g8lin)[1],b=coef(g8lin)[2]))
+@
+
+
+\section{Peforming the Back-Calculations}
+Must reshape first ...
+<<>>=
+wb90r <- gReshape(wb90,in.pre="anu")
+head(wb90r)
+@
+
+<<>>=
+##
+## Back-calculating with BCM1 (Dahl-Lea)
+( BCM1 <- bcFuns(1) )
+wb90r$bcm1 <- with(wb90r,BCM1(lencap,anu,radcap))
+
+##
+## Back-calculating with BCM2 (Fraser-Lee)
+( BCM2 <- bcFuns(2) )
+( a <- coef(g2)[1] )
+wb90r$bcm2 <- with(wb90r,BCM2(lencap,anu,radcap,a))
+
+##
+## Back-calculating with BCM3
+( BCM3 <- bcFuns(3) )
+# Set biological intercept values
+L0p <- 20            # just made this up
+R0p <- 0.2           #    this too
+wb90r$bcm3 <- with(wb90r,BCM3(lencap,anu,radcap,L0p,R0p))
+
+##
+## Back-calculating with BCM4
+( BCM4 <- bcFuns(4) )
+( a <- coef(g2)[1] )
+( b <- coef(g2)[2] )
+wb90r$bcm4 <- with(wb90r,BCM4(lencap,anu,radcap,a,b))
+
+##
+## Back-calculating with BCM6
+( BCM6 <- bcFuns(6) )
+( A <- coef(f2)[1] )
+( B <- coef(f2)[2] )
+wb90r$bcm6 <- with(wb90r,BCM6(lencap,anu,radcap,A,B))
+
+##
+## Back-calculating with BCM7
+( BCM7 <- bcFuns(7) )
+( a <- coef(f3)[1] )
+( b <- coef(f3)[2] )
+( c <- coef(f3)[3] )
+wb90r$bcm7 <- with(wb90r,BCM7(lencap,anu,radcap,prvAge,agecap,a,b,c))
+
+##
+## Back-calculating with BCM8
+( BCM8 <- bcFuns(8) )
+( A <- coef(g3)[1] )
+( B <- coef(g3)[2] )
+( C <- coef(g3)[3] )
+wb90r$bcm8 <- with(wb90r,BCM8(lencap,anu,radcap,prvAge,agecap,A,B,C))
+
+##
+## Back-calculating with BCM9
+( BCM9 <- bcFuns(9) )
+( c <- coef(g4)[2] )
+wb90r$bcm9 <- with(wb90r,BCM9(lencap,anu,radcap,c))
+
+##
+## Back-calculating with BCM10
+( BCM10 <- bcFuns(10) )
+( c <- coef(g4n)[2] )
+wb90r$bcm10 <- with(wb90r,BCM10(lencap,anu,radcap,c))
+
+##
+## Back-calculating with BCM11
+( BCM11 <- bcFuns(11) )
+# would use f4n here but it did not converge for these data
+( C <- coef(f4)[2] )
+wb90r$bcm11 <- with(wb90r,BCM11(lencap,anu,radcap,C))
+
+##
+## Back-calculating with BCM13
+( BCM13 <- bcFuns(13) )
+( a <- coef(g5)[1] )
+# arbitrarily choose R0 to be smallest (anu)lus measurement
+( R0 <- min(wb90r$anu) )
+# L0 is point on g5 line corresponding to R0
+( L0 <- predict(g5,data.frame(radcap=R0)) )
+wb90r$bcm13 <- with(wb90r,BCM13(lencap,anu,radcap,L0,R0,a))
+
+##
+## Back-calculating with BCM14
+( BCM14 <- bcFuns(14) )
+# Set biological intercept values (both are made up for this example)
+L0p <- 10
+R0p <- 0.2
+
+# Perform V&M g5 and f5 regressions via nls but with biological intercepts
+g5m <- nls(lencap~L0p-b*R0p^c+b*radcap^c,data=wb90,
+           start=list(b=exp(coef(g4)[1]),c=coef(g4)[2]))
+f5m <- nls(radcap~((lencap-L0p-b*R0p^c)/b)^(1/c),data=wb90,
+           start=list(b=exp(coef(f4)[1]/coef(f4)[2]),c=1/coef(f4)[2]))
+
+# extract parameter values from the L-R and R-L regressions in order to compute a
+b1 <- coef(g5m)[1];  c1 <- coef(g5m)[2]
+a1 <- L0p-b1*R0p^c1
+b2 <- coef(f5m)[1];  c2 <- coef(f5m)[2]
+a2 <- L0p-b2*R0p^c2
+# used as.numeric() to strip attribute which was labeled as b
+( a <- as.numeric((a1+a2)/2) )
+
+wb90r$bcm14 <- with(wb90r,BCM14(lencap,anu,radcap,L0p,R0p,a))
+
+##
+## Back-calculating with BCM15
+( BCM15 <- bcFuns(15) )
+( a <- coef(g5)[1] )
+( b <- coef(g5)[2] )
+( c <- coef(g5)[3] )
+wb90r$bcm15 <- with(wb90r,BCM15(lencap,anu,radcap,a,b,c))
+
+##
+## Back-calculating with BCM16
+( BCM16 <- bcFuns(16) )
+( a <- coef(f5)[1] )
+( b <- coef(f5)[2] )
+( c <- coef(f5)[3] )
+wb90r$bcm16 <- with(wb90r,BCM16(lencap,anu,radcap,a,b,c))
+
+##
+## Back-calculating with BCM17
+( BCM17 <- bcFuns(17) )
+( a <- coef(g6)[1] )
+( b <- coef(g6)[2] )
+( c <- coef(g6)[3] )
+wb90r$bcm17 <- with(wb90r,BCM17(lencap,anu,radcap,a,b,c))
+
+##
+## Back-calculating with BCM18
+( BCM18 <- bcFuns(18) )
+( a <- coef(f6)[1] )
+( b <- cf1 <- coef(f6)[2] )
+( c <- cf2 <- coef(f6)[3] )
+wb90r$bcm18 <- with(wb90r,BCM18(lencap,anu,radcap,a,b,c))
+
+##
+## Back-calculating with BCM19
+( BCM19 <- bcFuns(19) )
+( a <- coef(g7) )
+wb90r$bcm19 <- with(wb90r,BCM19(lencap,anu,radcap,a))
+
+##
+## Back-calculating with BCM20
+( BCM20 <- bcFuns(20) )
+( a <- coef(f7) )
+wb90r$bcm20 <- with(wb90r,BCM20(lencap,anu,radcap,a))
+
+##
+## Back-calculating with BCM21
+( BCM21 <- bcFuns(21) )
+( a <- coef(g8)[1] )
+( b <- coef(g8)[2] )
+wb90r$bcm21 <- with(wb90r,BCM21(lencap,anu,radcap,a,b))
+
+##
+## Back-calculating with BCM22
+( BCM22 <- bcFuns(22) )
+( a <- -coef(f8)[1]/coef(f8)[2] )
+wb90r$bcm22 <- with(wb90r,BCM22(lencap,anu,radcap,a))
+@
+
+\section{Some Comparisons}
+
+<<>>=
+means <- summaryBy(bcm1+bcm2+bcm3+bcm4+bcm6+bcm7+bcm8+bcm9+bcm10+
+                   bcm11+bcm13+bcm14+bcm15+bcm16+bcm17+bcm18+bcm19+bcm20+
+                   bcm21+bcm22~prvAge,data=wb90r,FUN=mean,na.rm=TRUE,keep.names=TRUE)
+round(means,0)
+( ns <- summaryBy(bcm1+bcm2+bcm3+bcm4+bcm6+bcm7+bcm8+bcm9+bcm10+
+                  bcm11+bcm13+bcm14+bcm15+bcm16+bcm17+bcm18+bcm19+bcm20+
+                  bcm21+bcm22~prvAge,data=wb90r,FUN=length,keep.names=TRUE) )
+@
+
+Suppose we want to compare the mean length-at-age computed with the BCM4, BCM6, BCM7, BCM8, BCM14, BCM19, and BCM20 models 
+
+<<MeanLengthAtAge1, echo=FALSE, fig.width=7, fig.height=7, out.width='.8\\linewidth', fig.cap="Mean back-calculated lengths-at-age for West Bearskin Lake smallmouth bass for a variety of pairs of models.">>=
+means2 <- means[,c("bcm4","bcm6","bcm7","bcm8","bcm14","bcm19","bcm20")]
+round(means2,0)
+clrs <- chooseColors("rainbow",7)
+plot(means2$bcm4~means$prvAge,type="l",lwd=2,col=clrs[1],ylim=range(means2),
+  xlab="Age",ylab="Back-Calculated TL")
+lines(means2$bcm6~means$prvAge,lwd=2,col=clrs[2])
+lines(means2$bcm7~means$prvAge,lwd=2,col=clrs[3])
+lines(means2$bcm8~means$prvAge,lwd=2,col=clrs[4])
+lines(means2$bcm14~means$prvAge,lwd=2,col=clrs[5])
+lines(means2$bcm19~means$prvAge,lwd=2,col=clrs[6])
+lines(means2$bcm20~means$prvAge,lwd=2,col=clrs[7])
+legend("topleft",legend=c("bcm4","bcm6","bcm7","bcm8","bcm14","bcm19","bcm20"),
+  col=clrs,lwd=2)
+@
+
+... against each other with a red line showing perfect agreement ...
+<<MeanLengthAtAge2, include=FALSE, fig.width=7, fig.height=7, out.width='.8\\linewidth', fig.cap="Mean back-calculated lengths-at-age for West Bearskin Lake smallmouth bass plotted against each other for a variety of pairs of models (shown on plot diagonal).  The red line represents perfect agreement in mean-length-at-age between the two models.">>=
+pairs(means2,
+      panel= function(x,y,...){
+        lines(x,y,lwd=2);
+        abline(coef=c(0,1),col="red",lwd=2,lty=2)
+      }
+     )
+@
+        
+
+%BIBLIOGRAPHY -----------------------------------------------------------------------------------
+\cleardoublepage   %not sure why, this is needed so that TOC entry will point to right start page
+\phantomsection    %not sure why, this is needed so that TOC entry will point to right start page
+\addcontentsline{toc}{section}{References}       %Add a TOC entry
+\bibliography{c:/aaaWork/zGnrlLatex/DHO_bib}    %make the bibliography
+
+<<echo=FALSE, results='asis'>>=
+## will add the reproducibility information
+et <- proc.time() - stime
+swvFinish(rqrdPkgs=rqrd,newPage=FALSE,elapsed=et["user.self"]+et["sys.self"])
+@
+<<echo=FALSE, results='hide', include=FALSE>>=
+## Will create the script file
+swvCode(moreItems=c("source","rqrd","stime"))
+@
+
+\end{document} 

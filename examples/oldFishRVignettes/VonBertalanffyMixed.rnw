@@ -1,0 +1,384 @@
+\documentclass[a4paper]{article}
+\input{c:/aaaWork/zGnrlLatex/GnrlPreamble}
+\usepackage[toc,page]{appendix}
+\usepackage{longtable}
+\input{c:/aaaWork/zGnrlLatex/JustRPreamble}
+\hypersetup{pdftitle = fishR Vignette -- Mixed Effects Von Bertalanffy}
+
+\begin{document}
+\titleFishR{Von Bertalanffy Growth Model, Mixed Effects}
+
+<<setup, echo=FALSE, include=FALSE>>=
+## Start time for keeping track of process time
+ stime <- proc.time()
+## load common knitr setup
+source("../knitr_Common.r")
+@
+
+\emph{\textbf{XXX THIS IS A WORK IN PROGRESS XXX}}
+
+The functions required to perform growth analyses in R are contained in the packages loaded below,
+<<echo=-1, results='hide', warning=FALSE, message=FALSE>>=
+rqrd <- c("FSA","lattice","nlme")
+library(FSA)
+library(lattice)
+library(nlme)
+@
+
+\section{The Data}
+The ``data'' used in this vignette will be simulated individual length-at-age data as described in \cite{VigliolaMeekan2009}.  These data may be thought of as back-calculated lengths-at-age.  Ten individuals aged 4 to 12 will be simulated with mean $L_{\infty}$=30, $K$=0.2, and $t_{0}$=-0.02 with the code below (see \cite{VigliolaMeekan2009} and \R{?vbDataGen} for more details).  The random seed was set to allow reproducibility.
+<<warning=FALSE>>=
+### Set seed to make reproducible
+set.seed(158936)
+### Make some data -- 10 individuals
+dw <- vbDataGen(10,Linf=30,K=0.2,t0=-0.02,minAge=4,maxAge=12,CV=0.05,undf=10,dataType="wide")
+head(dw)
+@
+
+The data in \R{dw} are in ``wide'' format but need to be in ``long'' format for the modeling.  The conversion from ``wide'' to ``long'' format is accomplished with \R{gReshape()} as shown below.  Finally, the long format data can be put into a ``groupedData'' format with \R{groupedData()} for ease of graphing and modeling.
+<<>>=
+dl <- gReshape(dw,in.pre="anu",id.var=c("id","agecap"),na.rm=TRUE)
+head(dl)
+dg <- groupedData(anu~age|id,data=dl,labels=list(x="Age",y="Size"),units=list(x="(Years)",
+                  y="(cm)"))
+head(dg)
+str(dg)
+@
+
+The individual data are observed \figrefp{fig:GroupedDataStrux} by plotting the groupedData data frame \R{dg},
+<<GroupedDataStrux, fig.width=7, fig.height=7>>=
+plot(dg)
+@
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=6in]{Figs/GroupedDataStrux}
+  \caption{Individual lengths-at-age for ten simulated individuals.}
+  \label{fig:GroupedDataStrux}
+\end{figure}
+
+A plot of length-at-age ignoring the repeated measures nature of the data \figrefp{fig:lengthAtAge} is created by plotting \var{anu} versus \var{agecap} from either the long or groupedData data frame,
+<<lengthAtAge, fig.width=3.5, fig.height=3.5, par1=TRUE>>=
+plot(anu~age,data=dg,ylab="Length (cm)",xlab="Age (years)")
+@
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=3in]{Figs/lengthAtAge}
+  \caption{Lengths-at-age for ten simulated individuals ignoring the repeated-measures natures of the data.}
+  \label{fig:lengthAtAge}
+\end{figure}
+
+
+\clearpage
+\section{Fitting Individual von Bertalanffy Models}
+A function for the ``typical'' or ``traditional'' von Bertalanffy model is created with \R{vbFuns()} as follows,
+<<>>=
+### Create a vonB function for ease of use
+( vb <- vbFuns("typical",simple=TRUE) )
+@
+
+Starting values are obtained by fitting the typical von Bertalanffy to ``all'' of the data ignoring the repeated-measures nature.  This is most easily accomplished with \R{vbStarts()} as follows,
+<<>>=
+## get started values for all fish together
+vbs <- vbStarts(anu~age,data=dg,"typical")
+unlist(vbs)   # unlist is only used for the presentation
+@
+
+The typical von Bertalanffy model found in the \R{vb} object is fit to each individual fish with \R{nlsList()} as follows,
+<<>>=
+## Fit all of the nls models at once
+resAll <- nlsList(anu~vb(age,Linf,K,t0),data=dg,start=vbs)
+@
+with the individual coefficients obtained with \R{coef()} as follows,
+<<>>=
+# get coefficient results
+( cfAll <- coef(resAll) )
+@
+
+The means, standard deviation, and coefficient of variation for each coefficient can be obtained with,
+<<>>=
+# average coefficients over all fish
+( cfMean <- apply(cfAll,2,mean,na.rm=TRUE) )
+# SD coefficients over all fish
+( cfSd <- apply(cfAll,2,sd,na.rm=TRUE) )
+# CV of coefficients over all fish
+( cfCV <- apply(cfAll,2,function(x) sd(x,na.rm=TRUE)/mean(x,na.rm=TRUE) )  )
+@
+
+Finally, a plot of the model fits for each individual can be be put on one figure \figrefp{fig:indivModels} to get a feel of where the individual variation occurs,
+<<indivModels, fig.width=3.5, fig.height=3.5, par1=TRUE>>=
+### Put all model fits on one graph to observe where variation is
+plot(-1,-1,xlab="Age",ylab="Length",xlim=c(1.1*cfMean[3],max(dw$agecap)),
+     ylim=c(0,1.1*cfMean[1]))
+for (i in 1:nrow(cfAll)) {
+  curve(vb(x,cfAll[i,1],cfAll[i,2],cfAll[i,3]),from=floor(cfMean[3]),to=11,add=TRUE)
+}
+@
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=3in]{Figs/indivModels}
+  \caption{Fitted line plots for the typical von Bertalanffy model fit to the lengths-at-age separately for each of ten simulated individuals.}
+  \label{fig:indivModels}
+\end{figure}
+
+
+\clearpage
+\section{Fitting Mixed-Effect von Bertalanffy Models}
+
+All models below use the same list for starting values of the fixed-effects.  Thus, this list is saved to an object as follows,
+<<>>=
+vbMEs <- list(fixed=c(Linf=cfMean[1],K=cfMean[2],t0=cfMean[3]))
+@
+
+The mixed effects model with fixed-effect estimates of the population mean value for each parameter and random effects for each parameter (i.e., estimates of the individual variability around each mean parameter) would be fit with \R{nlme()} as shown below.  However, this model did not converge.
+<<eval=FALSE>>=
+vbME0 <- nlme(anu~Linf*(1-exp(-K*(age-t0))),data=dg,start=vbMEs,
+              fixed=list(Linf~1,K~1,t0~1),random=Linf+K+t0~1|id)
+@
+
+The mixed effects model with fixed-effect estimates of the population mean value for each parameter and random effects for $L_{\infty}$ and $K$ was fit with \R{nlme()} as shown below.
+<<>>=
+vbME2LK <- nlme(anu~vb(age,Linf,K,t0),data=dg,start=vbMEs,fixed=list(Linf~1,K~1,t0~1),
+                random=Linf+K~1|id)
+summary(vbME2LK)
+fixME2LK <- fixef(vbME2LK)
+( ranME2LK <- ranef(vbME2LK) )
+( cfME2LK <- coef(vbME2LK) )
+@
+
+Similar models for $L_{\infty}$ and $t_{0}$ and $K$ and $t_{0}$ with random effects are fit with,
+<<>>=
+vbME2LT <- nlme(anu~vb(age,Linf,K,t0),data=dg,start=vbMEs,fixed=list(Linf~1,K~1,t0~1),
+                random=Linf+t0~1|id)
+summary(vbME2LT)
+fixME2LT <- fixef(vbME2LT)
+( ranME2LT <- ranef(vbME2LT) )
+( cfME2LT <- coef(vbME2LT) )
+@
+
+<<>>=
+vbME2KT <- nlme(anu~vb(age,Linf,K,t0),data=dg,start=vbMEs,fixed=list(Linf~1,K~1,t0~1),
+                random=K+t0~1|id)
+summary(vbME2KT)
+fixME2KT <- fixef(vbME2KT)
+( ranME2KT <- ranef(vbME2KT) )
+( cfME2KT <- coef(vbME2KT) )
+@
+
+The three models with only one parameter as a random effect is then fit with,
+<<>>=
+vbME1L <- nlme(anu~vb(age,Linf,K,t0),data=dg,start=vbMEs,fixed=list(Linf~1,K~1,t0~1),
+               random=Linf~1|id)
+summary(vbME1L)
+fixME1L <- fixef(vbME1L)
+( ranME1L <- ranef(vbME1L) )
+( cfME1L <- coef(vbME1L) )
+@
+
+<<>>=
+vbME1K <- nlme(anu~vb(age,Linf,K,t0),data=dg,start=vbMEs,fixed=list(Linf~1,K~1,t0~1),
+               random=K~1|id)
+summary(vbME1K)
+fixME1K <- fixef(vbME1K)
+( ranME1K <- ranef(vbME1K) )
+( cfME1K <- coef(vbME1K) )
+@
+
+<<>>=
+vbME1T <- nlme(anu~vb(age,Linf,K,t0),data=dg,start=vbMEs,fixed=list(Linf~1,K~1,t0~1),
+               random=t0~1|id)
+summary(vbME1T)
+fixME1T <- fixef(vbME1T)
+( ranME1T <- ranef(vbME1T) )
+( cfME1T <- coef(vbME1T) )
+@
+
+Finally fit the model with no random effects using the usual \R{nls()},
+
+<<>>=
+vbNLS <- nls(anu~vb(age,Linf,K,t0),data=dg,start=vbs)
+fixNLS <- coef(vbNLS)
+@
+
+\section{Model Selection}
+
+Compare all models?
+<<>>=
+AIC(vbME2LK,vbME2LT,vbME2KT,vbME1L,vbME1K,vbME1T,vbNLS)
+@
+
+How much different do the predictions using the mean parameter values look?
+
+<<separateModelPreds, fig.width=7, fig.height=7, par1=TRUE>>=
+cols <- chooseColors("rich",7)
+curve(vb(x,fixNLS[1],fixNLS[2],fixNLS[3]),from=floor(cfMean[3]),to=11,col=cols[1],
+      lwd=2,xlab="Age (years)",ylab="TL (cm)")
+curve(vb(x,fixME2LK[1],fixME2LK[2],fixME2LK[3]),from=floor(cfMean[3]),to=11,
+      add=TRUE,col=cols[2],lwd=2)
+curve(vb(x,fixME2LT[1],fixME2LT[2],fixME2LT[3]),from=floor(cfMean[3]),to=11,
+      add=TRUE,col=cols[3],lwd=2)
+curve(vb(x,fixME2KT[1],fixME2KT[2],fixME2KT[3]),from=floor(cfMean[3]),to=11,
+      add=TRUE,col=cols[4],lwd=2)
+curve(vb(x,fixME1L[1],fixME1L[2],fixME1L[3]),from=floor(cfMean[3]),to=11,add=TRUE,
+      col=cols[5],lwd=2)
+curve(vb(x,fixME1K[1],fixME1K[2],fixME1K[3]),from=floor(cfMean[3]),to=11,add=TRUE,
+      col=cols[6],lwd=2)
+curve(vb(x,fixME1T[1],fixME1T[2],fixME1T[3]),from=floor(cfMean[3]),to=11,add=TRUE,
+      col=cols[7],lwd=2)
+legend("topleft",legend=c("NLS","LK","LT","KT","L","K","T"),col=cols,lwd=2,lty=1)
+@
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=6in]{Figs/separateModelPreds}
+  \caption{Predicted lengths-at-age for each typical von Bertalanffy model fit to the lengths-at-age of ten simulated individuals.}
+  \label{fig:separateModelPreds}
+\end{figure}
+
+How different do the fixed effects look?
+<<>>=
+fixFits <- rbind(fixNLS,fixME2LK,fixME2LT,fixME2KT,fixME1L,fixME1K,fixME1T)
+rownames(fixFits) <- c("NLS","LK","LT","KT","L","K","T")
+fixFits
+@
+
+What does the model fit look like with the ``best'' model?
+<<indivFits, fig.width=7, fig.height=7>>=
+plot(augPred(vbME1L,level=0:1))
+@
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=6in]{Figs/indivFits}
+  \caption{Fitted line plots to lengths-at-age using only the fixed effects (blue) and fixed and random effects (red) from the fit of the mixed-effect model with only a random effect for $L_{\infty}$ for each of ten simulated individuals.}
+  \label{fig:indivFits}
+\end{figure}
+
+What does the residual plot and histogram of residuals look like?
+
+
+heteroscedasticity
+
+
+<<ME1Lresids1, fig.width=3.5, fig.height=3.5>>=
+plot(vbME1L,resid(.,type="p")~fitted(.))
+@
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=3in]{Figs/ME1Lresids1}
+  \caption{Residual plot from the fit of the mixed-effect model with only a random effect for $L_{\infty}$ for each of ten simulated individuals.}
+  \label{fig:ME1Lresids1}
+\end{figure}
+
+
+<<ME1Lresids2, fig.width=7, fig.height=7>>=
+plot(vbME1L,resid(.,type="p")~fitted(.)|id)
+@
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=6in]{Figs/ME1Lresids2}
+  \caption{Residual plot for each individual from the fit of the mixed-effect model with only a random effect for $L_{\infty}$ for each of ten simulated individuals.}
+  \label{fig:ME1Lresids2}
+\end{figure}
+
+
+<<ME1Lresids3, fig.width=7, fig.height=7>>=
+qqnorm(vbME1L,~resid(.,type="p")|id)
+@
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=6in]{Figs/ME1Lresids3}
+  \caption{Normal quantile plot of residuals for each individual from the fit of the mixed-effect model with only a random effect for $L_{\infty}$ for each of ten simulated individuals.}
+  \label{fig:ME1Lresids2}
+\end{figure}
+
+
+<<ME1LranefNorm, fig.width=3.5, fig.height=3.5>>=
+qqnorm(vbME1L,~ranef(.,level=1))
+@
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=3in]{Figs/ME1LranefNorm}
+  \caption{Normal quantile plot of random effects from the fit of the mixed-effect model with only a random effect for $L_{\infty}$ for each of ten simulated individuals.}
+  \label{fig:ME1LranefNorm}
+\end{figure}
+
+
+
+\clearpage
+\section{Fitting Mixed-Effect with Power Variance Function von Bertalanffy Models}
+
+<<>>=
+vbMEP2LK <- update(vbME2LK,weights=varPower(form=~anu))
+vbMEP2LT <- update(vbME2LT,weights=varPower(form=~anu))
+vbMEP2KT <- update(vbME2KT,weights=varPower(form=~anu))
+vbMEP1L <- update(vbME1L,weights=varPower(form=~anu))
+vbMEP1K <- update(vbME1K,weights=varPower(form=~anu))
+vbMEP1T <- update(vbME1T,weights=varPower(form=~anu))
+@
+
+<<>>=
+AIC(vbMEP2LK,vbMEP2LT,vbMEP2KT,vbMEP1L,vbMEP1K,vbMEP1T)
+@
+
+<<MEP1Lresids1, fig.width=3.5, fig.height=3.5>>=
+plot(vbMEP1L,resid(.,type="p")~fitted(.))
+@
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=3in]{Figs/MEP1Lresids1}
+  \caption{Residual plot from the fit of the mixed-effect model using a power variance function with only a random effect for $L_{\infty}$ for each of ten simulated individuals.}
+  \label{fig:MEP1Lresids1}
+\end{figure}
+
+
+<<MEP1Lresids2, fig.width=7, fig.height=7>>=
+plot(vbMEP1L,resid(.,type="p")~fitted(.)|id)
+@
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=6in]{Figs/MEP1Lresids2}
+  \caption{Residual plot for each individual from the fit of the mixed-effect model using a power variance function with only a random effect for $L_{\infty}$ for each of ten simulated individuals.}
+  \label{fig:MEP1Lresids2}
+\end{figure}
+
+
+<<MEP1Lresids3, fig.width=7, fig.height=7>>=
+qqnorm(vbMEP1L,~resid(.,type="p")|id)
+@
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=6in]{Figs/MEP1Lresids3}
+  \caption{Normal quantile plot of residuals for each individual from the fit of the mixed-effect model using a power variance function with only a random effect for $L_{\infty}$ for each of ten simulated individuals.}
+  \label{fig:MEP1Lresids2}
+\end{figure}
+
+
+<<MEP1LranefNorm, fig.width=3.5, fig.height=3.5>>=
+qqnorm(vbMEP1L,~ranef(.,level=1))
+@
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=3in]{Figs/MEP1LranefNorm}
+  \caption{Normal quantile plot of random effects from the fit of the mixed-effect model using a power variance function with only a random effect for $L_{\infty}$ for each of ten simulated individuals.}
+  \label{fig:MEP1LranefNorm}
+\end{figure}
+
+
+%BIBLIOGRAPHY -----------------------------------------------------------------------------------
+\cleardoublepage   %not sure why, this is needed so that TOC entry will point to right start page
+\phantomsection    %not sure why, this is needed so that TOC entry will point to right start page
+\addcontentsline{toc}{section}{References}      %Add a TOC entry
+\bibliography{c:/aaaWork/zGnrlLatex/DHO_bib}    %make the bibliography
+
+<<echo=FALSE, results='asis'>>=
+## will add the reproducibility information
+et <- proc.time() - stime
+swvFinish(rqrdPkgs=rqrd,newPage=TRUE,elapsed=et["user.self"]+et["sys.self"])
+@
+<<echo=FALSE, results='hide', include=FALSE>>=
+## Will create the script file
+swvCode(moreItems=c("source","rqrd","stime"))
+@
+\end{document} 

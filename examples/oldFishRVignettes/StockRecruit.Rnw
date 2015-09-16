@@ -1,0 +1,691 @@
+\documentclass[a4paper]{article}
+\input{c:/aaaWork/zGnrlLatex/GnrlPreamble}
+\usepackage[toc,page]{appendix}
+\input{c:/aaaWork/zGnrlLatex/JustRPreamble}
+\hypersetup{pdftitle = fishR Vignette -- Stock-Recruitment}
+
+\begin{document}
+\titleFishR{Stock-Recruitment Models}
+
+<<setup, echo=FALSE, include=FALSE>>=
+## Start time for keeping track of process time
+ stime <- proc.time()
+## load common knitr setup
+source("../knitr_Common.r")
+## Not required to do the analysis but required to make the document
+library(diagram)
+library(xtable)
+@
+
+XXXX
+
+The functions required to perform growth analyses in R are contained in the \R{FSA} and \R{FSAdata} packages maintained by the author and \R{nlstools} and \R{plotrix} maintained by others.  These package are loaded into R with
+<<echo=-1, results='hide', warning=FALSE, message=FALSE>>=
+rqrd <- c("FSA","FSAdata","nlstools","plotrix")
+library(FSA)
+library(FSAdata)
+library(nlstools)
+library(plotrix)   # for plotCI()
+@
+
+
+\section{Background}\label{sec:Background}
+\cite{QuinnDeriso1999} provide a simple schematic that represents the cycle of regeneration for fish populations \figrefp{fig:StagesSchematic1}.  Most readers are likely familiar with the terms ``spawners'' (often time called ``spawning stock'' or just ``stock''), ``eggs'', ``larvae'', and ``juveniles'' and have likely heard of ``recruits.''  However, the definition of ``recruits'' is very important to stock-recruit analysis and fisheries science in general.
+
+<<StagesSchematic1, echo=FALSE, warning=FALSE, fig.cap="Representation of the stages in the life cycle of a fish population (adapted from \\cite{QuinnDeriso1999}).",fig.pos="h!">>=
+par(mar=c(0.2,0.2,0.2,0.2))
+stages <- c("Eggs","Larvae","Juveniles","Recruits","Spawners")
+M <- matrix(nrow=length(stages),ncol=length(stages),byrow=TRUE,data=0)
+colnames(M) <- paste("from",stages,sep="")
+rownames(M) <- paste("to",stages,sep="")
+M[2,1] <- M[3,2] <- M[4,3] <- M[5,4] <- M[1,5] <- ""
+pp <- plotmat(M,name=stages,curve=-0.25,box.lwd=2,box.cex=0.85)
+@
+
+In its most basic form, recruitment is the addition of young fish to the parent stock of fish.  In practice, though, the definition is not as simple.  Recruitment can be defined by the age of the fish.  For example, fish that have matured to an \textbf{age} where they are able to reproduce are said to have ``recruited to the breeding population'' and fish that have survived to age-1 are said to have ``recruited to age-1.''  Some situations require recruitment to be defined by the size of the fish.  For example, fish that have survived to a \textbf{length} where they are able to reproduce are said to have ``recruited to the breeding population'' and fish that have survived to a catchable size (defined by tackle, gear, or minimum size by regulation) are said to have ``recruited to the fishery.''  Most stock-recruit analyses will consider ``recruitment to the fishery'' based on size or ``recruitment to the breeding population'' based on size or age.  However, as these examples illustrate, it is critically important to explicitly define what measure of recruitment one is using in a stock-recruit analysis.
+
+\subsection{Density Independent Model}\label{sec:DensityIndependentModel}
+In the simplest models, the abundance of individuals at each stage is assumed to be proportional to the abundance of individuals at the previous stage \citep{QuinnDeriso1999}.  For example, if each individual in the spawning stock ($S$) produces an average of $f$ eggs\footnote{Thus, $f$ is the average net fecundity.} \figrefp{fig:StagesSchematic2}, then the number of eggs produced ($N_{0}$) can be estimated with
+
+\begin{equation}  \label{eqn:EggProduction}
+  N_{0} = fS
+\end{equation}
+
+Similarly, if $g$ represents the probability of survival from an egg to the time of recruitment \figrefp{fig:StagesSchematic2}, then the number of recruits ($R$) can be estimated with
+
+\begin{equation}  \label{eqn:Eggs2Recruits}
+  R = gN_{0}
+\end{equation}
+
+<<StagesSchematic2, echo=FALSE, warning=FALSE, fig.cap="Representation of the stages in the life cycle of a fish population with variables representing transition constants between some stages (adapted from \\cite{QuinnDeriso1999}).",fig.pos="h!">>=
+par(mar=c(0.2,0.2,0.2,0.2))
+stages <- c("Eggs","Larvae","Juveniles","Recruits","Spawners")
+M1 <- matrix(nrow=length(stages),ncol=length(stages),byrow=TRUE,data=0)
+colnames(M1) <- paste("from",stages,sep="")
+rownames(M1) <- paste("to",stages,sep="")
+M1[2,1] <- M1[3,2] <- M1[4,3] <- M1[5,4] <- ""
+plotmat(M1,name=stages,curve=-0.25,box.lwd=2,box.cex=0.85)
+
+M2 <- curve2 <- matrix(nrow=length(stages),ncol=length(stages),byrow=TRUE,data=NA)
+colnames(M2) <- colnames(curve2) <- paste("from",stages,sep="")
+rownames(M2) <- colnames(curve2) <- paste("to",stages,sep="")
+M2[1,5] <- "f"; curve2[1,5] <- -0.25
+M2[4,1] <- "g"; curve2[4,1] <- -0.54
+plotmat(M2,name=stages,curve=curve2,arr.lwd=2,arr.col="red",arr.lcol="red",cex.txt=1.5,box.lwd=2,box.cex=0.85,dtext=0.65,add=TRUE)
+@
+
+If one substitutes \eqref{eqn:EggProduction} into \eqref{eqn:Eggs2Recruits} for $N_{0}$ and replaces the $fg$ product with $a$, then it can been seen that $R$ is proportional to $S$.  As all of the models presented here are representative of an average of the response variable rather than the individual observations themseleves, the left-hand-side (i.e., the response side) of the model will be written as an expectation.  Thus, in this case, $R$ will be replaced with $E[R|S]$ on the left-hand-side and $E[R|S]$ will be read as the ``expected value of $R$ given $S$.''  Thus, the simplest non-trivial stock-recruitment model is given as
+
+\begin{equation}  \label{eqn:SRDensityIndependent}
+  E[R|S] = aS
+\end{equation}
+
+While \eqref{eqn:SRDensityIndependent} is unrealistic, in the sense that the number of recruits can increase without bound as a function of the number of spawners \figrefp{fig:DensityIndependent}, it does provide some valuable insight into more realistic stock-recruit models to be discussed later.  A simple rearrangement of \eqref{eqn:SRDensityIndependent},
+\[ \frac{R}{S} = a \]
+shows that the ratio of recruits to spawners is a constant \figrefp{fig:DensityIndependent}.  In other words, the ratio of recruits to spawners does not depend on, or is independent of, the number of spawners.  For this reason, \eqref{eqn:SRDensityIndependent} is often referred to as the ``density independent'' stock-recruitment model and $a$ is often referred to as the ``density independent'' parameter.
+
+<<DensityIndependent, echo=FALSE, fig.scap="Density independence.",fig.cap="Plot of number of recruits (Left) and number of recruits per spawner (Right) against number of spawners for idealistic data constructed using equation \\ref{eqn:SRDensityIndependent}, random number of spawners from a uniform distribution between 0 and 10000, and $a$=2.">>=
+set.seed(14347834)
+a <- 2
+spawners <- round(runif(20,min=0,max=10000),0)
+recruits <- a*spawners
+rcrtsperspwnr <- recruits/spawners
+plot(recruits~spawners,type="p",pch=19,lwd=2,xlab="Spawners",ylab="Recruits")
+plot(rcrtsperspwnr~spawners,type="p",pch=19,lwd=2,xlab="Spawners",ylab="Recruits per Spawner")
+@
+
+The density-independent model in \eqref{eqn:SRDensityIndependent} is an unrealistic model if there is any density-dependent effect on mortality, fecundity, or growth of fishes \citep{Wootton1990}.  As such, a variety of models have been developed that extend the density-independent model by incorporating a density-dependent term.  These models are discussed in the \sectref{sect:BevHolt} and \sectref{sect:Ricker}.
+
+\subsection{Beverton-Holt Model} \label{sect:BevHolt}
+\cite{BevertonHolt1957} proposed a model that assumed that recruitment approached an asymptote at high spawning stock abundance \figrefp{fig:BevertonHolt1}.  Specifically, their model can be expressed as
+
+\begin{equation}  \label{eqn:SRBevertonHolt1}
+  E[R|S] = \frac{aS}{1+bS}
+\end{equation}
+
+This model expresses a density-dependent relationship because the number of recruits per spawner is a decreasing function of the number of spawners \figrefp{fig:BevertonHolt1}.  In \eqref{eqn:SRBevertonHolt1}, $a$ is still the density-independent parameter that is proportional to fecundity.  The units of $a$ are ``recruitment per spawner'' and the value of $a$ is the slope of the model near $S=0$.  However, $b$ is a density-dependent parameter that is proportional to both fecundity and density-dependent mortality \citep{QuinnDeriso1999}.  If density-dependence in the stock-recruitment relationship does \textbf{not} exist, then $b=0$ and \eqref{eqn:SRBevertonHolt1} reduces to the density-independent model \eqref{eqn:SRDensityIndependent}.  The asymptote, or peak recruitment (denoted by $R_{p}$), of \eqref{eqn:SRBevertonHolt1} is defined by $R_{p}=\frac{a}{b}$ \figrefp{fig:BevertonHolt1}. 
+
+<<BevertonHolt1, echo=FALSE, fig.scap="Beverton-Holt plot.", fig.cap="Plot of number of recruits (Left) and number of recruits per spawner (Right) against number of spawners for idealistic data constructed using equation \\ref{eqn:SRBevertonHolt1}, random number of spawners from a uniform distribution between 0 and 10000, $a$=2, and $b=0.0025$.  A horizontal line on the left plot is shown at $\\frac{a}{b}$=$\\frac{2}{0.0025}$=$800$ for reference.">>=
+## use same a and spawners from above
+b <- 0.0025
+recruits2 <- (a*spawners)/(1+b*spawners)
+rcrtsperspwnr <- recruits2/spawners
+plot(recruits2~spawners,type="p",pch=19,lwd=2,xlab="Spawners",ylab="Recruits",ylim=c(0,a/b))
+abline(h=a/b,lty=3,col="red")
+plot(rcrtsperspwnr~spawners,type="p",pch=19,lwd=2,xlab="Spawners",ylab="Recruits per Spawner")
+@
+
+The Beverton-Holt model is based on the assumptions that juvenile competition results in a mortality rate that is linearly dependent upon the number of fish alive in the cohort at any time and that predators are always present.  The Beverton-Holt model is appropriate ``if there is a maximum abundance imposed by food availability or space, or if the predator can adjust its predatory activity immediately to changes in prey abundance'' \citep[p. 264]{Wootton1990}.
+
+
+\subsubsection{Alternative Parameterizations}
+A model can often be cast into a different form where the model is functionally the same -- i.e., predictions are exactly the same -- but it has different parameters.  This alternative form is called a parameterization.  All parameterizations of a model can ultimately be shown to be equivalent via algebra.  Different parameterizations of models are created for a variety of reasons, but the two most important reasons are that the re-parameterized model has parameters (i) for which the interpretation meets some need and (ii) that are less correlated.  The Beverton-Holt stock-recruitment model has been re-parameterized in a variety of ways, with the four most common re-parameterizations shown and discussed briefly below.
+
+If $R_{p}=\frac{a}{b}$ is solved for $b$ and substituted into \eqref{eqn:SRBevertonHolt1}, then the Beverton-Holt model can be re-written as
+\begin{equation}  \label{eqn:SRBevertonHolt2}
+  E[R|S] = \frac{aS}{1+a\frac{S}{R_{p}}}
+\end{equation}
+In this parameterization, the two parameters, $a$ and $R_{p}$, are as defined above.  Thus, this parameterization provides a direct estimate of the peak recruitment value.
+
+If $\tilde{a}=\frac{1}{a}$ and $\tilde{b}=\frac{b}{a}$ are substituted into \eqref{eqn:SRBevertonHolt1} and algebraically simplified, then the Beverton-Holt model can be re-written as
+\begin{equation}  \label{eqn:SRBevertonHolt3}
+  E[R|S] = \frac{S}{\tilde{a}+\tilde{b}S}
+\end{equation}
+In this parameterization, $\tilde{a}$ is still related to density-independendence but the relationship is in the opposite direction of $a$ in \eqref{eqn:SRBevertonHolt1} and \eqref{eqn:SRBevertonHolt2}.  In other words, if $a$ is ``large'' then $\tilde{a}$ will be small.  The asymptote of \eqref{eqn:SRBevertonHolt3} is then at $R_{p}=\frac{1}{\tilde{b}}$.
+
+Additionally, if $R_{p}=\frac{1}{\tilde{b}}$ is solved for $\tilde{b}$ and substituted into \eqref{eqn:SRBevertonHolt3}, then the Beverton-Holt model can be re-rewritten as
+\begin{equation}  \label{eqn:SRBevertonHolt4}
+  E[R|S] = \frac{S}{\tilde{a}+\frac{S}{R_{p}}}
+\end{equation}
+As with \eqref{eqn:SRBevertonHolt2}, this parameterization provides a direct estimate of $R_{p}$.
+
+All parameterizations of the Beverton-Holt model fit the data in exactly the same way \figrefp{fig:BHModelParamComp}.  In addition, the correlations among model parameters do not differ substantively \tabrefp{tbl:BHModelParamComp}.  Thus, the only real reason for choosing any particular parameterization lies in choices you make regarding which parameters should be estimated.  Throughout the remainder of this vignette the first, i.e., \eqref{eqn:SRBevertonHolt1}, or second, i.e., \eqref{eqn:SRBevertonHolt2}, parameterizations will be used as they allow for a direct comparison to the general density independence model (i.e., \eqref{eqn:SRDensityIndependent}).
+
+<<echo=FALSE, results='hide'>>=
+data(LakeTroutMI)
+LakeTroutMI$stock <- LakeTroutMI$wild + LakeTroutMI$stocked
+d <- Subset(LakeTroutMI,area=="MI7")
+d <- d[complete.cases(d),]
+
+Abh1 <- srFuns("BevertonHolt",param=1)
+Abh1s <- srStarts(recruits~stock,data=d,type="BevertonHolt",param=1)
+Abh1r <- nls(log(recruits)~log(Abh1(stock,a,b)),data=d,start=Abh1s,algorithm="port",lower=c(0,0))
+
+Abh2 <- srFuns("BevertonHolt",param=2)
+Abh2s <- srStarts(recruits~stock,data=d,type="BevertonHolt",param=2)
+Abh2r <- nls(log(recruits)~log(Abh2(stock,a,Rp)),data=d,start=Abh2s,algorithm="port",lower=c(0,0))
+
+Abh3 <- srFuns("BevertonHolt",param=3)
+Abh3s <- srStarts(recruits~stock,data=d,type="BevertonHolt",param=3)
+Abh3r <- nls(log(recruits)~log(Abh3(stock,a,b)),data=d,start=Abh3s,algorithm="port",lower=c(0,0))
+
+Abh4 <- srFuns("BevertonHolt",param=4)
+Abh4s <- list(a=3,Rp=19)     # default values did not work
+Abh4r <- nls(log(recruits)~log(Abh4(stock,a,Rp)),data=d,start=Abh4s,algorithm="port",lower=c(0,0))
+@
+
+<<BHModelParamComp, echo=FALSE, fig.width=4, fig.height=4, fig.cap="Fits of the four parameterizations of the Beverton-Holt stock-recruitment model to the Lake Trout data from area MI7 in Lake Superior.  Note that the results of all fits are identical and, thus, the fitted lines are directly on top of each other.  Different colors and different line widths were used to try to illustrate this point but may not be readily apparent on the screen or printed page.">>=
+plot(recruits~stock,data=d,pch=19,xlim=c(0,150),ylim=c(0,max(d$recruits)),xlab="Stock Level",ylab="Recruitment Level")
+curve(Abh1(x,coef(Abh1r)),from=0,to=150,col="red",lwd=12,add=TRUE)
+curve(Abh2(x,coef(Abh2r)),from=0,to=150,col="blue",lwd=9,add=TRUE)
+curve(Abh3(x,coef(Abh3r)),from=0,to=150,col="green",lwd=6,add=TRUE)
+curve(Abh4(x,coef(Abh4r)),from=0,to=150,col="yellow",lwd=3,add=TRUE)
+@
+
+<<echo=FALSE, results='asis'>>=
+sum1 <- summary(Abh1r,correlation=TRUE)
+coef1 <- coef(Abh1r)
+sum2 <- summary(Abh2r,correlation=TRUE)
+coef2 <- coef(Abh2r)
+sum3 <- summary(Abh3r,correlation=TRUE)
+coef3 <- coef(Abh3r)
+sum4 <- summary(Abh4r,correlation=TRUE)
+coef4 <- coef(Abh4r)
+mdls   <- 1:4
+sa <- c(coef1[1],coef2[1],NA,NA)
+sb <- c(coef1[2],NA,NA,NA)
+sat <- c(NA,NA,coef3[1],coef4[1])
+sbt <- c(NA,NA,coef3[2],NA)
+sRp <- c(NA,coef2[2],NA,coef4[2])
+scRp <- c(coef1[1]/coef1[2],NA,1/coef3[2],NA)
+RSS <- c(sum(residuals(Abh1r)^2),sum(residuals(Abh2r)^2),sum(residuals(Abh3r)^2),sum(residuals(Abh4r)^2))
+SE <- c(sum1$sigma,sum2$sigma,sum3$sigma,sum4$sigma)
+r <- c(upperTriangle(sum1$correlation),upperTriangle(sum2$correlation),upperTriangle(sum3$correlation),upperTriangle(sum4$correlation))
+res <- data.frame(mdls,sa,sb,sat,sbt,sRp,scRp,SE,r)
+names(res) <- c("Models","$a$","$b$","$\\tilde{a}$","$\\tilde{b}$","$R_{p}$","calc $R_{p}$","SE","$r$")
+cap <- "Parameter estimates and model results from fitting, with multiplicative errors, different parameterizations of the Beverton-Holt stock-recruitment model (in the order presented in the text) to Lake Trout from area MI-7 in Lake Superior.  The parameters are as defined in the text.  Note that ``calc $R_{p}$'' is $R_{p}$ computed from other parameters (rather than estimated directly, ``SE'' is the residual variability, and ``r'' is the correlation coefficient between the two parameters."
+xtbl.res <- xtable(res,digits=c(NA,0,3,3,3,3,2,2,2,2),align="ccrrrrrrrr",label="tbl:BHModelParamComp",caption=cap)
+print(xtbl.res,include.rownames=FALSE,NA.string="-",sanitize.colnames.function=function(x){x},table.placement="hbtp",caption.placement="top")
+@
+
+
+\clearpage
+\subsection{Ricker Model} \label{sect:Ricker}
+\cite{Ricker1954} proposed a stock-recruitment model that was ``dome-shaped'' -- i.e., the peak level of recruitment occurred at an intermediate spawning stock abundance \figrefp{fig:Ricker1}.  Specifically, the Ricker model can be expressed as
+
+\begin{equation}  \label{eqn:SRRicker1}
+  E[R|S] = aSe^{-bS}
+\end{equation}
+
+This model expresses a density-dependent relationship because the number of recruits per spawner is a decreasing function of the number of spawners \figrefp{fig:Ricker1}.  In \eqref{eqn:SRRicker1}, $a$ is still the density-independent parameter that is proportional to fecundity and $b$ is the density-dependent parameter \citep{QuinnDeriso1999}.  If density-dependence in the stock-recruitment relationship does \textbf{not} exist, then $b=0$ and \eqref{eqn:SRRicker1} reduces to the density-independent model \eqref{eqn:SRDensityIndependent}.  The peak level of recruitment is given by $R_{p}=\frac{a}{be}$ and occurs at a spawning stock biomass of $\frac{1}{b}$ \figrefp{fig:Ricker1}
+
+<<Ricker1, echo=FALSE, fig.scap="Ricker plot.", fig.cap="Plot of number of recruits (Left) and number of recruits per spawner (Right) against number of spawners for idealistic data constructed using equation \ref{eqn:SRRicker1}, random number of spawners from a uniform distribution between 0 and 10000, $a$=2, and $b=0.00025$.  A horizontal line on the left plot is shown at $\\frac{a}{be}$=$\\frac{2}{0.00025e}$=$2943$ and a vertical line is shown at $\\frac{1}{b}$=$\\frac{1}{0.00025}$=$4000$ for reference.">>=
+## use same a, b and spawners from above
+a <- 2
+b <- 0.00025
+recruits3 <- a*spawners*exp(-b*spawners)
+rcrtsperspwnr <- recruits3/spawners
+plot(recruits3~spawners,type="p",pch=19,lwd=2,xlab="Spawners",ylab="Recruits",ylim=c(0,a/(b*exp(1))))
+abline(h=a/(b*exp(1)),lty=3,col="red")
+abline(v=(1/b),lty=3,col="red")
+plot(rcrtsperspwnr~spawners,type="p",pch=19,lwd=2,xlab="Spawners",ylab="Recruits per Spawner")
+@
+
+The Ricker stock-recruitment model assumes that the mortality rate of the eggs and juveniles is proportional to the initial cohort size.  In other words, if, for example, the inital number of eggs is high then the mortality rate of the eggs and juveniles will also be high.  Biological realities that might lead to this assumption being met are (1) cannibalism of the juveniles by the adults \citep{Ricker1975}, (2) disease transmission, (3) damage by adults of one anothers spawning sites (e.g., redd superimposition), (4) density-dependent reductions in growth coupled with size-dependent predation (e.g., increase in the time it takes for the young fish to grow through a size range vulnerable to predation; \cite{Ricker1975}), and (5) a time-lag in the the response of a predator or parasite to the abundance of the fish \citep{Wootton1990}.
+
+
+\subsubsection{Alternative Parameterizations}
+As shown with the Beverton-Holt model above, the Ricker model can also be written in different forms.  Two common parameterizations are shown below.
+
+\cite{Ricker1954} commonly defined $\tilde{a}=e^{a}$ such that \eqref{eqn:SRRicker1} is modified to
+\begin{equation}  \label{eqn:SRRicker2}
+   E[R|S] = Se^{\tilde{a}-bS}
+\end{equation}
+With \eqref{eqn:SRRicker2} the peak level of recruitment is $R_{p}=\frac{e^{\tilde{a}}}{be}$ at a stock level of $\frac{1}{b}$.
+
+The first parameterization, i.e., \eqref{eqn:SRRicker1}, can be modified to include a parameter for the peak level of recruitment by solving $R_{p}=\frac{a}{be}$ for $b$ and substituting into \eqref{eqn:SRRicker1} to produce
+\begin{equation}  \label{eqn:SRRicker3}
+   E[R|S] = aSe^{-a\frac{S}{R_{p}e}}
+\end{equation}
+Thus, fitting \eqref{eqn:SRRicker3} will result in a direct estimate of the peak level of recruitment ($R_{p}$) at a stock level of $\frac{R_{p}e}{a}$.
+
+All parameterizations of the Ricker model fit the data in exactly the same way \figrefp{fig:RModelParamComp}.  The correlation between model parameters was substantially lower for the third parameterization \tabrefp{tbl:BHModelParamComp}.  The first or third parameterizations will be used throughout the remainder of this vignette as they allow direct comparison to the general density independence model (i.e., \eqref{eqn:SRDensityIndependent}).
+
+<<echo=FALSE, results='hide'>>=
+r1 <- srFuns("Ricker",param=1)
+r1s <- srStarts(recruits~stock,data=d,type="Ricker",param=1)
+r1r <- nls(log(recruits)~log(r1(stock,a,b)),data=d,start=r1s)
+
+r2 <- srFuns("Ricker",param=2)
+r2s <- srStarts(recruits~stock,data=d,type="Ricker",param=2)
+r2r <- nls(log(recruits)~log(r2(stock,a,b)),data=d,start=r2s)
+
+r3 <- srFuns("Ricker",param=3)
+r3s <- srStarts(recruits~stock,data=d,type="Ricker",param=3)
+r3r <- nls(log(recruits)~log(r3(stock,a,Rp)),data=d,start=r3s)
+@
+
+<<RModelParamComp, echo=FALSE, fig.width=4, fig.height=4, fig.cap="Fits of the three parameterizations of the Ricker stock-recruitment model to the Lake Trout data from area MI7 in Lake Superior.  Note that the results of all fits are identical and, thus, the fitted lines are directly on top of each other.  Different colors and different line widths were used to try to illustrate this point but may not be readily apparent on the screen or printed page.">>=
+plot(recruits~stock,data=d,pch=19,xlim=c(0,150),ylim=c(0,max(d$recruits)),xlab="Stock Level",ylab="Recruitment Level")
+curve(r1(x,coef(r1r)),from=0,to=150,col="red",lwd=12,add=TRUE)
+curve(r2(x,coef(r2r)),from=0,to=150,col="blue",lwd=8,add=TRUE)
+curve(r3(x,coef(r3r)),from=0,to=150,col="green",lwd=3,add=TRUE)
+@
+
+<<echo=FALSE, results='asis'>>=
+sum1 <- summary(r1r,correlation=TRUE)
+coef1 <- coef(r1r)
+sum2 <- summary(r2r,correlation=TRUE)
+coef2 <- coef(r2r)
+sum3 <- summary(r3r,correlation=TRUE)
+coef3 <- coef(r3r)
+mdls   <- 1:3
+sa <- c(coef1[1],NA,coef3[1])
+sb <- c(coef1[2],coef2[2],NA)
+sat <- c(NA,coef2[1],NA)
+sRp <- c(NA,NA,coef3[2])
+scRp <- c(coef1[1]/(coef1[2]*exp(1)),exp(coef2[1])/(coef2[2]*exp(1)),NA)
+scSp <- c(1/coef1[2],1/coef2[2],coef3[2]*exp(1)/coef3[1])
+RSS <- c(sum(residuals(r1r)^2),sum(residuals(r2r)^2),sum(residuals(r3r)^2))
+SE <- c(sum1$sigma,sum2$sigma,sum3$sigma)
+r <- c(upperTriangle(sum1$correlation),upperTriangle(sum2$correlation),upperTriangle(sum3$correlation))
+res <- data.frame(mdls,sa,sb,sat,sRp,scRp,scSp,SE,r)
+names(res) <- c("Models","$a$","$b$","$\\tilde{a}$","$R_{p}$","calc $R_{p}$","calc $S_{p}$","SE","$r$")
+xtbl.res <- xtable(res,digits=c(NA,0,3,3,3,2,2,2,2,2),align="ccrrrrrrrr",label="tbl:RModelParamComp",caption="Parameter estimates and model results from fitting, with multiplicative errors, different parameterizations of the Ricker stock-recruitment model to Lake Trout from area MI7 in Lake Superior.  The parameters are as defined in the text.  Note that ``calc $R_{p}$'' is $R_{p}$ computed from othe parameters (rather than estimated directly, ``calc $S_{p}$'' is the calculated stock level where the peak level of recruitment occurs, ``SE'' is the residual variability, and ``r'' is the correlation coefficient between the two parameters.")
+print(xtbl.res,include.rownames=FALSE,NA.string="-",sanitize.colnames.function=function(x){x},table.placement="hbtp",caption.placement="top")
+@
+
+
+\clearpage
+\newpage
+\section{Thoughts on Model Fitting}
+\subsection{Statistical Error Types}
+Most linear and non-linear model fitting algorithms assume that the random errors in the model are additive and normal.  If these errors are depicted by $\epsilon$, then, for example, the Ricker\footnote{From hereon the term ``Ricker'' model and ``Beverton-Holt'' model will refer to the first parameterizations of each model.} model \eqref{eqn:SRRicker1} with additive errors would be written as \citep{QuinnDeriso1999}
+\[ R = aSe^{-bS} + \epsilon  \]
+Fitting the model with additive errors assumes that the variability around the model is the same in all areas of the data.  It is often the case, where the variability will be greater near the peak of the model.  In these cases, a multiplicative error structure may be more appropriate.  A model with a multiplicative error structure is written as
+\[ R = aSe^{-bS}e^{\epsilon}  \]
+Most computer algorithms will not fit these models directly as the algorithm expects an additive error structure.  However, taking natural logarithms of both sides transforms the model with a multiplicative error structure to one with an additive error structure \citep{QuinnDeriso1999}.  For example,
+\[ log(R) = log(aSe^{-bS}) + \epsilon \]
+Thus, a model with a multiplicative error structure can be fit with most computer algorithms by using the model where both sides have been logged.  Because of this relationship, a multiplicative error structure is often referred to as fitting the model with ``lognormal errors.''
+
+Fitting the model with different error structures can lead to substantially different parameter estimates \figrefp{fig:ErrorTypes1}.  While one should carefully examine the residuals of each fitted model, \cite{QuinnDeriso1999} suggest that the theory used to develop the Beverton-Holt and Ricker models suggests that the multiplicative error model should be the default choice.  They also suggest that the multiplicative error model ``fits the error structure of actual data sets fairly well'' \citep[p. 104]{QuinnDeriso1999}.
+
+<<ErrorTypes1, echo=FALSE, fig.cap="Number of recruits versus number of spawners for Escanaba Lake Walleye with the Ricker stock-recruitment model fit with additive and multiplicative errors superimposed.">>=
+data(WalleyeEL)
+WalleyeEL$spawner <- WalleyeEL$age5                    # for simplicity
+WalleyeEL$recruit <- WalleyeEL$age0
+WalleyeEL$logR <- log(WalleyeEL$age0)
+rst <- list(a=4,b=0)
+rsr <- logR~log(spawner*exp(a+b*spawner))
+nls1 <- nls(rsr,data=WalleyeEL,start=rst)              # multiplicative model
+rsr3 <- recruit~spawner*exp(a+b*spawner)
+nls3 <- nls(rsr3,data=WalleyeEL,start=rst)             # additive model
+plot(recruit~spawner,data=WalleyeEL,pch=19,xlim=c(0,max(WalleyeEL$spawner)))
+cnls1 <- coef(nls1)
+curve(x*exp(cnls1[1]+cnls1[2]*x),from=0,to=max(WalleyeEL$spawner),col="red",lwd=2,add=TRUE)
+cnls3 <- coef(nls3)
+curve(x*exp(cnls3[1]+cnls3[2]*x),from=0,to=max(WalleyeEL$spawner),col="blue",lwd=2,add=TRUE)
+legend("topright",legend=c("Multiplicative","Additive"),col=c("red","blue"),lwd=2,cex=0.8)
+@
+
+
+\subsection{Variability}
+Stock-recruitment data is notoriously ``messy'' with large year-to-year variability in recruitment \figrefp{fig:Variability1} and a weak relationship between spawning stock and number of recruits \figrefp{fig:Variability2}.  This variability or the resultant difficulties in fitting or interpreting stock-recruitment models has been commented on by several authors:
+
+\begin{quote}
+Much ingenuity has been spent in fitting these curves to data sets and to developing the basic models.  All this effort has largely foundered in the face of the variability in the relationships between stock and recruitment shown by most natural populations.  The curves can be fitted, but it takes an act of faith to take the resulting curves seriously. -- \cite[p. 264]{Wootton1990}
+\end{quote}
+
+\begin{quote}
+Empirical relationships between spawning stock and recruitment shown extreme annual variability. -- \cite[p. 86]{QuinnDeriso1999}
+\end{quote}
+\begin{quote}
+... a number of tools are available for the analysis of stock and recruitment, but there are many pitfalls awaiting the unwary biologist who want to fit a curve and get an answer. ...
+
+Analysis of stock-recruitment data provides an enormous number of traps for the unwary -- good luck.  \cite[p. 295]{HilbornWalters2001}
+\end{quote}
+
+
+
+<<Variability1, echo=FALSE, fig.width=5, fig.height=7.5, out.width='.6\\linewidth', fig.cap="Plot of number of recruits versus year for a variety of species.">>=
+par(mfrow=c(3,2),mar=c(3.5,3.5,1.5,1),pch=19)
+data(VendaceLP)
+plot(recruits~year,data=VendaceLP,type="b",xlab="Year",ylab="Age-0+ Fish per ha",main="Vendace -- Finland")
+data(WShrimpGA)
+plot(recruits~year,data=WShrimpGA,type="b",xlab="Year",ylab="Commercial Landings (Aug-Jan)",main="White Shrimp -- Georgia")
+data(LakeTroutMI)
+plot(recruits~year,data=LakeTroutMI,subset=area=="MI3",type="b",xlab="Year",ylab="CPUE Age-7 Fish",main="Lake Trout -- Lake Superior")
+data(RBSmeltErie)
+plot(recruits~year,data=RBSmeltErie,type="b",xlab="Year",ylab="Number per Hour",main="Rainbow Smelt -- Lake Erie")
+data(YPerchSB)
+plot(recruits~year,data=YPerchSB,type="b",xlab="Year",ylab="Number per Set",main="Yellow Perch -- Lake Huron")
+data(WalleyeErie)
+plot(recruits~year,data=WalleyeErie,type="b",xlab="",ylab="Number per 1000 ft",main="Walleye -- Lake Erie")
+@
+
+<<Variability2, echo=FALSE, fig.width=5, fig.height=7.5, out.width='.6\\linewidth', fig.cap="Plot of number of recruits versus spawning stock for a variety of species.">>=
+par(mfrow=c(3,2),mar=c(3.5,3.5,1.5,1),pch=19)
+plot(recruits~stock,data=VendaceLP,xlab="Age-1+ Fish Biomass (kg/ha)",ylab="Age-0+ Fish per ha",main="Vendace -- Finland")
+plot(recruits~stock,data=WShrimpGA,xlab="CPUE in June",ylab="Commercial Landings (Aug-Jan)",main="White Shrimp -- Georgia")
+plot(recruits~I(wild+stocked),data=LakeTroutMI,subset=area=="MI3",xlab="CPUE of Age-8+ Fish",ylab="CPUE Age-7 Fish",main="Lake Trout -- Lake Superior")
+plot(recruits~stock,data=YPerchSB,xlab="Spawning Stock (Number per Set)",ylab="Recruits (Number per Set)",main="Yellow Perch -- Lake Huron")
+data(HalibutPAC)
+plot(rec~ssb,data=HalibutPAC,xlab="Spawning Stock Biomass (Tonnes)",ylab="Number of Recruits (Thousands)",main="Pacific Flounder")
+data(HerringISS)
+plot(rec~ssb,data=HerringISS,xlab="Spawning Stock Biomass (Tonnes)",ylab="Number of Age-1 (Thousands)",main="Herring -- Iceland")
+@
+
+% \clearpage
+% Did not do anything with this ...may in the future
+<<variability3, eval=FALSE, echo=FALSE, results='hide', include=FALSE, fig.width=5, fig.height=5, par1=TRUE>>=
+par(mfrow=c(2,2),pch=19))
+## use same a, b and spawners from above
+set.seed(15985)
+s <- c(0.1,0.25,0.35,0.5)
+recruits4 <- exp(log(a*spawners*exp(-b*spawners))+rnorm(length(spawners),sd=s[1]))
+recruits5 <- exp(log(a*spawners*exp(-b*spawners))+rnorm(length(spawners),sd=s[2]))
+recruits6 <- exp(log(a*spawners*exp(-b*spawners))+rnorm(length(spawners),sd=s[3]))
+recruits7 <- exp(log(a*spawners*exp(-b*spawners))+rnorm(length(spawners),sd=s[4]))
+ymax <- max(c(recruits4,recruits5,recruits6,recruits7))
+plot(recruits4~spawners,type="p",pch=19,lwd=2,xlab="Spawners",ylab="Recruits",ylim=c(0,ymax))
+legend("topright",legend="A",bty="n",cex=1.5)
+plot(recruits5~spawners,type="p",pch=19,lwd=2,xlab="Spawners",ylab="Recruits",ylim=c(0,ymax))
+legend("topright",legend="B",bty="n",cex=1.5)
+plot(recruits6~spawners,type="p",pch=19,lwd=2,xlab="Spawners",ylab="Recruits",ylim=c(0,ymax))
+legend("topright",legend="C",bty="n",cex=1.5)
+plot(recruits7~spawners,type="p",pch=19,lwd=2,xlab="Spawners",ylab="Recruits",ylim=c(0,ymax))
+legend("topright",legend="D",bty="n",cex=1.5)
+@
+
+
+
+\clearpage
+\subsection{Starting Values}
+The Beverton-Holt and Ricker stock-recruit models are best fit using non-linear regression methods.  Non-linear regression methods use an iterative algorithm that requires starting values for the model parameters.  There are at least two ways to arrive at reasonable starting values for the parameters of the Beverton-Holt and Ricker stock-recruit models -- (i) estimation from linearized models and (ii) visual estimation with dynamics graphics.  Both methods are discussed below.
+
+The first parameterization of the Beverton-Holt model can be viewed as a linear function as shown in \eqref{eqn:SRBevertonHolt1Linear}\footnote{Note that the critical step in deriving this model is to first invert both sides of \eqref{eqn:SRBevertonHolt1}.}.  Thus, a linear regression of the inverse of $R$ (i.e., $\frac{1}{R}$) on the inverse of $S$ (i.e., $\frac{1}{S}$) will yield an equation where the slope is equal to $\frac{1}{a}$ and the intercept is equal to $\frac{b}{a}$.  The slope and intercept equivalents can be solved for $a$ and $b$ to derive reasonable starting values for the non-linear regression algorithm.  Starting values for other parameters in the other parameterizations can be derived by using the starting values of $a$ and $b$ in the parameter equivalency equations.
+
+\begin{equation}  \label{eqn:SRBevertonHolt1Linear}
+  \frac{1}{E[R|S]} = \frac{1}{a}\frac{1}{S} + \frac{b}{a}
+\end{equation}
+
+The first parameterizaton of the Ricker model can be viewed as a linear function as shown in \eqref{eqn:SRRicker1Linear}\footnote{Again, the critical first step in deriving this function is inverting the original function \eqref{eqn:SRRicker1}.}.  Thus, a linear regression of the log of $\frac{R}{S}$ on $S$ will yield an equation where the slope is equal to $-b$ and the intercept is equal to $log(a)$.  Again, the slope and intercept equivalents can be solved for $a$ and $b$ to derive reasonable starting values.  Starting values for the other parameters in the other parameterizations can be derived by using the starting values for $a$ and $b$ in the parameter equivalency equations.
+
+\begin{equation}  \label{eqn:SRRicker1Linear}
+  log\left(\frac{E[R|S]}{S}\right) = log(a) - bS
+\end{equation}
+
+The methodology described above has been implemented in \R{srStarts()} and is described in more detail in \sectref{sect:FitModels}. 
+
+The selection of starting values for the stock-recruit models can also be easily estimated with \R{srSim()} from the \R{FSATeach} package\footnote{Note that the \R{FSATeach} package must be installed as described \href{http://www.rforge.net/FSATeach/Installation.html}{here} and the loaded with \R{library(FSATeach)}.}.  This function produces a plot of $R$ versus $S$ with a stock-recruit model superimposed.  The parameters of the superimposed stock-recruit model can be controlled with slider bars.  Thus, the slider bars can be adjusted until a model is produced that ``roughly'' fits the observed recruit versus stock graphic.  The parameters of the model when this rough fit is found can then be used as the starting values for the non-linear methods.  For this purpose, \R{srSim()} has the same four arguments as \R{srStart()}.  As an example, the starting values for the first parameterization of the Beverton-Holt model is shown by the slider bars on the graphic \figrefp{fig:stockRecruitSim} produced with
+
+<<eval=FALSE>>=
+srSim(recruits~stock,data=LakeTroutGIS,type="BevertonHolt",param=1)
+@
+
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=4.5in]{Figs/stockRecruitSim}
+  \caption{Example of using \R{srSim()} to find an approximate fit of the first parameterization of the Beverton-Holt stock-recruitment model to the Gull Island Shoal Lake Trout data.}
+  \label{fig:stockRecruitSim}
+\end{figure}
+
+
+\subsection{Assumption Checking}
+The non-linear regression, as it has been described here, requires that the variability about the model is constant (i.e., homoscedasticity), the errors are normally distributed, the model adequately fits the data, and there are no influential or outlying points.  There are tests to determine if these assumptions have been violated, but these tests can be hyper-sensitive (i.e., tend to identify assumption violations) especially with large sample sizes.  Thus, the adequacy of meeting these assumptions can be better determined by objectively analyzing two important graphics.  The first graphic is a residual plot which plots the model residuals versus the fitted values (\figref{fig:AssumPlotBH1}-Left).  In general, the assumptions of the model are met if NO pattern is observed in the residual plot.  Curvature in this plot would suggest that the model does not represent the data very well and a ``funneling'' from left-to-right would suggest that the variability around the model is not constant (i.e., heteroscedasticity).  The second graphic is a histogram of the residuals (\figref{fig:AssumPlotBH1}-Right).  In general, the assumption of normality is adequately met if this histogram is symmetric without overly long ``tails.''
+
+<<AssumPlotBH1, echo=FALSE, fig.cap="Residual plot (left) and residual histogram (right) from fitting the first parameterization of the stock-recruit model to the Lake Superior Lake Trout from area MI7 data.">>=
+residPlot(Abh1r)
+hist(residuals(Abh1r),main="")
+@
+
+The residual plot can be constructed by submitting the saved \R{nls} object to \R{residPlot()}.  The histogram can be constructed by submitting the saved \R{nls} object to \R{residuals()} and then submitting this result to \R{hist()}.  Interpretation of these graphics will be discussed further in the context of the examples in the following section.
+
+
+\section{Fitting Basic Models in R}\label{sect:FitModels}
+Both the Beverton-Holt and Ricker stock-recruit models can be linearized and fit with least-square simple linear regression.  However, the models can also be fit with non-linear least-squares methods that provide similar parameter estimates but provides a method that is more general and extensible.  Fitting non-linear models in R is described in detail in the Von Bertalanffy Growth Model vignette.  Briefly, the non-linear model fitting procedure in R is implemented with \R{nls()}, which requires the model formula, the list of starting values, and the data frame as arguments. In addition, \R{trace=TRUE} can be included in \R{nls()} to see the residual sum-of-squares and current values of the parameters for each iteration of the fitting process.  For simplicity and clarity, the starting values can be entered into a list and the formula can be created prior to calling \R{nls()}.  The use of \R{nls()} is illustrated with the following examples.
+
+The mean catch-per-unit-effort of adult female Lake Trout per 1000 m of gillnet from fall spawning surveys (i.e., the ``stock'') and the density of age-0 fish per ha captured the following fall in bottom trawls (i.e., the ``recruits'') were recorded from an area near Gull Island Shoal in the Apostle Islands region of Lake Superior \citep{Schrametal1995}.  These data are loaded and the structure is observed with
+<<>>=
+data(LakeTroutGIS)
+str(LakeTroutGIS)
+@
+
+In order to fit a stock-recruitment model with multiplicative errors, a new variable consisting of the natural log of the ``recruit'' variable must be constructed and appended to the data frame with
+<<>>=
+LakeTroutGIS$logR <- log(LakeTroutGIS$recruit)
+str(LakeTroutGIS)
+@
+
+\subsection{Fitting Beverton-Holt Model in R -- Case I}
+The linear models used to generate starting values discussed previously are implemented in R with \R{srStarts()}.  This function which requires a model of the generic form \R{R}\verb"~"\R{S} as the first argument, the data frame from which to find \R{R} and \R{S} in the \R{data=} argument, the type of model (either \R{"BevertonHolt"} or \R{"Ricker"}) in the \R{type=} argument, and the ``number'' of the parameterization in the \R{param=} argument.  The ``numbers'' 'used in \R{param=} correspond to the order the parameterizations were presented in this vignette\footnote{The models can also be seen with \R{srModels()}}.  Starting values for the Lake Trout example were generated, and saved to an object, with
+<<>>=
+bh1s <- srStarts(recruits~stock,data=LakeTroutGIS,type="BevertonHolt",param=1)
+unlist(bh1s)   # unlist used just to save space when displaying
+@
+
+For simplicity, the Beverton-Holt model should be declared and saved to an object before proceeding to use \R{nls()}.  For example, the first parameterization is declared with\footnote{The \R{srFuns()} function can be used to declare this and other stock-recruit model functions.  In this case, one would use \R{bh1 <- srFuns(type="BevertonHolt",param=1).}}
+<<>>=
+bh1 <- logR~log((a*stock)/(1+b*stock))
+@
+
+The Beverton-Holt model is then fit and saved to an object with\footnote{If the model \R{bh1} was declared using \R{srFuns()}, then one would need to use \R{bh1nls <- nls(logR\~log(bh1(stock,a,b)),data=LakeTroutGIS,start=bh1s)} to fit the model here.}
+<<>>=
+bh1nls <- nls(bh1,data=LakeTroutGIS,start=bh1s)
+@
+
+For comparative purposes the density-independence model is fit and saved to an object with
+<<>>=
+bh0 <- logR~log(a*stock)       # declare model
+bh0s <- bh1s[1]                # use the same starting value as above for a
+bh0nls <- nls(bh0,data=LakeTroutGIS,start=bh0s)
+@
+
+An ``extra sums-of-squares'' test and AIC calculations for determining whether the density independence or Beverton-Holt model ``best'' fits the data is computed with
+<<>>=
+anova(bh0nls,bh1nls)
+AIC(bh0nls,bh1nls)
+@
+With a large p-value (\Sexpr{swvPvalue(anova(bh0nls,bh1nls)[2,"Pr(>F)"],digits=2)}) for the ANOVA and a larger AIC value, it is clear that the Beverton-Holt model does NOT explain significantly more of the variability in recruitment then a simple density-independence model.  Thus, the Beverton-Holt model with the density-dependent parameter does NOT appear to be a ``better'' fit for these data.
+
+A graphic \figrefp{fig:fitBH1} depicting the relative fit of these two models can be constructed, from the ``ground up'', as shown with 
+
+<<BHFit1, fig.cap="Plot of recruitment versus stock levels for the Gull Island Shoal Lake Trout data with the Beverton-Holt and simple density-independence stock-recruit models superimposed.">>=
+plot(recruits~stock,data=LakeTroutGIS)
+curve((coef(bh1nls)[1]*x)/(1+coef(bh1nls)[2]*x),from=0,to=120,col="red",lwd=2,add=TRUE)
+curve(coef(bh0nls)[1]*x,from=0,to=120,col="blue",lwd=2,add=TRUE)
+legend("topleft",legend=c("density independent","density dependent"),
+col=c("blue","red"),lwd=2,cex=0.6)
+@
+
+The parameter estimates, along with other summary results, are obtained by submitting the saved \R{nls()} object to \R{overview()} from the \R{nlstools} package.  Because the Beverton-Holt model was not a ``better'' fit, this is demonstrated below for the Beverton-Hold model for illustrative purposes only, 
+<<>>=
+overview(bh1nls)
+@
+
+The asymptotic confidence intervals and hypothesis tests in the results above should generally not be trusted.  Instead 200 bootstrap samples are constructed with
+<<>>=
+bootbh1 <- nlsBoot(bh1nls,niter=200)   # B=200 is too low, should be nearer B=1000
+@
+
+and 95\% bootstrap confidence intervals are obtained and visualized \figrefp{fig:BootCIHistBH1} with
+<<BootCIHistBH1, fig.width=7, out.width='.8\\linewidth', fig.cap="Histogram of the bootstrap results for the Beverton-Holt stock-recruit model fit to the Gull Island Shoal Lake Trout data.  Red horizontal lines represent the 95\\% bootstrap confidence intervals.">>=
+confint(bootbh1,plot=TRUE)
+@
+
+The skewed distribution of the bootstrap results for both parameters suggests that the asympotic CIs and tests in the \R{overview()} output are likely biased.  In addition, note that the bootstrap CI for $b$ suggests that $b$ could be equal to zero, further suggesting that the density dependent paramater is not warranted for these data.
+
+Finally, a scatterplot of the bootstrap estimates of the parameters, constructed below and seen in \figrefp{fig:BootScatPlotBH1}, shows a strong correlation between the two parameters.
+
+<<BootScatPlotBH1, fig.cap="Scatterplot for the parameters of the bootstrap results for the Beverton-Holt stock-recruit model fit the Gull Island Shoal Lake Trout data.">>=
+plot(bootbh1)
+@
+
+\clearpage
+\subsection{Fitting Beverton-Holt Model in R -- Case II}
+Stock and recruitment data for the 1971-1991 year-classes of Lake Trout in Michigan waters of Lake Superior were recorded by \cite{Richardsetal2004}.  The ``stock'' data was the geometric mean CPE of age-8 and older fish caught in gillnets (separated by whether the fish were of ``wild'' or ``hatchery'' (i.e., stocked) origin) whereas the ``recruit'' data was the geometric mean CPE of age-7 fish caught in gillnets.  These data are loaded, the structure of the data frame is examined, the log of the recruits variable is created, the hatchery and wild CPE data are combined to one ``stock'' variable, and the data is reduced to just fish captured in the MI7 area with
+
+<<>>=
+data(LakeTroutMI)
+str(LakeTroutMI)
+LakeTroutMI$logR <- log(LakeTroutMI$recruit)
+LakeTroutMI$stock <- LakeTroutMI$stocked + LakeTroutMI$wild
+MI7 <- Subset(LakeTroutMI,area=="MI7")
+str(MI7)
+@
+
+The recruitment measure is missing from one year; thus, that year should be removed from the data with
+<<>>=
+MI7 <- MI7[complete.cases(MI7),]
+@
+
+The second parameterization of the Beverton-Holt model is declared\footnote{The \R{srFuns()} function produces a function for all parameterizations of the Beverton-Holt and Ricker stock-recruit models discussed here.  This is purely a convenience function and one should make sure they know how to enter functions ``by-hand'' into R so as not to be restricted to just those models found in \R{srFuns()}.  The ``by-hand'' method was demonstrated in the previous example.} and starting values are found with
+
+<<>>=
+bh2 <- srFuns(type="BevertonHolt",param=2)
+bh2s <- srStarts(recruits~stock,data=MI7,type="BevertonHolt",param=2)
+unlist(bh2s)    # unlist use only to save space for display
+@
+
+An attempt is then made to fit the model with
+<<eval=FALSE>>=
+bh2fit <- nls(logR~log(bh2(stock,a,Rp)),data=MI7,start=bh2s)
+@
+However, this code produces the error \R{In log(bh2(stock, a, Rp)) : NaNs produced}.  This error typically occurs when the \R{nls()} algorithm ``wanders'' into a territory where the parameters produce a negative level of recruits.  One way to avoid this error is to constrain the $a$ and $R_{p}$ parameters to be positive.  However, the default optimization algorithm in \R{nls()} does not support constrained parameters.  Therefore, the optimization algorithm needs to be changed to the so-called ``port'' algorithm which does support constrained parameter choices.  The optimization algorithm is changed with \R{algorithm="port"} and lower bounds of zero are set for both parameters with \R{lower=c(0,0)}.  Thus, the constrained model is fit and saved to an object with
+<<>>=
+bh2fit <- nls(logR~log(bh2(stock,a,Rp)),data=MI7,start=bh2s,algorithm="port",lower=c(0,0))
+@
+
+The density-independence model is fit to these data with
+<<>>=
+bh0 <- logR~log(a*stock)
+bh0s <- bh2s[1]
+bh0fit <- nls(bh0,data=MI7,start=bh0s,algorithm="port",lower=c(0))
+@
+The ``extra sum-of-squares'' test and AIC results to compare these two models are computed with
+<<>>=
+anova(bh0fit,bh2fit)
+AIC(bh0fit,bh2fit)
+@
+
+Both a ``small'' p-value (\Sexpr{swvPvalue(anova(bh0fit,bh2fit)[2,"Pr(>F)"])}) and the smaller AIC value suggest that the Beverton-Holt model with the density-dependent parameter provide a ``better'' fit to the data then the simple density-independence model.  A supporting graphic \figrefp{fig:fitBH2} is constructed with
+<<BHFit2, fig.cap="Plot of recruitment versus stock levels for the Lake Superior MI7 area Lake Trout data with the Beverton-Holt and simple density-independence stock-recruit models superimposed.">>=
+plot(recruits~stock,data=MI7,pch=19)
+curve(bh2(x,coef(bh2fit)[1],coef(bh2fit)[2]),from=0,to=130,col="red",lwd=2,add=TRUE)
+curve(coef(bh0fit)[1]*x,from=0,to=130,col="blue",lwd=2,add=TRUE)
+legend("topright",legend=c("density independent","density dependent"),col=c("blue","red"),
+       lwd=2,cex=0.6)
+@
+
+The parameter estimates, along with other summary results, are obtained with
+<<>>=
+overview(bh2fit)
+@
+
+The 95\% bootstrap confidence intervals are obtained and visualized \figrefp{fig:BootCIHistBH2} with
+<<BootCIHistBH2, fig.width=7, out.width='.8\\linewidth', fig.cap="Histogram of the bootstrap results for the Beverton-Holt stock-recruit model fit to the Lake Superior MI7 area Lake Trout data.  Red horizontal lines represent the 95\\% bootstrap confidence intervals.">>=
+bootbh2 <- nlsBoot(bh2fit,niter=200)   # B=200 is too low, should be nearer B=1000
+confint(bootbh2,plot=TRUE)
+@
+
+The bootstrap results show a strongly skewed distribution for $a$.  The $R_{p}$ distribution is less skewed and approximate 95\% confidence intervals for $R_{p}$ is between \Sexpr{formatC(confint(bootbh2)["Rp","95% LCI"],format="f",digits=1)} and \Sexpr{formatC(confint(bootbh2)["Rp","95% UCI"],format="f",digits=1)}.
+
+
+\clearpage
+\subsection{Fitting the Ricker Model in R}
+The fitting of the third parameterization of the Ricker model is illustrated with Lake Trout data from Lake Superior's MI7 area.  The third parameterization of the Ricker model is declared and starting values are found with
+<<>>=
+r3 <- srFuns(type="Ricker",param=3)
+r3s <- srStarts(recruits~stock,data=MI7,type="Ricker",param=3)
+unlist(r3s)    # unlist use only to save space for display
+@
+
+The model is then fit and saved to an object with
+<<>>=
+r3fit <- nls(logR~log(r3(stock,a,Rp)),data=MI7,start=r3s,algorithm="port",lower=c(0,0))
+@
+The density-independence model is fit and the ``extra sum-of-squares'' test and AIC results computed with
+<<>>=
+r0 <- logR~log(a*stock)
+r0s <- r3s[1]
+r0fit <- nls(r0,data=MI7,start=r0s,algorithm="port",lower=c(0))
+anova(r0fit,r3fit)
+AIC(r0fit,r3fit)
+@
+
+Both a ``small'' p-value (\Sexpr{swvPvalue(anova(r0fit,r3fit)[2,"Pr(>F)"])}) and the smaller AIC value suggest that the Ricker model with the density-dependent parameter provide a ``better'' fit to the data then the simple density-independence model.  A supporting graphic \figrefp{fig:fitR1} is constructed with
+<<RFit1, fig.cap="Plot of recruitment versus stock levels for the Lake Superior MI7 area Lake Trout data with the Ricker and simple density-independence stock-recruit models superimposed.">>=
+plot(recruits~stock,data=MI7,pch=19)
+curve(r3(x,coef(r3fit)[1],coef(r3fit)[2]),from=0,to=130,col="red",lwd=2,add=TRUE)
+curve(coef(r0fit)[1]*x,from=0,to=130,col="blue",lwd=2,add=TRUE)
+legend("topright",legend=c("density independent","density dependent"),col=c("blue","red"),
+       lwd=2,cex=0.6)
+@
+
+The parameter estimates, along with other summary results, are obtained with
+<<>>=
+overview(r3fit)
+@
+
+The 95\% bootstrap confidence intervals are obtained and visualized \figrefp{fig:BootCIHistR1} with
+<<BootCIHistR1, fig.width=7, out.width='.8\\linewidth', fig.cap="Histogram of the bootstrap results for the Ricker stock-recruit model fit to the Lake Superior MI7 area Lake Trout data.  Red horizontal lines represent the 95\\% bootstrap confidence intervals.">>=
+bootr3 <- nlsBoot(r3fit,niter=200)   # B=200 is too low, it should be nearer B=1000
+confint(bootr3,plot=TRUE)
+@
+
+The bootstrap results show a moderately skewed distribution for both $a$ and $R_{p}$.  Approximate 95\% confidence intervals for $R_{p}$ is between \Sexpr{formatC(confint(bootr3)["Rp","95% LCI"],format="f",digits=1)} and \Sexpr{formatC(confint(bootr3)["Rp","95% UCI"],format="f",digits=1)}.
+
+One can compute a confidence interval for the stock level that corresponds to the peak recruitment level by applying the formula provided previously to the $a$ and $R_{p}$ results from each of the bootstrap samples found in the \R{coefboot} object of the \R{bootr3} object.  Thus, the $S_{p}$ value for each bootstrap sample is computed with
+<<>>=
+Sp <- bootr3$coefboot[,"Rp"]*exp(1)/bootr3$coefboot[,"a"]
+@
+
+The median value and 95\% confidence interval for $S_{p}$ can be found by supplying those results to the quantile function as follows
+<<>>=
+( qSp <- quantile(Sp,c(0.5,0.025,0.975)) )
+@
+Thus, one is 95\% confident that the stock level that produces the peak recruitment level is between \Sexpr{formatC(qSp[1],format="f",digits=1)} and \Sexpr{formatC(qSp[3],format="f",digits=1)}.  An interesting plot \figrefp{fig:fitR2} of these results, along with the peak level of recruitment results, is constructed with
+
+<<RFit2, fig.cap="Plot of recruitment versus stock levels for the Lake Superior MI7 area Lake Trout data with the Ricker stock-recruit model and 95\\% bootstrapped confidence intervals for the predicted peak level of recruitment (vertical) and the stock level that would produce the predicted peak level of recruitment (horizontal) superimposed.">>=
+plot(recruits~stock,data=MI7,pch=19,col="gray")
+curve(r3(x,coef(r3fit)[1],coef(r3fit)[2]),from=0,to=130,lwd=2,add=TRUE)
+( cRp <- coef(r3fit)["Rp"] )
+plotCI(x=qSp[1],y=cRp,li=qSp[2],ui=qSp[3],err="x",lwd=2,pch=19,col="red",add=TRUE)
+plotCI(x=qSp[1],y=cRp,li=confint(bootr3,parm="Rp")[1],ui=confint(bootr3,parm="Rp")[2],
+err="y",lwd=2,pch=19,col="red",add=TRUE)
+@
+
+Finally, one may ask the question of whether the Beverton-Holt or Ricker model is a ``better'' fit to these data.  This can be answered by submitting the fitted objects of these two models to \R{AIC()} as follows
+<<>>=
+AIC(r3fit,bh2fit)
+@
+With a lower AIC value, the Ricker model appears to be a ``better'' fit to these data.
+
+
+\section{Spawning Potential Ratio}
+NEED TO WORK ON THIS
+
+\[ SPR = \frac{P_{fished}}{P_{unfished}} \]
+
+\[ P = \Sum_{i=1}^{n}\mu_{i}E_{i} \Prod_{j=0}^{i-1}S_{ij} \]
+
+where 
+
+\begin{Itemize}
+  \item $n$ is the maximum age
+  \item $\mu_{i}$ is the proportion mature at age $i$
+  \item $E_{i}$ is the mean fecundity (number of eggs produced) by females of age $i$ in the absence of density-dependent growth
+  \item $S_{ij}$ is the annual survival rate (probability) of age $i$ females when they were age $j$ (for $j<i$) and is $e^{-(F_{ij}+M_{ij})}$ 
+  \item $F_{ij}$ is the instantaneous fishing mortality rate of age $i$ females when they were age $j$
+  \item $M_{ij}$ is the instantaneous natural mortality rate of age $i$ females when they were age $j$
+\end{Itemize}
+
+\cite{MaceSissenwine1993}, \cite{Goodyear1993}, 
+
+
+%BIBLIOGRAPHY ------------------------------------------------------------------
+\cleardoublepage   %not sure why, this is needed so that TOC entry will point to right start page
+\phantomsection    %not sure why, this is needed so that TOC entry will point to right start page
+\addcontentsline{toc}{section}{References}
+\bibliography{c:/aaaWork/zGnrlLatex/DHO_bib}    %make the bibliography
+
+<<echo=FALSE, results='asis'>>=
+## will add the reproducibility information
+et <- proc.time() - stime
+swvFinish(rqrdPkgs=rqrd,newPage=FALSE,elapsed=et["user.self"]+et["sys.self"])
+@
+<<echo=FALSE, results='hide', include=FALSE>>=
+## Will create the script file
+swvCode(moreItems=c("source","rqrd","stime"))
+@
+\end{document} 

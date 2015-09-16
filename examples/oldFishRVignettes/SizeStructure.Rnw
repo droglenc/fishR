@@ -1,0 +1,291 @@
+\documentclass[a4paper]{article}
+\input{c:/aaaWork/zGnrlLatex/GnrlPreamble}
+\usepackage[toc,page]{appendix}
+\usepackage{longtable}
+\input{c:/aaaWork/zGnrlLatex/JustRPreamble}
+\hypersetup{pdftitle = fishR Vignette -- Size Structure}
+
+\begin{document}
+\titleFishR{Size Structure Analysis}
+
+<<setup, echo=FALSE, include=FALSE>>=
+## Start time for keeping track of process time
+ stime <- proc.time()
+## load common knitr setup
+source("../knitr_Common.r")
+@
+
+\section{Background}
+\cite{NeumannAllen2007} note that
+
+\begin{quote}
+Size structure is one of the most commonly used fisheries assessment tools.  The size structure of a fish population at any point in time can be considered a snapshot that reflects the interactions of the dynamic rates of recruitment, growth, and mortality.  Thus, length-frequency data provide valuable insight into the dynamics of fish populations and help identify problems such as inconsistent year-class strength, slow growth, or excessive mortality.
+\end{quote}
+
+This vignette will focus on the two most common methods of assessing the size structure of a fish population: length frequency histograms and size structure indices.
+
+Before loading these data, the \R{FSA} and \R{FSAdata} packages maintained by the author should be loaded with
+<<echo=-1, results='hide', warning=FALSE, message=FALSE>>=
+rqrd <- c("FSA","FSAdata")
+library(FSA)
+library(FSAdata)
+@
+
+Throughout this vignette, the total length data from Bluegill (\textit{Lepomis macrochirus}) and Largemouth Bass (\textit{Micropterus salmoides}) sampled in 2007 from a small catch-and-release lake in northern Wisconsin will be examined.  These data (along with other data) can be found in the \dfile{InchLake1} data frame in the \R{FSAdata} package.  The entire data frame is loaded into R and the structure and the first six rows of data are viewed with
+
+<<>>=
+data(InchLake1)
+str(InchLake1)
+head(InchLake1)
+@
+
+The Bluegill and Largemouth Bass data from 2007 are isolated with
+<<>>=
+bg <- Subset(InchLake1,year==2007 & species=="Bluegill")
+str(bg)
+lmb <- Subset(InchLake1,year==2007 & species=="Largemouth Bass") 
+str(lmb)
+@
+Note, from the data frame structure, that the number of observations in each subsetted data frame are reduced from the original data frame and that, in each instance, the \var{species} variable has only one level -- the level of the species of interest.  These subsetted data frames will be used in the examples below.
+
+\section{Length Frequencies}\label{sect:LenFreq}
+A length frequency shows the number (i.e., frequency) of fish in each of several length categories that cover the range of observed lengths.  The width of the length categories is important, as too few intervals may mask important information in the length frequency, whereas too many intervals does not provide a useful summary.  \cite{AndersonNeumann1996} suggested 1-cm (0.5-in) intervals for fish that reach 30 cm (12 in), 2-cm (1-in) intervals for fish that reach 60 cm (24 in), and 5-cm (2-in) intervals for fish that reach 150 cm (60 in) maximum length.  Of course, these are suggestions and you should use your best judgment when constructing the intervals.
+
+Histograms are constructed in R with \R{hist()}.  By default, \R{hist()} will use interval breaks and widths that are ``pretty'' and right-inclusive -- e.g., an 8 cm fish will be included in the 6-8 cm interval rather than the 8-10 cm interval.  This is not what most fisheries biologists desire.  Thus, the \R{FSA} package contains a modified \R{hist()} that will use left-inclusive bins by default.  The examples herein use the modified version of \R{hist()} which requires a formula notation as the first argument and a corresponding \R{data=} argument.
+
+For most fisheries applications, R will have to be forced to use the interval breaks that you want.  The exact interval breaks are set in R by putting the lower values of the breaks into a vector and assigning that vector to the \R{breaks=} argument in \R{hist()}.  For example, the range of values observed for Bluegills in Inch Lake was between \Sexpr{formatC(min(bg$length),format="f",digits=1)} and \Sexpr{formatC(max(bg$length),format="f",digits=1)} inches as found with
+<<>>=
+Summarize(~length,data=bg,digits=2)
+@
+With this range of values it makes sense to construct length intervals that begin at 1 in and continue in 0.5-in intervals up to 9.5 in.  This vector of numbers is constructed with \R{seq()} as follows\footnote{The ``extra'' parentheses in this command force R to print the result at the same time that it is being assigned to an object.  Without the parentheses you result would be assigned but not made visible to you until you typed the name of the assigned object.}
+<<>>=
+( bg.brks <- seq(1,9.5,0.5) )
+@
+With this vector of interval breaks the length frequency histogram for Bluegills \figrefp{fig:BGLenFreq} is constructed with\footnote{Note that my figures may look different than yours as I have changed the default settings for the graphics with \R{par()}.  In particular, I used \R{par(mar=c(3.5,3.5,1,1),mgp=c(2.1,0.4,0),tcl=-0.2)} for most graphics.  See the ``Basic Plotting in R'' vignette.}
+<<BGLenFreq, fig.cap="Length frequency for Inch Lake Bluegill.">>=
+hist(~length,data=bg,breaks=bg.brks,main="",xlab="Length (in)",col="gray90")
+@
+
+From \figref{fig:BGLenFreq} it is very apparent that a very large number of Bluegills less than approximately 3 inches were captured in Inch Lake.  These fish can be explored a bit more closely by isolating fish less than 4 inches, creating a set of interval breaks that are 0.1-in wide\footnote{I felt comfortable making such narrow intervals here because the sample size is so large}, and creating a new length frequency histogram \figrefp{fig:BGLenFreq2} as follows
+<<BGLenFreq2, fig.cap="Length frequency for Inch Lake Bluegill less than 4 inches.">>=
+bg.small <- Subset(bg,length <= 4)
+bg.brks2 <- seq(1,4,0.1)
+hist(~length,data=bg.small,breaks=bg.brks2,main="",xlab="Length (in)",col="gray90")
+@
+
+These small fish are likely one-year-old (sampled just after ice-out), there is some weak evidence for a slight bimodality with one mode of fish near 1.2 inches and another near 1.5 inches, and a sharp drop-off in abundance after 1.7 inches \figrefp{fig:BGLenFreq2}.
+
+The larger fish can be examined \figrefp{fig:BGLenFreq3} more closely in a similar manner with
+<<BGLenFreq3, fig.cap="Length frequency for Inch Lake Bluegill greater than 4 inches.">>=
+bg.lrg <- Subset(bg,length >= 4)
+bg.brks3 <- seq(4,9.5,0.2)
+hist(~length,data=bg.lrg,breaks=bg.brks3,main="",xlab="Length (in)",col="gray90")
+@
+
+Finally, you can easily create length frequency histograms separated by levels of a factor variable by including a formula of the form \R{length}\verb+~+\R{factor} where \R{length} is generically the length variable and \R{factor} is generically the variable that you want to separate by.  By default the same y-axis limits will be used for each graph.  This may be instructive in some instances but, in this instance, one gear captured most of the fish such that all of the other histograms are non-informative.  Different y-axis limits can be used by setting \R{same.ylim=FALSE}.  For example, length frequency histograms separated by gear type \figrefp{fig:BGLenFreq4} are constructed with
+<<label=BGLenFreq4, fig.width=7, fig.height=7, out.width='.8\\linewidth', fig.cap="Length frequency for Inch Lake Bluegill separated by gear type.">>=
+hist(length~netType,data=bg,breaks=bg.brks,same.ylim=FALSE,xlab="Length (in)",col="gray90")
+@
+
+\section{Proportional Size Distribution ($PSD$)}
+\cite{Gabelhouse1984} introduced the ``five-cell length categorization system'' that defines lengths for so-called ``stock'', ``quality'', ``preferred'', ``memorable'', and ``tropy'' size individuals of a wide variety of species\footnote{The list of known species for which length categories have been defined can be seen with \R{psdVal().}}.  For example, stock-sized fish are at least 20\% of the world-record length with the idea that fish smaller than this size have very little recreational value and that fish larger than this size are generally mature and available to most gears \citep{Gabelhouse1984}.  Additionally, quality-sized fish are at least 36\% of world-record length and are generally fish that most anglers would like to catch \citep{Gabelhouse1984}.  It should be noted that all quality-sized fish are also stock-sized fish -- i.e., the quality-sized fish are a subset of the stock-sized fish.  Indeed, all fish in the ``higher'' categories also belong to the previous categories.
+
+The minimum lengths for the five-cells in Gabelhouse's system can be obtained with \R{psdVal()}.  This function requires the name of the species, contained in quotes and spelled correctly\footnote{Spelled correctly means spelled as it appears in the function.  You can see a list of all species stored in the function by typing \R{psdVal()}, without any arguments.}, as its first argument.  There are two other optional arguments to \R{psdVal()}.  The \R{units=} argument controls whether the results are returned in millimeters (\R{="mm"}; default), centimeters (\R{="cm"}), or inches (\R{="in"}).  Finally, \R{incl.zero=} controls whether the list of values returned will include a zero as the first value in the vector (\R{=TRUE}; default) or not (\R{=FALSE}).  Including a zero in the vector is particularly useful in the common situation where the data set contains fish that are smaller then the stock size.  Thus, a vector containing the five-cell length, in inches, categories (and zero) for Bluegills is obtained with
+<<>>=
+( bg.cuts <- psdVal("Bluegill",units="in") )
+@
+
+Length frequency data can be summarized into a few useful statistics called proportional size distribution indices ($PSD-X$; \citealt{Guyetal2007})\footnote{These indices were formerly called the proportional stock density and relative stock density (RSD).}.  A $PSD-X$ index is defined as the proportion of stock-sized fish that are also greater than some other larger size category.  Specifically,
+
+\[ PSD-X = \frac{\text{Number of fish $\geq$ specified length}}{\text{Number of fish $\geq$ stock length}}*100 \]
+
+The $X$ in this formula is replaced with a letter or descriptor specific to the length specification in the numerator.  For example, $PSD-Q$ would have a numerator that is the ``number of fish greater than or equal to `quality' size'' and would be interpreted as the proportion of stock-sized fish that are also quality-sized fish.  $PSD-Q$ is the most common calculation and is often just referred to as $PSD$ \citep{Guyetal2007}.  Similarly, $PSD-P$ would use the preferred-size length in the numerator and is the proportion of stock-sized fish that are also preferred-size.  Finally, $PSD-7$ would use 7 inches in the numerator and is the proportion of stock-sized fish that are greater than or equal to 7 inches.  The $PSD-X$ is a percentage but it is commonly referred to as a proportion and shown without the percentage sign.
+
+A confidence interval for the $PSD-X$ value is computed using binomial distribution theory.  The binomial distribution theory is appropriate in this case because each fish of at least stock-size is recorded as to having also been of the specific size in the numerator or not (i.e., two choices) and the number of ``successes'' (i.e., of the specific size) is of interest to the biologist.
+
+\subsection{$PSD-X$ Calculation in R}
+Calculation of the $PSD-X$ is simplified in R through the use of several functions (in addition to \R{psdVal()} as defined above).  First, \R{lencat()} is used to convert the actual length measurements into a new variable that contains the length categories, which can then be summarized to obtain the number of fish in each length category.  For $PSD-X$ calculations, \R{lencat()} requires three arguments -- a formula of the form \verb+~+\R{length} as the first argument, the name of the data frame containing the length data as the second argument, and a vector containing the breaks (i.e., minimum values) for the length categories in the \R{breaks=} argument.  The new variable appended to the data frame will be called \var{LCat} unless a different name is specified in \R{vname=}.  The result from \R{lencat()} should be saved to a data frame object (either already existing or new).
+
+The length categories, using the breaks previously stored in \R{bg.cuts}, for computing common $PSD-X$ indices for Bluegill are appended to the \R{bg} data frame with
+<<>>=
+bg <- lencat(~length,data=bg,breaks=bg.cuts)
+str(bg)
+head(bg)
+@
+
+The frequency of individuals in each length category is then obtained with \R{table()} as follows
+<<>>=
+( bgtbl <- table(bg$LCat) )
+@
+
+Thus, there are \Sexpr{bgtbl["0"]} fish between 0 and 3 inches and \Sexpr{bgtbl["3"]} fish between 3 and 6 inches.  It is more instructive, however, to know how many total fish are greater then each of the length categories -- e.g., how many Bluegills are larger than 6 inches and how many are larger than 3 inches.  A reverse cumulative table can be obtained by submitting the saved \R{table()} object to \R{rcumsum()} as follows
+<<>>=
+( bgrcum <- rcumsum(bgtbl) )
+@
+From this, it is seen that there are \Sexpr{bgrcum["6"]} Bluegills larger than 6 inches (i.e., ``quality or better'') and \Sexpr{bgrcum["3"]} Bluegills larger than 3 inches (i.e., ``stock or better'').
+
+The computation of $PSD-Q$ is now straightforward with
+<<>>=
+( bg.psdq <- bgrcum["6"]/bgrcum["3"]*100 )
+@
+
+A confidence interval for the ``proportion of successes'' (i.e., the $PSD$ value as a proportion, in this case) is computed with \R{binCI()}.  This function requires two arguments -- the number of ``successes'' (i.e., number of quality-sized fish) and the total number of ``trials'' (i.e., number of stock-sized fish).  The result is usually multiplied by 100 to match the scale of the $PSD-X$ calculation.  For example\footnote{The ``zero'' and ``stock'' categories need to be removed from reverse cumulative sum table before making this calculation.},
+<<>>=
+( bg.psdq.ci <- binCI(bgrcum["6"],bgrcum["3"])*100 )
+@
+
+Thus, one is 95\% confident that $PSD$ for the population of Bluegills is between \Sexpr{formatC(bg.psdq.ci[1],format="f",digits=0)} and \Sexpr{formatC(bg.psdq.ci[2],format="f",digits=0)}.
+
+The four common $PSD-X$ values\footnote{The four common values are $PSD$, $PSD-P$, $PSD-M$, and $PSD-T$, though fewer may be presented if the categories contained zero fish.} can be quickly computed by dividing the number of fish in each of the quality-sized or greater categories by the number of fish in the stock-sized category.  For example,
+
+<<>>=
+( bg.psd <- bgrcum[-c(1,2)]/bgrcum["3"]*100 )
+@
+
+Thus, for example, the $PSD-P$ is \Sexpr{formatC(bg.psd["8"],format="f",digits=0)}.
+
+\subsection{PSD for Any Length}
+PSD calculations do not need to be restricted to only those lengths in the five-cell length categorization system.  For example, suppose that there is a 7-inch minimum size limit on Bluegill.  The biologist may then be interested in finding the proportion of stock-sized Bluegills that can be legally harvested (i.e., greater than or equal to 7 inches), or the $PSD-7$.  The $PSD-7$ is computed with the same concepts as shown previously, with the exception that the additional length(s) of interest must be added to the cut-off breaks by including the lengths in \R{addLens=} in \R{psdVal()}.  For example, the $PSD-7$ for Inch Lake Bluegill is computed with
+<<>>=
+( bg.cuts2 <- psdVal("Bluegill",units="in",addLens=7) )
+bg <- lencat(~length,data=bg,breaks=bg.cuts2,vname="LCat2")
+bgtbl2 <- table(bg$LCat2)
+( bgrcum2 <- rcumsum(bgtbl2) )
+bgrcum2["7"]/bgrcum2["3"]*100
+( bg.psd7 <- binCI(bgrcum2["7"],bgrcum2["3"])*100 )
+@
+Thus, it appears that between \Sexpr{formatC(bg.psd7[1],format="f",digits=0)}\% and \Sexpr{formatC(bg.psd7[2],format="f",digits=0)}\% of stock-length Bluegill in Inch Lake are of a legally harvestable length.
+
+
+\section{Convenience Functions} \label{sect:ConvenienceFuns}
+The \R{FSA} package has several functions to make the calculations of $PSD-X$ indices more convenient.  The first of these functions is \R{psdCalc()}, which will compute all of the common $PSD-X$ indices, along with the $PSD-X$ for any additional lengths provided by the user, with associated confidence intervals.  This function requires the same formula and corresponding data frame as described for \R{lencat()}, the same \R{species=} and \R{units=} described for \R{psdVal()}, and an optional \R{digits=} that controls the printed number of decimal places for the result.  For example, the calculations for Inch Lake Bluegill are obtained with
+<<>>=
+psdCalc(~length,data=bg,species="Bluegill",units="in",digits=1)
+@
+
+The following illustrates the inclusion of the 7-inch group using \R{addLens=} similar to what was illustrated previously
+<<>>=
+psdCalc(~length,data=bg,species="Bluegill",units="in",digits=1,addLens=7)
+@
+
+The \R{psdPlot()} can be used to construct a length frequency histogram with shaded bars representing the stock-size and greater fish and the five-cell length category lengths marked with vertical lines.  This function requires the same formula, \R{data=}, \R{species=}, and \R{units=} described for \R{psdCalc()} and the same \R{startcat=} and \R{w=} described for \R{lencat()}.  Other aspects of the plot are controlled as usual but it should be noted that if the range of values on the x-axis is limited with \R{xlim=}, then the minimum value in \R{xlim=} must be less than the stock length for the species.  An example of this plot \figrefp{fig:PSD_BG} was constructed for Inch Lake Bluegill with
+<<PSD_BG, fig.cap="Length frequency histogram for Inch Lake Bluegill with the five-cell length categories and the various $PSD-X$ values computed.">>=
+psdPlot(~length,data=bg,species="Bluegill",units="in",w=0.5,xlim=c(2.5,9.5),ylim=c(0,80))
+@
+
+Finally, a fisheries scientist is often faced with the task of computing the $PSD-X$ values for a wide variety of species across a variety of groups (e.g., years, gear, lakes).  This process is made more efficient by using \R{psdDataPrep()} to create the length categorization variable at one time for all species in a data frame for which the five-cell system has been defined.  As might be expected, \R{psdDataPrep()} has some limitations.  For example, the species names in the original data frame must be spelled exactly as they appear in the in \R{PSDlit} data frame, primarily full common names with the first letter capitalized only on the first name for species with compound names.  For example, the species names in the original \R{InchLake1} data frame are not in the correct format (largely, the second names are capitalized)
+
+<<>>=
+levels(InchLake1$species)
+@
+
+The \R{recodeSpecies()} can be used to convert species names.  This function is flexible but in its simplest form it will simply ``re-capitalize'' the names to match the required form.  More complicated examples are illustrated in the \R{recodeSpecies()} help.  A simple conversion for the \R{InchLake1} data frame is completed with (note that the new variable name is the same as the old variable name but with a ``1'' appended)
+
+<<>>=
+InchLake1 <- recodeSpecies(~species,data=InchLake1)
+levels(InchLake1$species1)
+@
+
+The \R{psdDataPrep()} requires three arguments -- a formula of the form \R{length}\verb+~+\R{species} in the first argument, the data frame in \R{data=}, and the units of measurement in \R{units=}.  Species for which no known five-cell length categories exist can be eliminated from the resulting data frame with \R{remove.other=TRUE}.  Removing the species without five-cell categories is not a requirement but it will speed-up the process and make the resulting tables less cluttered.  The \R{InchLake1} data frame can be appended with the length categorization variable with
+<<>>=
+InchLake1 <- psdDataPrep(length~species1,data=InchLake1,units="in",remove.other=TRUE)
+head(InchLake1)
+@
+
+The data could then be subsetted and summarized as described previously.  However, the following code (somewhat explained with comments) can be used to construct the common $PSD-X$ values for each species and year combination
+
+<<>>=
+# make a frequency table by species and length category
+( t1 <- with(InchLake1,table(interaction(species1,year),PSDcat)) )
+# do a reverse cum sum ignoring the zero (i.e., sub-stock) group
+( t1r <- t(apply(t1[,-1],MARGIN=1,FUN=rcumsum)) )
+# Divide all greater than stock groups by the stock group -- i.e., PSD
+( t1p <- round(t1r[,-1]/t1r[,1]*100,1) )
+@
+
+
+\section{$PSD-X$ Interpretation}
+As a \textbf{very general} rule-of-thumb, a population of fish is said to be ``in balance'' if the $PSD$  value is between 30 and 70.  Different ranges have been proposed for different species \tabrefp{tab:PSDRanges}.  The idea behind these target ranges is that if the $PSD$  value is very low then there are few large fish in the population, whereas a very large $PSD$  indicates that there are few small fish in the population.  These target ranges should be used with caution, though, as an ``in balance'' $PSD$  can be produced from a wide variety of size structures.  For example, three populations of Bluegills may have the same $PSD$  (and number of quality fish) but one population may have all quality fish between 6 and 7 inches, one population may have all quality fish greater than 9 inches (with fish between 6 and 9 inches absent), and the third population may have all quality fish spread more evenly between 6 and 9 inches.  The reaction of the fish manager will likely be different for these three populations, but a simple look at the $PSD$  would not detect the differences.  Thus, the $PSD$  is a useful summary, but it should not be used without also examining length frequency histograms (\sectref{sect:LenFreq} and \sectref{sect:ConvenienceFuns}) or other $PSD-X$ values.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Suggested target ranges for size structure indices for a variety of species.  From \cite{Willisetal1993}.}
+  \label{tab:PSDRanges}
+\begin{tabular}{lcccl}
+\hline
+Species & $PSD$  & $PSD-P$ & $PSD-M$ & Reference \\ 
+\hline
+Largemouth Bass & 40-70 & 10-40 & 0-10 & \cite{Gabelhouse1984} \\ 
+Bluegill & 20-60 & 5-20 & 0-10 & \cite{Anderson1985} \\ 
+Crappies (midwestern ponds) & 30-60 & $>$10 & -- & \cite{Gabelhouse1984b} \\ 
+Crappies (Kansas reservoirs) & 40-70 & 10-40 & 0-10 & \cite{Willis1984} \\ 
+White bass & 40-70 & 10-40 & 0-10 & \cite{Willis1984} \\ 
+Walleye & 30-60 & -- & -- & \cite{AndersonWeithman1978} \\ 
+Northern pike & 30-60 & -- & -- & \cite{AndersonWeithman1978} \\ 
+Yellow perch & 30-60 & -- & -- & \cite{AndersonWeithman1978} \\ 
+\hline
+\end{tabular}
+\end{table}
+
+A $PSD$  value should also not be interpreted without considering other species and specific management goals.  For example, \cite{Willisetal1993} proposed target $PSD$  and $PSD-P$ values for Bluegills and Largemouth Bass under three different management scenarios \tabrefp{tab:MgmtOpts}.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Suggested target ranges for size structure indices for Largemouth Bass and Bluegill under three different management options.  From \cite{Willisetal1993}.}
+  \label{tab:MgmtOpts}
+\begin{tabular}{lcccccc}
+
+\hline
+ & \multicolumn{3}{c}{Largemouth Bass} &  & \multicolumn{2}{c}{Bluegill} \\ 
+\cline{2-4}\cline{6-7}
+Option & $PSD$  & $PSD-P$ & $PSD-M$ &  & $PSD$  & $PSD-P$ \\ 
+\hline
+Panfish & 20-40 & 0-10 & -- &  & 50-80 & 10-30 \\ 
+Balance & 40-70 & 10-40 & 0-10 &  & 20-60 & 5-20 \\ 
+Big bass & 50-80 & 30-60 & 10-25 &  & 10-50 & 0-10 \\ 
+\hline
+\end{tabular}
+\end{table}
+
+A so-called ``tic-tac-toe'' graph is one method of visually representing size structure indices for a predator and a prey.  A tic-tac-toe graph plots the $PSD-X$ value for the predator on the x-axis and the prey on the y-axis.  Target ranges are highlighted on each axis with shading such that there are vertical and horizontal stripes that ``cut'' the graph into nine squares.  The ``center square'' is where the predator and the prey would both fall into their respective target ranges.  Construction of a tic-tac-toe graph for a ``balanced'' management plan for Bluegills and Largemouth Bass from Inch Lake is shown below \figrefp{fig:PSD_BGLMB}.
+
+The $PSD$  for Bluegill captured in Inch Lake in May 2007 was computed previously.  Similar $PSD$  calculations for Largemouth Bass captured during the same time frame are computed with
+<<>>=
+lmb.cuts <- psdVal("Largemouth Bass",units="in")
+lmb <- lencat(~length,data=lmb,breaks=lmb.cuts,vname="LCat2")
+( lmbrcum2 <- rcumsum(table(lmb$LCat2)) )
+( lmb.psdq <- lmbrcum2["12"]/lmbrcum2["8"]*100 )
+( lmb.psdq.ci <- binCI(lmbrcum2["12"],lmbrcum2["8"])*100 )
+@
+Thus, one is 95\% confident that the $PSD$  value for the population of Largemouth Bass is between \Sexpr{formatC(lmb.psdq.ci[1],format="f",digits=0)} and \Sexpr{formatC(lmb.psdq.ci[2],format="f",digits=0)}.
+
+The base tic-tac-toe graph is constructed with \R{tictactoe()}.  All arguments to this function are optional.  However,the default axis labels are changed with \R{xlab=} and \R{ylab=}, respectively.  More importantly, the default ``in balance'' target ranges are changed with the \R{predbal=} and the \R{preybal=} arguments.  Both of these arguments requires a vector of length two that indicates the lower and upper values of the target range.  The default values for both \R{predbal=} and \R{preybal=} is \R{c(30,70)}.
+
+After the base tic-tac-toe graph has been constructed, the size structure indices for a predator-prey pair are added to the graph with \R{tictactoeAdd()}.  This function requires a vector of length two corresponding to the numerator and denominator of the index calculation for the predator as the first argument and a similar vector for the prey as the second argument.  For example, a tic-tac-toe graph, with modified ``in balance'' ranges, of the $PSD$  values for the Bluegill and Largemouth Bass in Inch Lake in 2007 \figrefp{fig:PSD_BGLMB} is constructed with
+<<PSD_BGLMB, fig.cap="Tic-tac-toe graph of Bluegill and Largemouth Bass $PSD$  values for Inch Lake in May 2007.  The shaded target ranges represent a ``balanced'' management option.">>=
+tictactoe(xlab="Largemouth Bass",ylab="Bluegill",predbal=c(40,70),preybal=c(20,60))
+tictactoeAdd(c(lmbrcum2["12"],lmbrcum2["8"]),c(bgrcum["6"],bgrcum["3"]),pt.col="blue")
+@
+
+From this, and assuming that the predator and prey are ``in balance'' if both $PSD$  values are in the center shaded box, it is seen that the bass-Bluegill system is out of balance.  It appears that there are more quality-sized Bluegill then would be expected in a balanced predator-prey system.  Of course, other statistics should be looked at before making final conclusions about this population.  For example, bass in Inch Lake likely also prey on an abundant population of bluntnose minnows (\textit{Pimephales notatus}) and yellow perch (\textit{Perca flavescens}).
+
+\cite{NeumannAllen2007} provide a much more thorough discussion regarding the interpretation of length frequency histograms and size structure indices.
+
+
+%BIBLIOGRAPHY -------------------------------------------------------------------------------------------
+\cleardoublepage   %not sure why, this is needed so that TOC entry will point to right start page
+\phantomsection    %not sure why, this is needed so that TOC entry will point to right start page
+\addcontentsline{toc}{section}{References}    %Add a TOC entry
+\bibliography{c:/aaaWork/zGnrlLatex/DHO_bib}    %make the bibliography
+
+
+<<echo=FALSE, results='asis'>>=
+## will add the reproducibility information
+et <- proc.time() - stime
+swvFinish(rqrdPkgs=rqrd,newPage=TRUE,elapsed=et["user.self"]+et["sys.self"])
+@
+<<echo=FALSE, results='hide', include=FALSE>>=
+## Will create the script file
+swvCode(moreItems=c("source","rqrd","stime"))
+@
+\end{document}

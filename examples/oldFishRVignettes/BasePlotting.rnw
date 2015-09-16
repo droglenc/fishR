@@ -1,0 +1,607 @@
+\documentclass[a4paper]{article}
+\input{c:/aaaWork/zGnrlLatex/GnrlPreamble}
+\usepackage[toc,page]{appendix}
+\input{c:/aaaWork/zGnrlLatex/JustRPreamble}
+\hypersetup{pdftitle = fishR Vignette -- Base Plotting}
+
+\begin{document}
+\titleFishR{Base Plotting}
+<<setup, echo=FALSE, include=FALSE>>=
+## Start time for keeping track of process time
+stime <- proc.time()
+source("../knitr_Common.R")
+@
+
+R provides amazing plotting capabilities.  However, the default base plots in R may not serve the needs for presentations and publications produced by fisheries biologists.  Fortunately, nearly all aspects of the plot can be customized to fit one's needs.  In this vignette, I introduce some of the basic methods used to customize base R plots\footnote{One may also want to look into the \R{lattice} and \R{ggplots2} packages for other plotting options.}.  This vignette is not an exhaustive treatise on plotting.  I have simply tried to bring together methods to handle what I see as the most common situations among fisheries students and professionals.  I will begin by showing how to construct three common graphics types -- i.e., scatterplots, line plots, and histograms -- with common simple modifications to each.  I will then illustrate how setting options in a base function -- i.e., \R{par()} -- can be used to control the finer details of each type of plot.
+
+Several fisheries-related data frames are available in the \R{FSAdata} package, which is loaded with the first line below.  Data frames used throughout this vignette are loaded and the structure and first six rows examined with the remaining lines below.
+<<warning=FALSE, message=FALSE>>=
+library(FSAdata)
+data(BullTroutRML1)
+str(BullTroutRML1)
+head(BullTroutRML1)
+data(BullTroutRML2)
+str(BullTroutRML2)
+head(BullTroutRML2)
+data(BloaterLH)
+str(BloaterLH)
+head(BloaterLH)
+@
+
+In addition, functions from the \R{FSA} package maintained by the author and the \R{plotrix} package are also required.  These packages are loaded with
+<<echo=-1, results='hide', warning=FALSE, message=FALSE>>=
+rqrd <- c("FSA","FSAdata","plotrix")
+library(FSA)
+library(plotrix)  # for plotH()
+@
+
+\section{Scatterplots}
+\subsection{Default}
+Scatterplots are created with \R{plot()}.  The variables to be plotted can be provided to \R{plot()} in a variety of ways, but I prefer to use the ``formula notation.''  In formula notation, the variables are presented with a formula of the type \R{y}\verb"~"\R{x} where \R{x} and \R{y} generically represent the variables on the x- and y-axes, respectively.  When using the formula notation, the data frame containing these variables must be included in the \R{data=} argument.  Thus, the default scatterplot \figrefp{fig:BaseSPlot1} of mass versus fork length for the Rocky Mountain bull trout data set was constructed with
+<<BaseSPlot1, fig.cap="Default scatterplot of mass versus fork length for bull trout.">>=
+plot(mass~fl,data=BullTroutRML1)
+@
+
+\subsection{Simple Common Modifications}
+Of course the x- and y-axes should be labeled more appropriately.  The x- and y-axes labels are labeled with strings in the \R{xlab=} and \R{ylab=} arguments, respectively.  \figref{fig:BaseSPlot2} shows the results of
+<<BaseSPlot2, fig.cap="Scatterplot of mass versus fork length for bull trout showing use of \\R{xlab=} and \\R{ylab=} to label x- and y-axes.">>=
+plot(mass~fl,data=BullTroutRML1,ylab="Mass (g)",xlab="Fork Length (mm)")
+@
+
+The x- and y-axis limits can be controlled by a vector of size two, containing the minimum and maximum values for the axis, in the \R{xlim=} and \R{ylim=} arguments, respectively.  For example, the x-axis limit in \figref{fig:BaseSPlot3} was constrained to be between 0 and 500 with
+<<BaseSPlot3, fig.cap="Scatterplot of mass versus fork length for bull trout showing use of the \\R{xlim=} argument.">>=
+plot(mass~fl,data=BullTroutRML1,ylab="Mass (g)",xlab="Fork Length (mm)",xlim=c(0,500))
+@
+
+The default plotting symbol in R is the open-circle.  Other symbols are used by setting the \R{pch=} argument\footnote{The \R{pch=} argument stands for ``plotting character.''} to an integer value that corresponds to a particular symbol \apprefp{app:Symbols}.  In addition, the color of the plotted symbol is changed by setting the \R{col=} argument to a numerical representation of a color\footnote{The numbers 0-8 are used and represent white, black, red, green, blue, cyan, magenta, yellow, and grey.} or a string that is one of the 637 named colors in R \apprefp{app:Colors}\footnote{Also see this excellent website about R colors at \href{http://research.stowers-institute.org/efg/R/Color/Chart/index.htm}{Stowers Institute}.}.  For example, a ``small'' filled red circle can be used as the plotting symbol \figrefp{fig:BaseSPlot4} by including \R{pch=20} and \R{col="red"} as follows
+<<BaseSPlot4, fig.cap="Scatterplot of mass versus fork length for bull trout showing use of non-default plotting symbols and colors.">>=
+plot(mass~fl,data=BullTroutRML1,ylab="Mass (g)",xlab="Fork Length (mm)",
+ xlim=c(0,500),pch=20,col="red")
+@
+
+
+\subsection{Scatterplot By Group}
+A scatterplot with different symbols or colors for the different levels of a factor variable is often useful.  This type of plot can be constructed with an understanding of how R ``codes'' factor variables and modifications of the \R{pch=} or \R{col=} arguments.  A factor variable is a ``group membership'' variable in R -- i.e., typically a ``word'' that says to which group an individual belongs.  R will show the ``word'' for the category level but ``behind-the-scenes'' a numeric value is stored with the first level coded as a ``1'', the second level coded as a ``2'', and so on.  For example, the factor level and the corresponding code for the \var{era} variable for rows 1, 21, 41, and 81 (chosen for illustrative purposes only) in the bull trout data frame can be seen with
+<<>>=
+with(BullTroutRML1[c(1,21,41,81),],data.frame(era,code=as.numeric(era)))
+@
+Ultimately, the underlying numeric codes can be used to extract specific positions out of vectors that represent the \R{col=} or \R{pch=} values to use.
+
+Suppose that the two plotting symbols and colors to be used to represent the two groups in the data are put into vectors as follows
+<<>>=
+symbs <- c(19,1)
+cols <- c("black","red")
+@
+
+Then, the numeric codes from the factor can be used to select one of the symbols or colors based on the level of the factor variable.  This is best illustrated by appending the ``chosen'' symbol and color as columns to the portion of the data frame examined above\footnote{One does not have to do this appending; it is used here just for illustrative purposes.}, i.e., 
+<<>>=
+with(BullTroutRML1[c(1,21,41,81),],data.frame(era,code=as.numeric(era),
+symbol=symbs[era],color=cols[era]))
+@
+These principles, with a corresponding legend, are used to produce \figref{fig:BaseSPlot5}, with
+<<BaseSPlot5, fig.cap="Scatterplot of mass versus fork length for bull trout showing use of different symbols and colors for different levels of era.">>=
+plot(mass~fl,data=BullTroutRML1,ylab="Mass (g)",xlab="Fork Length (mm)",
+ xlim=c(0,500), pch=symbs[era],col=cols[era])
+legend("topleft",legend=levels(BullTroutRML1$era),pch=symbs,col=cols)
+@
+
+If one does not use the \R{col=} argument then R defaults to \R{col="black"} for all symbols, which is useful for plots that will be printed in black-and-white.
+
+
+\section{Line Plots}
+A line plot in R is a scatterplot with all of the ``points'' connected by a line.  Line plots are constructed by including the \R{type="l"} argument\footnote{Note that this is an ``el'' and not a ``one'' - ``el'' is for line.} in \R{plot()}.  The default plot (with the exception that the x- and y-axes are labelled and the x-axis is constrained to the years 1980 to 1996) shown in \figref{fig:BaseLPlot1} was constructed with
+
+<<BaseLPlot1, fig.cap="Default line plot of number of bloater eggs versus year.">>=
+plot(eggs~year,data=BloaterLH,type="l",ylab="Number of Eggs (Millions)",
+ xlab="Year", xlim=c(1980,1996))
+@
+
+The line style can be modified by including an integer code between 0 and 6, where 0 indicates the use of a blank line \apprefp{app:Lines}, in the \R{lty=} argument\footnote{The \R{lty} argument stands for ``line type.''}.  The width of the line can be increased by using values greater than one, with larger values meaning thicker lines, in the \R{lwd=} argument\footnote{The \R{lwd} argument stands for ``line width.''}.  For example, a wider dashed blue line \figrefp{fig:BaseLPlot2} is used with
+<<BaseLPlot2, fig.cap="Line plot of number of bloater eggs versus year illustrating non-default choices of line type, line width, and color.">>=
+plot(eggs~year,data=BloaterLH,type="l",ylab="Number of Eggs (Millions)",
+ xlab="Year", xlim=c(1980,1996),lty=2,lwd=3,col="blue")
+@
+
+Both lines and points can be plotted with the \R{type="b"} argument to \R{plot()}.  The points and the lines in this mixed plot can be modified as described separately for points and lines above\footnote{It is not, however, straightforward how to have a different color for the points and the lines.}.  A plot with ``small'' filled circles and dotted connected lines \figrefp{fig:BaseLPlot3} is constructed with
+
+<<BaseLPlot3, fig.cap="Mixed line and scatter plot of number of bloater eggs versus year illustrating non-default choices of line type, line width, and point type.">>=
+plot(eggs~year,data=BloaterLH,type="b",ylab="Number of Eggs (Millions)",
+ xlab="Year", xlim=c(1980,1996),pch=19,lty=3,lwd=2)
+@
+
+
+\clearpage
+\section{Histograms}
+\subsection{Default}
+Histograms can be constructed in R with \R{hist()}.  However, a modified version of this function is provided in the \R{FSA} package that ultimately allows the user to simultaneously make histograms of a single quantitative variable separated by the levels in a factor variable.  As this flexibility is often needed by the fisheries biologist, I will use the version of \R{hist()} from the \R{FSA} package throughout the following descriptions.  The \R{FSA} package is loaded with
+<<eval=FALSE>>=
+library(FSA)
+@
+
+The \R{hist()} function in \R{FSA} requires a first argument that is a formula followed by a \R{data=} argument.  If you simply want to create a histogram of a variable withOUT separation by groups then this formula must be of the type \R{x}\verb"~"1.  For example, the default (with the exception that the x-axis label has been modified) histogram of fork length for the Rocky Mountain bull trout data \figrefp{fig:BaseHist1} is constructed with
+<<BaseHist1, fig.cap="Default histogram of the fork length of bull trout.">>=
+hist(~fl,data=BullTroutRML1,xlab="Fork Length (mm)")
+@
+
+The default histogram likely did not use bin choices desired by a fisheries biologist.  The bins can be chosen explicitly with a vector of specific break values in the \R{breaks=} argument.  Assuming bins of equal width, the easiest way to construct the breaks is with \R{seq()}, which requires the minimum value as the first argument, the maximum value as the second argument, and the ``step'' value as the third argument.  For example, the sequence of values from 100 to 200 in steps of 10 is created with
+<<>>=
+seq(100,200,10)
+@
+
+A modified histogram for fork length from 80 to 500 in steps of 20 is created with
+<<BaseHist2, fig.cap="Histogram of the fork length of bull trout using user-defined breaks.">>=
+hist(~fl,data=BullTroutRML1,xlab="Fork Length (mm)",breaks=seq(80,500,20))
+@
+
+It should be noted that the histogram version in \R{FSA} defaults to a ``left-closed'' and ``right-open'' bin construction, which is opposite of the bin construction used in the histogram in base R\footnote{This behaior can be reversed, to follow the default for base R, by including \R{right=TRUE}.}.  For example, in the ``left-closed, and ``right-open'' construction a 100-mm individual would be placed in the 100-110 mm bin rather than in the 90-100 bin.  This is likely the form of bin construction to be favored by fisheries biologists.
+
+Finally, bar colors can be modified with the \R{col=} argument.  In addition, ``cross-hatchings'' can be used by including a numeric value in the \R{density=} argument and an angle for the hatching in the \R{angle=} argument (default is 45 degrees).  Larger numeric values in \R{density=} produce more ``dense'' cross-hatchings.  Example histograms \figrefp{fig:BaseHist3} using color and cross-hatchings are produced with
+<<BaseHist3, fig.width=7, out.width='.8\\linewidth', par2=TRUE, fig.cap="Histograms of the fork length of bull trout illustrating the use of colored bars (left) and cross-hatching (right).">>=
+hist(~fl,data=BullTroutRML1,xlab="Fork Length (mm)",right=TRUE,
+ breaks=seq(80,500,10),col="gray")
+hist(~fl,data=BullTroutRML1,xlab="Fork Length (mm)",right=TRUE,
+ breaks=seq(80,500,10),density=20,angle=10)
+@
+
+
+\subsection{Histograms By Group}
+Histograms separated by the levels of a factor variable (i.e., by group) can be constructed with a formula of the form \R{quantitative}\verb"~"\R{factor}, where \R{quantitative} is the quantitative variable and \R{factor} is the factor variable that identifies group membership, to \R{hist()} along with an appropriate \R{data=} argument.  For example, the histogram of bull trout fork length by era \figrefp{fig:BaseHist4} is constructed with
+<<BaseHist4, fig.width=7, out.width='.8\\linewidth', fig.cap="Histograms of the fork length of bull trout by era.">>=
+hist(fl~era,data=BullTroutRML1,xlab="Fork Length (mm)",right=TRUE,
+ breaks=seq(80,500,10), col="gray")
+@
+
+In the default version of \R{hist()} the separate histograms will use the same breaks and the same limits on the y-axis.  These options can be ``turned off'' by setting \R{same.breaks=FALSE} and \R{same.ylim=FALSE}.  Each histogram has a main title constructed from the levels of the factor variable.  A prefix can be appended to these titles by including that prefix in the \R{pre.main=} argument.  Alternatively, if \R{pre.main=NULL} then no main title will be printed above each histogram.  Finally, the number of rows and columns to be displayed in the ``grid'' of histograms is controlled by the \R{nrow=} and \R{ncol=} arguments.  An example histogram with different bin breaks, different y-axis limits, and user-defined main title prefixes \figrefp{fig:BaseHist5} is constructed with
+<<BaseHist5, fig.width=7, out.width='.8\\linewidth', fig.cap="Histograms of the fork length of bull trout by era illustrating different bin breaks, y-axis limits, and main title labels.">>=
+hist(fl~era,data=BullTroutRML1,xlab="Fork Length (mm)",right=TRUE,same.breaks=FALSE,
+same.ylim=FALSE,pre.main="Era = ")
+@
+
+
+\section{Bar Plots}
+Bar plots are used to visualize the frequency of individuals in the various levels of a factor variable.  Bar plots are constructed in R with \R{barplot()} which requires a table of frequencies as the first argument.  The table of frequencies, then, must be constructed with \R{table()} prior to calling \R{barplot()}.  For example, the number of sampled fish in each era for the bull trout data frame \figrefp{fig:BaseBarPlot1} can be visualized with\footnote{The extra parentheses around the first line force R to print the result at the same time that the result is being saved to the object.}
+<<BaseBarPlot1, fig.cap="Bar plot of number of bull trout captured by era.">>=
+( eraBT <- table(BullTroutRML1$era) )
+barplot(eraBT,xlab="Era",ylab="Number of Captured Fish")
+@
+
+Fisheries biologists also commontly need to plot values other than frequencies against levels with bars.  A simple method for constructing some plots is to use \R{plotH()} from the \R{plotrix} package \footnote{The \R{plotrix} package was loaded at the beginning of this vignette with \R{library(plotrix)}.}.  This function takes a formula of the form \R{Y}\verb"~"\R{X}, where \R{Y} is the quantitative variable to be plotted on the y-axis and \R{X} is a quantitative or factor variable to be plotted on the x-axis.  For example, the plot of number of eggs versus year for the Lake Huron bloater data frame \figrefp{fig:BasePlotH1} is constructed with
+<<BasePlotH1, fig.cap="Plot of number of bloater eggs versus year illustrating using bars.">>=
+plotH(eggs~year,data=BloaterLH,ylab="Number of Eggs (Millions)",
+ xlab="Year",xlim=c(1980,1996))
+@
+
+The plot of mean length-at-age for the bull trout data frame can be constructed by first summarizing the lengths with
+<<>>=
+( sumBTlen <- Summarize(fl~age,data=BullTroutRML2) )
+@
+A look at the structure for this summary data frame shows that \var{age} is a factor varaible.  If the plot is constructed with this variable it will treat ages sequentially and the break between age-12 and age-14 will not be seen\footnote{To see this problem try \R{plotH(mean \~\ age,data=sumBTlen)}.}.  This problem can be avoided by converting the age levels to numeric values using \R{fact2num()} from \R{FSA}.  Thus, a proper plot of mean length-at-age for the bull trout data frame is consttructed with
+<<BasePlotH2, fig.cap="Plot of mean length-at-age using bars for Rocky Mountain bull trout.">>=
+plotH(mean~fact2num(age),data=sumBTlen,ylab="Mean Fork Length (mm)",
+ ylim=c(0,600),xlab="Age (years)")
+@
+
+
+\clearpage
+\section{Finer Control with par()} \label{sect:par}
+The finer points of graphics are controlled through a number of options defined in \R{par()}.  Some common arguments defined in \R{par()} are shown in \appref{app:Rpar}.  The current graphical settings can be seen at any time by typing \R{par()} and some of these arguments can be used in other functions such as \R{plot()}, \R{axis()}, \R{text()}, and \R{curve()}.
+
+\subsection{Margins and Axis Label Positions}
+Each\footnote{Information in this section was heavily borrowed from \href{http://research.stowers-institute.org/efg/R/Graphics/Basics/mar-oma/index.htm}{this site at Stowers Institute}.} plot consists of three regions -- the plot area, the figure area, and the outer margin area.  In \figref{fig:parEx1} the area contained within the red box is the plot area and is where the points or bars will be plotted.  The area between the red box and the blue box is the figure area and is where the axis ticks, labels, and title will appear.  The area between the blue box and the green box is the outer margin area and is generally used for adding extra space around the graphic or for providing other areas to place text.  In most instances (and the default), the outer margin area is 0 on all sides of the graph and, thus, there would be no area between the blue and greeen boxes in \figref{fig:parEx1}.  As the outer margin area is usally zero\footnote{The default outer margin sizes are set with \R{par(oma=c(0,0,0,0))}.}, it will not be discussed further here\footnote{But see an example usage in \sectref{sect:Layouts}.}.
+
+<<parEx1, echo=FALSE, fig.cap="Plot schematic illustrating the plotting area (inside the red box), the figure area (between the blue and red boxes), and the outer margin area (between the green and blue boxes).">>=
+par(mar=c(5.1,4.1,4.1,2.1),mgp=c(3,1,0),oma=c(2,2,2,2))
+X <- Y <- 0:10
+plot(Y~X,type="n",xaxt="n",yaxt="n",xlab="",ylab="")
+
+box("plot",col="red")
+text(5,5,"Plot Area",col="red",cex=2)
+box("figure",col="blue")
+mtext("Figure",side=1,line=3,adj=1.0,cex=2,col="blue")
+box("outer",col="green")
+mtext("Outer Margin",side=3,line=0.4,adj=0.0,cex=1.5,col="green",outer=TRUE)
+@
+
+The size of the margins in the figure region are measured in ``lines'' and can be separately set for ``south'' (bottom), ``west'' (left), ``north'' (top), and ``east'' (right) sides (in that order, respectively) in the \R{mar=} argument to \R{par()}.  The default values for the margins are \R{c(5.1,4.1,4.1,2.1)} and are illustrated in \figrefp{fig:parEx2}.  I think that the default margins are too big and will thus reduce my margins to \R{c(3.5,3.5,1,1)}.  The \R{mgp=} argument in \R{par()} controls on which lines the axis title, labels, and line, respectively, will be plotted.  The default locations for these axis characteristics are at \R{c(3,1,0)} as seen in \figrefp{fig:parEx2}\footnote{Note how the axis titles line up with the ``line = 3'' label and the axis labels line up with the ``line = 1'' labels.}.  I generally prefer my axis labels and axis titles to be a bit closer to the axis line so I set the \R{mgp=} argument to \R{c(2.1,0.4,0)}.  Thus, my preferences and the graphing parameters used for all graphs in the previous section, are
+<<eval=FALSE>>=
+par(mar=c(3.5,3.5,1,1),mgp=c(2.1,0.4,0))
+@
+
+<<parEx2, echo=FALSE, fig.cap="Plot schematic illustrating the lines in each margin of the plotting area.">>=
+par(mar=c(5.1,4.1,4.1,2.1),mgp=c(3,1,0),oma=c(0,0,0,0))
+plot(Y~X,type="n",xaxt="n",yaxt="n")
+text(5,5,"Plot Area",col="red",cex=2)
+mtext(paste("line =",0:4),side=1,adj=0,line=0:4,col="gray")
+axis(side=1,at=3:10,labels=3:10)
+mtext(paste("line =",0:3),side=2,adj=0,line=0:3,col="gray")
+axis(side=2,at=4:10,labels=4:10)
+mtext(paste("line =",0:3),side=3,adj=1,line=0:3,col="gray")
+mtext(paste("line =",0:1),side=4,adj=1,line=0:1,col="gray")
+
+box("plot", col="red")
+box("figure", col="blue")
+
+mars <- capture.output(par()$mar)
+mars <- substr(mars,5,nchar(mars))
+mars <- paste("mar = c(",gsub(" ",",",mars),")",sep="")
+mtext(mars,side=3,line=2.5,adj=-0.3)
+
+mgps <- capture.output(par()$mgp)
+mgps <- substr(mgps,5,nchar(mgps))
+mgps <- paste("mgp = c(",gsub(" ",",",mgps),")",sep="")
+mtext(mgps,side=3,line=1,adj=-0.3)
+@
+
+\subsection{Changing Axis Types}
+The plotting axes in R default to find ``pretty labels'' to data that has been extended by 4\% at both ends of the axis.  This rule is problematic if the user wants a plot with axes that cross at specific x- and y-axis points; for example, at the origin.  For example, examine the ``origin'' of \figref{fig:BaseSPlot3}.  If you prefer that the end points of the x- and y-axes occur at the minimum value of each axis \figrefp{fig:parEx3} then include the \R{xaxs="i"} and \R{yaxs="i"} arguments to \R{par()} before the \R{plot()} function, as follows
+
+<<parEx3, fig.cap="Scatterplot of mass versus fork length for bull trout showing use of different types of axes.">>=
+par(mar=c(3.5,3.5,1,1),mgp=c(2.1,0.4,0),xaxs="i",yaxs="i", tcl=-0.2)
+plot(mass~fl,data=BullTroutRML1,ylab="Mass (g)",xlab="Fork Length (mm)",
+ xlim=c(0,500),ylim=c(0,1500),pch=20)
+@
+
+Also note that I prefer to make the tick lengths smaller with the \R{tcl=} argument.
+
+\subsection{Orientation of Axis Labels}
+One may also want to change the direction of the labels on the y-axis so that they are oriented in the same direction as the labels on the x-axis \figrefp{fig:parEx4}.  This is accomplished with \R{las=1} in \R{par()} with
+
+<<parEx4, fig.cap="Scatterplot of mass versus fork length for bull trout showing the change in orientation of the y-axis.">>=
+par(mar=c(3.5,3.5,1,1),mgp=c(2.1,0.4,0),xaxs="i",yaxs="i",las=1, tcl=-0.2)
+plot(mass~fl,data=BullTroutRML1,ylab="Mass (g)",xlab="Fork Length (mm)",
+ xlim=c(0,500),ylim=c(0,1500),pch=20)
+@
+
+\subsection{Changing Size of Plotted Points or Labels}
+R uses a series of character expansion multipliers (i.e., \R{cex}) to modify the size of objects on the plot.  For example, if the \R{cex=} argument to \R{par()} is set to 1.5 then all items in the plot (points, labels, and titles) will be 1.5 times or 50\% bigger.  For example, all aspects of \figref{fig:parEx3} were made 50\% bigger in \figref{fig:parEx5} with the following code\footnote{Note that I did not change the overall size of the figure.},
+<<parEx5, fig.cap="Scatterplot of mass versus fork length for bull trout with a character expansion factor of 1.5 (compare to \\figref{fig:parEx3}).">>=
+par(mar=c(3.5,3.5,1,1),mgp=c(2.1,0.4,0),xaxs="i",yaxs="i",tcl=-0.2,cex=1.5)
+plot(mass~fl,data=BullTroutRML1,ylab="Mass (g)",xlab="Fork Length (mm)",
+ xlim=c(0,500),ylim=c(0,1500),pch=20)
+@
+
+Of course, it is more useful to be able to control the sizes of specific aspects of the plot rather than all aspects of the plot.  Just the points can be expanded \figrefp{fig:parEx6} by including the \R{cex=} argument in the original \R{plot()} call rather than in \R{par()}.  For example, only the points are 50\% bigger with
+<<parEx6, fig.cap="Scatterplot of mass versus fork length for bull trout with a character expansion factor of 1.5 ONLY for the plotted points (compare to \\figref{fig:parEx3} and \\figref{fig:parEx5}).">>=
+par(mar=c(3.5,3.5,1,1),mgp=c(2.1,0.4,0),xaxs="i",yaxs="i",tcl=-0.2)
+plot(mass~fl,data=BullTroutRML1,ylab="Mass (g)",xlab="Fork Length (mm)",
+ xlim=c(0,500),ylim=c(0,1500),pch=20,cex=1.5)
+@
+
+The axis title labels can be expanded by using \R{cex.lab=} and the axis values can be expanded by using \R{cex.axis=}.  For example \figrefp{fig:parEx7}, just the axis titles are made 50\% bigger with
+<<parEx7, fig.cap="Scatterplot of mass versus fork length for bull trout with a character expansion factor of 1.5 ONLY for the axis titles (compare to \\figref{fig:parEx3} and \\figref{fig:parEx5}).">>=
+par(mar=c(3.5,3.5,1,1),mgp=c(2.1,0.4,0),xaxs="i",yaxs="i",tcl=-0.2,cex.lab=1.5)
+plot(mass~fl,data=BullTroutRML1,ylab="Mass (g)",xlab="Fork Length (mm)",
+ xlim=c(0,500),ylim=c(0,1500),pch=20)
+@
+
+\subsection{Changing Font}
+The \R{font=} argument in \R{par()} does not change the font \textit{family}; rather it changes the font \textit{face} -- i.e., whether it is bold or italic.  The \R{font=} argument defaults to a value of ``1'' which corresponds to plain text.  A value of ``2'' means bold, a value of ``3'' means italics, and a value of ``4'' means bold and italics.  The use of \R{font=} changes all of the text in the plot.  However, \R{font.axis=} and \R{font.lab=} change the axis values and the axis title labels, respectively.
+
+The font family can be changed with the \R{family=} argument in \R{par()}.  The actual fonts that can be displayed depend on the type of graphics device being used.  Thus, these will be discussed in more detail in \sectref{sect:OutputFormats}.
+                                                                                               
+
+\subsection{Side-by-Side or One-Over-the-Other Plots}
+It may be instructive to plot two plots side-by-side or one-over-the-other.  This type of construction is accomplished with either the \R{mfrow=} or \R{mfcol=} arguments to \R{par()}.  Both of these arguments require a vector of size two that indicates the number of rows and columns to be used, respectively.  The only difference between \R{mfrow=} and \R{mfcol=} is whether the individual plots should be placed by rows first or by columns first.  For example, the side-by-side (i.e., one row, two columns) plot in \figref{fig:SideBySide} is constructed with
+
+<<SideBySide, fig.width=7, out.width='.8\\linewidth', fig.cap="Scatterplot of mass versus fork length (left) and histogram of fork length (right) for bull trout showing how to construct a side-by-side plot.">>=
+par(mar=c(3.5,3.5,1,1),mgp=c(2.1,0.4,0),tcl=-0.2,mfrow=c(1,2))
+plot(mass~fl,data=BullTroutRML1,ylab="Mass (g)",xlab="Fork Length (mm)",
+ xlim=c(0,500),ylim=c(0,1500),pch=20)
+hist(fl~1,data=BullTroutRML1,xlab="Fork Length (mm)",breaks=seq(80,500,10))
+@
+
+The one-over-the-other plot (i.e., two rows and one column) in \figref{fig:OneOverTheOther} is constructed with
+
+<<OneOverTheOther, fig.height=7, fig.cap="Scatterplot of mass versus fork length (top) and histogram of fork length (bottom) for bull trout showing how to construct a one-over-the-other plot.">>=
+par(mar=c(3.5,3.5,1,1),mgp=c(2.1,0.4,0),tcl=-0.2,mfrow=c(2,1))
+plot(mass~fl,data=BullTroutRML1,ylab="Mass (g)",xlab="Fork Length (mm)",
+ xlim=c(0,500),ylim=c(0,1500),pch=20)
+hist(~fl,data=BullTroutRML1,xlab="Fork Length (mm)",breaks=seq(80,500,10))
+@
+
+
+\clearpage
+\section{Plotting Fitted Lines or Curves}
+In many instances a fisheries biologist will fit a particular model to data and will want to produce a graphic that illustrates the ``model'' superimposed on the data.  The examples in this section illustrate how to create such plots in special cases and more generally.
+
+\subsection{Following a Linear Model Fit}
+Most commonly, one will want to illustrate the fit of a linear model to data.  In the following example, the fit of a linear model to the natural log of mass on the natural log of fork length for the Rocky Mountain bull trout data is exhibited.  To fully perform this example, the natural log of both the fork length and mass variables must be created and appended to the original data frame.  This is illustrated with
+<<>>=
+BullTroutRML1$logFL <- log(BullTroutRML1$fl)
+BullTroutRML1$logMass <- log(BullTroutRML1$mass)
+@
+
+The linear model is then fit with \R{lm()} where the first argument is a formula of the form \R{y}\verb"~"\R{x} and the second argument is the data frame in which \R{y} and \R{x} can be found.  The estimated intercept and slope can be extracted from the saved \R{lm} object with \R{coef()} as follows
+<<>>=
+lm1 <- lm(logMass~logFL,data=BullTroutRML1)
+coef(lm1)
+@
+
+The linear model can be superimposed on to the scatterplot with \R{abline()}.  In this case the scatterplot must be constructed first and must still be active.  The \R{abline()} function, with the saved \R{lm} object as its only argument, will then superimpose the best-fit line onto the original scatterplot.  The \R{abline()} function will accept \R{lty=}, \R{lwd=}, and \R{col=} arguments if the user wants to modify the characteristics of the superimposed best-fit line.  For example, the base scatterplot and a superimposed best-fit line (in blue with increased width; \figref{fig:SLRFLP1}) is constructed with the following code,
+<<SLRFLP1, fig.cap="Scatterplot of natural log mass versus natural log fork length with the best-fit regression line superimposed.">>=
+plot(logMass~logFL,data=BullTroutRML1,xlab="log(Fork Length)",ylab="log(Mass)",pch=20)
+abline(lm1,lwd=2,col="blue")
+@
+
+An alternative to using \R{abline()} is to use \R{fitPlot()} from the \R{FSA} package.  This function will create the base scatterplot and superimpose the best-fit line by simply receiving the saved \R{lm} object as its first argument.  The \R{fitPlot()} function differs from \R{abline()} in that it shows the fitted line only over the range of the data.  An example for the transformed fork length and mass of the Rocky Mountain bull trout \figrefp{fig:SLRFLP2} is constructed with
+<<SLRFLP2, fig.cap="Scatterplot of natural log mass versus natural log fork length with the best-fit regression line superimposed (using \\R{fitPlot()}).">>=
+fitPlot(lm1,xlab="log(Fork Length)",ylab="log(Mass)",main="")
+@
+
+A second alternative is to use \R{curve()}.  While \R{curve()} is more general (see the next section) it is slightly more complicated to use and likely not worthwhile for a simple linear model.  However, it's use will be introduced here with the linear model.  The first argument to \R{curve()} is an equation of the right-hand-side of the best-fit model with an ``x'' replacing the actual explanatory (i.e., independent) variable.  This equation usually needs to be constructed ``by hand'' using the coefficients from the fitted model.  The \R{from=} and the \R{to=} arguments are used to set the domain over which the equation should be plotted.  The \R{curve()} function will plot the equation over the domain but, more usefully, it will plot the function over the domain superiposed over an existing scatterplot if the \R{add=TRUE} argument is used.  As with \R{abline()} and \R{fitPlot()}, \R{curve()} will accept \R{lty=}, \R{lwd=}, and \R{col=} arguments if the user wants to modify the characteristics of the superimposed best-fit line.  For example, the fitted-line plot for the natural log mass versus natural log fork length for the Rocky Mountain bull trout example \figrefp{fig:SLRFLP3} is constructed with \R{curve()} as follows
+
+<<SLRFLP3, fig.cap="Scatterplot of natural log mass versus natural log fork length with the best-fit regression line superimposed (using \\R{curve()}).">>=
+plot(logMass~logFL,data=BullTroutRML1,xlab="log(Fork Length)",ylab="log(Mass)",
+ pch=20,xlim=c(4,6.5),ylim=c(1,8))
+curve(coef(lm1)[1]+coef(lm1)[2]*x,from=4,to=6.5,add=TRUE,col="red",lwd=2)
+@
+
+\subsection{General Model with Parameter Estimates}
+\subsubsection{Length-Weight Example}
+The advantage of using to learn \R{curve()} is that it can be used to plot the best-fit model on the original scale rather than being restricted to the scale on which the model was fit.  For example, the raw power function for the length-weight regression can be visualized \figrefp{fig:SLRFLP4} using \R{curve()} with
+<<SLRFLP4, fig.cap="Scatterplot of mass versus fork length with the best-fit back-transformed regression line superimposed.">>=
+plot(mass~fl,data=BullTroutRML1,xlab="Fork Length (mm)",ylab="Mass (g)",pch=20,
+ xlim=c(0,500))
+curve(exp(coef(lm1)[1])*x^coef(lm1)[2],from=0,to=500,add=TRUE,col="red",lwd=2)
+@
+
+%As a second example, the best-fit power functions for the length-weight regression separated by era \figrefp{fig:BaseSPlot6} can be constructed with\footnote{The use of the indicator variable, \var{era}, in this model essentially forces R to compute separate regressions for the two different eras.  Also note that the ``extra'' parentheses around the R code forces an assigned result to also be printed.}
+
+<<eval=FALSE, echo=FALSE>>=
+lm2 <- lm(logMass~logFL*era,data=BullTroutRML1)
+coef(lm2)
+( a1 <- exp(coef(lm2)[1]) )
+( b1 <- coef(lm2)[2] )
+( a2 <- exp(coef(lm2)[1]+coef(lm2)[3]) )
+( b2 <- coef(lm2)[2]+coef(lm2)[4] )
+@
+
+<<BaseSPlot6, eval=FALSE, echo=FALSE, fig.cap="Scatterplot of mass versus fork length for bull trout showing with the back-transformed fitted model and different symbols and colors for different levels of era.">>=
+symbs <- c(19,1)
+cols <- c("black","red")
+
+plot(mass~fl,data=BullTroutRML1,ylab="Mass (g)",xlab="Fork Length (mm)",
+ xlim=c(0,500),pch=symbs[era],col=cols[era])
+curve(a1*x^b1,from=0,to=500,add=TRUE,col=cols[1],lwd=2)
+curve(a2*x^b2,from=0,to=500,add=TRUE,col=cols[2],lwd=2)
+legend("topleft",legend=levels(BullTroutRML1$era),pch=symbs,col=cols,lwd=2)
+@
+
+
+\subsubsection{von Bertalanffy Model Example}
+The following example shows the ultimate flexibility of \R{curve()}.  However, to follow the code prior to the line with \R{symbs}, one will need to have a basic understanding of fitting von Bertalanffy growth curves with \R{nls()}, which is described in the von Bertalanffy vignette.  
+
+<<VonBEx, fig.cap="Scatterplot of fork length versus age for bull trout with best-fit von Bertalanffy growth models superimposed for different eras.">>=
+data(BullTroutRML2)
+str(BullTroutRML2)
+svCom <- vbStarts(fl~age,data=BullTroutRML2,type="typical")
+svGen <- lapply(svCom,rep,2)
+vbGen <- fl~Linf[era]*(1-exp(-K[era]*(age-t0[era])))
+vb1 <- nls(vbGen,start=svGen,data=BullTroutRML2)
+symbs <- c(19,1)
+cols <- c("black","red")
+plot(fl~jitter(age,0.4),data=BullTroutRML2,ylab="Fork Length (mm)",xlab="Age (years)",
+pch=symbs[era],col=cols[era],xlim=c(0,15))
+curve(coef(vb1)["Linf1"]*(1-exp(-coef(vb1)["K1"]*(x-coef(vb1)["t01"]))),from=0,
+to=15,add=TRUE,col=cols[1],lwd=2)
+curve(coef(vb1)["Linf2"]*(1-exp(-coef(vb1)["K2"]*(x-coef(vb1)["t02"]))),from=0,
+to=15,add=TRUE,col=cols[2],lwd=2)
+legend("topleft",legend=levels(BullTroutRML1$era),pch=symbs,col=cols,lwd=2)
+@
+
+
+\clearpage
+\section{More Complex Layouts for Multiple Graphs}\label{sect:Layouts}
+Illustrating complex ideas can require constructing a single plot that is the combination of several subplots.  The side-by-side \figrefp{fig:SideBySide} and one-over-the-other \figrefp{fig:OneOverTheOther} plots were simple examples.  More complex example can be constructed in R and are the focus of this section.
+
+\subsection{Common Axis Labels on a Grid of Subplots}
+One common graphical desire is to plot multiple graphics in a grid-like format with one axis label that serves as the label for each graph.  One way to do this is to exploit the use of the outer margin area and other settings in \R{par()}, some of which were described in \sectref{sect:par}.  For example, the arguments to \R{par()} below create a plot that has an outer margin of 3 ``lines'' on the bottom and left and 0 ``lines'' on top and right; a figure area that contains a 2 row by 2 column grid for subplots that will be filled by row; a figure area with 1 ``line'' of margin on the bottom, 1.5 ``lines'' of margin on the left and right, and 3 ``lines'' of margin on top; and adjusted lines for plotting axis labels, values, and ticks.
+<<eval=FALSE>>=
+par(oma=c(3,3,0,0),mfrow=c(2,2),mar=c(1,1.5,3,1.5),mgp=c(2.1,0.4,0),tcl=-0.2)
+@
+
+The four subplot areas can then be populated with scatterplots as follows (note that the x- and y-axis labels have been set to empty strings to suppress labeling the axes)
+<<>>=
+xlmts <- c(-0.5,14.5)
+ylmts <- c(0,700) 
+plot(fl~age,data=BullTroutRML2,subset=(lake=="Harrison" & era=="1977-80"),xlab="",
+ ylab="",main="Harrison, 1977-80",pch=20,cex=1.5,xlim=xlmts,ylim=ylmts)
+plot(fl~age,data=BullTroutRML2,subset=(lake=="Osprey" & era=="1977-80"),xlab="",
+ ylab="",main="Osprey, 1977-80",pch=20,cex=1.5,xlim=xlmts,ylim=ylmts)
+plot(fl~age,data=BullTroutRML2,subset=(lake=="Harrison" & era=="1997-01"),xlab="",
+ ylab="",main="Harrison, 1997-01",pch=20,cex=1.5,xlim=xlmts,ylim=ylmts)
+plot(fl~age,data=BullTroutRML2,subset=(lake=="Osprey" & era=="1997-01"),xlab="",
+ ylab="",main="Osprey, 1997-01",pch=20,cex=1.5,xlim=xlmts,ylim=ylmts)
+@
+
+The common x- and y-axis labels can then be placed in the outer margin areas with \R{mtext()}.  In this capacity, \R{mtext()} requires the text to be written as the first argument, a number in \R{side=} indicating the margin on which to print the text (with the same scheme as with previous arguments -- 1=bottom, 2=left, 3=top, 4=right), a number in \R{line=} indicating the line on which to print the text (defaults to 0), and \R{outer=TRUE} to force the text into the outer margin area.  For example, the common x- and y-axis labels are added to the plots constructed above with
+<<eval=FALSE>>=
+mtext("Age (years)",outer=TRUE,side=1,line=1.5,cex=1.5)
+mtext("Fork Length (mm)",outer=TRUE,side=2,line=1.5,cex=1.5)
+@
+
+The final plot is shown in \figref{fig:Layout7}.
+
+<<Layout7, echo=FALSE, fig.width=6, fig.height=6, out.width='.8\\linewidth', fig.cap="Illustration of using the outer margin area to provide common axis labels.">>=
+par(oma=c(3,3,0,0),mfrow=c(2,2),mar=c(1,1.5,3,1.5),mgp=c(2.1,0.4,0),tcl=-0.2)
+xlmts <- c(-0.5,14.5)
+ylmts <- c(0,700) 
+plot(fl~age,data=BullTroutRML2,subset=(lake=="Harrison" & era=="1977-80"),xlab="",
+ylab="",main="Harrison, 1977-80",pch=20,cex=1.5,xlim=xlmts,ylim=ylmts)
+plot(fl~age,data=BullTroutRML2,subset=(lake=="Osprey" & era=="1977-80"),xlab="",
+ylab="",main="Osprey, 1977-80",pch=20,cex=1.5,xlim=xlmts,ylim=ylmts)
+plot(fl~age,data=BullTroutRML2,subset=(lake=="Harrison" & era=="1997-01"),xlab="",
+ylab="",main="Harrison, 1997-01",pch=20,cex=1.5,xlim=xlmts,ylim=ylmts)
+plot(fl~age,data=BullTroutRML2,subset=(lake=="Osprey" & era=="1997-01"),xlab="",
+ylab="",main="Osprey, 1997-01",pch=20,cex=1.5,xlim=xlmts,ylim=ylmts)
+mtext("Age (years)",outer=TRUE,side=1,line=1.5,cex=1.5)
+mtext("Fork Length (mm)",outer=TRUE,side=2,line=1.5,cex=1.5)
+@
+
+
+\clearpage
+\subsection{Complex Grid Layouts with \R{layout()}}
+The \R{layout()} function in R allows for more complicated organizations of graphics.  The only required argument to \R{layout()} is a matrix that specifies the positions, as a grid, for a series of plots.  For example, the following code constructs a 2x2 grid for four plots\footnote{the \R{layout.show()} function can be used to illustrate how the layout grid has been constructed.},
+
+<<Layout1, fig.cap="Illustration of 2x2 layout grid for graphics.">>=
+( m <- matrix(c(1,2,3,4),nrow=2,byrow=TRUE) )
+layout(m)
+layout.show(n=4)
+@
+
+The 2x2 grid in \figref{fig:Layout1} is not that interesting because that layout could just as easily have been constructed with the \R{mfrow=} argument in \R{par()} as shown previously.  A more interesting example is to construct a grid where the entire first row is one graphic and the second row is two graphics.  This graphic grid would be constructed by including a ``1'' in the first two positions of the layout matrix.  For example, the layout grid shown in \figref{fig:Layout2} is constructed with
+
+<<Layout2, fig.cap="Illustration of layout grid for graphics with one graph in first row and two in the second row.">>=
+( m <- matrix(c(1,1,2,3),nrow=2,byrow=TRUE) )
+layout(m)
+layout.show(n=3)
+@
+
+The following code populates the grids in the layout shown in \figref{fig:Layout2} with the result shown in \figref{fig:Layout3},
+
+<<Layout3, fig.width=5, fig.height=5, out.width='.7\\linewidth', fig.cap="Illustration of layout grid for graphics with one graph in first row and two in the second row.">>=
+m <- matrix(c(1,1,2,3),nrow=2,byrow=TRUE)
+layout(m)
+plot(age3~eggs,data=BloaterLH,xlab="Millions of Eggs",
+ ylab="Relative Abundance of Age-3 Fish", pch=20,cex=1.5)
+hist(eggs~1,data=BloaterLH,xlab="Millions of Eggs",col="gray")
+hist(age3~1,data=BloaterLH,xlab="Age-3 Relative Abundance",col="gray")
+@
+
+The size of the grids in the layout can be controlled with the \R{height=} and \R{width=} arguments.  These arguments accept vectors that represent the \emph{relative} heights and widths of the rows and columns in the layout grid, respectively.  For example, \R{height=c(3,1)} sets the height of the first row to be three times larger than the height of the second row.  Including the \R{respect=TRUE} argument will assure that ``unit distances'' in the horizontal and vertical directions are treated the same.  An example layout \figrefp{fig:Layout4} is constructed with
+
+<<Layout4, fig.cap="Illustration of layout grid for graphics with differing row heights and column widths.">>=
+( m <- matrix(c(2,0,1,3),nrow=2,byrow=TRUE) )
+layout(m,height=c(1,4),width=c(4,1),respect=TRUE)
+layout.show(n=3)
+@
+
+An example of using the previous layout is shown in \figref{fig:Layout5} and was constructed with
+<<Layout5, fig.cap="Illustration of layout grid with differing heights and widths such that a scatterplot appears in the ``middle'' with corresponding boxplots on the ``sides.''">>=
+m <- matrix(c(2,0,1,3),nrow=2,byrow=TRUE)
+layout(m,height=c(1,4),width=c(4,1),respect=TRUE)
+
+par(mar=c(4,4,0,0),mgp=c(2.1,0.4,0))
+plot(age3~eggs,data=BloaterLH,xlab="Millions of Eggs", 
+ylab="Relative Abundance of Age-3 Fish", xlim=c(0,2.4),ylim=c(0,240), pch=20,cex=1.5)
+par(mar=c(0,4,0,0))
+boxplot(BloaterLH$eggs,axes=FALSE,ylim=c(0,2.4),horizontal=TRUE)
+par(mar=c(4,0,0,0))
+boxplot(BloaterLH$age3,axes=FALSE,ylim=c(0,240))
+@
+
+\clearpage
+Another, slightly more complex, example ...
+<<Layout6, fig.width=5, fig.height=5, out.width='.7\\linewidth', fig.cap="Illustration of layout grid with differing heights and widths such that labels can be placed on the sides.">>=
+( m <- matrix(c(0,1,2,3,5,6,4,7,8),nrow=3,byrow=TRUE) )
+layout(m,height=c(1,8,8),width=c(1,8,8),respect=TRUE)
+
+par(mar=c(0,0,0,0))
+plot.new(); text(0.5,0.3,"Harrison",cex=2)
+plot.new(); text(0.5,0.3,"Osprey",cex=2)
+plot.new(); text(0.3,0.5,"Era = 1977-1980",srt=90,cex=2)
+plot.new(); text(0.3,0.5,"Era = 1997-2001",srt=90,cex=2)
+par(mar=c(3.75,3.75,1,1),mgp=c(2.1,0.4,0))
+plot(fl~age,data=BullTroutRML2,subset=(lake=="Harrison" & era=="1977-80"),
+ xlab="",ylab="Fork Length",pch=20,cex=1.5,xlim=c(-0.5,14.5),ylim=c(0,700))
+plot(fl~age,data=BullTroutRML2,subset=(lake=="Osprey" & era=="1977-80"),xlab="",
+ ylab="",pch=20,cex=1.5,xlim=c(-0.5,14.5),ylim=c(0,700))
+plot(fl~age,data=BullTroutRML2,subset=(lake=="Harrison" & era=="1997-01"),xlab="Age",
+ ylab="Fork Length",pch=20,cex=1.5,xlim=c(-0.5,14.5),ylim=c(0,700))
+plot(fl~age,data=BullTroutRML2,subset=(lake=="Osprey" & era=="1997-01"),xlab="Age",
+ ylab="",pch=20,cex=1.5,xlim=c(-0.5,14.5),ylim=c(0,700))
+@
+
+
+\clearpage
+\section{Graphical Output Formats}\label{sect:OutputFormats}
+STILL NEED TO DO
+
+
+\clearpage
+\begin{appendices}
+\section{Plotting Symbols}\label{app:Symbols}
+<<Rpch, eval=FALSE, echo=FALSE, include=FALSE, results='hide'>>=
+# ran this manually to create Rpch.pdf
+par(mgp=c(0,0,0),mar=c(0,0,0,0))
+plot(1,xlim=c(0.5,5.5),ylim=c(0.5,5.5),type="n",ann=FALSE,xaxt="n",yaxt="n",
+bty="n", yaxs="i",xaxs="i")
+points(1:5,rep(5,5),pch=0:4,cex=1.5)
+text((1:5)+0.3,rep(5,5),0:4,cex=1.25)
+points(1:5,rep(4,5),pch=5:9,cex=1.5)
+text((1:5)+0.3,rep(4,5),5:9,cex=1.25)
+points(1:5,rep(3,5),pch=10:14,cex=1.5)
+text((1:5)+0.3,rep(3,5),10:14,cex=1.25)
+points(1:5,rep(2,5),pch=15:19,cex=1.5)
+text((1:5)+0.3,rep(2,5),15:19,cex=1.25)
+points((1:6)*0.8+0.2,rep(1,6),pch=20:25,cex=1.5)
+text((1:6)*0.8+0.5,rep(1,6),20:25,cex=1.25)
+@
+\begin{center}
+  \includegraphics[width=3.5in]{Figs/Rpch}
+\end{center}
+
+\clearpage
+\section{Plotting Colors}\label{app:Colors}
+\begin{center}
+  \includegraphics[width=6in]{Figs/RColors.jpg}
+\end{center}
+
+\clearpage
+\section{Arguments to \R{par()}}\label{app:Rpar}
+\begin{center}
+\begin{tabular}{p{0.6in}p{2.5in}p{3in}}
+\textbf{Argument} & \textbf{Meaning} & \textbf{Values} \\ 
+\R{bty} & A character string which determines the type of box which is drawn about plots. & One of \R{"o"}, \R{"l"}, \R{"7"}, \R{"c"}, \R{"u"}, or \R{"]"} the resulting box resembles the corresponding upper case letter. A value of \R{"n"} suppresses the box. Default is \R{"o"}. \\ 
+\R{cex} & A numerical value giving the amount by which plotting text and symbols should be magnified relative to the default. & Multiplier values.  Default is \R{1}. \\ 
+\R{cex.axis} & The magnification to be used for axis annotation relative to the current setting of cex. & Multiplier values. Default is \R{1}. \\ 
+\R{cex.lab} & The magnification to be used for x and y labels relative to the current setting of cex. & Multiplier values.  Default is \R{1}. \\ 
+\R{family} & The name of a font family for drawing text. & Standard values are \R{"serif"}, \R{"sans"} and \R{"mono"}, and the Hershey font families are also available.  Values depend on the graphing device. Default depends on graphing device. \\ 
+\R{font} & An integer which specifies which font to use for text. & A \R{1} corresponds to plain text, \R{2} to bold face, \R{3} to italic, and \R{4} to bold italic. Also, font \R{5} is expected to be the symbol font, in Adobe symbol encoding. Default is \R{1}. \\ 
+\R{las} & A numeric that specifies the style of axis labels. & A \R{0} corresponds to always parallel to the axis, \R{1} to always horizontal, \R{2} to always perpendicular to the axis, and \R{3} always vertical. Default is \R{0}. \\ 
+\R{mar} & A numerical vector which gives the number of lines of margin to be specified on the four sides of the plot. & A vector of the form \R{c(bottom, left, top, right)}. Default is \R{c(5,4,4,2)+0.1}. \\ 
+\R{mfrow}, \R{mfcol} & A numerical vector that forms a layout where figures will be drawn in an nr-by-nc array on the device by rows (or by columns). & A vector of the form \R{c(nr, nc)}.  Default is \R{c(1,1)}. \\ 
+\R{mgp} & A numerical vector controlling the margin line for the axis title, axis labels and axis line. & A vector of the form \R{c(title,labels,line)}. Default is \R{c(3,1,0)}. \\ 
+\R{oma} & A numerical vector giving the size of the outer margins in lines of text. & A vector of the form c(bottom, left, top, right).  Default is \R{c(0,0,0,0)}\\
+\R{srt} & The string rotation, for example for axis labels, in degrees. & A numeric value. Default is 0. \\ 
+\R{xaxs}, \R{yaxs} & The style of axis interval calculation to be used for the x(y)-axis. & Style \R{"r"} (regular) first extends the data range by 4 percent at each end and then finds an axis with pretty labels that fits within the extended range.  Style \R{"i"} (internal) finds an axis with pretty labels that fits within the original data range. Default is \R{"r"}. \\ 
+\R{xaxt}, \R{yaxt} & A character which specifies the x(y)-axis type. & Style \R{"n"} suppresses plotting the x-axis.  Any other value plots the x-axis.  Default is \R{"s"}. \\ 
+\R{xlog}, \R{ylog} & A logical value indicating whether the x(y)-axis should be logged. & \R{TRUE} means use log scales, \R{FALSE} means use linear scale. Default is \R{FALSE} \\ 
+\end{tabular}
+\end{center}
+
+
+\section{Line Types}\label{app:Lines}
+<<Rlty, eval=FALSE, echo=FALSE, include=FALSE, results='hide', fig.width=2.5, fig.height=2.5>>=
+# ran this manually to create Rpch.pdf
+par(mar=c(0,0,0,0),mgp=c(0,0,0))
+plot(1,xlim=c(0.5,5.5),ylim=c(0.5,5.5),type="n",ann=FALSE,xaxt="n",yaxt="n",
+bty="n", yaxs="i",xaxs="i")
+lines(c(1.5,5),c(5,5),lty=1,lwd=2)
+text(1,5,"lty=1",cex=1.25)
+lines(c(1.5,5),c(4,4),lty=2,lwd=2)
+text(1,4,"lty=2",cex=1.25)
+lines(c(1.5,5),c(3,3),lty=3,lwd=2)
+text(1,3,"lty=3",cex=1.25)
+lines(c(1.5,5),c(2,2),lty=4,lwd=2)
+text(1,2,"lty=4",cex=1.25)
+lines(c(1.5,5),c(1,1),lty=5,lwd=2)
+text(1,1,"lty=5",cex=1.25)
+@
+\begin{center}
+  \includegraphics[width=2.5in]{Figs/Rlty}
+\end{center}
+
+
+\end{appendices}
+
+<<echo=FALSE, results='asis'>>=
+## will add the reproducibility information
+et <- proc.time() - stime
+swvFinish(rqrdPkgs=rqrd,newPage=TRUE,elapsed=et["user.self"]+et["sys.self"])
+@
+<<echo=FALSE, results='hide', include=FALSE>>=
+## Will create the script file
+swvCode(moreItems=c("source","rqrd","stime"))
+@
+\end{document} 

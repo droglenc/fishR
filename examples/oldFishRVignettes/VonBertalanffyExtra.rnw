@@ -1,0 +1,575 @@
+\documentclass[a4paper]{article}
+\input{c:/aaaWork/zGnrlLatex/GnrlPreamble}
+\usepackage[toc,page]{appendix}
+\usepackage{longtable}
+\input{c:/aaaWork/zGnrlLatex/JustRPreamble}
+\hypersetup{pdftitle = fishR Vignette -- Extra Von Bertalanffy}
+
+\begin{document}
+\titleFishR{Von Bertalanffy Growth Model - Extra}
+
+<<setup, echo=FALSE, include=FALSE>>=
+## Start time for keeping track of process time
+ stime <- proc.time()
+## load common knitr setup
+source("../knitr_Common.r")
+library(xtable)
+@
+
+\emph{\textbf{XXX THIS IS A WORK IN PROGRESS XXX}}
+
+The von Bertalanffy growth model (VBGM) was introduced in a separate vignette.  This vignette builds on the previous vignette but contains some extensions from the more ``traditional'' use of the VBGM.
+
+The functions required to perform growth analyses in R are contained in the packages loaded below,
+<<echo=-1, results='hide', warning=FALSE, message=FALSE>>=
+rqrd <- c("FSA","FSAdata","nlstools")
+library(FSA)
+library(FSAdata)
+library(nlstools)
+@
+
+
+\section{Methods for Tag-Recapture Data}
+\subsection{Fabens (1965)} \label{sec:Fabens}
+In tag-recapture data the length at two times in the fish's life is known, the amount of time between those two periods is known, but the age of the fish at those times is not known.  \cite{Fabens1965} provided a modification of the traditional VBGM (see Appendix \ref{appsec:VBDerivationFabens}) for the derivation) that can be used to estimate $L_{\infty}$ and $K$ (but not $t_{0}$) with this type of data.  As with the traditional VBGM there are many parameterizations of Fabens modified model.  The two most popular parameterizations appear to be,
+
+\begin{equation} \label{eqn:VBFabens1}
+  L_{r} = L_{m} + \left(L_{\infty} - L_{m}\right)\left(1-e^{-K\delta t}\right)
+\end{equation}
+  
+and
+
+\begin{equation} \label{eqn:VBFabens2}
+   L_{r} - L_{m} = \left(L_{\infty} - L_{m}\right)\left(1-e^{-K\delta t}\right)
+\end{equation}
+
+where $L_{m}$ is the length of the fish at the time of marking ($t_{m}$), $L_{r}$ is the length of the fish at the time of recapture ($t_{r}$), $\delta t$ is the ``time-at-large'' (i.e., $t_{r}-t_{m}$)), and the other parameters are as defined previously (but see \cite{Francis1988}).  Model \eqref{eqn:VBFabens1} is preferred over \eqref{eqn:VBFabens2} for fitting because the left-hand-side contains only the response variable.  Note also that this is a two-parameter ($L_{\infty}$ and $K$) model.
+
+Fabens' method requires the length-at-marking, length-at-recapture, and the length of time between marking and recapture.  As an example of this method, \cite{Bakeretal1991} recorded these three variables for rainbow trout from the Kenai River.  These data are loaded and viewed with,
+<<>>=
+data(RBTroutKenai)
+str(RBTroutKenai)
+head(RBTroutKenai)
+@
+
+Fabens' model is a non-linear model; therefore, initial values of $L_{\infty}$ and $K$ must be supplied to \R{nls()}.  Graphical procedures for finding initial values have not been developed for Faben's model.  However, a simple starting value for $L_{\infty}$ is the maximum length in the data frame,
+<<>>=
+max(RBTroutKenai$Lr)
+@
+
+A reasonable starting value for K can be found with,
+
+\[ K_{init}=\frac{log(\bar{L}_{r})-log(\bar{L}_{m})}{t_{r}-t_{m}} \]
+
+which is made more robust by averaging across all fish in the sample,
+<<>>=
+with(RBTroutKenai,mean((log(Lr)-log(Lm))/dt))
+@
+
+These initial values are then entered into a list as shown for the traditional VBGM.  For example,
+<<>>=
+Fabens.sv <- list(Linf=730,K=0.25)
+@
+The model is declared with
+<<>>=
+fvb <- vbFuns("Fabens")
+@
+and fit and summarized with
+<<>>=
+FVB1 <- nls(Lr ~ fvb(Lm,dt,Linf,K),start=Fabens.sv,data=RBTroutKenai)
+summary(FVB1,correlation=TRUE)
+@
+
+The second version -- using length increments -- can be fit by first constructing the length increments,
+<<>>=
+RBTroutKenai$dL <- RBTroutKenai$Lr-RBTroutKenai$Lm
+@
+and then fitting the model,
+<<>>=
+fvb2 <- vbFuns("Fabens2")
+FVB2 <- nls(dL ~ fvb2(Lm,dt,Linf,K),start=Fabens.sv,data=RBTroutKenai)
+summary(FVB2,correlation=TRUE)
+@
+
+
+Fabens' model has been criticized or modified by many authors (see following sections).
+
+
+\section{Wang(1998)} \label{sec:Wang}
+
+\cite{Wangetal1995} noted that Fabens' method assumes that each fish follows the same growth curve and does not take into account individual growth variability and further noted that this characteristic caused Fabens' method to produce biased and inconsistent parameter estimates.  \cite{Wang1998} provided a solution to this problem.  Specifically, he defined the model
+
+\[ L_{r}-L_{m} = \left[{l_\infty + \beta \left({L_{m}-\bar L_{m}}\right) - L_{m}} \right]\left({1-e^{-K\delta t}}\right) \]
+
+where $l_\infty$ is the mean $L_\infty$ ``over the recapture population'' and $\beta$ is a new parameter that XXXX.  \cite{Wang1998} proposed a slightly modified model of
+
+\[ L_{r}-L_{m} = \left(a+bL_{m}\right)\left({1-e^{-K\delta t}}\right) \]
+
+The first model is fit with,
+<<>>=
+wvb <- vbFuns("Wang")
+Wang.sv <- list(Linf=730,K=0.25,b=0)
+WVB1 <- nls(dL ~ wvb(Lm,dt,Linf,K,b),start=Wang.sv,data=RBTroutKenai)
+summary(WVB1,correlation=TRUE)
+@
+
+The second model is fit with,
+<<>>=
+wvb2 <- vbFuns("Wang2")
+Wang2.sv <- list(K=0.25,a=200,d=1)
+WVB2 <- nls(dL ~ wvb2(Lm,dt,K,a,d),start=Wang2.sv,data=RBTroutKenai)
+summary(WVB2,correlation=TRUE)
+@
+
+XXX I have not yet been able to verify these calculations XXX
+
+
+
+\subsection{Francis(1988)}
+\cite{Francis1988} noted that $L_{\infty}$ and $K$ do not have the same meanings in Fabens' and the traditional VBGM.  In addition, he noted the very high correlation between these two parameters in Fabens' model.  To address these issues he suggested the following parameterization,
+
+\[ L_{r} = L_{m} + \frac{\frac{\beta g_{\alpha}-\alpha g_{\beta}}{(g_{\alpha}-g_{\beta})-L_{m}}}{1-\left(1+\frac{g_{\alpha}-g_{\beta}}{\alpha-\beta}\right)^{\delta t}} \]
+
+where $g_{\alpha}$ and $g_{\beta}$ are parameters that represent the mean growth rate at the arbitrary ages $\alpha$ and $\beta$.  
+
+XXX MORE HERE XXX
+
+
+\subsection{Baker \textit{et al.} (1991)}
+Finally, \cite{Bakeretal1991} provide modifications of Fabens method that produce analogues to Schnute's four-parameter growth model.
+
+XXX MORE HERE XXX
+
+
+
+
+
+\newpage
+\section{Modeling Seasonal Growth Oscillations}
+\subsection{Background}
+Numerous models to describe the seasonal growth of organisms have been proposed.  Nearly all these models are a modification of the traditional VBGM that allows for seasonal oscillations in length within each growth year.  The model originally proposed by Hoenig and Hanumara in an unpublished report \citep{HoenigHanumara1990, Paulyetal1992}, but most often cited from its description in \cite{Somers1988}, is highly popular.  Following other authors (e.g. \cite{Pauly1998}), this model will be referred to as Somers' model throughout this vignette.
+
+\cite{PitcherMacdonald1973} and \cite{PaulyGaschutz1979} modified the traditional VBGM to incorporate seasonal growth oscillations by including a sine function with a period of one year.  However, \cite{Somers1988} showed that these modifications produced a model that only fulfilled the definition of $t_{0}$ (i.e., when $t=t_{0}$, $L=0$) under a very strict circumstance (i.e., the seasonal oscillations began at $t=t_{0}$).  Thus, \cite{Somers1988} proposed the following formula for modeling seasonal growth that rectified this situation\footnote{Note the warning expressed in \cite{GarciaBerthouetal2012} about assuring that the correct formula for this equation is used in all analyses.}:
+
+\begin{equation}  \label{eqn:VBModelSO}
+  E[L|t] = L_{\infty}\left(1-e^{-K(t-t_{0})-S(t)+S(t_{0})}\right)
+\end{equation}
+
+with 
+
+\[ S(t) = \frac{CK}{2\pi}sin(2\pi(t-t_{s})) \]
+
+where $E[L|t]$ is the expected or average length at time (or age) $t$; $C$ modulates the amplitude of the growth oscillations and corresponds to the proportion of decrease in growth at the depth of the oscillation (i.e., ``winter''); $t_{s}$ is the time between time 0 and the start of the convex portion of the first sinusoidal growth oscillation, and  $L_{\infty}$, $K$, and $t_{0}$ are as defined above.
+
+This model has two more parameters then the traditional VBGM.  These parameters warrant further discussion.  If $C=0$, then there is no seasonal oscillation and the model reduces to the traditional VBGM \figrefp{fig:soExC}.  If $C=1$, then growth completely stops once a year at the ``winter-point'' ($WP$; \figref{fig:soExC}).  Values of $0$<$C$<$1$ result in reduced, but not stopped, growth during the winter \figrefp{fig:soExC}.  Values of $C$>$1$ (or <$0$) allow seasonal decreases in average length-at-age, and might not seem realistic in organisms whose skeletons largely preclude shrinkage \citep{Paulyetal1992}, but could result from size-dependent overwinter mortality. 
+
+<<soExC, include=FALSE, echo=FALSE, results='hide', fig.width=3.5, fig.height=3.5, par1=TRUE>>=
+clrs <- chooseColors("rich",4)
+som1 <- vbFuns("Somers")
+t <- seq(-0.1,3,by=0.001)
+Linf <- 50; K <- 0.7; t0 <- 0; ts <- 0.2
+L0 <- som1(t,Linf=Linf,K=K,t0=t0,ts=ts,C=0)
+L1 <- som1(t,Linf=Linf,K=K,t0=t0,ts=ts,C=1)
+L2 <- som1(t,Linf=Linf,K=K,t0=t0,ts=ts,C=0.25)
+L3 <- som1(t,Linf=Linf,K=K,t0=t0,ts=ts,C=0.5)
+plot(L0~t,type="l",xlab="Age (years)",ylab="Length",lwd=2,lty=1,col=clrs[1])
+lines(L1~t,lwd=2,lty=1,col=clrs[2])
+lines(L2~t,lwd=2,lty=1,col=clrs[3])
+lines(L3~t,lwd=2,lty=1,col=clrs[4])
+legend("bottomright",paste("C=",c(0,1,0.25,0.5),sep=""),lwd=2,lty=1,col=clrs,bty="n",inset=0.05,cex=0.75)
+@
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=2.5in]{Figs/soExC}
+  \caption{Hypothetical growth trajectories from age \Sexpr{min(t)} to \Sexpr{max(t)} for Somers' model using $L_{\infty}$=\Sexpr{Linf}, $K$=\Sexpr{K}, $t_{0}$=\Sexpr{t0}, $t_{s}$=\Sexpr{ts}, and various values of $C$.}
+  \label{fig:soExC}
+\end{figure}
+
+The $t_{s}$ is harder to visualize because it is the very start of a convex oscillation on a curve (the traditional von Bertalanfy growth model) that is is already convex \figrefp{fig:soExWP}.  Thus, many authors refer to the ``winter point'', where growth is slowest and is the ``bottom'' of the seasonal oscillation \figrefp{fig:soExWP}.  The ``winter point'' is half-way between the starts of two consecutive seasonal oscillations; thus, $WP=t_{s}+0.5$ \figrefp{fig:soExWP}.  If interest is fully in $WP$ and not $t_{s}$, then the model of \cite{Somers1988} can be modified by substituting $t_{s}=WP-0.5$ into $S_{t}$, or 
+
+\begin{equation}  \label{eqn:VBModelSO2}
+  E[L|t] = L_{\infty}\left(1-e^{-K(t-t_{0})-R(t)+R(t_{0})}\right)
+\end{equation}
+
+with 
+
+\[ R(t) = \frac{CK}{2\pi}sin(2\pi(t-WP+0.5)) \]
+
+<<soExWP, include=FALSE, echo=FALSE, results='hide', fig.width=4.5, fig.height=4.5, par1=TRUE>>=
+par(mar=c(3.5,3.5,1.75,1.75))
+Linf <- 50; K <- 0.7; t0 <- -0.1; ts <- 0.2
+L1 <- som1(t,Linf=Linf,K=K,t0=t0,ts=ts,C=1)
+plot(L1~t,type="l",xlab="Age (years)",ylab="Length",lwd=2,lty=1,col="black")
+abline(v=c(t0,ts,ts+0.5),lwd=1,lty=3,col="black")
+axis(3,at=c(t0,ts,ts+0.5),labels=c("t0","ts","WP"),cex=0.75)
+abline(h=0,lwd=1,lty=3,col="black")
+@
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=2.5in]{Figs/soExWP}
+  \caption{Hypothetical growth trajectory from age \Sexpr{min(t)} to \Sexpr{max(t)} for Somers' model using $L_{\infty}$=\Sexpr{Linf}, $K$=\Sexpr{K}, $t_{0}$=\Sexpr{t0}, $t_{s}$=\Sexpr{ts}, and $C=0$.  Vertical dotted lines are placed at $t_{0}$, $t_{s}$, and $WP$=$t_{s}+0.5$ and a horizontal dotted line at $L_{t}=0$ to aid understanding.}
+  \label{fig:soExWP}
+\end{figure}
+
+\subsection{Fitting Models in R}
+Fitting Somer's model will be illustrated with length-at-age data for Chilean anchoveta (\textit{Engraulis ringens}) extracted approximately from Figure 9 in \cite{Cubillosetal2001}.  The data are loaded and their structured is viewed with
+<<>>=
+data(AnchovetaChile)
+str(AnchovetaChile)
+head(AnchovetaChile)
+@
+
+The age is recorded in months.  A new variable of age in years is created with
+<<>>=
+AnchovetaChile$age.yrs <- AnchovetaChile$age.mon/12
+@
+
+As with the traditional VBGM, Somers' model requires starting values for each parameter.  Starting values for $L_{\infty}$, $K$, and $t_{0}$ can be obtained as described in the vignette for the VBGM.  The range of possible values for both $t_{s}$ and $C$ is from 0 to 1.  Starting values near 0.5 for $t_{s}$ and nearer to 1 for $C$ are likely adequate for most species.  Starting values can be found with \R{vbStarts} using a formula of the form \R{length}\verb"~"\R{age} as the first argument, the data frame where the two variables are found in the \R{data=} argument, and \R{type="Somers"}.  Starting values for the Chilean anchoveta are found with
+<<>>=
+svbso <- vbStarts(tl.cm~age.yrs,data=AnchovetaChile,type="Somers")
+unlist(svbso)   # unlist used for display purposes only
+@
+Ths Somers' model is a more complicated formula than the traditional VBGM function.  Thus, the simplest way to enter the Somers' model function is to use \R{vbFuns()} with \R{"Somers"} as the only argument.  For example,
+<<>>=
+( vbso <- vbFuns("Somers") )
+@
+
+The starting values and model function are then used with \R{nls()} to find the best fit model.  The results of \R{nls()} must be saved to an object.  That object is then submitted to \R{overview()} from the \R{nlstools} package to extract model parameters and other summary information.  For example,
+<<>>=
+vbso1 <- nls(tl.cm~vbso(age.yrs,Linf,K,t0,C,ts),data=AnchovetaChile,start=svbso)
+overview(vbso1)
+@
+
+A fitted line plot \figrefp{fig:soFitPlot} can be obtained (manually) with
+<<soFitPlot, fig.width=3.5, fig.height=3.5, par1=TRUE>>=
+plot(tl.cm~age.yrs,data=AnchovetaChile,pch=19,xlab="Age (years)",ylab="Total Length (cm)")
+curve(vbso(x,coef(vbso1)),from=0,to=5,col="red",lwd=2,add=TRUE)
+@
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=3in]{Figs/soFitPlot}
+  \caption{Fitted line plot from the seasonally oscillating VBGM fit to the Chilean anchoveta data.}
+  \label{fig:soFitPlot}
+\end{figure}
+
+The modified version of Somers' model used to estimate the ``winter point'' directly can be fit very similarly as shown with (note use of \R{"Somers2"} and $WP$ in the model function)
+<<>>=
+svbso2 <- vbStarts(tl.cm~age.yrs,data=AnchovetaChile,type="Somers2")
+unlist(svbso2)   # unlist used for display purposes only
+( vbso2 <- vbFuns("Somers2") )
+vbso2 <- nls(tl.cm~vbso2(age.yrs,Linf,K,t0,C,WP),data=AnchovetaChile,start=svbso2)
+overview(vbso2)
+@
+
+
+
+\newpage
+\section{Double von Bertalanffy}
+\cite{VaughanHelser1990} introduced and \cite{Porchetal2002} explored the so-called ``double'' VBGM that allows the fitting of one Beverton-Holt VBGM to fish less than some ``critical'' age ($t_{c}$) and a different Beverton-Holt VBGM to fish greater than that critical age.  The model is parameterized as follows,
+
+\begin{equation}  \label{eqn:VBModelDouble}
+  E[L|t] = \left\{ 
+    \begin{array}{l l}
+       L_{\infty}*\left(1-e^{-K_{1}(t-t_{1})}\right) & \quad \mbox{if $t < t_{c}$ }\\
+       L_{\infty}*\left(1-e^{-K_{2}(t-t_{2})}\right) & \quad \mbox{if $t \geq t_{c}$ }\\
+    \end{array} \right.
+\end{equation}
+
+where $L$, $t$, and $L_{\infty}$ are as defined previously, $K_{1}$ and $K_{2}$ are Brody growth rate coefficients for the two groups, $t_{1}$ and $t_{2}$ are the ages when the average size is zero for each group, and
+
+\[ t_{c} = \frac{K_{2}t_{2}-K_{1}t_{1}}{K_{2}-K_{1}} \]
+
+This model is difficult to fit because it is essentially a piecewise model where the critical point of switching between the two pieces depends on parameters in the model.  Thus, the model effectively contains an ``if'' statement.  Fitting this form of model is difficult with \R{nls()} because \R{nls()} depends on derivatives of the function, which cannot be taken with an ``if'' component to the model.  Fortunately, other algorithms in R -- specifically, \R{optim()} -- can be used to find the minimum of a function without requiring the calculation of derivatives.  Unfortunately, \R{optim()} requires a manual setup of the function to be minimized.
+
+<<echo=FALSE>>=
+# create some random data that follows the double VBGM
+dist.age <- 1:40
+dist.freq <- round(300*exp(-0.1*dist.age))
+ages <- rep(dist.age,dist.freq)
+len <- numeric(length(ages))
+sLinf <- 40
+sK1 <- 0.412; st1 <-  0.0530
+sK2 <- 0.114; st2 <- -8.41
+stc <- ((sK2*st2-sK1*st1)/(sK2-sK1))
+
+len[ages<stc] <- sLinf*(1-exp(-sK1*(ages[ages<stc]-st1)))
+len[ages>=stc] <- sLinf*(1-exp(-sK2*(ages[ages>=stc]-st2)))
+len <- len + rnorm(length(ages),0,2)
+df <- data.frame(len=len,age=ages)
+@
+
+
+The process of using \R{optim()} to fit a VBGM is illustrated below, first by using \R{optim()} to fit the typical VBGM and then showing how to use it for fitting the double VBGM.  Before showing these methods, note that hypothetical data that follows a the double VBGM with $L_{\infty}$=\Sexpr{sLinf}, $K_{1}$=\Sexpr{sK1}, $K_{2}$=\Sexpr{sK2}, $t_{1}$=\Sexpr{st1}, $t_{2}$=\Sexpr{st2} parameters, resulting in , $t_{c}$=\Sexpr{formatC(stc,format="f",digits=3)}, was created and stored in the \R{df} data frame.  A view of these data is shown below\footnote{The algorithm for creating these data can be seen by examining the R code script found in last section of this vignette.}.
+
+<<>>=
+head(df)
+@
+
+The traditional Beverton-Holt VBGM is fit to these data with \R{nls()}\footnote{Note that the starting values were found graphically with \R{growthModelSim("vbTypical",len~age,data=df)}.}
+<<>>=
+svbs <- list(Linf=40,K=0.20,to=0)
+mdl <- len~Linf*(1-exp(-K*(age-to)))
+fit.nls <- nls(mdl,data=df,start=svbs)
+( c.nls <- coef(fit.nls) )
+@
+
+Then, for comparative purposes, the same model is fit to the same data using \R{optim()}.  To use \R{optim()}, a function must first be created that returns the predicted lengths from the model given a current set of parameters (i.e., these parameters will change during the iterations required for fitting the model) and the observed ages.  Such a function is shown below where the first argument is a vector of parameter values\footnote{Note that this function is hard-wired such that the first parameter must be $L_{\infty}$, the second must be $K$, and the third must be $t_{0}$.} and the second argument is vector of the observed ages.
+<<>>=
+sVonB <- function(params,age) {
+  Linf <- params[1]; K <- params[2]; to <- params[3]
+  Linf*(1-exp(-K*(age-to)))
+}
+@
+
+The \R{optim()} function also requires a function that computes the residual sum-of-squares between the observed lengths and the predicted lengths.  Such a function is shown below where the first argument is again the vector of parameter estimates and the second and third arguments are the vectors of observed lengths and ages, respectively.  Note how this function uses the function previously constructed to find predicted lengths.
+<<>>=
+sRSS <- function(params,len,age) { sum((len-sVonB(params,age))^2) }
+@
+
+Finally, \R{optim()} can be run by including the initial parameter guesses in the first argument, the RSS function that should be minimized as the second argument, the vectors of observed lengths and ages as the third and fourth arguments, and two arguments (\R{hessian=TRUE} and \R{method="BFGS"}) that control how the \R{optim()} routine will behave).  The results should be assigned to an object as illustrated below.
+<<>>=
+fit.o <- optim(svbs,sRSS,len=df$len,age=df$age,hessian=TRUE,method="BFGS")
+@
+
+The estimated parameters are extracted from the \R{par} portion of the object returned by \R{optim()} as follows
+<<>>=
+fit.o$par
+@  
+From this, it is evident that the parameter estimates are slightly, but imperceptibly, different between the \R{optim()} and \R{nls()} results \figrefp{fig:dblFitPlot}.
+
+Using a similar process the double VBGM can fit be fit to the hypothetical data using \R{optim()}.  So that the value of $t_{c}$ can be easily computed later it is useful to first construct a function to compute $t_{c}$.  The function below performs this calculation using only a vector of parameter values as an argument\footnote{Note that this function is hard-wired such that the parameter values must be in the order of $L_{\infty}$, $K_{1}$, $K_{1}$, $t_{1}$, and $t_{2}$.}.
+<<>>=
+tc <- function(params) {
+  K1 <- params[2]; t1 <- params[3]; K2 <- params[4]; t2 <- params[5]
+  (K2*t2-K1*t1)/(K2-K1)
+}
+@
+
+The function to constructed predicted lengths from double VBGM equation is then constructed as shown below.  In this function, note the use of \R{ifelse()} to calculate the two ``pieces'' of the double VBGM.
+<<>>=
+dVonB <- function(params,age) {
+  Linf <- params[1]; K1 <- params[2]; t1 <- params[3]; K2 <- params[4]; t2 <- params[5]
+  ifelse(age<tc(params),Linf*(1-exp(-K1*(age-t1))), Linf*(1-exp(-K2*(age-t2)))) 
+}
+@
+
+The function to compute the sum of squared residuals is a simple modification of the previously used function, i.e.,
+<<>>=
+dRSS <- function(params,len,age) { sum((len-dVonB(params,age))^2) }
+@
+
+Finally, \R{optim()} is used as described previously and shown below\footnote{Note that there is not an automatic way to construct the starting values.}  The final model fit is shown in \figrefp{fig:dblFitPlot}.
+<<>>=
+dvbs <- c(37,0.36,-0.3,0.26,-3.3)
+fit.d <- optim(dvbs,dRSS,len=df$len,age=df$age,hessian=TRUE,method="BFGS")
+fit.d$par
+tc(fit.d$par)
+@
+
+<<dblFitPlot, echo=FALSE, include=FALSE, fig.width=3.5, fig.height=3.5, par1=TRUE>>=
+p.ages <- seq(0,40,0.1)
+pred.n <- predict(fit.nls,data.frame(age=p.ages))
+pred.o <- sVonB(fit.o$par,p.ages)
+pred.d <- dVonB(fit.d$par,p.ages)
+
+plot(len~jitter(age),data=df,xlab="Age (years; jittered)",ylab="Total Length (mm)",pch=".")
+lines(p.ages,pred.n,col="blue",lwd=2,lty=1)
+lines(p.ages,pred.o,col="green",lwd=2,lty=2)
+lines(p.ages,pred.d,col="red",lwd=2,lty=2)
+legend("bottomright",legend=c("single, nls","single, optim","double"),lwd=2,lty=c(1,2,2),col=c("blue","green","red"))
+@
+
+\begin{figure}
+  \centering
+    \includegraphics[width=3.5in]{Figs/dblFitPlot}
+  \caption{Example of the fit of a double VBGM, \eqref{eqn:VBModelDouble}, fit to RANDOM data.}
+  \label{fig:dblFitPlot}
+\end{figure}
+
+
+\clearpage
+\section{Model of Porch et al. (2002)}
+WORKING ON THIS
+
+<<eval=FALSE>>=
+df$age1 <- df$age + runif(length(df$age),0.3,07)
+
+
+beta1 <- function(params,age) {
+  K1 <- params[4]; lambda1 <- params[5]; to <- params[3]
+  K1/lambda1*(exp(-lambda1*age)-exp(-lambda1*to))
+}
+
+beta2 <- function(params,age) {
+  K1 <- params[4]; lambda1 <- params[5]; to <- params[3]
+  K2 <- params[6]; lambda2 <- params[7]; ts <- params[8]
+  (K2/(4*pi^2+lambda2^2))*(exp(-lambda2*age)*(2*pi*cos(2*pi*(ts-age))-lambda2*sin(2*pi*(ts-age)))-exp(-lambda2*to)*(2*pi*cos(2*pi*(ts-to))-lambda2*sin(2*pi*(ts-to))))
+}
+
+porchVB <- function(params,age) {
+  Linf <- params[1]; K0 <- params[2]; to <- params[3]
+  Linf*(1-exp(beta1(params,age)+beta2(params,age)-K0*(age-to)))
+}
+
+porchRSS <- function(params,age,len) { sum((len-porchVB(params,age))^2) }
+
+pvbs <- c(43.4,0.0475,0.443,0.695,0.476,0.301,0.344,0.439)
+fit.p <- optim(pvbs,porchRSS,len=df$len,age=df$age1,hessian=TRUE,method="BFGS")
+fit.p$par
+
+pred.p <- porchVB(fit.p$par,p.ages)
+plot(len~age1,data=df,xlab="Age (years)",ylab="Total Length (mm)",pch=".")
+lines(p.ages,pred.p,col="blue",lwd=2,lty=1)
+@
+
+
+%BIBLIOGRAPHY ---------------------------------------------------------------------------------------------------------
+\cleardoublepage   %not sure why, this is needed so that TOC entry will point to right start page
+\phantomsection    %not sure why, this is needed so that TOC entry will point to right start page
+\addcontentsline{toc}{section}{References}    %Add a TOC entry
+\bibliography{C:/aaaWork/zGnrlLatex/DHO_bib}    %make the bibliography
+
+\cleardoublepage   %not sure why, this is needed so that TOC entry will point to right start page
+\phantomsection    %not sure why, this is needed so that TOC entry will point to right start page
+\section{Appendix}\label{sec:Appendices}
+\subsection{Derivation of Fabens (1965) Increment Model}  \label{appsec:VBDerivationFabens}
+\subsubsection*{First Version}
+Define the length at time of marking ($t_{m}$) as
+
+\[  L_{m} = L_{\infty}\left(1-e^{-K(t_{m}-t_{0})}\right)  \]
+
+which is immediately rewritten as,
+ 
+\begin{equation}  \label{eqn:VBModelFabensLm2}
+  \begin{split}
+     \frac{L_{m}}{L_{\infty}} &= 1-e^{-K(t_{m}-t_{0})} \\
+     \frac{L_{m}}{L_{\infty}}-1 &= -e^{-K(t_{m}-t_{0})} \\
+     1- \frac{L_{m}}{L_{\infty}} &= e^{-K(t_{m}-t_{0})} \\
+     \frac{L_{\infty}-L_{m}}{L_{\infty}} &= e^{-K(t_{m}-t_{0})}
+  \end{split}
+\end{equation}
+
+Similarly, the length at time of recapture ($t_{r}$) is
+
+\begin{equation}  \label{eqn:VBModelFabensLr}
+L_{r} = L_{\infty}\left(1-e^{-K(t_{r}-t_{0})}\right)
+\end{equation}
+
+and define $\delta t$ as ``time-at-large'' such that 
+
+\begin{equation}  \label{eqn:VBModelFabenstr}
+t_{r} = t_{m} + \delta t
+\end{equation}
+
+Substitute \eqref{eqn:VBModelFabenstr} into \eqref{eqn:VBModelFabensLr} for $t_{r}$ and simplify,
+
+\[ \begin{split}
+  L_{r} &= L_{\infty}\left(1-e^{-K(t_{m} + \delta t - t_{0})}\right)  \\
+  L_{r} &= L_{\infty}\left(1-e^{-K(t_{m}-t_{0})}e^{-K\delta t}\right)
+\end{split}  \]
+
+and now substitute in the last expression in \eqref{eqn:VBModelFabensLm2} and simplify to get,
+
+\[  \begin{split}
+  L_{r} &= L_{\infty}\left(1-\frac{L_{\infty}-L_{m}}{L_{\infty}}e^{-K\delta t}\right) \\
+  L_{r} &= L_{\infty} - \left(L_{\infty}-L_{m}\right)e^{-K\delta t}
+\end{split}  \]
+
+Some authors will further modify this (note the addition of $L_{m}-L_{m}$) to get,
+
+\[ \begin{split}
+  L_{r} &= L_{m} + L_{\infty} - L_{m} - \left(L_{\infty}-L_{m}\right)e^{-K\delta t} \\
+  L_{r} &= L_{m} + \left(L_{\infty} - L_{m}\right) - \left(L_{\infty}-L_{m}\right)e^{-K\delta t} \\
+  L_{r} &= L_{m} + \left(L_{\infty} - L_{m}\right)\left(1-e^{-K\delta t}\right)
+\end{split} \]
+  
+Finally, other authors will present this model as a change in length,
+
+\[ L_{r} - L_{m} = \left(L_{\infty} - L_{m}\right)\left(1-e^{-K\delta t}\right)  \]
+
+
+\subsubsection*{Second Version}
+Alternatively, one can start the derivation by thinking of the increment in lengths
+
+\[ \begin{split}
+  L_{r} - L_{m} &= L_{\infty}\left(1-e^{-K(t_{m} + \delta t -t_{0})}\right) - L_{\infty}\left(1-e^{-K(t_{m}-t_{0})}\right) \\
+  L_{r} - L_{m} &= L_{\infty}-L_{\infty}e^{-K(t_{m} + \delta t -t_{0})} - L_{\infty}+L_{\infty}e^{-K(t_{m}-t_{0})} \\
+  L_{r} - L_{m} &= L_{\infty}e^{-K(t_{m}-t_{0})} - L_{\infty}e^{-K(t_{m} + \delta t -t_{0})} \\
+  L_{r} - L_{m} &= L_{\infty}e^{-K(t_{m}-t_{0})}\left(1-e^{-K\delta t}\right)
+\end{split} \]
+
+Now, note that $L_{m} - L_{\infty} = -L_{\infty}e^{-K(t_{m}-t_{0})}$ or, more usefully, $L_{\infty} - L_{m} = L_{\infty}e^{-K(t_{m}-t_{0})}$ which can be substituted into the above to get
+
+\[ L_{r} - L_{m} = \left(L_{\infty} - L_{m}\right)\left(1-e^{-K\delta t}\right)  \]
+
+\subsection{More Algebra Related to the Fabens (1965) Model}
+Understanding how the Faben's model ``works'' is sometimes difficult to visualize.  However, some algebra on the increment model may help in this regard.  Begin with,
+
+\[ L_{r} - L_{m} = \left(L_{\infty} - L_{m}\right)\left(1-e^{-K\delta t}\right)  \]
+
+which is easily modified to
+
+\[ \frac{L_{r} - L_{m}}{L_{\infty} - L_{m}} = 1-e^{-K\delta t}  \]
+
+and then to
+
+\begin{equation}  \label{eqn:VBModelFabensInterpret}
+ \frac{L_{\infty} - L_{r}}{L_{\infty} - L_{m}} = e^{-K\delta t}
+\end{equation}
+
+which shows that Fabens model examines the relative ``distances'' of $L_{r}$ and $L_{m}$ from $L_{\infty}$ and models that ratio as an exponential decay model.  This can be explored with hypothetical data.  The predicted lengths at six ages were computed supposing that $L_{\infty}$=400, $K$=0.5, and $t_{0}$=0.  All combinations of two of these lengths were then taken as a mark and recapture pair, such that the ``time-at-large'' was computed as the difference in ages and the growth increment was computed as the difference in predicted lengths.  The results are shown in \tabref{tbl:FabensInterp} and \figref{fig:FabensInterp}.
+
+<<echo=FALSE, results='asis'>>=
+vb1 <- vbFuns()
+parms <- c(400,0.5,0)
+ages <- c(1,1.3,2,5,13.5,14)
+Ls <- vb1(ages,parms)
+chc <- combn(1:length(ages),2)
+ager <- agem <- Lr <- Lm <- deltat <- deltaL <- rat <- numeric(ncol(chc))
+for (i in 1:ncol(chc)) {
+  ager[i] <- ages[chc[2,i]]
+  agem[i] <- ages[chc[1,i]]
+  Lr[i] <- Ls[chc[2,i]]
+  Lm[i] <- Ls[chc[1,i]]
+}
+deltat <- ager-agem
+deltaL <- Lr-Lm
+rat <- (parms[1]-Lr)/(parms[1]-Lm)
+d <- data.frame(ager,agem,deltat,Lr,Lm,deltaL,rat)
+
+d1 <- cbind(1:nrow(d),d)
+names(d1) <- c("Scenario","$Age_{r}$","$Age_{m}$","$\\delta t$","$L_{r}$","$L_{m}$","$\\delta L$","$\\frac{L_{\\infty} - L_{r}}{L_{\\infty} - L_{m}}$")
+cap <- "Results of several scenarious computed for hypothetical mark-recaptrue data from hypothetical von Bertalanffy data."
+xtbl.res <- xtable(d1,digits=c(NA,0,1,1,1,1,1,1,3),align="ccrrrrrrr",label="tbl:FabensInterp",caption=cap)
+print(xtbl.res,include.rownames=FALSE,sanitize.colnames.function=function(x){x},table.placement="hbtp",caption.placement="top")
+@
+<<FabensInterp, echo=FALSE, fig.show='hold', fig.width=7, fig.height=3.5, par2=TRUE>>=
+plot(rat~deltat,data=d,xlab="Time-at-large",ylab="'LHS Ratio'",pch=16,xlim=c(0,14))
+text(d$deltat,d$rat,rownames(d),pos=4,cex=0.75)
+plot(log(rat)~deltat,data=d,xlab="Time-at-large",ylab="log('LHS Ratio')",pch=16,xlim=c(0,14))
+text(d$deltat,log(d$rat),rownames(d),pos=4,cex=0.75)
+@
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=5.5in]{Figs/FabensInterp}
+  \caption{Plots of the ratio (LEFT) and log ratio (RIGHT) on the LHS of \eqref{eqn:VBModelFabensInterpret} versus time-at-large ($\delta t$) for data from a hypothetical von Bertalanffy growth model.  The numbers correspond to the ``scenario'' shown in \tabref{tbl:FabensInterp}.}
+  \label{fig:FabensInterp}
+\end{figure}
+
+Thus, for example if the ``time-at-large'' ($\delta t$) is ``small'' (near zero) then the length-at-marking and the length-at-recapture should be approximately equal and both the LHS and the RHS of \eqref{eqn:VBModelFabensInterpret} will be approximately equal to 1.  However, as the ``time-at-large'' increases the RHS will be smaller and $L_{r}$ will be closer to $L_{\infty}$ than $L_{m}$ making the LHS also smaller.
+
+%\subsection{Derivation of Wang (1998) Increment Model}  \label{appsec:VBDerivationFabens}
+%XXX NEED THIS XXX
+
+
+<<echo=FALSE, results='asis'>>=
+## will add the reproducibility information
+et <- proc.time() - stime
+swvFinish(rqrdPkgs=rqrd,newPage=TRUE,elapsed=et["user.self"]+et["sys.self"])
+@
+<<echo=FALSE, results='hide', include=FALSE>>=
+## Will create the script file
+swvCode(moreItems=c("source","rqrd","stime"))
+@
+\end{document} 

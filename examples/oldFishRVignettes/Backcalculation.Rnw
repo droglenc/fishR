@@ -1,0 +1,438 @@
+\documentclass[a4paper]{article}
+\input{c:/aaaWork/zGnrlLatex/GnrlPreamble}
+\usepackage[toc,page]{appendix}
+\usepackage{longtable}
+\input{c:/aaaWork/zGnrlLatex/JustRPreamble}
+\hypersetup{pdftitle = fishR Vignette -- Back-Calculation}
+
+\begin{document}
+\titleFishR{Back-Calculation of Fish Length}
+
+<<setup, echo=FALSE, include=FALSE>>=
+## Start time for keeping track of process time
+ stime <- proc.time()
+## load common knitr setup
+source("../knitr_Common.r")
+@
+
+\cite{Francis1990} defined \emph{back-calculation} as,
+
+\begin{quote}
+``... a technique that uses a set of measurements made on a fish at one time to infer its length at an earlier time or times.  Specifically, the dimensions of one or more marks in some hard part of the fish, together with its current body length, are used to estimate its length at the time of formation of each of the marks. ... The marks are generally annual rings associated with growth checks, ...''
+\end{quote}
+
+Thus, back-calculation is the re-construction of the length of a fish at previous ages from measurements made on calcified structures.
+
+This vignette requires functions in the \R{FSA} package maintained by the author which is loaded into R with
+<<echo=-1, results='hide', warning=FALSE, message=FALSE>>=
+rqrd <- c("FSA","lattice")
+library(FSA)
+@
+
+All analyses in this document use the West Bearskin Lake Smallmouth Bass (\emph{Micropterus dolomieu}) data set used in \cite{Weisberg1993}.  The West Bearskin Lake Smallmouth Bass data are in the \R{SMBassWB} data frame of the \R{FSA} package and are read into R with
+
+<<>>=
+data(SMBassWB)
+@
+
+The analysis in this vignette will focus on only those fish captured in 1990 as found from the year-at-capture and age-at-capture with
+
+<<>>=
+SMBassWByearclass <- SMBassWB$yearcap-SMBassWB$agecap
+wb90 <- Subset(SMBassWB,yearcap==1990)
+@
+
+This vignette begins with background information about back-calculation techniques in \sectref{sec:Background}.  \sectref{sec:DataOrgManip} and \sectref{sec:Backcalculation} show how to organize the data for the back-calculation methods and how to use the techniques to back-calculate previous lengths for all fish.  \sectref{sec:Further} is final thoughts about back-calculation methods.
+
+\section{Background} \label{sec:Background}
+\subsection{Growth Measurement Types}
+Two types of measurements can be made on calcified structures.  First, a \emph{radial} measurement is the total distance from the center of the structure (e.g., focus of scale or nucleus of otolith) to the anterior edge of an annulus.  Second, an \emph{incremental} measurement is the distance between two successive annuli.  Each type of measurement is shown in \figref{fig:ScaleMeasure}.  Radial measurements are needed for back-calculating fish length.  Thus, incremental measurements must be converted to radial measurements for back-calculation of fish length.
+
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=5.5in]{Figs/Scale_Measurements.png}
+  \caption{Depiction of (A) anterior, (AL) antero-lateral, and (L) lateral axes for making radial ($S_{i}$) or incremental ($G_{i}$) measurements on an age-4 ruffe (left) and an age-3 herring (right).  The ruffe was captured in May, 1989 before new growth had begun; thus, the last increment shown is considered to be an annulus.  The herring was caught in September, 1983 after new growth had begun; thus, the last increment shown is not a full year's growth and is labeled as ``+'' growth.}
+  \label{fig:ScaleMeasure}
+\end{figure}
+
+\subsection{Terminology}
+Let $L$ and $S$ represent measurements of body length and scale (or other calcified structure) radius, respectively.  Specifically, $L_{C}$ and $S_{C}$ represent the length and scale radius at the time of capture and $L_{i}$ and $S_{i}$ represent the length and scale radius at age $i$ \figrefp{fig:ScaleMeasure}.
+
+A back-calculation model is used to estimate $L_{i}$ from known values of $S_{i}$, $L_{C}$, and $S_{C}$.  The particular back-calculation model usualy defines a family of lines for a sample of fish with one line that depends on $L_{C}$, and $S_{C}$ used for a particular fish.  The family of lines are discussed with each model further below.
+
+The relationship between fish length and scale radius is a key component of back-calculation models.  Depending on assumptions of the model, a function of the mean scale radius for fish of a given length (i.e., $E(S|L)$ ) or a function of the mean length for fish of a given scale radius (i.e., $E(L|S)$) will be used.  These functions are not required to be linear, but often are, and in their linear form are represented as
+
+\begin{eqnarray}  \label{eqn:BackCalcESL}
+  E(S|L)=a+bL \\  \label{eqn:BackCalcELS}
+  E(L|S)=c+dS
+\end{eqnarray}
+
+where $E(S|L)$ is estimated from the regression of $S$ on $L$ and $E(L|S)$ is estimated from the regression of $L$ on $S$.
+
+
+\subsection{Common Back-Calculation Models}
+\subsubsection{Dahl-Lea Model}
+The first back-calculation model was jointly developed by Knut Dahl and Einar Lea and appeared in \cite{Lea1910}.  This model is used rarely now but it provides a good starting point for considering the derivation and use of other back-calculation models.
+
+The underlying concept of the Dahl-Lea model is that scale growth is in exact proportion to the growth in length of the fish.  With this, the ratio of scale radius at age $i$ to scale radious at capture is the same as the ratio of fish length at age $i$ to fish length at capture.  For example, if the scale was 50\% of its captured size at age-1 then the length of the fish at age-1 should be 50\% of its captured length.  This concepts is shown with
+
+\[ \frac{S_{i}}{S_{C}}=\frac{L_{i}}{L_{C}} \]
+
+Rearrangement of these ratios yields the Dahl-Lea back-calculation model
+
+\begin{equation}  \label{eqn:BackCalcDahlLea}
+  L_{i}=\frac{S_{i}}{S_{C}}L_{C}
+\end{equation}
+
+The Dahl-Lea model describes a family of straight lines that pass through the \emph{origin} and each observed ($S_{C},L_{C}$) point.  Visually \figrefp{fig:BackCalcEx704}, the estimated length at age $i$ for a particular fish is found by locating $S_{i}$ along the x-axis, moving vertically until the straight line for that fish is met, and then moving horizontally to the y-axis.  The value located on the y-axis is the back-calculated length for the fish at that previous age.
+
+<<BackCalcEx704,echo=FALSE,fig.width=8, fig.height=8, out.width='.8\\linewidth', fig.cap="Plot of length-at-capture versus scale radius for West Bearskin Lake Smallmouth Bass in 1990.  All four methods of backcalculation are shown for fish 704 ($S_{2}=3.49804$, $L_{C}=218$, and $S_{C}=7.44389$; black point and line) with calculational steps shown in red and blue.  Fish 701 is shown as the gray line for comparative purposes.">>=
+par(mfrow=c(2,2),mar=c(3.5,3.5,2,1),mgp=c(2,0.75,0),las=1,tcl=-0.2,xaxs="i",yaxs="i")
+attach(wb90)
+#-------------------------------------------------------------------------------
+# Plots the Dahl-Lea
+#-------------------------------------------------------------------------------
+plot(radcap,lencap,xlim=c(0,max(radcap)),ylim=c(0,max(lencap)),xlab=expression(S[C]),ylab=expression(L[C]),yaxt="n",xaxt="n")
+axis(2,c(0,50,seq(150,350,50)))
+xs <- c(0,2,6,8,10)
+axis(1,xs)
+
+Sc <- 9.2219; Lc <- 312                                             # Fish #701 as an example -- just show line
+points(Sc,Lc,pch=19,col="grey",cex=1.25)                            # Highlight the point
+lines(c(0,Sc),c(0,Lc),lwd=2,col="grey")                             # Show the back-calculation line
+Sc <- 7.44389; Lc <- 218; Si <- 3.49804                             # Fish #704 as an example -- show calculation
+points(Sc,Lc,pch=19,cex=1.5)                                        # Highlight the point
+lines(c(0,Sc),c(0,Lc),lwd=2)                                        # Show the back-calculation line
+Li<-(Si/Sc)*Lc                                                      # Back-calculated length
+text(Si,-10,paste(Si),pos=1,col="blue",xpd=TRUE)                    # Label scale radius on x-axis
+arrows(Si,-5,Si,Li,lwd=2,col="blue",length=0.1,angle=20,xpd=TRUE)   # Draw a line up from scale radius on x-axis
+arrows(Si,Li,-0.1,Li,lwd=2,col="red",length=0.1,angle=20,xpd=TRUE)  # Draw a line over to the length axis
+text(-0.1,Li,paste(round(Li,2)),pos=2,col="red",xpd=TRUE)           # Label back-calculated length
+mtext("Dahl-Lea",line=0.5)
+
+#-------------------------------------------------------------------------------
+# Plots Fraser-Lee method
+#-------------------------------------------------------------------------------
+plot(radcap,lencap,xlim=c(0,max(radcap)),ylim=c(0,max(lencap)),xlab=expression(S[C]),ylab=expression(L[C]),yaxt="n",xaxt="n")
+axis(2,seq(0,350,50))
+xs <- c(0,2,6,8,10)
+axis(1,xs)
+
+lm.ls <- lm(lencap~radcap)
+c <- coef(lm.ls)[1]
+Sc <- 9.2219; Lc <- 312                                             # Fish #701 as an example -- just show line
+points(Sc,Lc,pch=19,col="grey",cex=1.25)                            # Highlight the point
+lines(c(0,Sc),c(c,Lc),lwd=2,col="grey")                             # Show the back-calculation line
+Sc <- 7.44389; Lc <- 218; Si<-3.49804                               # Fish #704 as an example -- show calculation
+points(Sc,Lc,pch=19,cex=1.5)                                        # Highlight the point
+lines(c(0,Sc),c(c,Lc),lwd=2)                                        # Show the back-calculation line
+Li <- (Si/Sc)*(Lc-c)+c
+text(Si,-10,paste(Si),pos=1,col="blue",xpd=TRUE)                    # Label scale radius on x-axis
+arrows(Si,-5,Si,Li,lwd=2,col="blue",length=0.1,angle=20,xpd=TRUE)   # Draw a line up from scale radius on x-axis
+arrows(Si,Li,-0.1,Li,lwd=2,col="red",length=0.1,angle=20,xpd=TRUE)  # Draw a line over to the length axis
+text(-0.1,Li,paste(round(Li,2)),pos=2,col="red",xpd=TRUE)           # Label back-calculated length
+mtext("Fraser-Lee",line=0.5)
+
+#-------------------------------------------------------------------------------
+# Plots the SPH method
+#-------------------------------------------------------------------------------
+plot(radcap,lencap,xlim=c(0,max(radcap)),ylim=c(0,max(lencap)),xlab=expression(S[C]),ylab=expression(L[C]),yaxt="n",xaxt="n")
+axis(2,seq(0,350,50))
+xs <- c(0,2,6,8,10)
+axis(1,xs)
+
+lm.sl <- lm(radcap~lencap)
+a <- coef(lm.sl)[1]; b <- coef(lm.sl)[2]
+Sc <- 9.2219; Lc <- 312                                             # Fish #701 as an example -- just show line
+points(Sc,Lc,pch=19,col="grey",cex=1.25)                            # Highlight the point
+lines(c(0,Sc),c(-a/b,Lc),lwd=2,col="grey")                          # Show the back-calculation line
+Sc <- 7.44389; Lc <- 218; Si <- 3.49804                             # Fish #704 as an example -- show calculation
+points(Sc,Lc,pch=19,cex=1.5)                                        # Highlight the point
+lines(c(0,Sc),c(-a/b,Lc),lwd=2)                                     # Show the back-calculation line
+Li <- (-a/b)+(Lc+a/b)*(Si/Sc)
+text(Si,-10,paste(Si),pos=1,col="blue",xpd=TRUE)                    # Label scale radius on x-axis
+arrows(Si,-5,Si,Li,lwd=2,col="blue",length=0.1,angle=20,xpd=TRUE)   # Draw a line up from scale radius on x-axis
+arrows(Si,Li,-0.1,Li,lwd=2,col="red",length=0.1,angle=20,xpd=TRUE)  # Draw a line over to the length axis
+text(-0.1,Li,paste(round(Li,2)),pos=2,col="red",xpd=TRUE)           # Label back-calculated length
+mtext("SPH",line=0.5)
+
+#-------------------------------------------------------------------------------
+# Plots the BPH method
+#-------------------------------------------------------------------------------
+plot(radcap,lencap,xlim=c(0,max(radcap)),ylim=c(0,max(lencap)),xlab=expression(S[C]),ylab=expression(L[C]),yaxt="n",xaxt="n")
+axis(2,seq(0,350,50))
+xs <- c(0,2,6,8,10)
+axis(1,xs)
+
+lm.ls <- lm(lencap~radcap)
+c <- coef(lm.ls)[1]; d <- coef(lm.ls)[2]
+Sc <- 9.2219; Lc <- 312                                             # Fish #701 as an example -- just show line
+int <- (c*Lc)/(c+d*Sc)
+points(Sc,Lc,pch=19,col="grey",cex=1.25)                            # Highlight the point
+lines(c(0,Sc),c(int,Lc),lwd=2,col="grey")                           # Show the back-calculation line
+Sc <- 7.44389; Lc <- 218; Si <- 3.49804                             # Fish #704 as an example -- show calculation
+points(Sc,Lc,pch=19,cex=1.5)                                        # Highlight the point
+int <- (c*Lc)/(c+d*Sc)
+lines(c(0,Sc),c(int,Lc),lwd=2)                                      # Show the back-calculation line
+Li <- Lc*(c+d*Si)/(c+d*Sc)
+text(Si,-10,paste(Si),pos=1,col="blue",xpd=TRUE)                    # Label scale radius on x-axis
+arrows(Si,-5,Si,Li,lwd=2,col="blue",length=0.1,angle=20,xpd=TRUE)   # Draw a line up from scale radius on x-axis
+arrows(Si,Li,-0.1,Li,lwd=2,col="red",length=0.1,angle=20,xpd=TRUE)  # Draw a line over to the length axis
+text(-0.1,Li,paste(round(Li,2)),pos=2,col="red",xpd=TRUE)           # Label back-calculated length
+mtext("BPH",line=0.5)
+detach(wb90)
+@
+
+
+\subsubsection{Fraser-Lee Model}
+\cite{Fraser1916} was the first to describe but \cite{Lee1920} was the first to formally put forth the back-calculation model derived from the concept that ``the growth \emph{increment} of the scale is, on the average ..., a constant proportion of the growth \emph{increment} of the fish'' \citep{Francis1990}.  In practice, Fraser and Lee modified the Dahl-Lea model by allowing that a fish is already of some length when the scale first forms (i.e., $L\neq0$ when $S=0$).  Thus, if fish length is adjusted for the length of the fish when the scale forms (i.e., $L=c$ when $S=0$) then the Dahl-Lea ratios become
+
+\[ \frac{S_{i}}{S_{C}}=\frac{L_{i}-c}{L_{C}-c} \]
+
+Rearrangement of these ratios yields the Fraser-Lee back-calculation model
+
+\begin{equation}  \label{eqn:BackCalcFraserLee}
+  L_{i}=\frac{S_{i}}{S_{C}}(L_{C}-c)+c
+\end{equation}
+
+The constant $c$ is generally taken from one of three sources.  First, as was Lee's intention, $c$ is the length of the fish at the time of scale formation.  Second, which is what Lee actually did, $c$ is the intercept of the length-scale relationship regression (e.g., from \eqref{eqn:BackCalcELS}).  Third, $c$ may come from published ``standards'' for a species (e.g., \cite{Carlander1982}).
+
+The Fraser-Lee model describes a family of lines with an intercept of $c$ that pass through the ($S_{C},L_{C}$) point (\cite{Francis1990}; \figref{fig:BackCalcEx704}).
+
+
+\subsubsection{Scale Proportional Hypothesis}
+The scale proportional hypothesis (SPH) was named by \cite{Francis1990} but was first recognized by \cite{WhitneyCarlander1956} when they said
+
+\begin{quote}
+``If the scale was 10 per cent larger when the fish was caught than the average scale for that size of fish, [then] the scale would be 10 per cent larger than normal throughout the life.''
+\end{quote}
+
+If ``average'' and ``normal'' are considered to be expected values then this hypothesis can be written as
+
+\[ \frac{S_{i}}{E[S|L_{i}]}=\frac{S_{C}}{E[S|L_{C}]}  \]
+
+Assuming that the scale-length relationship is linear then the two expected values in these ratios are computed by plugging $L_{i}$ and $L_{C}$, respectively, into the scale-length relationship (i.e., \eqref{eqn:BackCalcESL}) to produce
+
+\[ \frac{S_{i}}{a+bL_{i}}=\frac{S_{C}}{a+bL_{C}}  \]
+
+Solving for $L_{i}$ yields the general SPH back-calculation model
+
+\begin{equation}  \label{eqn:BackCalcSPHLinear}
+    L_{i} = \frac{S_{i}}{S_{C}}\left(L_{C}+\frac{a}{b}\right) - \frac{a}{b}
+\end{equation}
+
+The linear SPH model produces a family of lines that all have an intercept of $-\frac{a}{b}$ and pass through each observed ($S_{C},L_{C}$) point \figrefp{fig:BackCalcEx704}.
+
+The SPH model is the same as the Fraser-Lee model except that the intercept from \eqref{eqn:BackCalcELS} is replaced with $-\frac{a}{b}$.  Further note that the SPH model is the same as the Dahl-Lea model if $a=0$.  
+
+
+\subsubsection{Body Proportional Hypothesis}
+The body proportional hypothesis (BPH) was also named by \cite{Francis1990} and was also first recognized by \cite{WhitneyCarlander1956} when they said,
+
+\begin{quote}
+``If a fish at time of capture were 10 per cent smaller than the average fish with that size of scale, [then] the fish would be 10 per cent smaller than the expected length for the size of that scale throughout life.''
+\end{quote}
+
+This hypothesis can be written as
+
+\[ \frac{L_{i}}{E[L|S_{i}]}=\frac{L_{C}}{E[L|S_{C}]} \]
+
+If the length-scale relationship is linear then the expected values can be found by plugging $S_{i}$ and $S_{c}$ \eqref{eqn:BackCalcELS} to get 
+
+\[ \frac{L_{i}}{c+dS_{i}}=\frac{L_{C}}{c+dS_{C}} \]
+
+Solving for $L_{i}$ yields the general BPH back-calculation model
+
+\begin{equation}  \label{eqn:BackCalcBPHLinear}
+  L_{i}=L_{C}\frac{c+dS_{i}}{c+dS_{c}}
+\end{equation}
+
+The linear BPH model produces a family of lines that have an intercept of $\frac{cL_{C}}{c+dS_{C}}$ and pass through each observed ($S_{C},L_{C}$) point \figrefp{fig:BackCalcEx704}.  In contrast to the other back-calculation models, the BPH model uses lines with a different intercept for each fish.
+
+The linear BPH model is the same as the Dahl-Lea model if $c=0$.
+
+
+\section{Data Organization \& Manipulation} \label{sec:DataOrgManip}
+All back-calculation models, with the exception of the Dahl-Lea method, requires the scale measurement data to be in two formats.  The first format, called one-fish-per-line format\footnote{The one-fish-per-line format is often referred to as ``wide'' format}, is used to compute the scale-length \eqref{eqn:BackCalcESL} and length-scale \eqref{eqn:BackCalcELS} relationships.  The second format, called one-measurement-per-line format\footnote{The one-measurement-per-line format is often referred to as ``long'' format}, is used to back-calculate previous fish length from scale measurements.
+
+\subsection{Convert from One-Fish-per-Line to One-Measurement-per-Line}
+Most files containing growth data are organized in a one-fish-per-line format.  In this format, all information about a single fish, including all of the growth measurements, are stored on a single line in the data file.  The \R{wb90} data frame, a portion of which is shown below, is recorded in one-fish-per-line format.
+
+<<>>=
+head(wb90)
+tail(wb90)
+@
+
+The partial data file shown above illustrates two important points about organizing data for performing back-calculations in R.  First, each data file must contain enough columns to hold  growth measurement for the first through the maximum observed age in the data set.  In this example, that means there must be a column for the first through the twelfth radial measurements (i.e., the columns labeled with the prefix \var{anu}).  For fish younger than the maximum age the columns corresponding to ages older than the observed age must be filled with \R{NA} (for ``not available'').  Second, the column names containing the growth measurements should have a common prefix (e.g., \var{anu}) followed by the number of the measurement.  For example, the second measurement should be something like \var{anu2}.  The common prefix will allow efficiency in the analyses and the numbers allow efficient labeling of the age corresponding to the growth measurement.
+
+\emph{Radial} scale measurements were recorded in this data file, as is required for the back-calculation techniques.  If the file had contained incremental measurements then it would need to be converted to radial measurements with \R{gConvert()}.  The \R{gConvert()} function requires the data frame with the incremental measurements as the first argument, the prefix (in quotes) for the columns containing the incremental measurements in the \R{in.pre=} argument, and the type of measure to \emph{convert to} in the \R{type=} argument (the options are \R{"inc"} or \R{"rad"}).  The result from \R{gConvert()} should be saved to an object that has a different name than the original data frame (so that the original data frame is preserved).  For example, if it were needed, one would make this conversion with
+
+<<eval=FALSE>>=
+wb90A <- gConvert(wb90,in.pre="anu",type="rad")
+@
+
+The back-calculation techniques cannot be applied to data in the the one-fish-per-line format; rather the data must be ``reshaped'' to one-measurement-per-line format.  Each row in the one-measurement-per-line format contains all information known about a particular growth measurement (rather than an individual fish).  Thus, information about an individual fish is spread across several rows.  Data that is in one-fish-per-line format can be converted to one-measurement-per-line format with \R{gReshape()}.  The \R{gReshape()} function requires the data frame with the \emph{radial} measurements as the first argument and the prefix for the columns containing the radial measurements in the \R{in.pre=} argument\footnote{This prefix will be \R{"rad"} if the radial measurements data frame was created with \R{gConvert()}).}.
+
+The \R{gReshape()} function also needs to know whether ``plus growth'' was recorded in the data file or not.  ``Plus growth'' is growth on the margin of the scale that is not complete and does not represent a full year of growth (see the herring scale in \figref{fig:ScaleMeasure}).  If ``plus growth'' is present, then the last recorded ``radius'' will need to be ignored by \R{gReshape()}.  If ``plus growth'' is recorded then the \R{last.plus=} argument should be set equal to the variable name that contains the age-at-capture (\R{"agecap"} in the West Bearskin Lake example).  If ``plus growth'' is not recorded then the \R{last.plus=} argument should be set equal to \R{NULL}, which is the default.  ``Plus growth'' was not recorded in the West Bearskin Lake data (as noted by the age-at-capture being equal to the number of recorded measurements).
+
+The results of \R{gReshape()} should be saved to an object.  The West Bearskin Lake data was reshaped with
+
+<<>>=
+wb90r <- gReshape(wb90,in.pre="anu")
+head(wb90r)
+@
+
+\subsection{Convert from One-Measurement-per-Line to One-Fish-per-Line}
+As noted in the previous section, most data is originally stored in one-fish-per-line format.  However, if the data is stored in one-measurement-per-line format then it will also be necessary to convert  to one-fish-per-line format.  This conversion is rare enough that a specific function for performing it has not been developed.  Fortunately, the conversion can be obtained by careful use of \R{reshape()}.  The \R{reshape()} function requires the one-measurement-per-line data frame as the first argument, the name of the variable that contains the ``data'' (i.e., radial measurements) in the \R{v.names=} argument, the age variable in the \R{timevar=} argument, all of the variables that are constant for each fish in the \R{idvar=} argument, and the \R{direction="wide"} argument to indicate conversion to what R calls ``wide'', but we are calling ``one-fish-per-line'', format.  For example, the one-measurement-per-line \R{wb90r} data frame is converted to a one-fish-per-line data frame with
+<<>>=
+str(wb90r)        # to see the variable names
+wb90z <- reshape(wb90r,v.names="anu",timevar="prvAge",
+                 idvar=c("species","lake","gear","yearcap","fish","agecap","lencap","radcap"),
+                 direction="wide")
+head(wb90z)
+@
+The process illustrated in this subsection is \emph{NOT} needed for the example in the vignette.  It is used here simply to illustrate how to convert one-measurement-per-line data to one-fish-per-line data if needed.\footnote{Note that \var{anu10}, \var{anu11}, and \var{anu12} in the original \R{wb90} data frame contained all \var{NA}s.}
+
+
+\section{Performing the Back-Calculations} \label{sec:Backcalculation}
+\subsection{Acquiring Coefficients from Regression Models}
+The scale-length \eqref{eqn:BackCalcESL} and length-scale \eqref{eqn:BackCalcELS} relationships must be fit using the length-at-capture and scale radius-at-capture data in the \emph{one-fish-per-line format} data frame (e.g., \R{wb90}).  These relationships are fit with \R{lm()} and the coefficients are extracted from the saved \R{lm()} object with \R{coef()}.  These models are fit and the coefficients are saved to ojects with
+
+<<>>=
+lm.sl <- lm(radcap~lencap,data=wb90)
+( a <- coef(lm.sl)[1] )
+( b <- coef(lm.sl)[2] )
+
+lm.ls <- lm(lencap~radcap,data=wb90)
+( c <- coef(lm.ls)[1] )
+( d <- coef(lm.ls)[2] )
+@
+
+\subsection{Applying Back-Calculation Models}
+The back-calculation models are applied to the \emph{one-measurement-per-line format} data frame (i.e., \R{wb90r}) by writing the model as an equation in R.  In this dataframe note that $S_{i}$ is the \var{anu} variable, $S_{c}$ is the \var{radcap} variable, and $L_{c}$ is the \var{lencap} variable.  Thus, estimated lengths at previous ages are computed with the Dahl-Lea model and appended to the \R{wb90r} data frame as the \var{dl.len} variable with
+
+<<>>=
+wb90r$dl.len <- with(wb90r,(anu/radcap)*lencap)
+head(wb90r)
+@
+
+Use of \R{with()} above simply saves the user from having to type \R{wb90r\$} for each variable name in the equation.  Estimated lengths at previous ages computed with the Fraser-Lee, SPH, and BPH models are appended to the \R{wb90r} data frame in unique variables with
+
+<<>>=
+wb90r$fl.len <- with(wb90r,(anu/radcap)*(lencap-c)+c)
+wb90r$sph.len <- with(wb90r,(-a/b)+(lencap+a/b)*(anu/radcap))
+wb90r$bph.len <- with(wb90r,lencap*(c+d*anu)/(c+d*radcap))
+head(wb90r)
+@
+
+\subsection{Some Summary Calculations}
+The mean and standard deviation of lengths-at-age estimated with the SPH model, for example, with
+<<>>=
+Summarize(sph.len~prvAge,data=wb90r,digits=2)
+@
+
+A plot \figrefp{fig:LengthAtAge1} of back-calculated length-at-age can be constructed with
+<<LengthAtAge1, fig.cap="Back-calculated length-at-age for West Bearskin Lake Smallmouth Bass.">>=
+plot(sph.len~jitter(prvAge),data=wb90r,pch=".",
+     ylab="Back-Calculated Length (mm)",xlab="Age (jittered)")
+@
+
+The mean back-calculated length separated by the age-at-capture of the fish can be found with,
+<<>>=
+sumTable(sph.len~agecap*prvAge,data=wb90r,digits=1)
+@
+
+Finally, a plot \figrefp{fig:LengthAtAge2} of length-at-age separated by the age-at-capture of the fish can be constructed with
+
+<<LengthAtAge2, fig.width=5, fig.height=5, warning=FALSE, message=FALSE, fig.cap="Back-calculated length-at-age for West Bearskin Lake Smallmouth Bass separated by age-at-capture.">>=
+library(lattice)  #required for xyplot
+xyplot(sph.len~jitter(prvAge)|factor(agecap),data=wb90r,pch=".",
+ylab="Back-Calculated Length (mm)",xlab="Age (jittered)")
+@
+
+\clearpage
+\section{Further Thoughts}\label{sec:Further}
+\subsection{Choosing The Back-Calculation Method}
+\cite{Francis1990} argued that either proportional model (i.e, SPH or BPH) should be used to back-calculate fish length.  He further argued that if lengths are back-calculated using both proportional methods then the difference in results is a measure of the minimum uncertainty in back-calculated lengths.  \cite{Pierceetal1996} back-calculated the lengths of two species using the Fraser-Lee and both proportional methods and compared these to observed lengths-at-age.  Their results showed little or no difference among the three methods and they hypothesized that this result was due to the tight body-scale relationship observed for the two species studied.
+
+
+\subsection{Non-Linear Length-Scale Relationship}
+The discussion above began with general SPH and BPH models and then showed specific models if the length-scale or scale-length relationships were linear, which will not always be the case.  The SPH and BPH methods are general to any form of relationship; albeit, with a bit more work.  The scale-length or length-scale relationship should be examined carefully and the functional form that best represents the relationship should be chosen to develop an appropriate back-calculation model from the general SPH and BPH hypotheses.
+
+For example, suppose that the scale-length relationship followed a power function of the form $E(S|L)=aL^{b}$.  In this case, the ratios of the SPH hypothesis woud be
+
+\[ \frac{S_{i}}{aL_{i}^{b}} =\frac{S_{C}}{aL_{C}^{b}} \]
+
+This can still be solved for $L_{i}$ to get a non-linear SPH model that was attributed to Monasytrsky by \cite{BagenalTesch1978})
+
+\[ L_{i}=L_{c}\left[\frac{S_{i}}{S_{C}}\right]^{\frac{1}{b}} \]
+
+
+\subsection{Lee's Phenomenon}
+``Rosa Lee's'' or just ``Lee's'' phenomenon is the tendency for back-calculated lengths at a given age in the same cohort of fish to be smaller as the fish they are computed from get older.  It must be remembered that Lee's phenomenon is detected by examining lengths at the \emph{same} age and \emph{same} cohort back-calculated from progressively older fish (i.e., captured in later years).  Reverse Lee's phenomenon is the tendency for the same back-calculated lengths to be larger as progressively older fish are examined.
+
+For example \cite{VanOosten1928} carefully examined the scales of lake herring from Saginaw Bay Lake Huron.  In particular, he examined the back-calculated lengths, using the Dahl-Lea back-calculation model, of lake herring from the 1918 and 1919 year-classes captured at various ages.  His results \tabrefp{tab:LeesPhenomenonLH}, although not tested for statistical significance, illustrate ``Lee's'' phenomenon for back-calculated lengths at ages one to three for both year-classes \tabrefp{tab:LeesPhenomenonLH}.
+
+\begin{table}
+  \caption{Back-calculated lengths-at-age for Saginaw Bay lake herring from two different year-classes captured at several different ages.}
+  \label{tab:LeesPhenomenonLH}
+  \centering
+  \begin{tabular}{c|cccccc}
+    \multicolumn{1}{c}{} & \multicolumn{6}{c}{Back-Calculated Length-at-Age} \\
+    \multicolumn{1}{c}{} & I & II & III & IV & V & VI \\
+    \cline{2-7}
+    \multicolumn{1}{c}{Age} & \multicolumn{6}{c}{\emph{1918 Year-Class}} \\
+    \cline{2-7}
+    IV & 116 & 179 & 214 & 232 &  &  \\
+    V & 114 & 171 & 205 & 229 & 241 &  \\
+    VI & 113 & 166 & 203 & 228 & 247 & 263 \\
+    \multicolumn{1}{c}{} &  &  &  &  &  &  \\
+    \multicolumn{1}{c}{Age} & \multicolumn{6}{c}{\emph{1919 Year-Class}} \\
+    \cline{2-7}
+    III & 127 & 192 & 224 &  &  &  \\
+    IV & 122 & 183 & 217 & 236 &  &  \\
+    V & 119 & 179 & 213 & 237 & 251 &  \\
+    VI & 116 & 168 & 199 & 237 & 248 & 267 \\
+  \end{tabular}
+\end{table}
+
+\cite{Ricker1969} described four possible explanations of Lee's phenomenon.  The first explanation was that an incorrect mathematical model was used in the back-calculation of previous lengths.  This problem can be identified by examining the annular measurements on the scales at a given age on the scales of progressively older individuals from the same cohort \citep{NewmanWeisberg1987}.  If Lee's phenomenon is not evident in the scales but it is evident in the back-calculated lengths then a problem exists with the model used to make the back-calculations.
+
+The remaining explanations involve the appearance of faster-growing but younger-aged individuals of a cohort in ``earlier'' samples of the cohort and slower-growing, older-aged individuals in ``later'' samples.  The first of these explanations is that a biased form of sampling is used.  An example, would be the use of gill-nets to select samples where the faster-growing individuals will be captured by nets at younger ages and the slower-growing individuals at older ages.  The second and third of these explanations are length-selective natural and fishing mortality.  If faster-growing individuals are selectively removed from the population earlier in the history of the cohort then the older individuals captured in later years will be relatively slow-growing individuals that will have relatively smaller back-calculated lengths at previous ages.
+
+\cite{Duncan1980} offered another explanation.  Annular increments on calcified structures may contract as calcium is resorbed from hard parts for metabolic purposes.  This contraction would make growth and, subsequently size, appear smaller than what was actual.
+
+
+\subsection{Use With Otoliths}
+The back-calculation methods described above can be applied to annular measurements on otoliths.  However, slow-growing fish tend to have larger otoliths than fast-growing fish of the same size (CITATIONS).  This leads to an underestimation of previous lengths and the appearance of Lee's phenomenon.  To avoid this problem, \cite{CampanaJones1992} proposed a back-calculation model that is similar to the Fraser-Lee method but uses a biologically-determined intercept that is determined by the mean size of the fish and the otolith at the larval or juvenile stage.  Specifically, biological intercept is measured in the smallest fish where all larger fish yield a directly proportional linear length-otolith relationship.  Very small fish for which the proportional relationship between length and otolith size has not yet developed are not used in the development of the back-calculation model.  This leads to a method that does not depend on any regression method and is insensitive to growth-related variations in the length-otolith relationship.  The specific back-calculation model is,
+
+\begin{equation*}
+    L_{i} = L_{c}+\frac{(O^{*}-O_{c})(L_{c}-L^{*})}{O_{c}-O^{i}}
+\end{equation*}
+
+where $O_{c}$ is the otolith radius at capture, $O_{i}$ is the otolith radius to the ith annulus, and $L^{*}$ and $O^{*}$ are the fish length and otolith radius at the biological intercept.
+
+Otoliths have also been shown to grow continuously during periods when fish size is not growing (CITATION).  This phenomenon tends to make the length-otolith relationship non-linear, but linear within a given age.  Thus, \cite{MoritaMatsuishi2001} developed a back-calculation model that incorporated an \emph{age-effect} into the relationship regression.
+
+
+\subsection{Validation}
+As with any model, the results from the use of the model should be compared to actual observations to validate that the model is producing the results for which it was intended.  In back-calculation, this means comparing back-calculated lengths at previous ages to observed lengths when the fish was that age.  The strictest validation is the comparison of the back-calculated lengths of an individual fish to its own previous lengths.  However, this is a difficult process and, thus, the usual form of validation is to show that the average back-calculated lengths-at-age are the same as the the observed average lengths at those ages.  However, as \cite{Francis1990} correctly points out, this latter method will only detect gross errors with the back-calculation technique because a sample of one-year-old fish is not the same as a sample of one-year-old fish that will survive to some later age (see comments above about length-selective mortality).  Despite these difficulties every attempt should be made by a researcher to validate the back-calculation model for the population of fish being studied.
+
+
+%BIBLIOGRAPHY ------------------------------------------------------------------
+\cleardoublepage   %not sure why, this is needed so that TOC entry points to right start page
+\phantomsection    %not sure why, this is needed so that TOC entry points to right start page
+\addcontentsline{toc}{section}{References}    %Add a TOC entry
+\bibliography{c:/aaaWork/zGnrlLatex/DHO_bib}    %make the bibliography
+
+<<echo=FALSE, results='asis'>>=
+## will add the reproducibility information
+et <- proc.time() - stime
+swvFinish(rqrdPkgs=rqrd,newPage=TRUE,elapsed=et["user.self"]+et["sys.self"])
+@
+<<echo=FALSE, results='hide', include=FALSE>>=
+## Will create the script file
+swvCode(moreItems=c("source","rqrd","stime"))
+@
+
+\end{document} 

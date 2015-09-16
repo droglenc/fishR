@@ -1,0 +1,1327 @@
+\documentclass[a4paper]{article}
+\input{c:/aaaWork/zGnrlLatex/GnrlPreamble}
+\usepackage[toc,page]{appendix}
+\input{c:/aaaWork/zGnrlLatex/JustRPreamble}
+\hypersetup{pdftitle = fishR Vignette -- Von Bertalanffy}
+
+\begin{document}
+\titleFishR{Von Bertalanffy Growth Models}
+
+<<setup, echo=FALSE, include=FALSE>>=
+## Start time for keeping track of process time
+ stime <- proc.time()
+## load common knitr setup
+source("../knitr_Common.r")
+## Not needed for the methods, but needed for the document
+library(xtable)
+@
+
+Growth of individual organisms within a population is generally characterized by an expression which is representative of individual growth of an ``average'' animal in the population.  Individual growth is treated as an increase in either length or weight with increasing age.  Several functions or models have been used to model the mean length or weight of fishes.  One model, the von Bertalanffy growth model (VBGM), is the most popular and is the focus of this vignette.
+
+The functions required to perform growth analyses in R are contained in the \R{FSA} and \R{FSAdata} packages created by the author and the \R{nlstools} package.  These packages are loaded into R with
+<<echo=-1, results='hide', warning=FALSE, message=FALSE>>=
+rqrd <- c("FSA","FSAdata","nlstools")
+library(FSA)
+library(FSAdata)
+library(nlstools)
+@
+
+All analyses in this document use the lengths and ages of Atlantic Croaker (\emph{Micropogonias undulatus}; \figref{fig:AtlanticCroaker}) as determined by researchers at Old Dominion University in conjunction with the Virginia Marine Resources Commission (VMRC).  The data are stored in the \R{Croaker2} data frame found in the \R{FSAdata} package which is loaded along with \R{FSA}.  The first part of this vignette will focus only on the male Atlantic Croaker data as isolated and stored in \R{crm} with
+<<>>=
+data(Croaker2)
+crm <- Subset(Croaker2,sex=="M")
+@
+
+\begin{figure}[hbp]
+  \centering
+    \includegraphics[width=3in]{Figs/AtlanticCroaker2.jpg}
+  \caption{Atlantic croaker drawing (from \href{http://www.dnr.state.md.us/mydnr/CreatureFeature/atlanticcroaker.asp}{Maryland DNR website}).}
+  \label{fig:AtlanticCroaker}
+\end{figure}
+
+This vignette begins with a brief introduction to the type of data that can be used for modeling growth with the VBGM \sectrefp{sect:Data}.  The general concept of fitting non-linear models is described in \appref{app:NLS} with these methods first being extended and then applied to the typical VBGM in \sectref{sect:TypicalVBGM}.  Alternative parameterizations of the VBGM are described, with an example fitting, in \sectref{sect:OtherVBGM}.  Methods for comparing VBGM fits between groups are described in \sectref{sect:VBGMCompare}.  Finally, \appref{app:ModelDerivations} gives derivations for the different parameterizations of the VBGMs.
+
+\section{Size-at-Age Data}\label{sect:Data}
+The raw data for size-at-age modeling consists of the measurement of size, either length or weight, and the assignment of age to individual fish at the time the fish was captured.  This is called \emph{length-at-capture}, \emph{weight-at-capture}, and \emph{age-at-capture} data.  An example\footnote{The remainder of this vignette will focus on length data only} of this type of data for length and age is shown in \tabref{tab:GrowthDataEx}-left and in \figref{fig:GrowthDataEx}.
+
+\begin{table}[hbp]
+  \centering
+  \caption{Length-at-age for a portion of a sample of male Atlantic Croakers (left) and average length-at-age (right) for all male Atlantic Croakers in 1999.} \label{tab:GrowthDataEx}
+    \begin{tabular}{||rrr||rr||}
+      \hline
+      \widen{-2}{7}{$Indiv$}&$Age$&$Length$&$Avg Age$&$Avg Length$\\
+      \hline
+      \widen{0}{5}{1}&1&248&1&248.0\\
+      \widen{0}{0}{2}&2&210&2&248.4\\
+      \widen{0}{0}{3}&2&225&3&281.8\\
+      \widen{0}{0}{4}&2&236&4&298.3\\
+      \widen{0}{0}{5}&2&240&5&328.2\\
+      \widen{0}{0}{6}&2&245&6&345.9\\
+      \widen{0}{0}{7}&2&255&7&332.5\\
+      \widen{0}{0}{8}&2&258&8&344.3\\
+      \widen{0}{0}{9}&2&263&9&370.8\\
+      \widen{0}{0}{10}&2&270&10&327.0\\
+      \widen{0}{0}{11}&2&292&&\\
+      $\vdots$&$\vdots$&$\vdots$&&\\
+      \hline
+    \end{tabular}
+\end{table}
+
+<<GrowthDataEx, echo=FALSE, fig.cap="Length-at-age of male Atlantic Croaker.  Red lines are the average length-at-age.">>=
+plot(tl~age,data=crm,ylab="Total Length (mm)",pch=19)
+sumdata <- aggregate(cbind(crm$tl,crm$age),list(crm$age),mean)
+names(sumdata) <- c("age","mean.tl","age1")
+points(mean.tl~age,data=sumdata,pch=151,cex=1.25,col="red")
+@
+
+Historical methods for estimating the parameters of growth models used the \emph{average} length or weight at each observed age for the sample (\tabref{tab:GrowthDataEx}-right) rather than the original data recorded for each individual.  The historical methods should no longer be used because high-speed computers can easily perform the calculations or iterations necessary for fitting the growth models to individual at-capture data.  In addition, the historical methods lost important information about individual variability.  The historical method is carefully discussed in \cite{Ricker1975} and a brief example for fitting the VBGM to the mean data is given in \sectref{sect:FitMeans}.
+
+It is also common to use ``back-calculation'' techniques to reconstruct data for growth analyses.  This type of data is called \emph{retrospective size-at-age data} \citep{Jones2000}.  Growth data generated in this way is generally inappropriate for the simple modeling techniques developed in this vignette because the back-calculated measurements are serially correlated (i.e., the techniques described here require independent observations).  The problems created by serially-correlated data and techniques for handling serially-correlated data are described in \cite{Jones2000}.
+
+
+\section{``Typical'' von Bertalanffy Growth Model} \label{sect:TypicalVBGM}
+\subsection{The Model and Parameters}
+There are many versions or parameterizations of the VBGM (see \sectref{sect:OtherVBGM}).  The most common version is due to \cite{Beverton1954} and  \cite{BevertonHolt1957}, who modified the original version introduced by von Bertalanffy \citep{Cailletetal2006}.  This model will be termed the ``typical'' version of the VBGM throughout this vignetted.  The typical VBGM is represented by\footnote{A weight specific version essentially raises the length-specific version to the power of $b$, the allometric relation term from the regression of weight on length (i.e., $W=aL^B$) -- i.e., $E[W|t] = \left(W_{\infty}\left(1-e^{-K(t-t_{0})}\right)\right)^{b}$.}
+
+\begin{equation}  \label{eqn:VBModelTypicalLength}
+  E[L|t] = L_{\infty}\left(1-e^{-K(t-t_{0})}\right)
+\end{equation}
+
+where
+\begin{itemize}
+  \item $E[L|t]$ is the expected or average length at time (or age) t,
+  \item $L_{\infty}$ is the asymptotic average length,
+  \item $K$ is the so-called Brody growth rate coefficient (units are yr$^{-1}$), and
+  \item $t_{0}$ is a modeling artificat that is said to represent the time or age when the average length was zero.
+\end{itemize}
+
+The parameters of \eqref{eqn:VBModelTypicalLength} have strict meanings that have been misunderstood in past work.  The following items address some of these misunderstandings.
+\begin{itemize}
+  \item $L_{\infty}$ is \emph{not} the maximum length of the animal.  Rather $L_{\infty}$ is the asymptote for the model of \emph{average} length-at-age \citep{Francis1988}.  As with any average, some individuals will be larger than average; thus, some animals will be larger than $L_{\infty}$.  This is illustrated in  \figref{fig:VBModelTypicalEx}.
+  \item Furthermore, \cite{Francis1988} argues that $L_{\infty}$ only has meaning in fish populations where ``mortality is low enough to allow fish to reach an age at which the mean length (virtually) ceases to increase.''
+  \item $K$ is \emph{not} a growth rate \citep[p. 221]{Ricker1975}.  The units of $K$ can be seen by algebraically solving \eqref{eqn:VBModelTypicalLength} for $K$,
+\begin{equation}
+  \begin{split}
+    1-\frac{E[L|t]}{L_{\infty}} &= -e^{-K(t-t_{o})} \\
+    log(\frac{1-E[L|t]}{L_{\infty}}) &= -K(t-t_{o}) \\
+    K &= \frac{log(\frac{L_{\infty}-E[L|t]}{L_{\infty}})}{t-t_{o}}
+  \end{split}
+\end{equation}
+
+to notice that the units in the numerator disappear.  Thus, the units of $K$ are in $time^{-1}$ rather than a change in length for a unit time as required by a growth rate. 
+  \item \cite{SchnuteFournier1980} offer two related interpretations of the meaning of $K$.  First, $K$ ``measures the exponential rate of approach to the asymptotic size.''  Second, the value $e^{-K}$ is ``the fixed fraction by which the annual growth increment is multiplied each year.''  This last definition is seen by the relation
+  
+\begin{equation}   \label{eqn:VBKdefn}
+    E[L|t=i+2]-E[L|t=i+1] = e^{-K}(E[L|t=i+1]-E[L|t=i])
+\end{equation}
+
+where, because $K>0$, the quantity $e^{-K}$ is a decimal.  Thus, each succeeding growth increment is a constant fraction of the current growth increment indicating that growth slows as the fish gets older.
+  \item $t_{0}$, despite its definition above, is a modeling artifact and not a biological parameter \citep{SchnuteFournier1980}.  The $t_{0}$ parameter is included in \eqref{eqn:VBModelTypicalLength} to adjust or ``correct'' the model for the initial size of the animal as most of the models do not pass through the origin.  This is illustrated in \figref{fig:VBModelTypicalEx}.  \cite{Beverton1954}[p. 43] said ``It must be remembered that the constant $t_{0}$ is largely artificial, insofar as it defines the age at which the organism would be of zero length if it grew throughout life with the same pattern of growth as in the post-larval stage.''  In addition, \cite{BevertonHolt1957}[p. 34] stated that ``in practice, the constant $t_{0}$ must be regarded as quite artificial.''
+  \item The estimation and interpretation of $t_{0}$ is further complicated by the fact that the value of $t_{0}$ is generally an extrapolation \citep{Francis1988} -- e.g., \figref{fig:VBModelTypicalEx}.
+  \item $L_{\infty}$, $K$, and $t_{0}$ are highly related (or correlated).  This can be seen in the solution for $K$ above where $K$ depends on the values of $L_{\infty}$ and $t_{0}$.  For example, with all else held constant, $K$ will be larger for smaller values of $L_{\infty}$.  This dependency among parameters causes problems in model fitting and interpretation \citep{Ratkowsky1986}.  Some of the other VBGM parameterizations \sectrefp{sect:OtherVBGM} have parameters that are much less correlated.
+\end{itemize}
+
+<<VBModelTypicalEx, echo=FALSE, fig.cap="Example of the typical parameterization of the VBGM fit to size-at-age Atlantic Croaker data.  The plot on the left is the fitted model expressed over the observed ages and lengths of the data.  The plot on the right is the same fitted model but expressed over a range of ages and lengths that allow illustrating the meaning of $L_{\\infty}$ and $t_{0}$.">>=
+vb1 <- vbFuns()   # typical parameterization
+fit1 <- nls(tl~vb1(age,Linf,K,t0),data=crm,start=vbStarts(tl~age,data=crm,type="typical"))
+Linf <- coef(fit1)[1]
+t0 <- coef(fit1)[3]
+plot(tl~jitter(age),data=crm,xlab="Age",ylab="Total Length (mm)",pch=19)        # Plot the data
+curve(vb1(x,Linf=Linf,K=coef(fit1)[2],t0=t0),from=1,to=10,lwd=3,add=TRUE)
+plot(tl~jitter(age),data=crm,xlab="Age",ylab="Total Length (mm)",ylim=c(0,470),xlim=c(-2,12),pch=19,xaxt="n")  # Plot the data
+axis(1,seq(0,12,2))
+curve(vb1(x,Linf=Linf,K=coef(fit1)[2],t0=t0),from=-2,to=12,lwd=3,add=TRUE)
+lines(c(t0,t0),c(-20,20),lwd=2,lty=3,col="red")                                 # Mark t0 on plot
+lines(c(-4,-1),c(0,0),lwd=2,lty=3,col="red")
+points(t0,0,col="red",pch=19,cex=1.25)
+text(t0,-42,expression(t[0]),xpd=TRUE,col="red",cex=1.25)
+abline(h=Linf,lwd=2,lty=3,col="red")                                            # Mark Linf on plot
+text(-3.6,Linf,expression(L[infinity]),xpd=TRUE,col="red",cex=1.25)
+@
+
+
+\subsection{Fitting von Bertalanffy Models in R} \label{sect:FitVBGMTypical}
+\subsubsection{Starting Values} \label{sect:StartingValuesTypical}
+The VBGM, as well as most other growth models, is a non-linear model that requires non-linear statistical methods to estimate parameter values.  Fitting non-linear models\footnote{Fitting non-linear models is discussed in detail in \appref{app:NLS}.} is a two-step process of first finding starting values for the model parameters and, second, calling \R{nls()} with the non-linear model and these starting values.  Two general methods for finding starting values for the typical VBGM are described below.
+
+\cite{Ford1933} and \cite{Walford1946} introduced the Ford-Walford plot method for estimating $L_{\infty}$ and $K$ from mean length-at-age data.  They showed that a plot of $L_{t+1}$ versus $L_{t}$ for length data that follows a typical VBGM is linear with a slope equal to $e^{-K}$.  In addition, the point where the linear relationship between $L_{t+1}$ and $L_{t}$ intercepts the 1:1 line (45$^{o}$) is an estimate of $L_{\infty}$ \figrefp{fig:WalfordPlot}.
+
+<<WalfordPlot, echo=FALSE, fig.cap="Example of a Ford-Walford plot for the male Atlantic Croaker data.  The dashed red line is the 1:1 relationship and the solid blue line is the regression line fit to the observed data.  The intersection of these two lines is marked and represents and estimate of $L_{\\infty}$.">>=
+walfordPlot(tl~age,data=crm)
+@
+
+Algebraically manipulating the two observations about the Ford-Walford plot shows that the following equations provide reasonable starting values for $L_{\infty}$ and $K$ (the ``tilde'' above each parameter will be used to identify these results as starting values for the non-linear regression),
+
+\[ \tilde{K} = -log(slope) \]
+\[ \tilde{L}_{\infty} = \frac{intercept}{1-slope} \]
+
+where $intercept$ and $slope$ are obtained from fitting the linear regression of $L_{t+1}$ on $L_{t}$ as in the Ford-Walford plot.
+
+With a starting value for $L_{\infty}$ and observed values for one age and mean length pair (i.e., ($\dot{t},\bar{L}_{\dot{t}}$)), the typical VBGM (i.e., \eqref{eqn:VBModelTypicalLength}) can be re-arranged to solve for $t_{0}$ as follows,
+
+\[ \tilde{t}_{0} = \dot{t}*log\left(\frac{\tilde{L}_{\infty}-\bar{L}_{\dot{t}}}{\tilde{L}_{\infty}}\right)  \]
+
+An alternative method for obtaining $\tilde{t}_{0}$ is to fit a second-degree polynomial to the mean length-at-age data, find the roots for this polynomial (i.e., where the polynomial function crosses the x- or age axis), and choose the root that is closet to zero\footnote{This process will be discussed in more detail in \sectref{sect:FitVBGMOther}.}.
+
+The methods described above for generating reasonable starting values are implemented in \R{vbStarts()}.  The first argument to \R{vbStarts()} is a formula of the form \R{len}\verb"~"\R{age} where \var{len} and \var{age} generically represent the variables containing the lengths and ages for individual fish.  The \R{data=} argument must also be set to data frame where the ages and lengths are found.  The \R{vbStarts()} function defaults to using the polynomial regression method to produce a starting value for $t_{0}$.  Starting values for $t_{0}$ based on the re-arrangement of the typical VBGM can be obtained by using the \R{meth0="yngAge"} argument.  Finally, as an option, a graphic of the VBGM using the default starting values superimposed on the observed data  can be constructed by including \R{plot=TRUE}.  The results of \R{vbStarts()} must be saved to an object for use in subsequent calls to \R{nls()}.  For example, the starting values for the typical VBGM applied to the male Atlantic Croaker data are obtained with
+<<>>=
+svTypical <- vbStarts(tl~age,data=crm)
+unlist(svTypical)      # unlist used only to save space when viewing the results
+@
+
+The selection of starting values for the VBGM can also be obtained with \R{growthModelSim()} from the \R{FSATeach} package\footnote{Note that the \R{FSATeach} package must be installed as described \href{http://www.rforge.net/FSATeach/Installation.html}{here} and the loaded with \R{library(FSATeach)}.}.  This function produces a plot of length-at-age with the VBGM superimposed.  The superimposed VBGM can be controlled with slider bars tied to the parameters of the VBGM.  Thus, the slider bars can be adjusted until a VBGM is produced that ``roughly'' fits the observed lengths-at-age.  The parameters of the VBGM when this rough fit is found are then used as the starting values for the non-linear methods.  For this purpose, \R{growthModelSsim()} has three arguments very similar, but in a different order, to what was described for \R{vbStart()}.  The first argument is a string indicating the VBGM to use, the second argument is the model formula, and the third, or \R{data=}, argument is the data frame in which the observed ages and lengths can be found.  The typical VBGM is used with a first argument of \R{"vbTypical"}.  As an example, the starting values for the typical parameterization of the VBGM to be fit to the male Atlantic Croaker length data can be obtained by manipulating the slider bars on the graphic \figrefp{fig:GrowModelSim} produced with
+<<eval=FALSE>>=
+growthModelSim("vbTypical",tl~age,data=crm)
+@
+\begin{figure}[hbp]
+  \centering
+    \includegraphics[width=4.5in]{Figs/GrowthModelSim}
+  \caption{Example of using \R{growthModelSim()} to find an approximate fit of the typical VBGM parameterization to the male Atlantic Croaker data.}
+  \label{fig:GrowModelSim}
+\end{figure}
+
+Following the identification of an approximate fit to the length-at-age data, an object must be created that contains a list of the identified starting values.  The starting values are entered into a list, for example, with
+<<>>=
+svTypical <- list(Linf=376,K=0.3,t0=-1.8)
+@
+
+\subsubsection{General Fitting of the Models with nls()}
+Parameters for the non-linear VBGM can be estimated with \R{nls()}.  The \R{nls()} function requires the growth model expression as the first argument, with the appropriate variable names substituted for the generic length and age variables, the data frame from which to draw the varabiles in the \R{data=} argument, and the list containing starting parameter values in the \R{start=} argument.  As always, the model fit should be assigned to an object for further analysis.  Generally, it is somewhat easier to enter the model function and starting values into objects prior to the \R{nls()} call.  For example, the typical VBGM model is fit to the male Atlantic Croaker data with\footnote{Note that it is good practice to be able to enter the models directly into R.  However, \R{vbFuns()} is a convenience function that can be used to easily create the right-hand-side of VBGM parameterizations used in this vignette.  For example, the same typical model could be fit with \R{fitTypical <- nls(tl \~ vbFuns("typical"),data=crm,start=svTypical)}.}
+
+<<>>=
+# note that svTypical was created in the previous section
+vbTypical <- tl~Linf*(1-exp(-K*(age-t0)))
+fitTypical <- nls(vbTypical,data=crm,start=svTypical)
+@
+
+A quick visual \figrefp{fig:FitPlot1} of the fitted model is constructed with\footnote{Note that examples later in this vignette will use \R{curve()} rather than \R{fitPlot()} to obtain a visual of the model fit.  The \R{curve()} method is more general and will allow the building of comparative graphs, whereas \R{fitPlot()} is a specific function and is, thus, limited in what it can display.}
+
+<<FitPlot1, fig.cap="Fitted typical VBGM for the male Atlantic Croaker data.">>=
+fitPlot(fitTypical,xlab="Age",ylab="Total Length (mm)",main="")
+@
+
+Summary results of the model fit (e.g., coefficient values, measures of variability, parameter correlations) can be obtained with \R{overview()} from the \R{nlstools} package as follows,
+<<>>=
+overview(fitTypical)
+@
+
+These results show that point estimates of the parameters are: $\widehat{L_{\infty}}=$\Sexpr{formatC(coef(fitTypical)["Linf"],format="f",digits=1)}, $\hat{K}=$\Sexpr{formatC(coef(fitTypical)["K"],format="f",digits=2)}, and $\widehat{t_{0}}=$\Sexpr{formatC(coef(fitTypical)["t0"],format="f",digits=2)}.  In addition, as expected, the parameter estimates are very highly correlated.
+
+The results from \R{overview()} show confidence intervals for the model parameters based on normal distribution theory; however, as discussed in \appref{app:NLS}, confidence intervals for parameters in non-linear models are best constructed through bootstrap methods.  The bootstrap samples are taken by sending the saved \R{nls()} object to \R{nlsBoot()} with the \R{niter=} argument controlling the number of bootstrap samples to take.  Confidence intervals, with associated plots of the distribution of parameter estimates from the bootstrap samples, are constructed by sending the object saved from \R{nlsBoot()} to \R{confint()} with the \R{plot=TRUE} argument.  Thus, confidence intervals for the parameters in the typical VBGM fit to the male Atlantic Croaker data are obtained with\footnote{Bootstrap methods require patience as the algorithm continuously resamples the original data.  Furthermore, the bootstrap methods rely on randomization; thus, the results shown below would likely be different upon a different ``run'' of the functions.}
+<<BootCIHist1, fig.width=7, fig.height=7, out.width='.8\\linewidth', fig.cap="Histogram of the bootstrap results for the typical VBGM for the male Atlantic Croaker data.  The red horizontal lines represent the 95\\% bootstrap confidence intervals.">>=
+bootTypical <- nlsBoot(fitTypical,niter=200)   # niter should be nearer 1000
+confint(bootTypical,plot=TRUE)
+@
+
+Thus, for example, one is 95\% confident that the Brody growth coefficient ($K$) is between \Sexpr{formatC(confint(bootTypical)["K",1],format="f",digits=2)} and \Sexpr{formatC(confint(bootTypical)["K",2],format="f",digits=2)}.  Histograms of the bootstrapped results shows that the distribution of $K$ is approximately normally distributed whereas the distributions of $L_{\infty}$ and $t_{0}$ are very much not normally distributed \figrefp{fig:BootCIHist1}.  Thus, the difference between the asymptotic and bootstrapped confidence intervals are much greater for  $L_{\infty}$ and $t_{0}$ than for $K$.
+
+
+The p-value for testing the hypothesis that $H_{0}: K=0.5$ versus $H_{A}: K<0.5$ is obtained with
+<<>>=
+htest(bootTypical,"K",0.5,"less")
+@
+Thus, with a p-value (\Sexpr{swvPvalue(htest(bootTypical,"K",0.5,"less")[2])}) slightly larger than a typical $\alpha$ of 0.05, there is not enough evidence to conclude that $K$ is less than 0.5.
+
+Predicted lengths at a given age are obtained with the \R{predict()} function.  However, as discussed in \appref{app:NLS}, corresponding confidence intervals must be constructed from the bootstrapped results.  As an example, the predicted mean length and corresponding confidence interval for the mean length at age-8 can be constructed with
+<<>>=
+new <- data.frame(age=8)
+predict(fitTypical, new)
+ests <- bootTypical$coefboot
+pv <- ests[,"Linf"]*(1-exp(-ests[,"K"]*(8-ests[,"t0"])))
+quantile(pv,c(0.025,0.975))
+@
+
+Thus, the mean length of all age-8 male Atlantic Croakers is between \Sexpr{formatC(quantile(pv,c(0.025,0.975))[1],format="f",digits=0)} and \Sexpr{formatC(quantile(pv,c(0.025,0.975))[2],format="f",digits=0)} mm.
+
+One may be interested in creating a fitted line plot with confidence bounds for the mean length-at-age from the VBGM.  One way to create this plot is to first predict the length-at-age for each age in a range of ages using the parameters from each of the bootstrap samples.  One can then plot the 2.5\% and 97.5\% quantile length-at-age for each age.  This process is illustrated with the following code which resulted in \figref{fig:BootFLPConfInt}.
+
+<<FLPConfInt, fig.cap="Fitted line plot for the fit of the typical VBGM with approximate 95\\% bootstrap confidence bounds shown as blue dashed lines.">>=
+ages2plot <- 0:15
+fitPlot(fitTypical,xlab="Age",ylab="Total Length (mm)",xlim=range(ages2plot),main="")
+LCI <- UCI <- numeric(length(ages2plot))
+for (i in 1:length(ages2plot)) {
+  pv <- ests[,"Linf"]*(1-exp(-ests[,"K"]*(ages2plot[i]-ests[,"t0"])))
+  LCI[i] <- quantile(pv,0.025)
+  UCI[i] <- quantile(pv,0.975)
+}
+lines(UCI~ages2plot,type="l",col="blue",lwd=2,lty=2)
+lines(LCI~ages2plot,type="l",col="blue",lwd=2,lty=2)
+@
+
+One may also want to add approximate prediction bounds to the fitted line plot.  One way to do this is to add and substract the residual standard error from each bootstrap model (these values are found in the \R{rse} portion of the results saved from the bootstrap sampling -- i.e., \R{bootTypical\$rse} in this example.) to the predictions constructed from each model as described for the confidence bounds above\footnote{This assumes that the residuals are homoscedastic or additive.  See \sectref{sect:MultErrs}.}.  The 2.5\% quantile for when the residual standard error was subtracted is an approximate 95\% lower prediction bound and the 97.5\% quantile for when the residual standard error was added is an approximately 95\% upper prediction bound.  The code for a plot with both the confidence and prediction bounds is constructed with the code below and is shown in \figref{fig:BootFLPConfInt}.
+
+<<FLPPredInt, fig.cap="Fitted line plot for the fit of the typical VBGM with approximate 95\\% bootstrap confidence bounds shown as blue dashed lines and 95\\% bootstrap prediction bounds shown as red dashed lines.">>=
+ages2plot <- 0:15
+fitPlot(fitTypical,xlab="Age",ylab="Total Length (mm)",xlim=range(ages2plot),main="")
+LCI <- UCI <- LPI <- UPI <- numeric(length(ages2plot))
+for (i in 1:length(ages2plot)) {
+  pv <- ests[,"Linf"]*(1-exp(-ests[,"K"]*(ages2plot[i]-ests[,"t0"])))
+  LCI[i] <- quantile(pv,0.025)
+  UCI[i] <- quantile(pv,0.975)
+  LPI[i] <- quantile(pv-bootTypical$rse,0.025)
+  UPI[i] <- quantile(pv+bootTypical$rse,0.975)
+}
+lines(UCI~ages2plot,type="l",col="blue",lwd=2,lty=2)
+lines(LCI~ages2plot,type="l",col="blue",lwd=2,lty=2)
+lines(UPI~ages2plot,type="l",col="red",lwd=2,lty=2)
+lines(LPI~ages2plot,type="l",col="red",lwd=2,lty=2)
+@
+
+Finally, submitting the \R{nlsBoot()} object to \R{plot()} will produce scatterplots for the bootstrapped values for each pair of parameters \figrefp{fig:BootScatPlot1}.  For example,
+<<BootScatPlot1, fig.width=7, fig.height=7, out.width='.8\\linewidth', fig.cap="Paired scatterplots for the parameters of the bootstrap results for the typical VBGM for the male Atlantic Croaker data.">>=
+plot(bootTypical)
+@
+
+These results further illustrate the strong correlation between pairs of the parameters.
+
+\clearpage
+\subsubsection{Assumption Checking}
+A non-linear regression, as it has been described here, requires that the variability about the model is constant (i.e., homoscedasticity), the errors are normally distributed, the model adequately fits the data, and there are no influential or outlying points.  There are tests to determine if these assumptions have been violated but these tests can be hyper-sensitive (i.e., tend to identify assumption violations) especially with large sample sizes.  Thus, the adequacy of meeting these assumptions can be better determined by objectively analyzing two important graphics.  The first graphic is a residual plot which plots the model residuals versus the fitted values (\figref{fig:AssumPlotTypical}-Left).  In general, the assumptions of the model are fit if NO pattern is observed in the residual plot.  Curvature in this plot would suggest that the model does not represent the data very well and a ``funneling'' from left-to-right would suggest that the variability around the model is not constant (i.e., heteroscedasticity).  The second graphic is a histogram of the residuals (\figref{fig:AssumPlotTypical}-Right).  In general, the assumption of normality is adequately met if this histogram is symmetric without overly long ``tails.''
+
+The residual plot is constructed by submitting the saved \R{nls()} object to \R{residPlot()}.  The histogram is constructed by submitting the saved \R{nls()} object to \R{residuals()} and then submitting this result to \R{hist()}.  These plots for the male Atlantic Crocker data \figrefp{fig:AssumPlotTypical} are constructed with
+
+<<AssumPlotTypical, fig.cap="Residual plot (left) and residual histogram (right) from fitting the typical VBGM to the male Atlantic Croaker data.">>=
+residPlot(fitTypical)
+hist(residuals(fitTypical),main="")
+@
+
+The residual plot suggests a slight increase in variability with increasing fitted values.  The histogram suggests a slight right-skewed distribution of residuals.  One method for dealing with a non-constant variance is shown in \sectref{sect:MultErrs}.
+
+
+\section{Other Parameterizations of the VBGM} \label{sect:OtherVBGM}
+\subsection{The Models and Their Parameters}
+A model can often be cast into a different parameterization where the model is functionally the same -- i.e., predictions are exactly the same -- but it has different parameters.  Different parameterizations of models are created for a variety of reasons but two important reasons are that the re-parameterized model (i) has parameters for which the interpretation meets some need and (ii) has parameters that are less correlated.  Each parameterization can ultimately be shown to be equivalent via albegra.  The VBGM has been cast in at least five different parameterizations, each of which is discussed in this section.
+
+\subsubsection{Original Model Parameterization} \label{sect:VBModelParamOriginal}
+The VBGM first proposed by von Bertalanffy \citep{Cailletetal2006} is
+
+\begin{equation}  \label{eqn:VBModelOriginalLength}
+  E[L|t] = L_{\infty} - \left (L_{\infty} - L_{0}\right)e^{-Kt}
+\end{equation}
+
+where most items are defined as for \eqref{eqn:VBModelTypicalLength} and $L_{0}$ is the mean length at time zero (i.e., birth)\footnote{\cite{Cailletetal2006} notes that $L_{0}$=$L_{\infty}(1-e^{kt_{0}})$}.  Visualizations for the parameters are shown in \figref{fig:VBModelOriginalEx}.  This parameterization of the VBGM, despite being the model proposed by von Bertalanffy, has been relatively (as compared to the typical VBGM) rarely used in the literature.  However, \cite{Cailletetal2006} recommended its use with chondrychthians.
+
+<<VBModelOriginalEx, echo=FALSE, fig.cap="Example of the ``original'' parameterization of the VBGM fit to size-at-age Atlantic Croaker data.  The plot on the left is the fitted model expressed over the observed ages and lengths of the data.  The plot on the right is the same fitted model but expressed over a range of ages and lengths that allows for illustrating the meaning of $L_{\\infty}$ and $L_{0}$.">>=
+vb2 <- vbFuns("original")               # original parameterization
+fit2 <- nls(tl~vb2(age,Linf,L0,K),data=crm,start=vbStarts(tl~age,data=crm,type="original"))
+Linf <- coef(fit2)[1]
+L0 <- coef(fit2)[2]
+plot(tl~jitter(age),data=crm,xlab="Age",ylab="Total Length (mm)",pch=19)        # Plot the data
+curve(vb2(x,Linf=Linf,L0=L0,K=coef(fit2)[3]),from=1,to=10,lwd=3,add=TRUE)
+plot(tl~jitter(age),data=crm,xlab="Age",ylab="Total Length (mm)",ylim=c(0,470),xlim=c(-2,12),pch=19)  # Plot the data
+curve(vb2(x,Linf=Linf,L0=L0,K=coef(fit2)[3]),from=-2,to=12,lwd=3,add=TRUE)
+lines(c(0,0),c(-50,L0),lwd=2,lty=3,col="red")                                   # Mark L0 on plot
+lines(c(-4,-0),c(L0,L0),lwd=2,lty=3,col="red")
+points(0,L0,col="red",pch=19,cex=1.25)
+text(-3.6,L0,expression(L[0]),xpd=TRUE,col="red",cex=1.25)
+abline(h=Linf,lwd=2,lty=3,col="red")                                            # Mark Linf on plot
+text(-3.6,Linf,expression(L[infinity]),xpd=TRUE,col="red",cex=1.25)
+@        
+
+\subsubsection{Gallucci and Quinn (1979) Parameterization}  \label{sect:VBModelParamGallucciQuinn}
+\cite{GallucciQuinn1979} noted that comparisons of ``growth'' between two groups should involve both $K$ and $L_{\infty}$.  However, because of the generally high correlation between these two parameters, simultaneous hypothesis tests of these two parameters are compromised and difficult to interpret.  To aid comparison between two groups, \cite{GallucciQuinn1979} introduced a new parameter, $\omega=KL_{\infty}$ which, by solving this quantity for $L_{\infty}$ and substituting into \eqref{eqn:VBModelTypicalLength}, yields yet another reparameterization of the VBGM,
+
+\begin{equation}  \label{eqn:VBModelGallucciQuinnLength}
+  E[L|t] = \frac{\omega}{K}\left(1-e^{-K(t-t_{0})}\right)
+\end{equation}
+
+\cite{GallucciQuinn1979} state that $\omega$ can be thought of as a growth rate because the units are in length-per-time and, in fact, it is representative of the growth rate near $t_{o}$.  Furthermore, they claim that $\omega$ is the appropriate parameter to use when comparing populations because of its statistical robustness.
+
+\subsubsection{Mooij \emph{et al.} (1999) Parameterization} \label{sect:VBModelParamMooij}
+\cite{Mooijetal1999} applied the same concept as \cite{GallucciQuinn1979} to \eqref{eqn:VBModelOriginalLength} rather than \eqref{eqn:VBModelTypicalLength} to yield the following parameterization,
+
+\begin{equation}  \label{eqn:VBModelMooijLength}
+  E[L|t] = L_{\infty}-(L_{\infty}-L_{0})e^{-\frac{\omega}{L_{\infty}}t}
+\end{equation}
+
+The parameters of this model are interpreted as before with the exception that $\omega$ is representative of the growth rate near $L_{0}$.
+
+\subsubsection{Schnute Parameterization} \label{sect:VBModelParamSchnute}
+All previous parameterizations have two major difficulties -- (1) highly correlated parameters and (2) some parameters that are largely extrapolations (the ``positions'' of $L_\infty$, $L_{0}$, and $t_{0}$ are rarely represented in the data).  The VBGM parameterizations shown in this, and the next, section are largely based on ``expected values'' at known ages and, thus, largely alleviate these difficulties \citep{Ratkowsky1986}.  The so-called ``Schnute'' parameterization  (from \cite{QuinnDeriso1999}) of the VBGM is,
+
+\begin{equation}  \label{eqn:VBModelSchnuteLength}
+  E[L|t] = L_{1} + (L_{2}-L_{1})\frac{1-e^{-K(t-t_{1})}}{1-e^{-K(t_{2}-t_{1})}}
+\end{equation}
+
+where $L_{1}$ is the average length at the youngest age, $t_{1}$, and $L_{2}$ is the average length at the oldest age, $t_{2}$, \emph{in the sample}.
+
+It is important to note that this parameterization is not more or less parsimonious then any of the previous parameterizations as it still has three parameters -- $L_{1}$, $L_{2}$, and $K$ (note that $t_{1}$ and $t_{2}$ are constants).  However, it does have two major advantages over the previous parameterizations.  First, the parameters in this parameterization are less correlated than the parameters in other parameterizations (\cite{GallucciQuinn1979} and see \sectref{sect:VBGMParamComps}) and, thus, more stable.  Second, this parameterization is directly comparable to the general growth model developed by \cite{Schnute1981}.  The major drawback of this parameterization is that comparison to results in the literature or from previous studies is difficult, as the typical parameterization is far more prevalent.  \cite{SchnuteFournier1980} did show, however, that the point estimate of $L_{\infty}$ and $t_{0}$ can be obtained from the parameters in the Schnute parameterization as follows,
+
+\begin{equation}
+  \begin{split}
+    L_{\infty} &= \frac{L_{2}-L_{1}e^{-K(t_{2}-t_{1})}}{1-e^{-K(t_{2}-t_{1})}} \\
+    t_{0} &= t_{1} + \frac{1}{K}ln\left(\frac{L_{2}-L_{1}}{L_{2}-L_{1}e^{-K(t_{2}-t_{1})}}\right)
+  \end{split}
+\end{equation}
+
+A common mistake in the interpretation of the Schnute parameterization is to equate $L_{2}$ and $L_{\infty}$.  However, $L_{2} \neq L_{\infty}$ as $L_{\infty}$ is the average size at the theoretical maximum age and $L_{2}$ is the average size at the maximum age \emph{in the sample}.  Thus, $L_{2}\leq L_{\infty}$ because the maximum age in the sample is either less than or equal to the theoretical maximum age \figrefp{fig:VBModelSchnuteEx}.
+
+<<VBModelSchnuteEx, echo=FALSE, fig.cap="Example of the Schnute parameterization of the VBGM fit to size-at-age Atlantic Croaker data expressed over a range of ages and lengths that allow illustrating the meaning of $L_{1}$ and $L_{2}$.  In addition, the blue lines correspond to $L_{\\infty}$ from \\figref{fig:VBModelTypicalEx} and $L_{0}$ from \\figref{fig:VBModelOriginalEx} for comparative purposes.">>=
+vb3 <- vbFuns("Schnute")
+min.age <- min(crm$age)
+max.age <- max(crm$age)
+fit3 <- nls(tl~vb3(age,L1,L2,K,t1=min.age,t2=max.age),data=crm,start=vbStarts(tl~age,data=crm,type="Schnute"))
+plot(tl~jitter(age),data=crm,xlab="Age",ylab="Total Length (mm)",ylim=c(0,470),xlim=c(-2,12),pch=19,xaxt="n",yaxt="n")  # Plot the data
+axis(1,seq(-2,12,2),FALSE)
+axis(1,c(2,4,6,8,12))
+axis(2,seq(0,500,100),FALSE)
+axis(2,c(0,100,300))
+L1 <-coef(fit3)[1]
+L2 <-coef(fit3)[2]
+curve(vb3(x,L1=L1,L2=L2,K=coef(fit3)[3],t1=min.age,t2=max.age),from=-2,to=12,lwd=3,add=TRUE)
+abline(h=Linf,lwd=2,lty=3,col="blue")                                           # Mark Linf on plot
+lines(c(0,0),c(-50,L0),lwd=2,lty=3,col="blue")                                  # Mark L0 on plot
+lines(c(-4,-0),c(L0,L0),lwd=2,lty=3,col="blue")
+lines(c(min.age,min.age),c(-20,L1+20),lwd=2,lty=3,col="red")                    # Mark L1 on plot
+lines(c(-4,min.age+1),c(L1,L1),lwd=2,lty=3,col="red")
+points(min.age,L1,col="red",pch=19,cex=1.25)
+text(min.age,-37,expression(t[1]),xpd=TRUE,col="red",cex=1.25)
+text(-3.6,L1,expression(L[1]),xpd=TRUE,col="red",cex=1.25)
+lines(c(max.age,max.age),c(-20,L2+20),lwd=2,lty=3,col="red")                    # Mark L2 on plot
+lines(c(-4,max.age+1),c(L2,L2),lwd=2,lty=3,col="red")
+points(max.age,L2,col="red",pch=19,cex=1.25)
+text(max.age,-37,expression(t[2]),xpd=TRUE,col="red",cex=1.25)
+text(-3.6,L2,expression(L[2]),xpd=TRUE,col="red",cex=1.25)
+@
+
+\subsubsection{Francis (1988) Parameterization}  \label{sect:VBModelParamFrancis}
+\cite{Francis1988} provided yet another parameterization of the VBGM in his paper comparing the fit of VBGMs to length-at-age data and to tag-recapture data.  His basic argument was that the meanings of $L_{\infty}$ and $K$ depend on which type of data (and corresponding model) is being fit and that this is an undesirable property.  He proposed the following parameterization as a correction to this problem,
+
+\begin{equation}  \label{eqn:VBModelFrancisLength}
+  E[L|t] = L_{1} + \left(L_{3} - L_{1}\right)\frac{1-r^{2\frac{t-t_{1}}{t_{3}-t_{1}}}}{1-r^2}
+\end{equation}
+
+where 
+
+\[ r = \frac{L_{3}-L_{2}}{L_{2}-L_{1}} \]
+
+where $L_{1}$, $L_{2}$, and $L_{3}$ are the mean lengths at ages $t_{1}$, $t_{2}$,and $t_{3}$, respectivly.  The $t_{1}$ and $t_{3}$ are arbitrary reference ages (and $t_{2}$ is half-way between each) but are generally a relatively young (i.e., $t_{1}$) and old (i.e., $t_{3}$) age.  Note that $r$ is used to simplify the presentation and is not a new parameter.  The resultant parameters from this model are effectively the predicted mean lengths-at-age for the three chosen ages \figrefp{fig:VBModelFrancisEx}.
+
+<<VBModelFrancisEx, echo=FALSE, fig.cap="Example of the Francis parameterization of the VBGM fit to size-at-age Atlantic Croaker data expressed over a range of ages and lengths that allow illustrating the meaning of $L_{1}$, $L_{2}$, and $L_{3}$.  Note that the arbitrary ages chosen were $t_{1}$=2 and $t_{3}$=9.">>=
+vb4 <- vbFuns("Francis")
+t1 <- 2
+t3 <- 9
+t2 <- (t1+t3)/2
+fit4 <- nls(tl~vb4(age,L1,L2,L3,t1=t1,t3=t3),data=crm,start=vbStarts(tl~age,data=crm,type="Francis",tFrancis=c(t1,t3)))
+plot(tl~jitter(age),data=crm,xlab="Age",ylab="Total Length (mm)",ylim=c(0,470),xlim=c(-2,12),pch=19,xaxt="n",yaxt="n")  # Plot the data
+axis(1,c(t1,t2,t3),FALSE)
+axis(2,seq(0,500,100))
+L1 <-coef(fit4)[1]
+L2 <-coef(fit4)[2]
+L3 <-coef(fit4)[3]
+curve(vb4(x,L1=L1,L2=L2,L3=L3,t1=t1,t3=t3),from=-2,to=12,lwd=3,add=TRUE)
+lines(c(t1,t1),c(-20,L1+20),lwd=2,lty=3,col="red")                              # Mark L1 on plot
+lines(c(-4,t1+1),c(L1,L1),lwd=2,lty=3,col="red")
+points(t1,L1,col="red",pch=19,cex=1.25)
+text(t1,-45,expression(t[1]),xpd=TRUE,col="red",cex=1.25)
+text(-3.6,L1,expression(L[1]),xpd=TRUE,col="red",cex=1.25)
+lines(c(t2,t2),c(-20,L2+20),lwd=2,lty=3,col="red")                              # Mark L2 on plot
+lines(c(-4,t2+1),c(L2,L2),lwd=2,lty=3,col="red")
+points(t2,L2,col="red",pch=19,cex=1.25)
+text(t2,-45,expression(t[2]),xpd=TRUE,col="red",cex=1.25)
+text(-3.6,L2,expression(L[2]),xpd=TRUE,col="red",cex=1.25)
+lines(c(t3,t3),c(-20,L3+20),lwd=2,lty=3,col="red")                              # Mark L3 on plot
+lines(c(-4,t3+1),c(L3,L3),lwd=2,lty=3,col="red")
+points(t3,L3,col="red",pch=19,cex=1.25)
+text(t3,-45,expression(t[3]),xpd=TRUE,col="red",cex=1.25)
+text(-3.6,L3,expression(L[3]),xpd=TRUE,col="red",cex=1.25)
+@
+
+\cite{Francis1988} showed that point estimates of the typical parameters could be derived from these modified parameters as follows,
+\begin{equation}
+  \begin{split}
+    L_{\infty} &= L_{1} + \frac{L_{3}-L_{1}}{1-r^{2}} \\
+    K &= \frac{-2log(r)}{t_{3}-t_{1}}\\
+    t_{0} &= t_{1} + \frac{1}{K}log\left(\frac{L_{\infty}-L_{1}}{L_{\infty}}\right)
+  \end{split}
+\end{equation}
+
+
+\subsection{Parameterization Comparisons} \label{sect:VBGMParamComps}
+<<echo=FALSE, results='hide'>>=
+## Calculations required to produce the parameter comparison table
+## vb1, fit1 ==> typical
+## vb2, fit2 ==> original
+## vb3, fit3 ==> Schnute
+## vb4, fit4 ==> Francis
+vb5 <- vbFuns("GallucciQuinn")
+fit5 <- nls(tl~vb5(age,omega,K,t0),data=crm,start=vbStarts(tl~age,data=crm,type="GallucciQuinn")) 
+vb6 <- vbFuns("Mooij")
+fit6 <- nls(tl~vb6(age,Linf,L0,omega),data=crm,start=vbStarts(tl~age,data=crm,type="Mooij")) 
+sum1 <- summary(fit1,correlation=TRUE)
+coef1 <- coef(fit1)
+sum2 <- summary(fit2,correlation=TRUE)
+coef2 <- coef(fit2)
+sum3 <- summary(fit3,correlation=TRUE)
+coef3 <- coef(fit3)
+sum4 <- summary(fit4,correlation=TRUE)
+coef4 <- coef(fit4)
+sum5 <- summary(fit5,correlation=TRUE)
+coef5 <- coef(fit5)
+sum6 <- summary(fit6,correlation=TRUE)
+coef6 <- coef(fit6)
+mdls   <- c("Typical","Original","Schnute","Francis","Gallucci Quinn","Mooij")
+sL0    <- c(NA,coef2[2],NA,NA,NA,coef6[2])
+sLinf  <- c(coef1[1],coef2[1],NA,NA,NA,coef6[1])
+sK     <- c(coef1[2],coef2[3],coef3[3],NA,coef5[2],NA)
+st0    <- c(coef1[3],NA,NA,NA,coef5[3],NA)
+somega <- c(NA,NA,NA,NA,coef5[1],coef6[3])
+sL1    <- c(NA,NA,coef3[1],coef4[1],NA,NA)
+sL2    <- c(NA,NA,coef3[2],coef4[2],NA,NA)
+sL3    <- c(NA,NA,NA,coef4[3],NA,NA)
+
+RSS <- c(sum(residuals(fit1)^2),sum(residuals(fit2)^2),sum(residuals(fit3)^2),sum(residuals(fit4)^2),sum(residuals(fit5)^2),sum(residuals(fit6)^2))
+SE <- c(sum1$sigma,sum2$sigma,sum3$sigma,sum4$sigma,sum5$sigma,sum6$sigma)
+its <- c(sum1$convInfo$finIter,sum2$convInfo$finIter,sum3$convInfo$finIter,sum4$convInfo$finIter,sum5$convInfo$finIter,sum6$convInfo$finIter)
+r.max <- c(max(abs(upperTriangle(sum1$correlation))),max(abs(upperTriangle(sum2$correlation))),max(abs(upperTriangle(sum3$correlation))),max(abs(upperTriangle(sum4$correlation))),max(abs(upperTriangle(sum5$correlation))),max(abs(upperTriangle(sum6$correlation))))
+r.mean <- c(mean(abs(upperTriangle(sum1$correlation))),mean(abs(upperTriangle(sum2$correlation))),mean(abs(upperTriangle(sum3$correlation))),mean(abs(upperTriangle(sum4$correlation))),mean(abs(upperTriangle(sum5$correlation))),mean(abs(upperTriangle(sum6$correlation))))
+
+d <- data.frame(mdls,sL0,sLinf,sK,st0,somega,sL1,sL2,sL3,SE,its,r.max,r.mean)
+d <- d[c(1,2,5,6,3,4),]  # reorder models to be the same as presented in the vignette
+@
+
+As noted previously, the different parameterizations of the VBGM are the same model with different parameters \figrefp{fig:VBModelParamComp}.  Estimates of parameters that appear in more than one of the parameterizations will be the same among the parameterizations \tabrefp{tbl:VBModelParamComp}.  The parameterizations based on expected values (i.e., Schnute and Francis) will generally require fewer iterations to converge when fitting and will result in lower correlations among parameter estimates \tabrefp{tbl:VBModelParamComp}.
+
+<<echo=FALSE, results='asis'>>=
+names(d) <- c("Models","$L_{0}$","$L_{\\infty}$","$K$","$t_{0}$","$\\omega$","$L_{1}$","$L_{2}$","$L_{3}$","SE","iters","$r_{max}$","$r_{mean}$")
+xtbl.d <- xtable(d,digits=c(NA,NA,0,0,2,2,1,0,0,0,0,0,2,2),align="llrrrrrrrrrrrr",label="tbl:VBModelParamComp",caption="Parameter estimates and model results from fitting different parameterizations of the VBGM to the male Atlantic Croaker data.  Note that $L_{1}$, $L_{2}$, and $L_{3}$ are not comparable between parmaterizations; $L_{1}$, $L_{2}$, and $L_{3}$ correspond to ages 2, 5.5, and 9 in the Francis parameterization; ``iters'' is the number of iterations to convergence; and $r_{max}$ and $r_{mean}$ are the maximum and average absolute value of correlation coefficients among the three parameters.")
+print(xtbl.d,include.rownames=FALSE,NA.string="-",sanitize.colnames.function=function(x){x},caption.placement="top")
+@
+
+<<VBModelParamComp, echo=FALSE, fig.width=4, fig.height=4, fig.cap="Fits of the typical (blue), Schnute (red), and Francis (green) parameterizations of the VBGM to size-at-age Atlantic Croaker data (auto-generated starting values were used for all parameterizations).  Note that the results of all fits are identical and, thus, the fitted lines are directly on top of each other.  Different colors and different line widths were used to illustrate this point but may not be readily apparent on the screen or printed page.">>=
+plot(tl~jitter(age),data=crm,xlab="Age",ylab="Total Length (mm)",ylim=c(100,470),xlim=c(0,10),pch=19)  # Plot the data
+curve(vb1(x,Linf=coef(fit1)[1],K=coef(fit1)[2],t0=coef(fit1
+)[3]),from=0,to=10,lwd=12,col="blue",add=TRUE)
+curve(vb3(x,L1=coef(fit3)[1],L2=coef(fit3)[2],K=coef(fit3)[3],t1=min.age,t2=max.age),from=0,to=10,lwd=7,col="red",add=TRUE)
+curve(vb4(x,L1=coef(fit4)[1],L2=coef(fit4)[2],L3=coef(fit4)[3],t1=t1,t3=t3),from=0,to=10,lwd=2,col="green",add=TRUE)
+@
+
+
+\clearpage
+\subsection{Fitting Alternative VBGMs in R} \label{sect:FitVBGMOther}
+Methods for finding starting values for $L_{\infty}$, $K$, and $t_{0}$ were discussed in \sectref{sect:StartingValuesTypical}.  Those methods still work for other VBGM parameterizations using these parameters.  A starting value for the $\omega$ parameter is simply the product of $\tilde{L}_{\infty}$ and $\tilde{K}$.  A starting value for $L_{0}$ can be obtained by algebraically solving \eqref{eqn:VBModelOriginalLength} for $L_{0}$, i.e.,
+
+\[  \tilde{L}_{0} = \tilde{L}_{\infty} + \frac{\bar{L}_{\dot{t}}-\tilde{L}_{\infty}}{e^{\tilde{K}\dot{t}}} \]
+
+or finding the y-intercept of the second-degree polynomial fit to the mean length-at-age data \figrefp{fig:StartingValues}.
+
+<<StartingValues, echo=FALSE, fig.cap="Illustrations for use of the polynomial (solid red) and the linear interpolation (solid blue) functions to estimate starting values.  The vertical line in the left plot shows how $L_{0}$ is estimated and the horizontal line shows how $t_{0}$ is estimated with the polynomial function.  The red vertical line in the right plot shows how the starting value for $L_{2}$ at $t_{2}$=5.5 in the Francis parameterization is estimated using the polynomial function and the blue segment shows the difference in estimating $L_{2}$ between the polynomial and the interpolating function (i.e., the vertical red plus the vertical blue line illustrate the estimate using the interpolating function).">>=
+meanL <- with(crm,tapply(tl,age,mean))
+ages <- as.numeric(names(meanL))
+plot(meanL~ages,xlab="Age",ylab="Mean Length",pch=19,xlim=c(-5,12),ylim=c(0,400))
+respoly <- lm(meanL~ages+I(ages^2))
+a <- seq(-5,12,0.01)
+predpoly <- predict(respoly,data.frame(ages=a))
+lines(predpoly~a,col="red",lwd=2)
+resroots <- Re(polyroot(coef(respoly)))                                         # get real component of roots to polynomial equation
+st0 <- resroots[which(abs(resroots)==min(abs(resroots)))]                       # find starting value for t0 as polynomial root closest to zero
+sL0 <- predict(respoly,data.frame(ages=0))                                      # find starting value for L0 as predicted value from polynomial at age=0
+lines(c(0,0),c(0,sL0),col="blue",lty=2)
+lines(c(-7,st0),c(0,0),col="blue",lty=2)
+
+plot(meanL~ages,xlab="Age",ylab="Mean Length",pch=19,xlim=c(0,11),ylim=c(240,380))
+meanFnx <- approxfun(ages,meanL)
+lines(predpoly~a,col="red",lwd=2)
+lines(meanFnx(ages)~ages,col="blue",lwd=2)
+lines(c(5.5,5.5),c(200,predict(respoly,data.frame(ages=5.5))),lty=2,col="red")
+lines(c(5.5,5.5),c(predict(respoly,data.frame(ages=5.5)),meanFnx(5.5)),lty=2,col="blue")
+@
+
+Starting values for the $L_{1}$, $L_{2}$, and $L_{3}$ parameters of the Schnute and Francis models can be obtained with the means lengths at the $t_{1}$, $t_{2}$, and $t_{3}$ ages.  However, especially in the Schnute method where $t_{1}$ and $t_{2}$ are the mean lengths at the minimum and maximum ages, respectively, these values may be problematic due to low sample sizes.  An alternative to using the sample means is to predict mean lengths from the fits of a second-degree-polynomial to the mean length-at-age data \figrefp{fig:StartingValues}.  The polynomial function is useful in that it ``averages'' across all ages regardless of sample size.  The negative side of the polynomial function is that its shape may be erratic at the ends -- i.e., near the minimum and maximum age.  Another problem occurs in the Francis method if the ``middle age'' (i.e., $t_{2}$) is a fractional age and not specifically represented in the data.  This problem can be alleviated by linearly interpolating the mean length at the fractional age from the mean lengths at the two closest ages or by predicting the mean length at the fractional age from the polynomial regression \figrefp{fig:StartingValues}.
+
+The methods described above for generating reasonable starting values are also implemented in \R{vbStarts()}.  The first and second arguments to this function are exactly as described in \sectref{sect:StartingValuesTypical}.  However, a third, or \R{type=}, argument is required and is a string indicating which paramterization to use -- choices are \R{"original"}, \R{"typical"} (the default), \R{"GallucciQuinn"}, \R{"Mooij"}, \R{"Schnute"}, and \R{"Francis"}.  If the Francis method is used then a numeric vector of the three ages corresponding to the three parameters must be entered into the \R{tFrancis=} argument.  The default settings are to use the polynomial regression method to produce starting values for $L_{0}$.  Starting values for $L_{0}$ based on the re-arrangement of the original parameterization can be obtained by using the \R{meth0="yngAge"} argument.  The means method is the default method for producing starting values for $L_{1}$, $L_{2}$, and $L_{3}$.  The polynomial function can be used to estimate these parameters by using the \R{methEV="poly"} argument.  For example, the starting values for the original, Gallucci and Quinn, and Francis parameterizations of the VBGM for the male Atlantic Croaker data are obtained with
+<<>>=
+svOriginal <- vbStarts(tl~age,data=crm,type="original")
+unlist(svOriginal)      # unlist used only to save space when viewing the results
+svGQ <- vbStarts(tl~age,data=crm,type="GallucciQuinn")
+unlist(svGQ)
+svFrancis <- vbStarts(tl~age,data=crm,type="Francis",tFrancis=c(2,9))
+unlist(svFrancis)
+@
+
+Starting values for these parameterizations can also be obtained with \R{growthModelSim()} as described in \sectref{sect:StartingValuesTypical}, with the exception that the first argument must be one of \R{"vbOriginal"}, \R{"vbGallucciQuinn"}, \R{"vbMooij"}, and \R{"vbSchnute"}\footnote{There is not a method for the \cite{Francis1988} parameterization in \R{growthModelSim()}.}.
+
+\subsubsection{Example Fitting with Francis Parameterization}
+The fitting of the \cite{Francis1988} VBGM is similar to the fitting of the typical VBGM but has a different ``feel.''  First, one should determine the ages present for all fish in the sample and use this to determine the ages to use for  $t_{1}$ and $t_{3}$ in \eqref{eqn:VBModelFrancisLength}.  A table of age frequencies is obtained with
+<<>>=
+table(crm$age)
+@
+From this, one can see that ages range between \Sexpr{min(crm$age,na.rm=TRUE)} and \Sexpr{max(crm$age,na.rm=TRUE)} and reasonable choices may be $t_{1}$=2 and $t_{3}$=9\footnote{I chose not to use the youngest and oldest ages because of the very small sample sizes at these ages.} such that $t_{2}$=$\frac{2+9}{2}$=5.5.  It is easiest to enter the two endpoint values into a vector with
+<<>>=
+ages <- c(2,9)
+@
+Reasonable starting values are then obtained as shown previously and stored in \R{svFrancis}.
+
+This parameterization of the model is a bit cumbersome to write so it is easier to use the \R{vbFuns()} convenience function.  If you did enter the model directly into R it would look like this
+<<eval=FALSE>>=
+vbFrancis <- tl~L1 + (L3-L1)*(1-((L3-L2)/(L2-L1))^
+(2*(age-ts[1])/(ts[3]-ts[1])))/(1-((L3-L2)/(L2-L1))^2)
+@  
+However, when using \R{vbFuns()}, the Francis model is declared with
+<<>>=
+vbFrancis <- vbFuns("Francis")
+@
+
+This model is then fit to the male Atlantic Croaker data, and the results are seen, with
+<<>>=
+fitFrancis <- nls(tl~vbFrancis(age,L1,L2,L3,t1=ages[1],t3=ages[2]),
+data=crm,start=svFrancis)
+overview(fitFrancis)
+@
+
+Note the lower correlations among parameters in this parameterization of the model.
+
+The bootstrapped results, obtained with the code below, show fairly symmetric distributions for each parameter \figrefp{fig:BootCIHistFrancis} and very weak correlations among each pair of parameters \figrefp{fig:BootScatPlotFrancis}.  The fairly symmetric distributions lead to very similar asymptotic and bootstrap confidence intervals.
+
+<<BootCIHistFrancis, fig.width=7, fig.height=7, out.width='.8\\linewidth', fig.cap="Histogram of the bootstrap results for the Francis VBGM for the male Atlantic Croaker data.  Red horizontal lines represent the 95\\% bootstrap confidence intervals.">>=
+bootFrancis <- nlsBoot(fitFrancis,niter=200)   # B=200 is too low, use approx B=1000
+confint(bootFrancis,plot=TRUE)
+@
+
+<<BootScatPlotFrancis, fig.width=7, fig.height=7, out.width='.8\\linewidth', fig.cap="Paired scatterplots for the parameters of the bootstrap results for the Francis VBGM for the male Atlantic Croaker data.">>=
+plot(bootFrancis)
+@
+
+The predicted values with bootstrapped confidence intervals are constructed exactly as shown with the typical VBGM except that it is easier to construct the predictions for each bootstrap sample in parts due to the more complicated coding required to implement the Francis parameterization.  The predicted length, with associated bootstrapped confidence interval, for a fish of age-8 is constructed with
+<<>>=
+new <- data.frame(age=8)
+predict(fitFrancis, new)
+ests <- bootFrancis$coefboot
+L1 <- ests[,"L1"]
+L2 <- ests[,"L2"]
+L3 <- ests[,"L3"]
+r <- (L3-L2)/(L2-L1) 
+pv <- L1 + (L3-L1)*(1-r^(2*(8-ages[1])/(ages[2]-ages[1])))/(1-r^2)
+quantile(pv,c(0.025,0.975))
+@
+Thus, the mean length of all age-8 male Atlantic Croakers is between \Sexpr{formatC(quantile(pv,c(0.025,0.975))[1],format="f",digits=0)} and \Sexpr{formatC(quantile(pv,c(0.025,0.975))[2],format="f",digits=0)} mm, which is very similar to what was observed when the typical VBGM was used.
+
+
+\section{Other Considerations When Fitting VBGMs} \label{sect:OtherConsiderations}
+\subsection{Multiplicative or Lognormal Error Structures} \label{sect:MultErrs}
+The model fitting discussed in the previous sections implicitly assumes that the errors around the VBGM are normally distributed and additive.  If the errors are denoted by $\epsilon$ then, for example, the typical parameterization of the VBGM (i.e., \eqref{eqn:VBModelTypicalLength}) would be modified to,
+
+\begin{equation}  \label{eqn:VBModelTypicalLengthwErrorA}
+  L_{i} = L_{\infty}\left(1-e^{-K(t_{i}-t_{0})}\right) + \epsilon_{i}
+\end{equation}
+
+where $i$ is a subscript index for individual fish and $\epsilon$\verb"~"$N(0,\sigma)$.  This model tacitly assumes that the variability in length is constant at all ages.  In other words, for instance, the variability in the length of age-1 fish is the same as the variability in the length of age-10 fish.  In many instances this assumption will not be true as variability in length tends to increase with increasing length and, thus, age.  Smaller fish tend to be more alike then larger fish.
+
+A multiplicative error structure essentially assumes that variability changes, usually increases, in proportion to the expected value of the response variable.  Under the assumption of multiplicative errors, the typical parameterization of the VBGM is modified to,
+
+\begin{equation}  \label{eqn:VBModelTypicalLengthwErrorM}
+  L_{i} = L_{\infty}\left(1-e^{-K(t_{i}-t_{0})}\right)e^{\epsilon_{i}}
+\end{equation}
+ 
+Taking logarithms of \eqref{eqn:VBModelTypicalLengthwErrorM} results in
+
+\begin{equation}  \label{eqn:VBModelTypicalLengthwErrorMlog}
+  log(L_{i}) = log\left(L_{\infty}\left(1-e^{-K(t_{i}-t_{0})}\right)\right) + \epsilon_{i}
+\end{equation}
+
+which shows that the error structure is additive on the log scale.  Thus, typical non-linear estimation techniques can be used with the data on the log scale to estimate the model parameters.
+
+A comparison of means and standard deviations of length-at-age often suggests whether the variability increases with increasing length or not.  A simple way to construct these summaries is to use \R{Summarize()} from the \R{FSA} package as follows,
+<<>>=
+Summarize(tl~age,data=crm,numdigs=1)
+@
+While a strong trend between the standard deviations and the means is not evident, there is some suggestion for an increasing standard deviation with an increasing mean length.  This was also evident in the residual plots shown in the previous sections.
+
+The typical parameterization of the VBGM with a multiplicative error structure is fit with,
+
+<<>>=
+crm$logTL <- log(crm$tl)                                 # add log TL variable to crm
+svTypicalM <- vbStarts(tl~age,data=crm,type="typical")   # get starting values as usual
+vbTypical <- vbFuns(type="typical")                      # get RHS of typical function
+fitTypicalM <- nls(logTL~log(vbTypical(age,Linf,K,t0)),data=crm,start=svTypicalM)
+overview(fitTypicalM)
+@
+
+The residual plots, constructed with the code below, suggest that the results are slightly less heteroscedastic and slightly less skewed with the multiplicative rather than additive error structure \figrefp{fig:AssumPlotTypicalM}.
+
+<<AssumPlotTypicalM, fig.cap="Residual plot (left) and residual histogram (right) from fitting the typical VBGM with multiplicative errors to the male Atlantic Croaker data.">>=
+residPlot(fitTypicalM)
+hist(residuals(fitTypicalM),main="")
+@
+
+A plot comparing the model fit with additive and multiplicative error structures (constructed with the code below) shows that the different error structures did not result in a major difference in this case.  This is likely due to the fact that the residual error was not highly heteroscedastic.
+<<TypicalMACompare, fig.cap="Fitted line plot for the typical VBGM comparing the fits with additive and multiplicative errors to the male Atlantic Croaker data.">>=
+plot(tl~age,data=crm,pch=19)
+curve(vbTypical(x,Linf=coef(fitTypical)),from=1,to=10,col="red",lwd=2,add=TRUE)
+curve(vbTypical(x,Linf=coef(fitTypicalM)),from=1,to=10,col="blue",lwd=2,add=TRUE)
+legend("topleft",legend=c("Additive","Multiplicative"),col=c("red","blue"),lwd=2,
+lty=1,cex=0.75)
+@
+
+\subsection{Fitting Mean Length-At-Age Data} \label{sect:FitMeans}
+As mentioned in \sectref{sect:Data}, historical methods for fitting the VBGM used mean length-at-age data.  In this section, weighted non-linear methods will be used to show how the point estimates, but not the variance estimates, of the parameters can be found from the mean length-at-age data.
+
+Mean length-at-age data can be constructed for the male Atlantic Croaker data with
+<<>>=
+crm1 <- Summarize(tl~age,data=crm)
+str(crm1)
+@
+However, note that \var{age} is a factor variable.  The \var{age} factor variable can be converted to a numeric variable with \R{fact2num()} as follows
+<<>>=
+crm1$age <- fact2num(crm1$age)
+str(crm1)
+crm1
+@
+A function that performs the ``weighting'' must then be declared.  This function uses a fish's age and the VBGM to predict a mean length, computes the difference between the observed mean length and this prediction, and multiplies this difference by the square root of the number of fish at that age.  The square root of the number of fish at each age is the ``weight'' that effectively expands the single mean to represent the number of fish that went into the calculation of that mean.  This weighting function is declared with
+<<>>=
+wTypical <- function(meanlen,age,n,Linf,K,t0) {
+    pred <- Linf*(1-exp(-K*(age-t0)))
+    (meanlen-pred)*sqrt(n)
+}
+@
+
+The weighted non-linear model is then fit by first finding starting values and then calling \R{nls()} with a formula that has no left-hand-side and the weighting function as the right-hand-side.  This fitting is completed with
+<<>>=
+svTypicalM <- vbStarts(mean~age,data=crm1)
+wFitTypical <- nls(~wTypical(mean,age,n,Linf,K,t0),data=crm1,start=svTypicalM)
+@
+
+The summary of the fit is obtained as usual with
+<<>>=
+overview(wFitTypical)
+@
+
+From this it is seen that the point estimates of the parameters are the same as when the model was fit to the individual fish length-at-age data (see output from \R{overview(fitTypical)} previously).  However, the standard errors, residual variance, and confidence intervals are all different.  Thus, it is probably prudent to focus only on the parameter estimates with this method, extracted solely with
+<<>>=
+coef(wFitTypical)
+@
+
+\subsection{Common Model Fitting Problems}
+The primary problem when fitting a VBGM using \R{nls()} is the dreaded ``failed to converge'' message.  Sometimes the message can be forced to go away, at the expense of increased computing time, by increasing the maximum number of iterations that \R{nls()} will use before it quits\footnote{The maximum number of iterations can be increased by using \R{nls.control(maxiter=10000)} before the \R{nls()} call}.  However, the problem more often rests with difficulties in the model or difficulties with the data.
+
+Some of the difficulties with the model have been discussed previously.  The primary difficulty is that most of the VBGM parameterizations have parameters that are very highly correlated.  Parameters that are very highly correlated suggest that there is very little practical difference, in terms of minimizing an error sum-of-squares, between many different combinations of the three parameters.  One can think of highly correlated parameters that result in similar error sum-of-squares as a hyper-plane (i.e., think of a ``bowl''; see \figref{fig:NLSIterationsEx1}) that is very ``flat'' near the global minimum.  The gradient to the global minimum is very shallow and the algorithms move either very slowly or erratically towards that global minimum.  The global minimum is, thus, very difficult to find.  If appropriate to one's needs, the user should use the VBGM parameterization that has the least correlated parameters (i.e., the Francis parameterization).
+
+Model convergence can also be aided by simplifying the parameter space over which the error sum-of-squares is being minimized.  In other words, there is generally a higher likelihood of convergence if the model has fewer parameters.  All parameterizations of the VBGM consist of three parameters, so choice of model does not directly help in this regard.  However, the $L_{0}$ parameter in the original VBGM parameterization has a very precise biological interpretation -- i.e., the average length at age-0 -- and has, in some instances (\cite{Cailletetal2006} provides a list of recent authors from the chondrychthian literature), been set equal to the mean length at hatching determined from other means.  The general commands for fitting such a model to estimate the remaining two parameters would be something like
+
+<<eval=FALSE>>=
+vbOriginal0 <- vbFuns("Original")
+# note no starting value for L0
+svOriginal0 <- list(Linf=300,K=0.3)
+# note constant value (e.g., 5) in L0 position of vb function
+fitOriginal0 <- nls(tl~vbOriginal0(age,Linf,5,K),start=svOriginal0)
+@
+
+\cite{Cailletetal2006} does note that fixing the $L_{0}$ value to a constant can greatly impact the VBGM parameter estimates and suggests that if $L_{0}$ is fixed that care should be taken to produce the best estimate of $L_{0}$ as possible.
+
+A common data difficulty is the lack of age-length data from relatively young fish.  Without young fish in the sample, the length-at-age plot may be primarily linear which makes it very difficult to accurately represent the curvature in the ``early'' part of the VBGM.  This problem is illustrated in \figref{fig:MissingYoung}.  The model did converge in this example but the much ``flatter'' VBGM resulted in a dramatically different estimate of $K$.  Data from younger fish is the primary solution to this problem, though fixing the $L_{0}$ value at a constant as described above has also been used to ``anchor'' the left-side of the VBGM.
+
+<<MissingYoung, echo=FALSE, results='hide', fig.width=5, fig.height=5, out.width='.6\\linewidth', fig.cap='Hypothetical length-at-age data with the fits of the typical VBGM to fish of all ages and only those fish age-6 and older.  Data was simulated using \\R{vbGenData(100,300,0.3,-1,minAge=1,maxAge=20,dataType="atCapture")}.'>>=
+set.seed(84949)
+fake <- vbDataGen(100,300,0.3,-1,minAge=1,maxAge=20,dataType="atCapture")       # generates individual at-capture data
+svFake1 <- vbStarts(len~age,data=fake,type="typical")
+fitFake1 <- nls(len~vbTypical(age,Linf,K,t0),data=fake,start=svFake1)
+fitFake2 <- nls(len~vbTypical(age,Linf,K,t0),data=fake,subset=age>5,start=svFake1)
+plot(len~age,data=fake,xlab="Age",ylab="Length",xlim=c(-1,22),ylim=c(100,450))
+points(len~age,data=fake,subset=age<=5,pch=19)
+curve(vbTypical(x,coef(fitFake1)),from=-1,to=22,col="red",lwd=2,add=TRUE)
+curve(vbTypical(x,coef(fitFake2)),from=-1,to=22,col="blue",lwd=2,add=TRUE)
+legend("bottomright",legend=c("All Ages",paste("Linf=",formatC(coef(fitFake1)[1],format="f",digits=1)),paste("K=",formatC(coef(fitFake1)[2],format="f",digits=3)),paste("t0=",formatC(coef(fitFake1)[3],format="f",digits=3))),lwd=c(2,NA,NA,NA),col=c("red",NA,NA,NA),cex=0.75)
+legend("topleft",legend=c("Ages > 5",paste("Linf=",formatC(coef(fitFake2)[1],format="f",digits=1)),paste("K=",formatC(coef(fitFake2)[2],format="f",digits=3)),paste("t0=",formatC(coef(fitFake2)[3],format="f",digits=3))),lwd=c(2,NA,NA,NA),col=c("blue",NA,NA,NA),cex=0.75)
+@
+
+The other data problem occurs at the other end of the distribution -- not enough old fish to accurately characterize the asymptote.  This problem can be a result of sampling a population where the mortality rate is high enough that fish do not live long enough to approach the asymptote \citep{Francis1988}, from difficulties capturing large old fish (i.e., a size-selective gear is used), or from under-aging older fish (i.e., the larger, older fish would appear younger).  In the example in \figref{fig:MissingOld}, a hypothetical sample of slow-growing long-lived (to age-40) fish was created and it was then assumed that only fish age-15 and younger or fish age-20 and younger were actually sampled.  When only age-15 and younger fish were sampled, the length-at-age data looked approximately linear resulting in a very large estimate of $L_{\infty}$ and, because of the strong correlation with $L_{\infty}$, a very low estimate of $K$.  However, when fish age-20 and younger were used, the length-at-age data contained enough of the ``curve'' in the VBGM to provide parameter estimates similar to when all known fish were used.
+
+<<MissingOld, echo=FALSE, results='hide', fig.width=5, fig.height=5, fig.cap='Hypothetical length-at-age data with the fits of the typical VBGM to fish of all ages, only those fish age-15 and younger, and only those fish age-20 and younger.  Data was simulated using \\R{vbGenData(200,300,0.12,-1,minAge=1,maxAge=40,dataType="atCapture")}.'>>=
+set.seed(37772)
+fake <- vbDataGen(200,300,0.12,-1,minAge=1,maxAge=40,dataType="atCapture")       # generates individual at-capture data
+svFake1 <- vbStarts(len~age,data=fake,type="typical")
+fitFake1 <- nls(len~vbTypical(age,Linf,K,t0),data=fake,start=svFake1)
+fitFake2 <- nls(len~vbTypical(age,Linf,K,t0),data=fake,subset=age<=15,start=svFake1)
+fitFake3 <- nls(len~vbTypical(age,Linf,K,t0),data=fake,subset=age<=20,start=svFake1)
+plot(len~age,data=fake,xlab="Age",ylab="Length",xlim=c(-3,42))
+points(len~age,data=fake,subset=age>15,pch=19,col="gray")
+points(len~age,data=fake,subset=age>20,pch=19)
+curve(vbTypical(x,coef(fitFake1)),from=-1,to=42,col="red",lwd=2,add=TRUE)
+curve(vbTypical(x,coef(fitFake2)),from=-1,to=42,col="blue",lwd=2,add=TRUE)
+curve(vbTypical(x,coef(fitFake3)),from=-1,to=42,col="green",lwd=2,add=TRUE)
+legend("bottomright",legend=c("All Ages",paste("Linf=",formatC(coef(fitFake1)[1],format="f",digits=1)),paste("K=",formatC(coef(fitFake1)[2],format="f",digits=3)),paste("t0=",formatC(coef(fitFake1)[3],format="f",digits=3))),lwd=c(2,NA,NA,NA),col=c("red",NA,NA,NA),cex=0.75)
+legend("topleft",legend=c("Ages <= 15",paste("Linf=",formatC(coef(fitFake2)[1],format="f",digits=1)),paste("K=",formatC(coef(fitFake2)[2],format="f",digits=3)),paste("t0=",formatC(coef(fitFake2)[3],format="f",digits=3))),lwd=c(2,NA,NA,NA),col=c("blue",NA,NA,NA),cex=0.75)
+legend(13,138,legend=c("Ages <= 20",paste("Linf=",formatC(coef(fitFake3)[1],format="f",digits=1)),paste("K=",formatC(coef(fitFake3)[2],format="f",digits=3)),paste("t0=",formatC(coef(fitFake3)[3],format="f",digits=3))),lwd=c(2,NA,NA,NA),col=c("green",NA,NA,NA),cex=0.75)
+@
+
+The discussion of this section assumes that the VBGM was the proper model to represent fish growth.  Other models of fish growth (e.g., Logistic, Gompertz, Richards, Schnute) offer different growth trajectories (e.g., sigmoidal) or more flexibility in identifying a growth trajectory.  While the VBGM may be the most prevalent growth model in the literature \citep{Haddon2001} it is not always the ``best'' model and some have even argued that it is an innappropriate model \citep{Knight1968,Roff1980}.  For example, \cite{Knight1968} showed that the model fit to data from a left- and right-truncated age structure produced incredibly unrealistic parameter estimates.  As another example, \cite{KatsanevakisMaravelias2008} found that the VBGM, when compared to three other possible models, was the ``best'' model in only about one-third of the 133 data sets examined.  In addition, the Gompertz model is widely used in place of the VBGM when modeling growth during larval or early life stages \citep{Ricker1979}.
+
+\clearpage
+\section{VBGM Comparison Between Groups} \label{sect:VBGMCompare}
+A fairly common analysis in fisheries research is to compare parameters from a growth model between two groups or populations.  The statistical methods for making these comparisons requires the use of indicator variables.  In this section, the methods for comparing parameters among two groups will be illustrated with the typical VBGM for fish length.  This illustration will focus on the comparison of male and female Atlantic Croakers and will, thus, retrun to the full data set in \R{Croaker2}.  A re-examination of the structure of the \R{Croaker2} data frame shows that \var{tl} is the ``length'', \var{age} is the ``age'', and \var{sex} is the ``group'' factor variable.
+<<>>=
+str(Croaker2)
+@
+
+\subsection{Models to be Considered}
+In order to consider different groups, parameters specific to one of the groups must be defined by adding a subscript or, as we will do here, a number in brackets for the group to the parameter.  For example, $L_{\infty}[1]$ is the asymptotic mean length for individuals in group 1 and $K[2]$ is the Brody growth coefficient for individuals in group 2.  In some models below, parameters without the bracketed number are the same or are common to both groups.  For example, $L_{\infty}$ is the asymptotic mean length for all individuals, regardless of group.
+
+The situation where each parameter differs between the two groups is written as follows (following the notation used by \cite{RitzStreibig2008}),
+
+\begin{equation} \label{eqn:gnrl1}
+  L(t) = \begin{cases}
+    L_{\infty}[1]\left(1-e^{-K[1](t-t_{0}[1])}\right) & \text{if in ``group 1''} \\
+    L_{\infty}[2]\left(1-e^{-K[2](t-t_{0}[2])}\right) & \text{if in ``group 2''}
+  \end{cases}
+\end{equation}
+
+However, \eqref{eqn:gnrl1} can be written more succinctly as follows,
+
+\begin{equation} \label{eqn:gnrl2}
+  L(t) = L_{\infty}[group]\left(1-e^{-K[group](t-t_{0}[group])}\right)
+\end{equation}
+
+where $group$ is $1$ if in ``group 1'' and $2$ if in ``group 2.''
+
+With the definitions above, several models can be considered that will ultimately help determine which parameters are different among groups.  These models are defined as follows,
+
+\begin{itemize}
+  \item \textsc{General Model}: \emph{Separate parameter estimates for individuals in each group.}
+    \begin{equation*} \label{eqn:AA8}
+        L(t) = L_{\infty}[group]\left(1-e^{-K[group](t-t_{0}[group])}\right)
+    \end{equation*}
+
+  \item \emph{One parameter in common between groups}.
+    \begin{itemize}
+      \item \textsc{Common $L_{\infty}$ Model}.
+        \begin{equation*}  \label{eqn:AA7l}
+            L(t) = L_{\infty}\left(1-e^{-K[group](t-t_{0}[group])}\right)
+        \end{equation*}
+      \item \textsc{Common $K$ model}.
+        \begin{equation*}  \label{eqn:AA7K} 
+          L(t) = L_{\infty}[group]\left(1-e^{-K(t-t_{0}[group])}\right)
+        \end{equation*}
+      \item \textsc{Common $t_{0}$ Model}.
+        \begin{equation*}  \label{eqn:AA7t}
+          L(t) = L_{\infty}[group]\left(1-e^{-K[group](t-t_{0})}\right)
+        \end{equation*}
+    \end{itemize}
+
+  \item \emph{Two parameters in common between groups}.
+    \begin{itemize}
+      \item \textsc{Common $L_{\infty}$ and $K$ Model}.
+        \begin{equation*}   \label{eqn:AA6t}
+          L(t) = L_{\infty}\left(1-e^{-K(t-t_{0}[group])}\right)
+        \end{equation*}
+      \item \textsc{Common $L_{\infty}$ and $t_{0}$ Model}.
+        \begin{equation*}   \label{eqn:AA6K}
+          L(t) = L_{\infty}\left(1-e^{-K[group](t-t_{0})}\right)
+        \end{equation*}
+      \item \textsc{Common $K$ and $t_{0}$ Model}.
+        \begin{equation*}   \label{eqn:AA6L}
+          L(t) = L_{\infty}[group]\left(1-e^{-K(t-t_{0})}\right)
+        \end{equation*}
+      \end{itemize}
+
+  \item \textsc{Common Model}: \emph{Same parameter estimates for both groups.  This is the typical parameterization of the VBGM.}
+    \begin{equation*}     \label{eqn:AA3}
+      L(t) = L_{\infty}\left(1-e^{-K(t-t_{0})}\right)
+    \end{equation*}
+\end{itemize}
+
+Each ``one parameter in common'' model is a subset of the \textsc{General Model}, each ``two parameters in common'' model is a subset of two of the ``one parameter in common'' models, and the \textsc{Common Model} is a subset of each ``two parameters in common'' model.  Thus, determining which is the best model is a matter of fitting each model and interpreting several \R{anova()} results or one \R{AIC()} result.
+
+\subsection{Fitting The Models}
+\subsubsection{Fitting the General Model}
+The analysis of the multiple non-linear models begins by fitting and checking the assumptions for the \textsc{General Model}.  If the assumptions are met with this model, then they should be met for all other subset models.  Thus, assumption checking only needs to take place on this most complex \textsc{General Model}.
+
+The \textsc{General Model} requires starting values for six parameters.  However, the starting values for the common parameters in the \textsc{Common Model} can generally be used for both groups in the \textsc{General Model}.  Starting values for the \textsc{Common Model} are found with
+<<>>=
+( svCom <- vbStarts(tl~age,data=Croaker2) )
+@
+and replicated to serve are starting values for the \textsc{General Model} with
+<<>>=
+( svGen <- lapply(svCom,rep,2) )
+@
+
+The general model is then declared and fit with
+<<>>=
+vbGen <- tl~Linf[sex]*(1-exp(-K[sex]*(age-t0[sex])))
+fitGen <- nls(vbGen,data=Croaker2,start=svGen)
+@
+
+Assumption diagnostics are computed with
+<<AssumptionsPlot1, fig.cap="Residual plot (left) and residual histogram (right) from fitting the most general VBGM to the combined male and female Atlantic Croaker data.">>=
+residPlot(fitGen)
+hist(residuals(fitGen),main="")
+@
+
+The model appears to fit the data appropriately, with slight heteroscedasticity, but approximately normal residuals \figrefp{fig:AssumptionsPlot1}.  Overall, the assumptions are adequately met with this model.
+
+\subsubsection{Finding the Best Subset Model}
+If the assumptions are met for the \textsc{General Model} then each subset model can be fit to the data with the results from each model saved in an appropriately named object.  The subset models with corresponding starting values are declared with\footnote{Make sure to note which parameters are separate and which are common between groups and how those appear in the model and starting values list.}
+<<>>=
+vb1KT <- tl~Linf*(1-exp(-K[sex]*(age-t0[sex])))
+sv1KT <- mapply(rep,svCom,c(1,2,2))
+vb1LT <- tl~Linf[sex]*(1-exp(-K*(age-t0[sex])))
+sv1LT <- mapply(rep,svCom,c(2,1,2))
+vb1LK <- tl~Linf[sex]*(1-exp(-K[sex]*(age-t0)))
+sv1LK <- mapply(rep,svCom,c(2,2,1))
+vb2T <- tl~Linf*(1-exp(-K*(age-t0[sex])))
+sv2T <- mapply(rep,svCom,c(1,1,2))
+vb2K <- tl~Linf*(1-exp(-K[sex]*(age-t0)))
+sv2K <- mapply(rep,svCom,c(1,2,1))
+vb2L <- tl~Linf[sex]*(1-exp(-K*(age-t0)))
+sv2L <- mapply(rep,svCom,c(2,1,1))
+vbCom <- tl~Linf*(1-exp(-K*(age-t0)))
+@
+
+The starting values for the \textsc{Common K} and \textsc{Common K and t0} models are shown below to illustrate the above declarations\footnote{Note that \R{unlist()} is used here simply to save space.},
+<<>>=
+unlist(sv1LT)
+unlist(sv2L)
+@
+
+All subset models are then fit to the Atlantic Croaker data with
+<<>>=
+fit1KT <- nls(vb1KT,data=Croaker2,start=sv1KT)
+fit1LT <- nls(vb1LT,data=Croaker2,start=sv1LT)
+fit1LK <- nls(vb1LK,data=Croaker2,start=sv1LK)
+fit2T <- nls(vb2T,data=Croaker2,start=sv2T)
+fit2K <- nls(vb2K,data=Croaker2,start=sv2K)
+fit2L <- nls(vb2L,data=Croaker2,start=sv2L)
+fitCom <- nls(vbCom,data=Croaker2,start=svCom)
+@
+
+The model fits are then compared in a hierarchical manner.  In other words, each ``one parameter in common'' model is compared to the \textsc{General Model}.  Any ``one parameter in common'' model that is not statistically different from the \textsc{General Model} is considered ``better'' then the \textsc{General Model} because it is more parsimonious.  If two ``one parameter in common'' models are better than the \textsc{General Model}, then the one with the smallest RSS is chosen as the ``best'' ``one parameter in common'' model.  Then, each ``two parameters in common'' model is compared to the ``best'' ``one parameter in common'' model with the same rationale.  Finally, if needed, the ``best'' ``two parameters in common'' model is compared to the \textsc{Common Model}.  This process stops when a more complex model is significantly different then every simpler subset model.  Alternatively, the model with the lowest AIC is the ``best'' model.  These methods are illustrated below.
+
+Each of the ``one parameter in common'' models is compared to the \textsc{General Model} with
+<<>>=
+anova(fit1KT,fitGen)
+anova(fit1LT,fitGen)
+anova(fit1LK,fitGen)
+@
+
+These results indicate that each ``one parameter in common'' models fits the data as well as the more complex \textsc{General Model}.  Thus, because each ``one parameter in common'' model is simpler then the \textsc{General Model}, the \textsc{General Model} will be removed from consideration as the ``best model.''  Thus, at this point, it is known that separate values for all three parameters are not needed for the two groups.
+
+Of the ``one parameter in common'' models, the model with $t_{0}$ in common is the ``best'' model because it has the lowest RSS (=\Sexpr{formatC(deviance(fit1LK),format="f",digits=0)}).  Thus, the two ``two parameters in common'' models that have $t_{0}$ in common will be compared to this model with
+<<>>=
+anova(fit2L,fit1LK)
+anova(fit2K,fit1LK)
+@
+
+The first result suggests that the model with $K$ in common fits the data as well as the model without $K$ in common.  The second result indicates that the model withOUT $L_{\infty}$ in common fits better than the model with $L_{\infty}$ in common.  Thus, the separate $L_{\infty}$ parameters should ``stay'' in the model at this point, but a common $K$ parameter can be used.
+
+Finally, the model with $K$ and $t_{0}$ in common should be compared to the \textsc{common model} to clarify that $L_{\infty}$ differs between the groups.  This comparison is done with
+<<>>=
+anova(fitCom,fit2L)
+@
+
+This result shows very strong evidence that the \textsc{Common Model} does NOT fit the data better then the model with separate $L_{\infty}$ values.  Thus, the model with common $K$ and $t_{0}$ parameters, but separate $L_{\infty}$ parameters, is the model that best fits the data.  We conclude that $L_{\infty}$, but not $K$ or $t_{0}$, differs between male and female Atlantic Croakers.
+
+Similar results are obtained by computing the AIC for each model with
+<<>>=
+AIC(fitGen,fit1KT,fit1LT,fit1LK,fit2T,fit2K,fit2L,fitCom)
+@
+
+Summary results of the model fit (e.g., coefficient values, measures of variability, parameter correlations) are obtained with
+<<>>=
+overview(fit2L)
+@
+
+From this it is conclude that the females (i.e., ``group 1'') has a larger asymptotic mean length then the males.
+
+A fitted line plot can be constructed by first using \R{plot()} and \R{points()} to plot different colored points for the female and male fish.  A function is then created for the ``no difference'' common model of the typical VBGM using \R{vbFuns()}.  This function is used within \R{curve()} to add the fitted lines for both groups, being careful that only the parameters for a particular group are used when adding that group's fitted line to the plot.  For example, the parameter estimates for just the first group are obtained by excluding the parameters for the second group (which consists of only \var{Linf2} in the second position of the coefficients vector) with
+<<>>=
+coef(fit2L)[-2]
+@
+
+The fitted line plot for the model with only different $L_{\infty}$ parameters \figrefp{fig:FitPlot2} is constructed with
+<<FitPlot2, fig.cap="Fitted line plot from fitting the VBGM with separate $L_{\\infty}$ parameters to male and female Atlantic Croakers.">>=
+plot(tl~jitter(age,0.3),data=Croaker2,subset=sex=="F",pch=19,xlab="Age (yrs)",
+ylab="Total Length (mm)")
+points(tl~jitter(age,0.3),data=Croaker2,subset=sex=="M",pch=19,col="gray")
+vbTypical <- vbFuns("typical")
+curve(vbTypical(x,Linf=coef(fit2L)[-2]),from=1,to=10,lwd=2,add=TRUE)
+curve(vbTypical(x,Linf=coef(fit2L)[-1]),from=1,to=10,col="gray",lwd=2,add=TRUE)
+legend("topleft",legend=c("Female","Male"),col=c("black","gray"),lwd=2,lty=1,cex=0.75)
+@
+
+As another example, the fitted line plot assuming that the model with different $L_{\infty}$ parameters and $K$ parameters was chosen \figrefp{fig:FitPlot3} is constructed with
+
+<<FitPlot3, fig.cap="Example of a fitted line plot from fitting the VBGM with separate $L_{\\infty}$ and $K$ parameters to male and female Atlantic Croakers.">>=
+plot(tl~jitter(age,0.3),data=Croaker2,subset=sex=="F",pch=19,xlab="Age (yrs)",
+ylab="Total Length (mm)")
+points(tl~jitter(age,0.3),data=Croaker2,subset=sex=="M",pch=19,col="gray")
+vbTypical <- vbFuns("typical")
+curve(vbTypical(x,Linf=coef(fit1LK)[-c(2,4)]),from=1,to=10,lwd=2,add=TRUE)
+curve(vbTypical(x,Linf=coef(fit1LK)[-c(1,3)]),from=1,to=10,col="gray",lwd=2,add=TRUE)
+legend("topleft",legend=c("Female","Male"),col=c("black","gray"),lwd=2,lty=1,cex=0.75)
+@
+
+
+
+%BIBLIOGRAPHY ------------------------------------------------------------------------------------------
+\cleardoublepage   %not sure why, this is needed so that TOC entry will point to right start page
+\phantomsection    %not sure why, this is needed so that TOC entry will point to right start page
+\addcontentsline{toc}{section}{References}    %Add a TOC entry
+\bibliography{c:/aaaWork/zGnrlLatex/DHO_bib}    %make the bibliography
+
+
+\cleardoublepage   %not sure why, this is needed so that TOC entry will point to right start page
+\phantomsection    %not sure why, this is needed so that TOC entry will point to right start page
+\begin{appendices}
+\section{Fitting Non-Linear Models} \label{app:NLS}
+Many models in fisheries and ecological research are non-linear.  Some of these models can be transformed to a linear scale where traditional linear regression methods can be used.  However, some models cannot be ``linearized'' and linearization may be troublesome with other models.  Thus, many types of data are best analyzed by fitting a curve using non-linear regression techniques \citep{MotulskyRansnas1987}.  The VBGMs are non-linear and cannot be linearized.
+
+\subsection{Parameter Estimation} \label{appsect:NLSParamEst}
+The usual non-linear regression model for individuals is expressed as
+
+\begin{equation}
+  \label{eqn:NLSPModelIndiv}
+  y_{i} = f(\vec{\beta},X)+\epsilon_{i}
+\end{equation}
+
+where $f(\bullet)$ is a non-linear function that relates the response variable to an explanatory variable ($X$), $\vec{\beta}$ is a vector of parameters, and $\epsilon_{i}$\verb"~"$N(0,\sigma_{Y|X})$ \citep{Fox2002}.  The RSS and likelihood functions for these models can be developed in a manner similar to that for linear regression models.  However, because the RSS and likelihood functions for non-linear models are non-linear they often require iterative numerical approximation solutions to find the parameter estimates that minimize the RSS or maximize the likelihood function.  In other words, calculus cannot be used to solve for parameter estimates as was done with the linear regression models.  Instead computers must be used to implement optimization algorithms to estimate the parameters.
+
+\cite{MotulskyRansnas1987} provide a nice description of the concept of fitting non-linear models to data.  Their description relies on visualizing the RSS surface in a simple example that has two parameters, $A$ and $B$ \figrefp{fig:NLSIterationsEx1}.  In general, the algorithm begins with the user (i.e., you!) supplying a set of starting values for the model parameters.  Selection of these starting values is discussed in the next section.  The algorithm then finds another set of parameter values that are generally ``downhill'' from the starting values (a process that involves using the second derivatives of the RSS function).  This process is continued such that with each iteration the set of parameter values gets closer and closer to the set of parameter values that are at the minimum RSS value.  The algorithm usually continues until the improvement in minimizing RSS from one iteration to the next is considered negligible.  The algorithm would proceed similarly if there were more parameters in the model; however, the surface would be more than three-dimensional and, thus, not able to be visualized.
+
+\begin{figure}[hbp]
+  \centering
+    \includegraphics[width=3in]{Figs/NLSIterationsEx1.png}
+  \caption{A schematic representation of the RSS as a function of the parameters $A$ and $B$.  Non-linear regression begins at user-defined starting values and iteratively ``moves downhill'' to find the choices of $A$ and $B$ that minimize the RSS.  Graphic was modified from \cite{MotulskyRansnas1987}.}
+  \label{fig:NLSIterationsEx1}
+\end{figure}
+
+\subsection{Choosing Starting Values} \label{appsect:NLSStartValues}
+The choice of starting values is important to the non-linear regression parameter estimation algorithms.  Improper choice of starting values can cause the numerical algorithm to not converge to a minimum RSS value, to behave erratically or not at all (because of problems associated with the second derivatives of the RSS function at the starting values), or to find a local minimum value of RSS rather than the global best-fit minimum \figrefp{fig:NLSIterationsEx2}.
+
+\begin{figure}[hbp]
+  \centering
+    \includegraphics[width=3in]{Figs/NLSIterationsEx2.png}
+  \caption{With inappropriate starting values, non-linear regression algorithms might find a local minimum rather than the global best-fit minimum (modified from \cite{MotulskyRansnas1987}).}
+  \label{fig:NLSIterationsEx2}
+\end{figure}
+
+The process of selecting starting parameter values begins with a thorough understanding of the meaning and impact of each parameter in the non-linear model.  Once the parameters are understood, starting values can be obtained in at least three ways:
+\begin{enumerate}
+  \item Some parameters can be visually estimated.  For example, a parameter that is known to represent the horizontal asymptote of the model can be visually estimated by plotting the data and observing the value of the apparent asymptote.
+  \item Some parameters can be estimated by fixing other parameters or variables at reasonable values (usually from using the previous method) and solving for the parameter.
+  \item Some parameters can be estimated by superimposing the model on the data and interactively altering the parameters until the model appears to visually fit the data.
+\end{enumerate}
+The non-linear models used in this vignette will generally (with one exception) use the last strategy.  Special purpose functions will be used to visually derive these starting values.
+
+\subsection{Non-Linear Models in R \& Interpretations}  \label{sect:NLSAnalysis1}
+Non-linear models are fit in R with the \R{nls()} function.  The \R{nls()} function is similar to the \R{lm()} function in R, but differs in two important ways \citep{Weisberg2005b}.  First, the user must define \emph{both} the variables and the parameters of the model (in contrast to the \R{lm()} function where only the variables need to be defined).  Second, \emph{starting values} for the parameters must be specified.
+
+The \R{nls()} function requires three arguments.  The first argument is a formula that defines the non-linear model.  The formula will typically have the response variable on the right-hand side separated from an algebraic expression of the left-hand side of the model by a \verb"~".  The second argument, named \R{start=}, is a list of starting values for the parameters of the model.  This list also serves to tell R which items in the models are parameters, with the remaining items in the model assumed to be variables.  The third argument, named \R{data=}, is the data frame from which the variables in the model will be drawn.  As with the \R{lm()} function the results from the \R{nls()} function should be saved to an object.
+
+As an example, consider the logistic growth equation,
+
+\begin{equation}  \label{eqn:NLSLogistic}
+  y_{i} = \frac{\beta_{1}}{1+e^{\beta_{2}+\beta_{3}x_{i}}}+\epsilon_{i}
+\end{equation}
+
+where $\beta_{1}$ is the horizontal asymptote representing the maximum mean of the response variable, $\beta_{2}$ reflects the mean value of the response variable, relative to the asymptote, when the explantory variable is zero, and $\beta_{3}$ controls the rate of increase or decrease.  The fitting of \eqref{eqn:NLSLogistic} will be illustrated with the number of \emph{Escherchia coli} cells over time from the classic experiment by \cite{McKendrickPai1911}.  The data are read into R and examined as follows,
+
+<<>>=
+data(Ecoli)
+str(Ecoli)
+view(Ecoli)
+@
+
+The first step in fitting the logistic growth model to these data was to use trial-and-error\footnote{Trial-and-error is not an efficient method to identify starting values.  More efficient methods will be described with specific fisheries models.  In addition, the starting values for this model could be found by estimating $\beta_{1}$ with the horizontal asymptote in \figref{fig:NLSLogistic} (i.e, $\beta_{1}\approx6$) and then selecting two points from the steepest portion of the curve (i.e., (3,1.2) and (4,3.1)), plugging these into \eqref{eqn:NLSLogistic} and solving for $\beta_{2}$ and $\beta_{3}$.} to identify starting values for the three parameters.  The three starting values used in this case were entered into a list object for simplicity,
+
+<<>>=
+lr.sv <- list(B1=6,B2=7.2,B3=-1.5)
+@
+
+The non-linear model in \eqref{eqn:NLSLogistic} is then fit with \R{nls()} and the parameter estimates obtained with \R{summary()} or, as I prefer, \R{overview()} from the \R{nlstools} package, as follows,
+
+<<>>=
+nl1 <- nls(cells~B1/(1+exp(B2+B3*days)),data=Ecoli,start=lr.sv)
+# summary(nl1)    # did not show because redundant with overview()
+overview(nl1)
+@
+
+The fit of the non-linear regression model can be constructed with \R{fitPlot()} using the saved \R{nls()} object as the first argument.  The fitted regression model shown in \figref{fig:NLSLogistic} was constructed with,
+
+<<NLSLogistic, fig.cap="Plot of the number of \\emph{Escherchia coli} cells over time with the superimposed fit of the logistic growth equation.">>=
+fitPlot(nl1,Ecoli,xlab="Day",ylab="Cellsx10^6/ml",cex.main=0.8)
+@
+
+\subsection{Making Inferences about Model Parameters}  \label{appsect:NLSInference}
+Confidence intervals and hypothesis tests can be constructed for the parameters in the non-linear model as they were for the linear model -- i.e., using \R{confint()}.  For instance, approximate 95\% confidence intervals for the parameters in \eqref{eqn:NLSLogistic} can be obtained with
+
+<<>>=
+confint(nl1)
+@
+
+In addition, the t-test and p-value for testing $H_{0}:\beta_{1}=0$ versus $H_{A}:\beta_{1}\neq0$ is shown in the results from \R{summary()}.
+
+The confidence intervals and hypothesis tests just described, however, may be incorrect in certain situations because the standard errors in non-linear regressions are often poorly estimated.  Thus, it is often more appropriate to approximate the confidence interval with a bootstrapping routine.  Fortunately, \R{nlsBoot} will quickly perform the bootstrap method with the results from a non-linear model.  The \R{nlsBoot} function estimates model parameters from a series of \R{niter} resampled data sets.  An approximate 95\% CI for a variable can then computed by finding the values of the bootstrapped parameter estimates with 2.5\% of the values smaller and 2.5\% of the values greater.  This is most easily accomplished by saving the \R{nlsBoot()} result to an object and submitting that object to \R{confint()}.  For example, a bootstrapped 95\% confidence interval for the parameters in the logistic growth model are found with\footnote{Note that \R{B} controls the number of bootstrap samples.  The value of \R{niter=} should be much larger than the 200 shown in this example -- e.g., 500 to 5000.  A smaller number was used here simply to conserve computing time while producing this document.},
+
+<<>>=
+nl1.b <- nlsBoot(nl1,niter=200)
+confint(nl1.b)
+@
+
+In this case, the bootstrapped confidence intervals are substantially different than the confidence intervals based on normal theory.  The bootstrapped confidence intervals are likely more appropriate in this case.
+
+\subsection{Making Predictions}  \label{appsect:NLSPredictions}
+Predictions of the mean value of the response variable and the response variable for an individual can again be made with \R{predict()}.  The arguments to this function are exactly the same as described for the \R{lm()} objects -- i.e., the first argument is the saved \R{nls()} object and the second argument is a data frame containing values of the explanatory for which to make predictions.  Unfortunately, \R{predict()} for an \R{nls} object does not support prediction or confidence intervals as of R version 2.9.1.  In other words, \R{predict()} will only predict the mean value of the response variable at the given value of the explanatory variable.  For example, the mean number of \emph{E. coli} cells on day 3 is predicted to be,
+
+<<>>=
+predict(nl1,data.frame(days=3))
+@
+
+A prediction interval can be estimated by using the parameter estimates for each bootstrap sample saved in the \R{nlsBoot()} object.  To make this interval the column corresponding to each parameter must be substituted into the right-hand-side of the non-linear regression model.  In addition, the particular value for the explanatory variable must be substituted into the right-hand-side.  For example, the 95\% prediction interval for the number of cells on day 3 is found with,
+
+<<>>=
+pred.day <- 3
+ests <- nl1.b$coefboot
+nl1.bp3 <- ests[,"B1"]/(1+exp(ests[,"B2"]+ests[,"B3"]*pred.day))
+coli.ci <- quantile(nl1.bp3,c(0.025,0.975))
+coli.ci
+@
+
+Thus, one is 95\% confident that the number of cells on any day \Sexpr{pred.day} will be between \Sexpr{round(coli.ci[1],2)} and \Sexpr{round(coli.ci[2],2)}.
+
+
+\clearpage
+\newpage
+\section{Model Derivations} \label{app:ModelDerivations}
+\subsection{The von Bertalanffy Model for Length I}  \label{appsect:VBDerivationLength1}
+One method of deriving the typical VBGM \eqref{eqn:VBModelTypicalLength} begins by assuming that the rate of growth of an organism declines linearly as the length of the organism increases,
+
+\begin{equation}  \label{eqn:VBModel1DerivationI1}
+  \frac{dL(t)}{dt} = K(L_{\infty}-L(t))
+\end{equation}
+
+Integration of \eqref{eqn:VBModel1DerivationI1} leads to the intermediate function,
+
+\begin{equation}  \label{eqn:VBModel1DerivationI2}
+  \begin{split}
+    \frac{dL(t)}{dt} &= K(L_{\infty}-L(t))\\
+    \frac{dL(t)}{L_{\infty}-L(t)} &= Kdt\\
+    -log(L_{\infty}-L(t)) &= kt + c\\
+    log(L_{\infty}-L(t)) &= -kt + c\\
+    L_{\infty}-L(t) &= e^{c}e^{-kt}\\
+    L_{\infty}-L(t) &= de^{-kt}\\
+    L(t) &= L_{\infty} - de^{-kt}\\
+  \end{split}
+\end{equation}
+
+Note that $c$ and $d$ were both constants of integration in the work above.  Now to specifically identify $d$ in \eqref{eqn:VBModel1DerivationI2} consider the \emph{hypothetical} time or age when the average length of the fish is zero, $t_{0}$.  More specifically this defines $L(t_{0}) = 0$ which, when substituted into \eqref{eqn:VBModel1DerivationI2}, leads to,
+
+\begin{equation}  \label{eqn:VBModel1DerivationI3}
+  \begin{split}
+    0 &= L_{\infty} - de^{-kt_{0}}\\
+    de^{-kt_{0}} &= L_{\infty}\\
+    d &= \frac{L_{\infty}}{e^{-kt_{0}}}\\
+    d &= L_{\infty}e^{kt_{0}}\\
+  \end{split}
+\end{equation}
+
+Now substituting \eqref{eqn:VBModel1DerivationI3} into \eqref{eqn:VBModel1DerivationI2} leads to,
+
+\begin{align*}
+  L(t) &= L_{\infty} - L_{\infty}e^{kt_{0}}e^{-kt}\\
+  L(t) &= L_{\infty}(1-e^{kt_{0}-kt})\\
+  L(t) &= L_{\infty}(1-e^{-k(t-t_{0})})\\
+\end{align*}
+
+which is \eqref{eqn:VBModelTypicalLength}.
+
+
+\subsection{The von Bertalanffy Model for Length II}  \label{appsect:VBDerivationLength2}
+A second method for deriving the VBGM is to follow the logic Ludwig von Bertalanffy (1938) who derived the common VBGM \eqref{eqn:VBModelTypicalLength} from a physiological argument.  The weight of an organism at any moment depends upon the result of two opposing forces: \emph{anabolism}, i.e., the synthesis of tissue, and \emph{catabolism}, i.e., the breakdown of tissue.  The rate of anabolism is supposedly proportional to the magnitude of the ``resorbing surfaces'' of the animal while the rate of catabolism is proportional to the body weight.  The size of the ``resorbing surfaces'' (S) is not directly measurable but it is hypothesized that it is proportional to the square of some linear dimension, say length (L), i.e.,
+
+\begin{equation}  \label{eqn:VBModel1DerivationIIS}
+  S = pL^{2}
+\end{equation}
+
+where p is a proportionality constant.  Weight (W) too is taken to be proportional to the cube of some linear dimension, i.e.,
+
+\begin{equation}  \label{eqn:VBModel1DerivationIIW}
+  W = qL^{3}
+\end{equation}
+
+where $q$ is a proportionality constant.
+
+Anabolism and catabolism proceed simultaneously throughout the life of an animal.  Thus, the difference between these two forces at any instant defines the rate at which the weight of the animal is changing at that moment.  Rates are defined as derivatives, so the instantaneous change in weight over a given time is given by the differential equation
+
+\begin{equation}  \label{eqn:VBModel1DerivationII1}
+  \frac{dW(t)}{dt} = aS(t) - cW(t)
+\end{equation}
+
+where a is the coefficient of anabolism and c is the coefficient of catabolism.  By substitution of \eqref{eqn:VBModel1DerivationIIS} and \eqref{eqn:VBModel1DerivationIIW} into \eqref{eqn:VBModel1DerivationII1} we begin von Bertalanffy's historical development of the model,
+
+\begin{equation}  \label{eqn:VBModel1DerivationII2}
+  \begin{split}
+    \frac{d[qL(t)^3]}{dt} &= a[pL(t)^2] - c[qL(t)^3]\\
+    \frac{qd[L(t)^3]}{dt} &= apL(t)^2 - cqL(t)^3\\
+    3qL(t)^2\frac{d[L(t)]}{dt} &= apL(t)^2 - cqL(t)^3\\
+    3q\frac{d[L(t)]}{dt} &= ap - cqL(t)\\
+    \frac{d[L(t)]}{dt} &= \frac{ap}{3q} - \frac{cq}{3q}L(t)\\
+  \end{split}
+\end{equation}
+
+The combination of the constants, a, p, and q in the final row of \eqref{eqn:VBModel1DerivationII2} can be replaced with constants, specifically $K=\frac{c}{3}$ and $M=\frac{ap}{cq}$ (Note, thus, that $MK=\frac{ap}{3q}$).  Thus, \eqref{eqn:VBModel1DerivationII2} becomes
+
+\begin{equation}
+   \frac{d[L(t)]}{dt} = MK - KL(t)\\
+\end{equation}
+
+which is a linear differential equation that we can write in ``standard form'' as
+
+\begin{equation}  \label{eqn:VBModel1DerivationII3}
+    \frac{d[L(t)]}{dt} + KL(t) = MK\\
+\end{equation}
+
+We can now use the method for solving a linear differential equation (appendix XXX) on \eqref{eqn:VBModel1DerivationII3}.  In this case, $P'(x)=\frac{d[L(t)]}{dt}$, $f(x)=K$, $P(x)=L(t)$, and $g(x)=MK$.  With these definitions $F(x)=kt$ and the integrating factor is $e^{Kt}$.  Therefore, \eqref{eqn:VBModel1DerivationII3} can be rewritten as
+
+\begin{equation}  \label{eqn:VBModel1DerivationII4}
+  \begin{split}
+    e^{Kt}\frac{d[L(t)]}{dt} + Ke^{Kt}L(t) &= MKe^{Kt}\\
+    \frac{d[e^{Kt}L(t)]}{dt} &= MKe^{Kt}\\
+  \end{split}
+\end{equation}
+
+Following the method for solving linear differential equations we want to integrate both sides of \eqref{eqn:VBModel1DerivationII4} with respect to t evaluated from $z_{0}$ (which will correspond to the time when the average length was zero) to some arbitrary z,
+
+\begin{equation}  \label{eqn:VBModel1DerivationII5}
+  \begin{split}
+    \int\limits_{z_{0}}^{z}\frac{d[e^{Kt}L(t)]}{dt}dt &= \int\limits_{z_{0}}^{z}MKe^{Kt}dt\\
+    \int\limits_{z_{0}}^{z}\frac{d[e^{Kt}L(t)]}{dt}dt &= M\int\limits_{z_{0}}^{z}Ke^{Kt}dt\\
+    \left.e^{Kt}L(t)\right|_{z_{0}}^{z} &= \left.Me^{Kt}\right|_{z_{0}}^{z}\\
+    e^{Kz}L(z) - e^{Kz_{0}}L(z_{0}) &= Me^{Kz} - Me^{Kz_{0}}\\
+    e^{Kz}L(z) &= Me^{Kz} - Me^{Kz_{0}}\\
+    L(z) &= M - Me^{Kz_{0}}e^{-Kz}\\
+    L(z) &= M - Me^{-K(z-z_{0})}\\
+    L(z) &= M(1 - e^{-K(z-z_{0})})\\
+  \end{split}
+\end{equation}
+
+Replacing $z$ with $t$ in \eqref{eqn:VBModel1DerivationII5} and letting $t\rightarrow\infty$ to see that $M=L_{\infty}$ (as we did in the first model development) it is seen that \eqref{eqn:VBModel1DerivationII5} is indeed equivalent to \eqref{eqn:VBModelTypicalLength}.
+
+
+\subsection{The von Bertalanffy Model for Weight}  \label{appsect:VBDerivationWeight}
+The development of the VBGM for weight is very simply a substituting of the VBGM for length \eqref{eqn:VBModelTypicalLength} into the allometric length-weight relationship model,
+
+\begin{equation}  \label{eqn:VBModel1DerivationWeight}
+  \begin{split}
+    W(t) &= aL(t)^b\\
+    W(t) &= a\left[L_\infty\left(1-e^{-K(t-t_{0})}\right)\right]^b\\
+    W(t) &= aL^{b}_{\infty}\left(1-e^{-K(t-t_{0})}\right)^b\\
+    W(t) &= W_{\infty}\left(1-e^{-K(t-t_{0})}\right)^b\\
+  \end{split}
+\end{equation}
+
+
+\subsection{Relationship Between $K$ and Growth Increments in the VBGM}  \label{appsect:VBKrelation}
+From \eqref{eqn:VBModelTypicalLength}, define the expected length for three successive but generic ages,
+
+\begin{equation}
+  \begin{split}
+    E[L|t=i] &= L_{\infty}\left(1-e^{-K(i-t_{0})}\right) \\
+    E[L|t=i+1] &= L_{\infty}\left(1-e^{-K(i+1-t_{0})}\right) \\
+    E[L|t=i+2] &= L_{\infty}\left(1-e^{-K(i+2-t_{0})}\right) \\
+  \end{split}
+\end{equation}
+
+Further define the two annular growth increments between these three successive ages,
+
+\begin{equation}  \label{eqn:VBKrelation1}
+  \begin{split}
+    E[L|t=i+2] - E[L|t=i+1] &= L_{\infty}\left(1-e^{-K(i+2-t_{0})}\right) - L_{\infty}\left(1-e^{-K(i+1-t_{0})}\right) \\
+    &= L_{\infty}\left[e^{-K(i+1-t_{0})}-e^{-K(i+2-t_{0})} \right] \\
+    &= L_{\infty}e^{-K(i+1-t_{0})}\left[1-e^{-K} \right] \\
+    &= e^{-K}L_{\infty}e^{-K(i-t_{0})}\left[1-e^{-K} \right] \\
+  \end{split}
+\end{equation}
+
+and, with similar algebra,
+
+\begin{equation}   \label{eqn:VBKrelation2}
+  \begin{split}
+    E[L|t=i+1] - E[L|t=i] &= L_{\infty}\left(1-e^{-K(i+1-t_{0})}\right) - L_{\infty}\left(1-e^{-K(i-t_{0})}\right) \\
+    &= L_{\infty}e^{-K(i-t_{0})}\left[1-e^{-K} \right] \\
+  \end{split}
+\end{equation}
+
+Now the right-hand-size of \eqref{eqn:VBKrelation2} can be substituted into the right-hand-side of \eqref{eqn:VBKrelation1},
+
+\begin{equation}
+    E[L|t=i+2] - E[L|t=i+1] = e^{-K}\left(E[L|t=i+1] - E[L|t=i]\right)
+\end{equation}
+
+This proves the relation shown in \eqref{eqn:VBKdefn}.
+
+
+\subsection{Schnute Parameterization of the von Bertalanffy Model}  \label{appsect:VBDerivationParam2}
+The derivation follows that shown by \cite{SchnuteFournier1980}.  From \eqref{eqn:VBModelTypicalLength}, define the expected length at the youngest, $t_{1}$, and oldest, $t_{2}$, age in the data as
+
+\begin{equation}  \label{eqn:VBModel2DerivationL1L2}
+  \begin{split}
+    L_{1} &= E[L|t=t_{1}] = L_{\infty}\left(1-e^{-K(t_{1}-t_{0})}\right) \\
+    L_{2} &= E[L|t=t_{2}] = L_{\infty}\left(1-e^{-K(t_{2}-t_{0})}\right) \\
+  \end{split}
+\end{equation}
+
+Also recall from \appref{appsect:VBKrelation} that,
+
+\begin{equation}  \label{eqn:VBModel2DerivationK}
+    E[L|t=i+2] - E[L|t=i+1] = e^{-K}\left(E[L|t=i+1] - E[L|t=i]\right)
+\end{equation}
+
+The \eqref{eqn:VBModel2DerivationK} is a second order difference equation that is linear with constant coefficients and boundary conditions defined by \eqref{eqn:VBModel2DerivationL1L2}.  Two possible solutions to \eqref{eqn:VBModel2DerivationK} are,
+
+\begin{equation}
+  \begin{split}
+    E[L|t] &= \alpha \\
+    E[L|t] &= \beta e^{-Kt}  \\
+  \end{split}
+\end{equation}
+
+A theory of difference equations states that the solution to \eqref{eqn:VBModel2DerivationK} must be a combination of these two solutions,
+
+\begin{equation}  \label{eqn:VBModel2Derivation1}
+     E[L|t] = \alpha + \beta e^{-Kt}
+\end{equation}
+
+Substituting \eqref{eqn:VBModel2Derivation1} into the two boundary conditions of \eqref{eqn:VBModel2DerivationL1L2} gives,
+
+\begin{equation}
+  \begin{split}
+    L_{1} &= \alpha + \beta e^{-Kt_{1}} \\
+    L_{2} &= \alpha + \beta e^{-Kt_{2}}\\
+  \end{split}
+\end{equation}
+
+which can be solved for $\alpha$ and $\beta$,
+
+\begin{equation}
+  \begin{split}
+    \alpha &= L_{1} - \beta e^{-Kt_{1}} \\
+    \beta &= \frac{L_{2}-L_{1}}{e^{-Kt_{2}}-e^{-Kt_{1}}}
+  \end{split}
+\end{equation}
+
+Finally, these values are substituted into \eqref{eqn:VBModel2Derivation1} and simplified,
+
+\begin{equation}
+  \begin{split}
+    E[L|t] &= \alpha + \beta e^{-Kt} \\
+    &= L_{1} - \beta e^{-Kt_{1}}+ \beta e^{-Kt} \\
+    &= L_{1} + \beta \left(e^{-Kt}-e^{-Kt_{1}}\right)  \\
+    &= L_{1} + (L_{2}-L_{1})\frac{e^{-Kt}-e^{-Kt_{1}}}{e^{-Kt_{2}}-e^{-Kt_{1}}} \\
+    &= L_{1} + (L_{2}-L_{1})\frac{e^{-Kt}-e^{-Kt_{1}}}{e^{-Kt_{2}}-e^{-Kt_{1}}}\frac{-e^{-Kt_{1}}}{-e^{-Kt_{1}}} \\
+    &= L_{1} + (L_{2}-L_{1})\frac{1-e^{-K(t-t_{1})}}{1-e^{-K(t_{2}-t_{1})}} \\
+  \end{split}
+\end{equation}
+
+which is the Schnute parameterization of the VBGM, \eqref{eqn:VBModelSchnuteLength}.
+
+\end{appendices}
+
+<<echo=FALSE, results='asis'>>=
+## will add the reproducibility information
+et <- proc.time() - stime
+swvFinish(rqrdPkgs=rqrd,newPage=TRUE,elapsed=et["user.self"]+et["sys.self"])
+@
+<<echo=FALSE, results='hide', include=FALSE>>=
+## Will create the script file
+swvCode(moreItems=c("source","rqrd","stime"))
+@
+\end{document} 

@@ -1,0 +1,375 @@
+\documentclass[a4paper]{article}
+\input{c:/aaaWork/zGnrlLatex/GnrlPreamble}
+\usepackage[toc,page]{appendix}
+\input{c:/aaaWork/zGnrlLatex/JustRPreamble}
+\hypersetup{pdftitle = fishR Vignette -- Data Entry}
+
+\begin{document}
+\titleFishR{Data Entry}
+
+<<setup, echo=FALSE, include=FALSE>>=
+## Start time for keeping track of process time
+ stime <- proc.time()
+## load common knitr setup
+source("../knitr_Common.r")
+@
+
+Many fisheries biologists, when first learning to use R, struggle with how to ``enter'' their data into R.  In this vignette I will show how to port your data into R from tab-delimited, comma-separated values (CSV),  MSExcel (2007; .xlsx), MSExcel (pre-2007 .xls), MSAccess (2007), and MSAccess (pre-2007) files.  In addition, I will briefly mention how ``pre-existing'' data (not ``your'' data) can be loaded from existing R packages.  Finally, I will provide a brief tutorial on how to create subsets of your data once it is in R.
+
+This vignette is not an exhaustive treatment of how to load data into R.  I have simply tried to bring together methods to handle what I see as the most common situations among fisheries students and professionals.  It should be noted that the R Project does provide a \href{http://cran.r-project.org/doc/manuals/R-data.html}{manual that describes the importing and exporting of data}.  It should also be noted that I work primarily on a Windows-based machine and have not tested the methods below on Unix- or Mac-based machines, though I have tried to comment where I think that what is being described is Windows specific.
+
+The code below relies on the \R{FSA} package maintained by the author as well as the \R{XLConnect} and \R{RODBC} packages maintained by other authors.  These packages are loaded with
+<<echo=-1, results='hide', warning=FALSE, message=FALSE>>=
+rqrd <- c("FSA","RODBC","XLConnect","reshape2")
+library(FSA)
+library(XLConnect)
+library(RODBC)
+library(reshape2)
+@
+
+\section{The Data Files}\label{sec:DataFiles}
+Throughout this vignette, I will use a dataset of typical biological data from a population of ruffe (\textit{Gymnocephalus cernuus}).  These data contain the following variables measured on 40 ruffe captured in the St. Louis River Harbor, Lake Superior in 2007:
+\begin{Itemize}
+  \item \var{fishID}: a unique fish identification number.
+  \item \var{locShort}: name of the sampling location (all entries are \R{St. Louis R. (2007)}).
+  \item \var{year}: year of capture.
+  \item \var{month}: month of capture.
+  \item \var{day}: day of capture.
+  \item \var{date}: date of capture (this is redundant with the three previous variables but was included to illustrate how date data are read into R).
+  \item \var{tl}: total length (mm) (note: has missing data).
+  \item \var{wt}: weight (g).
+  \item \var{sex}: sex (\R{female}, \R{male}, or \R{unknown} ).
+  \item \var{maturity}: coarse maturity stage (\R{immature} or \R{mature}) (note: has missing data).
+\end{Itemize}
+
+The first few lines of these data look like:
+<<echo=FALSE>>=
+ruffeCSV <- read.csv("RuffeBio.csv",header=TRUE)
+head(ruffeCSV)
+@
+
+These data have been entered into a variety of formats for this vignette.  These formats are as follows:
+\begin{itemize}
+  \item MSAccess (2007): file called \dfile{RuffeBio.accdb}, table called \dfile{dbRuffeBio}, and query (which retrieves all records from the dbRuffeBio table) called \dfile{qryRuffeBio}.
+  \item MSAccess (2002-03): file called \dfile{RuffeBio.mdb}, same table and query names as above.
+  \item MSAccess (2000): file called \dfile{RuffeBio00.mdb}, same table and query names as above.
+  \item MSExcel (2007): file called \dfile{RuffeBio.xlsx}, sheet called \dfile{Bio}
+  \item MSExcel (pre-2007): file called \dfile{RuffeBio.xls}, same sheet name as above.
+  \item Tab-delimited text: file called \dfile{RuffeBio.txt}.
+  \item Comma-separated-values: file called \dfile{RuffeBio.csv}.
+\end{itemize}  
+  
+All of these files contain the same data, are available on the \href{http://www.ncfaculty.net/dogle/fishR/gnrlex/gnrlex.html}{FishR General Examples} web page, and will be used to illustrate the different methods for loading data into R in the following sections.
+
+All functions illustrated below assume that you have changed the R working directory to the location that holds your data files.  The working directory can be set through the ``File..Change Dir'' menu item but I prefer to set it using \R{setwd()}.  For example, on my system, I set the working directory with
+
+<<eval=FALSE>>=
+setwd("c:/aaaWork/web/fishR/gnrlex/DataEntry")
+@
+
+Please note that you will have to change this to the directory containing the data files on \textbf{YOUR} system.  On a Windows machine you can use a dialog box to interactively select (through browsing dialog boxes) a data file by including \R{file.choose()} in place of any of the file names shown below.  For example (this will make more sense after reading the ensuing sections), instead of
+<<eval=FALSE>>=
+txt.bio <- read.table("RuffeBio.txt",header=TRUE,sep="\t",na.strings="")
+@
+you could use
+<<eval=FALSE>>=
+txt.bio <- read.table(file.choose(),header=TRUE,sep="\t",na.strings="")
+@
+to interactively browse to where the data file is located.  In this instance you would not have to worry about setting the working directory with \R{setwd()}.  In general, this interactive method should be avoided as it will require the user to interact with the program whenever an R script is run, rather than having the script run to completion without additional interaction by the user.
+
+%\section{Methods for Comparing Results}
+%The following function can be used to determine if two data frames are equal or not.  You do not need to be worried about the details of this function, but do need to know that if it returns a \R{TRUE} then the two data frames examined are completely equal (i.e., all comparable elements in each data frame are the same).
+<<eval=FALSE, echo=FALSE>>=
+comp.df <- function(df1,df2) { all(is.element(paste(df1),paste(df2))) }
+@
+
+
+\section{Reading Data Files in R Packages}
+In many texts and vignettes one will see data loaded into R with the \R{data()} function.  This function is used explicitly to load data files that are parts of R packages.  For example, the \dfile{SMBassWB} from the \R{FSA} package can be loaded with
+<<>>=
+data(SMBassWB)
+str(SMBassWB)
+@
+Of course, this is only useful for data that is likely not yours and is found in an R package.
+
+
+\section{Reading from Text Files}\label{sec:TextFiles}
+Tab-delimited text files can be read into R with \R{read.table()}.  The \R{read.table()} function requires only one argument -- the name of the file in quotes.  However, if the first row of the data file contains the variable names, as \dfile{RuffeBio.txt} does, then R must be told so with the \R{header=TRUE} argument.  By default, \R{read.table()} simply looks for fields that are separated by ``white space'' whether that be a space, multiple spaces, or a tab.  There are at least two problems with this approach.  First, if the file contains missing cells then those missing cells appear as spaces in the file and \R{read.table()} will lump those spaces with the tabs before and after the missing field to make it look like a single field delimiter.  In this case, \R{read.table()} will return an error saying ``line XX did not have YY elements''.  Second, if any one of the field entries contains spaces then each ``word'' in that field will be incorrectly considered as a separate field.  For example, the \var{locShort} field contains the text ``St. Louis R. (2007)''.  The default \R{read.table()} will treat this single entry as four entries and will result in an error saying ``more columns than column names''.  The easiest way to address these errors is to force \R{read.table()} to delimit fields with tabs by using the  \R{sep="\t"} argument.  Additionally, one can identify a string that when read is considered to be a missing value.  The default behavior of \R{read.table()} is to consider \R{NA} as a missing value.  However, it is more common that missing values will truly be missing and, in this case, one should use \R{na.strings=""}.  Thus, \dfile{RuffeBio.txt} can be loaded into R, the \var{date} variable format converted\footnote{The second argument in \R{strptime} shows the format of the dates in the \R{xls.bio\$date} input object (\R{\%m} says the month is first, \R{\%d} says the day is second, and \R{\%Y} says that the four digit year is last) and the \R{tz=""} argument tells \R{strptime()} to ignore the time zone of the date.}, and the data frame structure observed with
+<<>>=
+txt.bio <- read.table("RuffeBio.txt",header=TRUE,sep="\t",na.strings="")
+txt.bio$date <- as.POSIXct(strptime(txt.bio$date,"%m/%d/%Y",tz=""))
+str(txt.bio)
+@
+
+Comma-separated-values (CSV) files are text files where each field is separated by commas.  Commas-separated-values files can be loaded into R with \R{read.csv()} with the only required argument being the name of the data file in quotes.  It should also be noted that \R{read.csv()}, in contrast to \R{read.table()}, defaults to using \R{header=TRUE}.  Thus, \dfile{RuffeBio.csv} is loaded into R and the data variable format is converted with
+<<>>=
+csv.bio <- read.csv("RuffeBio.csv",na.strings="")
+csv.bio$date <- as.POSIXct(strptime(csv.bio$date,"%m/%d/%Y",tz=""))
+str(csv.bio)
+@
+
+
+\section{Reading from Excel Files}\label{sec:TextFiles}
+\subsection{using XLConnect}
+The \R{XLConnect} package provides useful and flexible functions for reading from and writing to Excel files.  In this section, I will describe only simple methods of reading data from Excel files.  The excellent demo vignette provided with the \R{XLConnect} package should be consulted for more advanced uses.
+
+The Excel file, or workbook, must first be ``loaded'' into R before specific worksheets can be read from it.  This is accomplished by providing the name of the file in the first argument of \R{loadWorkbook()}.  It is important to save the results of this function to an object.  For example, the Excel 2007 example file is loaded with
+<<>>=
+x07.wb <- loadWorkbook("RuffeBio.xlsx")    # Excel 2007
+@
+Once a file is loaded into R, a worksheet inside that file can be read with \R{readWorksheet()}.  This function requires the \R{loadWorkbook} object as the first argument and the name of worksheet to be read in quotes in the \R{sheet=} argument.  Thus, the \dfile{Bio} worksheet from the \dfile{RuffeBio.xlsx} file is read and the structure is obsered with
+<<>>=
+x07.bio <- readWorksheet(x07.wb,sheet="Bio")
+str(x07.bio)
+@
+It is seen that \R{readWorkseet()} does not convert character strings to factors as \R{read.table()} does.  The \var{date} variable can be converted to a proper date format as shown previously.  The other variables can be converted to factor variables with \R{factor()}.  However, after doing so it will be apparent that the ``missing data'' in the \var{maturity} variable will be treated as a level.  To rectify this, the missing values should be converted to \R{NA}s before factoring.  All of these conversions are illustrated with
+<<>>=
+x07.bio$date <- as.POSIXct(strptime(x07.bio$date,"%m/%d/%Y",tz=""))
+x07.bio$locShort <- factor(x07.bio$locShort)
+x07.bio$sex <- factor(x07.bio$sex)
+x07.bio$maturity[x07.bio$maturity==""] <- NA
+x07.bio$maturity <- factor(x07.bio$maturity,exclude="")
+str(x07.bio)
+@
+With these changes, this file matches the tab-delimited text file read previously with the exception that some variables are recorded as ``numerical'' rather than ``integer.''
+
+A similar process is followed for pre-2007 versions of Excel (demonstrated in the next paragraph).
+
+Some Excel data files do not so strictly resemble a database table (i.e., they don't have variable names in the first row, data starting in the second row after the labels, very few missing fields, etc.) as the \dfile{RuffeBio.xls} file does.  For example, the \dfile{RuffeBio2.xls} file has variable names that start in the fourth row, a non-data title in the first cell (i.e., A1), and \var{tl} and \var{maturity} variables that have missing values in the first 26 rows.  These types of files can be adequately read with \R{readWorksheet()} using the \R{startRow=} argument to identify which row to start reading from\footnote{Also note that there are \R{endRow=}, \R{startCol=}, and \R{endCol=} arguments if one must read a range of data that does not start in the upper-right cell of the worksheet.}.  For example, the \dfile{RuffeBio2.xls} is read with
+<<>>=
+xodd.wb <- loadWorkbook("RuffeBio2.xls")
+xodd.bio <- readWorksheet(xodd.wb,sheet="Bio",startRow=4)
+str(xodd.bio)
+@
+
+\subsection{Using RODBC}\label{sect:RODBC}
+The \R{RODBC} packag provides functions for which a user can import data directly from external files, including Excel and Access, into R.  With the advent of 64-bit versions of R, Microsoft products, and computers, one has to be much more careful using the RODBC functions than previously.  In particular, one must make sure that your workflow is \emph{using the same architecture for R as it is for the Microsoft products} if one is going to successfully read directly from those products into R.  In other words, R and Microsoft Office both either need to be 32-bit or 64-bit, but not a mixture of both (e.g., you can't use 64-bit R with 32-bit Office).  One can determine their version of R with \R{version}, or more directly with \R{version\$platform} as such,
+<<>>=
+version$platform
+@
+If one sees ``i386'' and ``mingw32'' in this then you are using the 32-bit version of R.  The version of your Microsoft Office product can generally be found in the ``Help..About'' or ``File .. Help'' information.  For example, on my current machine, I am using a 32-bit version of Office (see the lower-right highlighted item below)
+
+\begin{center}
+\includegraphics[width=4in]{Figs/wordBit.png}
+\end{center}
+
+Thus, I should be able to successfully use \R{RODBC} as described below because both my R and Microsoft Office are using the 32-bit architecture.
+
+Reading data from Excel using the \R{RODBC} package is very similar to what was described above for using \R{XLConnect}.  First, a connection to the Excel file must be created with either \R{odbcConnectExcel2007()} for Excel (2007) files or \R{odbcConnectExcel()} for pre-Excel (2007) files.  For example,
+<<eval=-2>>=
+x07.con <- odbcConnectExcel2007("RuffeBio.xlsx")    # Excel 2007
+xls.con <- odbcConnectExcel("RuffeBio.xls")         # pre-Excel 2007
+@
+
+The worksheet in one of these files is then ``fetched'' with \R{sqlFetch()} which requires two arguments.  The first argument is the saved ``connection'' name that was just created.  The second argument is the name, in quotes, of the worksheet on the connected Excel file that contains the data to be fetched.  Also, notice that true missing values will be considered as R missing values (i.e., as \R{NA}s) when \R{na.strings=""} is used.  For example, the worksheet named ``Bio'' in the Excel (2007) file is fetched and the structure is obsered with
+<<>>=
+x07.bio2 <- sqlFetch(x07.con,"Bio",na.strings="")
+str(x07.bio2)
+@
+
+It is seen that RODBC reads the \var{date} variable as a factor rather than a character or POSIXct object.  This conversion is accomplished as preiously with
+<<>>=
+x07.bio2$date <- as.POSIXct(strptime(x07.bio2$date,"%m/%d/%Y",tz=""))
+@
+
+Similar steps are used to read from the Excel (pre-2007) file (making sure to use the \R{xls.con} connection from above).  All connections should be closed when you are done fetching data through them.  This is accomplished with \R{odbcClose()} as shown below
+<<eval=-2>>=
+odbcClose(x07.con)
+odbcClose(xls.con)
+@
+
+The RODBC method can NOT be reliably used for Excel files that do not closely look like a database table (e.g., like \dfile{RuffeBio2.xls}).  For example, examine the structure of the data frame produced with
+<<>>=
+xls2.con <- odbcConnectExcel("RuffeBio2.xls")
+xls2.bio <- sqlFetch(xls2.con,"Bio",na.string="")
+str(xls2.bio)
+odbcClose(xls2.con)
+@
+
+
+\section{Access}
+The \R{RODBC} package can also be used to directly port from Access to R.  The functions are very similar to those described for Excel in \sectref{sect:RODBC}.  In addition, if you did not read \sectref{sect:RODBC}, then you should go there now to read the discussion and warning related to the 32- and 64-bit architectures of R and Microsoft Office.
+
+
+A channel of communication must first be opened between R and the application which holds the data using one of \R{odbcConnectAccess2007()} for Access (2007) files or \R{odbcConnectAccess()} for pre-Access (2007) files.  Each of these is shown below, though, of course, you would only use one of these commands that was specific to the data file you wish to use.
+<<eval=-(2:3)>>=
+a07.con <- odbcConnectAccess2007("RuffeBio.accdb")  # Access 2007
+a03.con <- odbcConnectAccess("RuffeBio.mdb")        # Access 2003
+a00.con <- odbcConnectAccess("RuffeBio00.mdb")      # Access 2000
+@
+
+Once the connection to the data file has been created then the data is ``fetched'' with \R{sqlFetch()} where the first argument is the name of the connection created above and the second argument is the name, in quotes, of the object (table or query) in Access that contains the data to be fetched.  If the database is protected with a user ID and password then the user ID can be passed in the \R{UID=} and the password passed in the \R{pwd=} optional arguments.  For example, the data stored in the Access (2007) file is fetched and the structure observed with
+<<>>=
+a07d.bio <- sqlFetch(a07.con,"dbRuffeBio",na.strings="")
+str(a07d.bio)
+@
+
+The data can be read from the \textbf{query} in the Access (2007) file in a similar manner with
+<<>>=
+a07q.bio <- sqlFetch(a07.con,"qryRuffeBio",na.string="")
+str(a07q.bio)
+@
+
+Similar commands can be used to read from the Access (2003) and Access (2000) files (simply making sure to use the correct connection created above).  All connections should be closed when you are done fetching data through them with
+<<eval=-(2:3)>>=
+odbcClose(a07.con)
+odbcClose(a03.con)
+odbcClose(a00.con)
+@
+
+
+\section{Final Comments on Reading Data into R}
+My recommendation is to keep your data in its native format if at all possible.  By this I mean if your data is in Access then keep it in Access rather than converting it to Excel, a CSV, or a tab-delimited text file.  Similarly, if your data is in Excel then try to read it from Excel rather than converting to CSV or tab-delimited text file.  I make this recommendation primarily because it will be much easier on you if you have to modify the data file and re-read it into R.  For example, if you data is in Access but you converted it to a text file, then, if you modify the Access file, you will have to make sure to save a new version of the text file.  In contrast, if you are reading directly from the Access file then you simply need to re-read the modified file.
+
+I have focused this presentation on reading data from Microsoft products not because I want to promote Microsoft products but because most questions that I receive are related to these products.  As an open-source product, R contains other functions for reading data from Oracle files (see \href{http://cran.r-project.org/web/packages/ROracle/index.html}{ROracle}), mySQL files (see \href{http://cran.r-project.org/web/packages/RMySQL/}{RMySQL}), and Open Office Base files (see \href{http://cran.r-project.org/web/packages/ODB/index.html}{ODB}).
+
+
+\section{Creating Subsets of Data Frames}
+It is common that a researcher will want to examine a subset of a larger data frame -- e.g., examine just male ruffe.  Base R provides \R{subset()} for creating subsets of data frames.  For example, the male ruffe can be extracted from any of the previous data frames with (the details will be explained later)
+<<>>=
+r.male <- subset(txt.bio,sex=="male")
+@
+and a frequency table of \var{sex} constructed with
+<<>>=
+table(r.male$sex)
+@
+It is immediately obvious from this table that \R{subset()} does indeed extract just the males, but the \var{sex} variable still contains the ``female'' and ``unknown'' level names.  This produces tables (and graphs) that are ``ugly.''  There are a variety of methods for correcting this problem but the easiest is to use \R{Subset()} from the \R{FSA} package.
+
+The \R{Subset()} function requires the original data frame as the first argument and a conditioning statement as the second argument.  The conditioning statement is a statement that is used to either include or exclude the individuals from the original data frame that will make up the new data frame.  The result from \R{Subset()} should be stored in a new object which will then be a new data frame.  The conditioning statements used in \R{Subset()} can be fairly complex \tabrefp{tab:RSubsetConditions}.
+
+\begin{table}[h]
+  \caption{Condition operators used in \R{Subset()} and their results.  Note that \emph{variable} generically represents a variable in the original data frame and \emph{value} is a generic value or level.  Both of these would be replaced with specific items.}  \label{tab:RSubsetConditions}
+  \centering
+\begin{tabular}{cc}
+\hline\hline
+Comparison &  \\
+Operator &  Individuals Returned from Original Data Frame \\
+\hline
+\widen{-1}{6}{\emph{variable}} $==$ \emph{value} & all individual equal to given value \\
+\widen{-1}{5}{\emph{variable}} $!=$ \emph{value} & all individuals NOT equal to given value \\
+\widen{-1}{5}{\emph{variable}} $>$ \emph{value} & all individuals greater than given value \\
+\widen{-1}{5}{\emph{variable}} $>=$ \emph{value} & all individuals greater than or equal to given value \\
+\widen{-1}{5}{\emph{variable}} $<$ \emph{value} & all individuals less than given value \\
+\widen{-1}{5}{\emph{variable}} $<=$ \emph{value} & all individuals less than given value \\
+\widen{-1}{5}{\emph{condition}} \& \emph{condition} & all individuals that meet both conditions \\
+\widen{-2}{6}{\emph{condition}} $|$ \emph{condition} & all individuals that meet one or both conditions \\
+\hline\hline
+\end{tabular}
+\end{table}
+
+As an example, the subset of just male ruffe is found using \R{Subset()}, with a table of the result shown to demonstrate that the ``female'' level name has indeed been removed, with
+<<>>=
+r.male <- Subset(txt.bio,sex=="male")
+table(r.male$sex)
+@
+
+The following items are examples of new data frames created by subsetting the \var{txt.bio} data frame\footnote{The \R{view()} function is used in the examples below to show a random selection of six rows from the new data frame.}.
+
+\begin{itemize}
+  \item A data frame that contains only males.
+<<>>=
+r.male <- Subset(txt.bio,sex=="male")
+view(r.male)
+@
+
+  \item A data frame that contains \emph{male} and \emph{female}s (but not \emph{unknown} sex individuals).
+<<>>=
+r.fm1 <- Subset(txt.bio,sex=="male" | sex=="female")  # male OR female
+view(r.fm1)
+r.fm2 <- Subset(txt.bio,sex!="unknown")               # exclude unknowns
+view(r.fm2)
+r.fm3 <- Subset(txt.bio,sex%in%c("male","female"))
+view(r.fm3)
+@
+
+  \item A data frame that contains individuals with a total length greater than 80 mm.
+<<>>=
+r.gt80 <- Subset(txt.bio,tl>80)
+view(r.gt80)
+@
+
+  \item A data frame that contains males with a total length greater than 80 mm.
+<<>>=
+r.mgt80 <- Subset(txt.bio,sex=="male" & tl>80)
+view(r.mgt80)
+@
+\end{itemize}
+
+Note that after each subsetting you should get in the habit of either typing the name of the new data frame to see all of the resulting data, using \R{head()} or \R{view()} to examined a subsample of rows from the new data frame, or using \R{str()} to examine the structure of the new data frame.  While this practice is not required, it is highly recommended as a way to determine if the new data frame actually contains the items that you desire.
+
+
+\section{Changing ``Directions'' of the Data}
+Suppose you have data that consists of the counts of several species of fish from several sets of nets.  These type of data may be entered in one of two formats.  In the so-called ``wide'' format, each row of the data frame would consist of one net set and there would be multiple columns corresponding to each species of fish.  This type of data would look like this
+<<echo=FALSE, background='white'>>=
+( dfw <- data.frame(net=c(1,2,3),eff=c(1,1,1),temp=c(17,17.3,17.2),BKT=c(17,5,0),LKT=c(45,0,17),RBT=c(14,13,17)) )
+@
+where \R{net} is a net identification number; \R{BKT}, \R{LKT}, and \R{RBT} represent the various species of fish captured; and \R{eff} and \R{temp} are ``effort'' and water temperature, respectively, and are meant to illustrate the type of ``net-specific'' data that might be collected in addition to the catch of individual species.  In so-called ``long'' format each row does NOT correspond to a net, rather each row corresponds to a net-species combination.  Thus, in long format the catches of all species in one net are distributed across several rows.  The same data shown above in wide format is shown below in long format
+<<echo=FALSE, background='white'>>=
+dfl <- melt(dfw,id.vars=c("net","eff","temp"),measure.vars=c("BKT","LKT","RBT"),variable.name="species",value.name="catch")
+## this is a hack to get around a problem associated with FSA and reshape2
+names(dfl)[4:5] <- c("species","catch")
+dfl
+@
+It is fairly common to need to convert data in ``long'' format to that in ``wide'' format or vice versa.  Methods for making these changes are described in the following subsections.  For all examples below, suppose that the wide data above is stored in \R{dfw} and the long data above is stored in \R{dfl}.
+
+\subsection{Using \R{reshape()} from Base R}
+The \R{reshape()} function in base R can be used to convert between the two formats.  In either conversion, the first argument to \R{reshape()} is the name of the data frame to be reshaped.  The \R{direction=} argument can be set either to \R{"wide"} or \R{"long"} depending on the desired direction of the RESULTING data frame.  To convert from wide to long format one would also use the following arguments:
+\begin{itemize}
+  \item \R{idvar=}: The variable in wide format that represents the individuals or unit of measurements.
+  \item \R{varying=}: The variable(s) in wide format that represent the ``multiple measurements'' on the individuals.  These variables will ultimately be stacked into a single variable in the resulting long format.
+  \item \R{v.names=}: This is a name for the new variable in the long format that is to be constructed from the \R{varying=} variables from the wide format.
+  \item \R{timevar=}: This is a name for the new variable in the long format that is constructed so as to keep track of the original ``group'' of the multiple measurements from the wide format.
+  \item \R{times=}: This is a vector of the ``group'' names to be used in the variable declared in \R{timevar=}.  Often times this will be very closely related to the names given in \R{varying=}.
+\end{itemize}
+It should be noted that the variables not listed in \R{idvar=} or \R{varying=} will essentially be treated as constant variables that are closely linked to the variable in \R{idvar=}.  Thus, the data shown above in wide format can be converted to long format with
+<<>>=
+( dfL <- reshape(dfw,direction="long",idvar="net",
+                 varying=c("BKT","LKT","RBT"),v.names="catch",
+                 timevar="species",times=c("BKT","LKT","RBT")) )
+@
+
+The same function can also be used to convert from long to wide format.  In this case, the following arguments are used
+\begin{itemize}
+  \item \R{idvar=}: The variable in long format that represents the individuals or unit of measurements.
+  \item \R{v.names=}: The variable in long format that represents the multiple measurements.
+  \item \R{timevar=}: The variable in long format that represents the variable that identifies the ``groups'' on which the multiple measurements were made.
+\end{itemize}
+The variables not listed in \R{idvar=}, \R{v.names=}, or \R{timevar=} will be treated as constant variables that are closely linked to the variable in \R{idvar=}.  Thus, the data shown above in long format can be converted to wide format with
+<<>>=
+( dfW <- reshape(dfl,direction="wide",idvar="net",v.names="catch",timevar="species") )
+@
+
+\subsection{Using \R{cast()} and \R{melt()} from \pkg{reshape2}}
+The \R{reshape2} package offers alternatives to using \R{reshape()} from base R.  To convert from a wide format to a long format the \R{melt()} function is used.  As above, the first argument to this function is the wide format data frame to be ``melt''ed.  The following other arguments are used
+\begin{itemize}
+  \item \R{id.vars=}: The variable in wide format that represents the individuals or unit of measurements.
+  \item \R{measure.vars=}: The variable(s) in wide format that represent the ``multiple measurements'' on the individuals.  These variables will ultimately be stacked into a single variable in the resulting long format.
+  \item \R{variable.name=}: This is a name for the new variable in the long format that is constructed so as to keep track of the original ``group'' of the multiple measurements in the wide format.
+  \item \R{value.name=}: This is a name for the new variable in the long format that is to be constructed from the \R{varying=} variables from the wide format.
+\end{itemize}
+The data shown above in wide format can be converted to long format with
+<<echo=-c(2:4)>>=
+dfL <- melt(dfw,id.vars=c("net","eff","temp"),measure.vars=c('BKT','LKT','RBT'),
+              variable.name="species",value.name="catch")
+## this is a hack to get around a problem associated with FSA and reshape2
+names(dfl)[4:5] <- c("species","catch")
+dfl
+@
+
+The \R{dcast()} function is used to convert from long to wide format.  As with the other functions mentioned so far, this function begins with the long format data frame to be reshaped.  However, in contrast to all of the previous functions this function uses a formula to identify how the reshaping should occur.  The left-hand-side (LHS; i.e., to the left of the tilde) of the formula contains the variables that represent or are constant for all individuals.  The right-hand-side (RHS) of the formula contains the variable(s) that represent(s) the ``groups'' of each individual.  Finally, the \R{value.var=} argument is used to identify the variable that contains the multiple measurments for each individual.  Thus, the data shown above in long format is converted to wide format with
+<<>>=
+( dfW <- dcast(dfl,net+eff+temp~species,value.var="catch") )
+@
+
+<<echo=FALSE, message=FALSE, results='asis'>>=
+## reload FSA after it was detached for a work-around with bug with reshape2
+library(FSA)
+## will add the reproducibility information
+et <- proc.time() - stime
+swvFinish(rqrdPkgs=rqrd,newPage=TRUE,elapsed=et["user.self"]+et["sys.self"])
+@
+<<echo=FALSE, results='hide', include=FALSE>>=
+## Will create the script file
+swvCode(moreItems=c("source","rqrd","stime"))
+@
+\end{document} 

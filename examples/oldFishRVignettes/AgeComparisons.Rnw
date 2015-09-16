@@ -1,0 +1,173 @@
+\documentclass[a4paper]{article}
+\input{c:/aaaWork/zGnrlLatex/GnrlPreamble}
+\usepackage[toc,page]{appendix}
+\usepackage{longtable}
+\input{c:/aaaWork/zGnrlLatex/JustRPreamble}
+\hypersetup{pdftitle = fishR Vignette -- Age Precision and Accuracy}
+
+\begin{document}
+\titleFishR{Precision and Accuracy in Ages}
+
+<<setup, echo=FALSE, include=FALSE>>=
+## Start time for keeping track of process time
+ stime <- proc.time()
+## load common knitr setup
+source("../knitr_Common.r")
+@
+
+As with most estimation techniques, errors in age estimation will occur.  The first type of error that can occur is related to the validity of the method of age determination.  For example, if the number of annuli found on scales reaches an asymptote that is considerably less than the maximum age of the fish then the interpretation of scales may provide invalid or inaccurate estimates of age.  Another type of error is associated with the interpreters of the ageing structure, or the agers themselves.  An ager may be producing biased interpretations if his or her interpretations are systematically different then what is known to be true, drift over time (away from the ``truth''), or are different than another ager (supposedly interpreting the ``truth'').  In addition, the precision of non-systematic differences in interpretations should be measured between two agers or between an ager's interpretations of the same structures over time.  This vignette will focus on graphical and statistical measures used to identify systematic bias \sectrefp{sect:AgeBias} and measure precision \sectrefp{sect:AgePrecision}.  More complete treatments of these items can be found in \cite{Campanaetal1995} and \cite{Campana2001}.
+
+This vignette requires functions in the \R{FSA} and \R{FSAdata} packages maintained by the author.  These packages are loaded into R with
+<<echo=-1, results='hide', warning=FALSE, message=FALSE>>=
+rqrd <- c("FSA","FSAdata")
+library(FSA)
+library(FSAdata)  # for datafile
+@
+
+\section{Systematic Bias} \label{sect:AgeBias}
+\subsection{Test of Symmetry}
+The systematic bias of an ager can occur if the assigned ages by the ager differ from a more experienced ager, if the assigned ages differ from ages assigned to the same sample at a previous time, or if there are differences between structures.  \cite{Hoenigetal1995} described a test of symmetry for determining if significant differences existed between structures or agers\footnote{\cite{Hoenigetal1995} first suggested this test for assessing bias in age assessments.  However, this test existed previously in the statistical literature and is called a \emph{Bowker's Test of Symmetry}.}.  The test proposed by \cite{Hoenigetal1995} is best described through examination of an age-agreement table (e.g., \tabref{tab:ExAgeAgree}).
+
+\begin{table}[hbp]
+  \centering
+  \caption{The age-agreement table for two agers of Atlantic Croaker otoliths.}
+  \label{tab:ExAgeAgree}
+\begin{tabular}{cccccccccccc}
+\hline\hline
+ & \multicolumn{11}{c}{Reader 2} \\
+ \cline{2-12}
+Reader 1 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 \\
+\hline
+1&$3$&$ 0$&$ 0$&$ 0$&$ 0$&$ 0$&$ 0$&$ 0$&$ 0$&$0$&$0$\\
+2&$0$&$34$&$ 1$&$ 0$&$ 0$&$ 0$&$ 0$&$ 0$&$ 0$&$0$&$0$\\
+3&$0$&$ 0$&$29$&$ 1$&$ 0$&$ 0$&$ 0$&$ 0$&$ 0$&$0$&$0$\\
+4&$0$&$ 0$&$ 0$&$17$&$ 1$&$ 0$&$ 0$&$ 0$&$ 0$&$0$&$0$\\
+5&$0$&$ 0$&$ 0$&$ 3$&$58$&$ 0$&$ 0$&$ 0$&$ 0$&$0$&$0$\\
+6&$0$&$ 0$&$ 0$&$ 0$&$ 4$&$26$&$ 5$&$ 0$&$ 0$&$0$&$0$\\
+7&$0$&$ 0$&$ 0$&$ 0$&$ 0$&$ 2$&$52$&$ 1$&$ 0$&$0$&$0$\\
+8&$0$&$ 0$&$ 0$&$ 0$&$ 0$&$ 0$&$ 0$&$36$&$ 1$&$0$&$0$\\
+9&$0$&$ 0$&$ 0$&$ 0$&$ 0$&$ 0$&$ 0$&$ 2$&$39$&$0$&$0$\\
+10&$0$&$ 0$&$ 0$&$ 0$&$ 0$&$ 0$&$ 0$&$ 0$&$ 0$&$1$&$1$\\
+11&$0$&$ 0$&$ 0$&$ 0$&$ 0$&$ 0$&$ 0$&$ 0$&$ 0$&$0$&$0$\\
+\hline\hline
+\end{tabular}
+\end{table}
+
+On an age-agreement table, the main diagonal represents the frequency of fish for which the same age was obtained by the two agers or on the two structures.  Each cell off of the main diagonal represents a difference in assigned age between agers or structures.  If there are no systematic differences between agers or structures then it would be expected that the disagreements in age would fall randomly on either side of the diagonal, producing an approximately symmetric age-agreement table.  The test of symmetry proposed by \cite{Hoenigetal1995} uses a chi-square-type statistical test to determine if the age-agreement table is symmetric (the null) or not.  If the age-agreement table is determined to be asymmetric then it can be concluded that there is a systematic difference in ages observed between agers or structures.
+
+The test of symmetry described above can be computed in R with \R{ageBias()}.  The first argument to this function is a formula of the form \R{col}\verb"~"\R{row} where \R{col} is a variable name for the structure or ager that will form the columns and \R{row} will form the rows of the age-agreement table.  Generally the structure or ager thought to provide the most accurate ages should be used as the column variable in the age-agreement table.  The second argument (\R{data=}) is the name of the data frame that contains the \R{col} and \R{row} data given in the first argument.  In addition, the columns and rows of the age agreement table can be labeled with \R{col.lab=} and \R{row.lab=}.  The result of \R{ageBias()} should be assigned to an object.  The age agreement table and the test of symmetry are extracted from that object with \R{summary()} using the \R{what="symmetry"} argument.
+
+\cite{Ogormanetal1987} examined ages assessed from scales and otoliths for 104 Alewife (\emph{Alosa pseudoharengus}) from Lake Huron (in \R{AlewifeLH}).  These data are read and the structure is examiend with
+<<>>=
+data(AlewifeLH)
+str(AlewifeLH)
+@
+
+Otoliths are generally thought to be more accurate than scales so the variable containing the otolith ages should appear as the columns in the age agreement table and thus should be on the left-hand-side of the formula in the first argument to \R{ageComp()}.  The test of symmetry for detecting systematic differences between ages assigned through examination of the two structures was constructed with
+<<>>=
+ab.ale <- ageBias(otoliths~scales,data=AlewifeLH,col.lab="Otolith Age",
+row.lab="Scale Age")
+summary(ab.ale,what="symmetry")
+@
+<<echo=FALSE, results='hide'>>=
+sumab.ale <- summary(ab.ale,what="symmetry")
+@
+
+The test of symmetry (\Sexpr{swvPvalue(sumab.ale$p)}) indicates that there are systematic differences in assigned ages between the two structures.  The age-agreement table suggests that scales underestimate age relative to otoliths after about age-5.  If the otolith ages have been validated then these results would suggest that scale ages should not be used.
+
+\subsection{Age-Bias Plots}
+\cite{Campanaetal1995} noted that several statistical methods were capable of detecting systematic ageing differences but were incapable of detecting both linear and non-linear biases in ageing.  For example, the statistical methods were not sensitive to detecting if one ager systematically over-aged for younger fish but systematically under-aged for older fish.  To address this problem, \cite{Campanaetal1995} proposed a so-called \emph{age-bias plot}.
+
+In an age-bias plot, the mean (with 95\% confidence interval) age from the ager, time, or structure thought to be less accurate is plotted for each distinct age from the ager, time, or structure thought to be more accurate (e.g., \figref{fig:AgeBias1}).  If the 95\% confidence intervals do not ``contain'' the 1:1 agreement line then the age-bias plot suggests a systematic difference between agers, times, or structures.  An age-bias plot is constructed by sending the object saved from \R{ageBias()} to \R{plot()} along with the \R{what="bias"} argument (which is the default).
+
+Potential biases in the ageing of Lake Huron Alewife were further examined by producing an age-bias plot \figrefp{fig:AgeBias1} of the paired otolith and scale readings with
+
+<<AgeBias1, fig.cap="Age-bias plot for age-estimates from otoliths and scales of Lake Huron Alewife.">>=
+plot(ab.ale)
+@
+
+These results further suggest that the scales underestimate the age of Alewife relative to otoliths beginning at about age-5 or age=6.
+
+\cite{Muiretal2008} used a slight modification of the age-bias plot where the differences in ages between the groups was plotted on the y-axis \figrefp{fig:AgeBias2}.  Their modification can be constructed by including the \R{difference=TRUE} argument in \R{plot()}.
+
+<<AgeBias2, fig.cap="Alternative age-bias plot for age-estimates from otoliths and scales of Lake Huron Alewife.">>=
+plot(ab.ale,difference=TRUE)
+@
+
+The 95\% confidence intervals in \figref{fig:AgeBias1} and \figref{fig:AgeBias2} are color coded.  The color of the confidence interval corresponds to whether a one-sample t-test indicated that the mean of the ages plotted on the y-axis was equal to the corresponding age on the x-axis for the original age-bias plot or whether the difference in ages plotted on the y-axis was equal to zero on the difference age-bias plot.  The significance was determined by comparing an adjusted p-value (default is the ``Holm'' method\footnote{See \R{p.adjust.methods()} for the full list of possible adjustment methods.}) to the \R{sig.level=} argument in the original call to \R{ageBias()} (=0.05 by default).  Note that the p-value adjustment makes it more difficult to reject the null hypothesis of no difference then in a situation where no p-value adjustment occurred.  The confidence intervals presented in the age-bias plot are \textit{unadjusted} confidence intervals; thus, more differences from the 1:1 line (original age-bias plot) or the zero line (differences age-bias plot) than are warranted will appear.  The significance colors presented are \textit{adjusted} and are more conservative then the actual confidence intervals.  Unadjusted p-values can be obtained by using \R{method="none"} in \R{ageBias()}.  In addition, different color coding for the confidence intervals can be avoided by setting the \R{col.err=} and \R{col.err.sig=} arguments to the same color.
+
+The fisheries scientist may want to visualize the actual observations on an age-bias plot.  However, this is problematic because the discrete nature of age data results in a large amount of overplotting (i.e., individual points cannot be discerned).  One possible correction is to modify the age-bias plot by plotting individual points with transparency such that a single point is very transparent but as more points are plotted on top of each other the ``point'' becomes darker.  The number of overplotted points required to make the point appear completely dark is controlled with the \R{transparency=} argument.  This argument can be set equal to a fraction where the denominator dictates the number of points required to remove all transperncy.  For example, if \R{transparency=1/10} then 10 overplotted points are required to have a completely dark point.  These types of points are added to the age-bias plot \figref{fig:AgeBias3a} by including \R{show.pts=TRUE} to \R{plot()}.
+
+<<AgeBias3a, fig.cap="Age-bias plot for age-estimates from otoliths and scales of Lake Huron Alewife.  Darker points on the plot represent more individuals.">>=
+plot(ab.ale,show.pts=TRUE,transparency=1/10)
+@
+
+Additionally, the age-bias plot can be further modified to include a ``range bar'' that shows the range of ages for the y-axis variable for each age of the x-axis variable.  These types of bars are added to the age-bias plot \figref{fig:AgeBias3b} by including \R{show.rng=TRUE} to \R{plot()}.
+
+<<AgeBias3b, fig.cap="Age-bias plot for age-estimates from otoliths and scales of Lake Huron Alewife.  The gray intervals represent the range of observed ages.">>=
+plot(ab.ale,show.rng=TRUE)
+@
+
+Finally, you can see the statistics underlying an age-bias plot by adding \R{what="bias"} and, optionally, \R{difference=TRUE}, to \R{summary()} with the saved \R{ageComp()} object.  For example,
+
+<<>>=
+summary(ab.ale,what="bias")
+summary(ab.ale,what="bias",difference=TRUE)
+@
+
+\section{Precision} \label{sect:AgePrecision}
+In age assessment, precision is the reproducibility of estimated ages either between- or within-agers regardless of whether the estimated ages are accurate or not \citep{Campana2001}.  Measures of precision can be used as a relative measure of the ease with which ages are assigned, reproducibility of an individual's age assessments, or for comparing multiple ager's age assignments to the same structures.  It must be made clear, though, that highly precise estimates should not imply highly accurate age assessments; it is possible, and common, for age assessments to be highly reproducible but wrong!
+
+A common measure of precision is to compute the percent of all paired age assessments that are in agreement.  However, the percent-agreement measure should not be used solely as it varies widely among species and among ages within a species.  The classic example of the inadequacy of the percent-agreement measure was shown by \cite{BeamishFournier1981}.  They noted that 95\% agreement to within one year between two agers is very poor agreement for a species that consists of a few year-classes, whereas the same level of agreement is very good agreement for a species that has several year-classes spread over a long-period of time.
+
+Two other statistical measures have been forwarded as ``better'' measures of precision.  \cite{BeamishFournier1981} recommended the average percent error (APE),
+
+\begin{equation}  \label{eqn:APE}
+    APE = \frac{\Sum_{j=1}^{n}APE_{j}}{n} \hspace{5mm}\text{where}\hspace{5mm} APE_{j}=100 * \frac{\Sum_{i=1}^{R}\frac{\left|x_{ij}-\bar{x}_{j}\right|}{\bar{x}_{j}}}{R}
+\end{equation}
+
+where $APE_{j}$ is the average percent error for the $j$th fish, $x_{ij}$ is the $i$th age estimate on the $j$th fish, $\bar{x}_{j}$ is the mean age estimate for the $j$th fish, $R$ is the number of times that each fish was aged (assumed to be the same for all fish), and $n$ is the number of aged fish in the sample.  The APE formula \eqref{eqn:APE} tacitly assumes that the standard deviation of the age estimates are proportional to the mean of the age estimates \citep{Chang1982}.  To avoid this assumption, \cite{Chang1982} suggested that precision should be measured by the coefficient of variation (CV),
+
+\begin{equation}  \label{eqn:CV}
+    CV = \frac{\Sum_{j=1}^{n}CV_{j}}{n} \hspace{5mm}\text{where}\hspace{5mm} CV_{j}=100 * \frac{s_{j}}{\bar{x}_{j}} = 100 * \frac{\sqrt{\Sum_{i=1}^{R}\frac{(x_{ij}-\bar{x}_{j})^{2}}{R-1}}}{\bar{x}_{j}}
+\end{equation}
+
+where $CV_{j}$ is the coefficient of variation for the $j$th fish and $s_{j}$ is the standard deviation of the age estimates for the $j$th fish.
+
+The CV measure is the preferred measure because the coefficient of variation has known statistical properties.  However, \cite{Chang1982} shows that the CV will be a constant value greater than APE and \cite{Campana2001} showed that the CV was approximately 40\% greater than the APE in practice.  Thus, for relative comparisons, it does not matter whether APE or CV is used.
+
+A ``cut-off'' criterion for what is an acceptable value of precision cannot be made as it will depend on the species being examined, the experience of the agers, and the structure being examined.  However, \cite{Campana2001} found in an examination of a larger number of studies that the median CV was 7.6\% and suggested that a CV of 5\% could serve as a general reference point.  Thus, a CV of less than 5\% suggests that the assigned ages are acceptably precise and values greater than 5\% suggest that the ages are relatively imprecise.
+
+All measures of precision discussed in this section can be computed with \R{agePrecision()}.  The arguments to \R{agePrecision()} are a formula of the form \verb"~"\R{var1}+\R{var2}+$...$, where \R{var1}, \R{var2}, etc. are the variables containing the age assessments\footnote{If only two variables are being considered this formula can also be of the same form used in \R{ageBias()}.} and the corresponding data frame in \R{data=}.  The results of \R{agePrecision()} should be saved to an object such that specific results can be extracted with \R{summary()}.  The summary measures of precision discussed above are extracted with \R{summary()} using \R{what="precision"} (the default).  A table of percentage agreement between the structures within various amounts (e.g., ages agree within $\pm$1 year) is extracted with \R{what="agreement"} in \R{summary()}.
+
+Old Dominion University in conjunction with the Virginia Marine Resources Commission (VMRC) conducts routine ageing of Virginia's marine catch to provide the VMRC with the fundamental demographic data necessary for management.  One of the species studied in their continuing project is the Atlantic Croaker (\emph{Micropogonias undulatus}) which is one of the five most targeted species by anglers. For part of their quality control analysis of the ageing process they had two different agers examine 317 otolith thin sections.  Their data (in the file \dfile{Croaker1}) is analyzed here to estimate precision among readers\footnote{One should check for a lack of bias between readers before estimating precision.}.
+
+<<>>=
+data(Croaker1)
+str(Croaker1)
+ap.croak <- agePrecision(~reader1+reader2,data=Croaker1)
+summary(ap.croak,what="precision")
+summary(ap.croak,what="agreement")
+@
+
+These results indicate very high agreement between the two agers (i.e., APE and CV $<$1\%, 93\% exact agreement, 100\% agreement within one year).
+
+
+%BIBLIOGRAPHY -----------------------------------------------------------------------------------
+\cleardoublepage   %not sure why, this is needed so that TOC entry will point to right start page
+\phantomsection    %not sure why, this is needed so that TOC entry will point to right start page
+\addcontentsline{toc}{section}{References}    %Add a TOC entry
+\bibliography{c:/aaaWork/zGnrlLatex/DHO_bib}    %make the bibliography
+
+
+<<echo=FALSE, results='asis'>>=
+## will add the reproducibility information
+et <- proc.time() - stime
+swvFinish(rqrdPkgs=rqrd,newPage=FALSE,elapsed=et["user.self"]+et["sys.self"])
+@
+<<echo=FALSE, results='hide', include=FALSE>>=
+## Will create the script file
+swvCode(moreItems=c("source","rqrd","stime"))
+@
+
+\end{document} 

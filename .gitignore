@@ -5,3 +5,12 @@ _site/
 ## RStudio project files
 .Rproj.user
 fishR.Rproj
+
+## Intermediate files in the old fishR vignettes
+examples/oldFishRVignettes/*.bbl
+examples/oldFishRVignettes/*.brf
+examples/oldFishRVignettes/*.log
+examples/oldFishRVignettes/*.synctex.gz
+examples/oldFishRVignettes/*.tex
+examples/oldFishRVignettes/Figs/*.pdf
+examples/oldFishRVignettes/cache/

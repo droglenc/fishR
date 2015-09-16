@@ -1,0 +1,267 @@
+\documentclass[a4paper]{article}
+\input{c:/aaaWork/zGnrlLatex/GnrlPreamble}
+\usepackage[toc,page]{appendix}
+\usepackage{longtable}
+\input{c:/aaaWork/zGnrlLatex/JustRPreamble}
+\hypersetup{pdftitle = fishR Vignette -- Length-Weight}
+
+\begin{document}
+\titleFishR{Length-Weight Relationships}
+
+<<setup, echo=FALSE, include=FALSE>>=
+## Start time for keeping track of process time
+ stime <- proc.time()
+## load common knitr setup
+source("../knitr_Common.r")
+@
+
+Modeling the relationship between length and weight of a species of fish has been considered a routine analysis for which the results do not warrant publication \citep{Froese2006} or has been scorned as being of little value \citep{HilbornWalters2001}.  However, the recent review of methods and the meta-analysis of a large number of length-weight relationships by \cite{Froese2006} demonstrated that a synthetic analysis of length-weight relationships for a species can provide important insights into the ecology of that species.
+
+The relationship between the length and weight of a fish is used by fisheries researchers and managers for two main purposes \citep{LeCren1951}.  First, the relationship is used to predict the weight from the length of a fish.  This is particularly useful for computing the biomass of a sample of fish from the length-frequency of that sample.  Second, the parameter estimates of the relationship for a population of fish can be compared to average parameters for the region, parameter estimates from previous years, or parameter estimates among groups of fish to identify the relative condition or robustness of the population.  By convention, this second purpose is usually generically referred to as describing the \emph{condition} of the species.
+
+In this vignette, length and weight data is discussed in \sectref{sect:LengthWeightData}.  The common model used to describe length-weight relationships is introduced, developed, fit, and interpreted in \sectref{sect:LengthWeightModel}.  Methods for determining if the parameters of the length-weight relationship differ between populations are described in \sectref{sect:LWComp}.  Measures of relative condition are discussed in a separate vignette.
+
+This vignette requires functions in the \R{FSA} package and a data frame from the \R{fsadata} packaged maintained by the author.  These packages are loaded into R with
+<<echo=-1, results='hide', warning=FALSE, message=FALSE>>=
+rqrd <- c("FSA","FSAdata")
+library(FSA)
+library(FSAdata)
+@
+
+
+\section{Length-Weight Data}  \label{sect:LengthWeightData}
+The required data for examining the length-weight relationship for a sample of fish is measurements of the length ($L$) and weight ($W$) of individual fish at the time of capture (e.g., \tabref{tab:LWDataEx}).  Any other data about individual fish, such as month or year of capture, are of capture, etc. can also be recorded.
+
+\begin{table}[hbtp]
+  \centering
+  \caption{Length and weight measurements for a portion of Ruffe from the St. Louis River Harbor, 1992.}
+  \label{tab:LWDataEx}
+    \begin{tabular}{cccccc}
+      \hline\hline
+      \widen{-1}{6}{month} & day & year & individual & length & weight \\
+      \hline
+\widen{0}{5}{4} &  23 & 1992 &       1 &     90 &    9.3 \\
+4 &  23 & 1992 &       2 &    128 &   32.5 \\
+4 &  23 & 1992 &       3 &    112 &   19.0 \\
+4 &  23 & 1992 &       4 &     68 &    4.4 \\
+4 &  23 & 1992 &       5 &     56 &    2.1 \\
+4 &  23 & 1992 &       6 &     58 &    2.8 \\
+      \widen{-1}{0}{$\vdots$}&$\vdots$&$\vdots$&$\vdots$&$\vdots$&$\vdots$\\
+      \hline\hline
+    \end{tabular}
+\end{table}
+
+Three types of length measurements are common in the fisheries literature \figrefp{fig:LengthMeasures}.  \emph{Total length} (TL) is the length from the most anterior to the most posterior point with the tail of the fish compressed to exhibit the longest possible length.  \emph{Fork length} (FL) is the length from the most anterior point to the anterior notch in the fork of the tail.  For fish without a forked tail, the fork and total lengths are the same.  The \emph{standard length} (SL) is the length from the most anterior point to the posterior end of the caudal peduncle.  Total length is the most common measurement in fisheries studies, as this is the measurement used in management decisions such as setting minimum lengths.
+
+\begin{figure}[hbtp]
+  \centering
+    \includegraphics[width=4in]{Figs/Length_Measures.png}
+  \caption{Demonstration of total, fork, and standard length measurements on a bluegill.}
+  \label{fig:LengthMeasures}
+\end{figure}
+
+Length measurements are often taken with the aid of a measuring board where the measuring ``stick'' is embedded into the bottom board and one end of this board is fit with a vertical end piece.  The fish to be measured is placed on the bottom board such that the anterior point of the fish is against the vertical end piece and the measurement can be read directly from the embedded measuring stick \figrefp{fig:LengthWeightMeasure}.  Length measurements are subject to very little measurement error \citep{GutreuterKrzoska1994}.
+
+\begin{figure}[hbtp]
+  \centering
+    \includegraphics[width=5in]{Figs/LengthWeightMeasure.png}
+  \caption{Field measurements of length (left) and weight with a spring scale (right).}
+  \label{fig:LengthWeightMeasure}
+\end{figure}
+
+Two common weight measurements are used.  The usual body weight is the weight of the fish as it was captured, whereas the dressed weight is the weight of the fish with the gills and entrails removed.  Dressed weight is usually only used when measurements are reported from a commercial fishery.
+
+Weight measurements can be made in the field on fresh specimens or in the lab on fresh-frozen specimens.  Weight measurements in the field can be taken with tared spring or electronic balances \figrefp{fig:LengthWeightMeasure}.  However, field measurements can be extremely variable due to differences in fish surface wetness, boat movements, wind, and other adverse environmental conditions \citep{GutreuterKrzoska1994}.  Substantial variability in weight measurements can occur when fish weigh less than 10\% of a scale's capacity \citep{GutreuterKrzoska1994}.  Thus, multiple sizes of scales should be taken into the field \citep{Blackwelletal2000}.  \cite{WegeAnderson1978} suggest that the accuracy of the scale should be $\pm$1\% of a fish's body weight for use in relative weight calculations.  Weight measurements on frozen fish were roughly 1-9\% lighter than the measurements on the same fish when fresh, whereas length measurements were roughly 1-4\% shorter on frozen then fresh fish for a variety of species (reviewed in \cite{Ogle2009}).
+
+\section{Length-Weight Model}  \label{sect:LengthWeightModel}
+\subsection{Model Characteristics}
+The relationship between the length and weight of a sample of fish tends to have two important characteristics.  First, the relationship is not linear \figrefp{fig:RuffeRawLW}.  This can be explained intuitively by  thinking of length as a linear measure and weight as being related to volume.  Thus, as the organism adds a linear amount of length, it is adding a disk of volume with a commensurate weight.  Second, the variability in weight increases as the length of the fish increases (i.e., the scatter of the points increases from left-to-right in \figref{fig:RuffeRawLW}).  Thus, variability in weight among shorter fish is less then variability in weight among longer fish.  Unfortunately, because of these two characteristics, length-weight data tends to violate the linearity and homoscedasticity (i.e., ``constant variance'') assumptions of simple linear regression.
+
+<<RuffeRawLW, echo=FALSE, fig.cap="Length and weight of Ruffe from the St. Louis River Harbor, 1992.">>=
+data(RuffeSLRH92)
+ruffe2 <- Subset(RuffeSLRH92,!is.na(weight) & !is.na(length))
+ruffe2$logL <- log(ruffe2$length)
+ruffe2$logW <- log(ruffe2$weight)
+plot(weight~length,data=ruffe2,pch=19,xlab="Total Length (mm)",ylab="Weight (g)",xlim=c(0,200),cex=0.5)
+@
+
+These characteristics of length-weight data suggest that a two-parameter power function with a multiplicative error term should be used to model the length-weight relationship.  Specifically, the model typically used is
+
+\begin{equation}  \label{eqn:LWModel}
+  W_{i} = aL_{i}^{b}e^{\epsilon_{i}}
+\end{equation}
+
+where $a$ and $b$ are constants and $\epsilon_{i}$ is the multiplicative error term for the $i$th fish.  The length-weight model \eqref{eqn:LWModel} can be \emph{transformed} to a linear model by taking the natural logarithms\footnote{Natural logarithms are used throughout this vignette and will be referred to simply as ``logarithms'' and will be abbreviated with ``log.''} of both sides and simplifying,
+
+\begin{equation}  \label{eqn:LWTransformModel}
+    log(W_{i}) = log(a) + blog(L_{i}) + \epsilon_{i}
+\end{equation}
+
+Thus, with $y=log(W)$, $x=log(L)$, slope=$b$, and intercept=$log(a)$, \eqref{eqn:LWTransformModel} is in the form of a linear model.  In addition to linearizing the model, this transformation has the added benefit of making the errors additive and stabilizing the variances about the model (i.e., making the scatter around the line nearly constant for all length measurements; \figref{fig:RuffeTransLW}).  With this linearization and stabilization, the usual linear regression methods can be used to fit the relationship between $log(W)$ and $log(L)$.
+
+<<RuffeTransLW, echo=FALSE, fig.cap="Natural log transformed total length and weight of Ruffe from the St. Louis River Harbor, 1992.  Note that the ``flaring'' of the values in the lower-left corner of the plot is due to minimum weight limitations of the measuring scale.">>=
+plot(logW~logL,data=ruffe2,pch=19,xlab="log Total Length (mm)",ylab="log Weight (g)",cex=0.5)
+@
+
+It should be noted that, with the example in \figref{fig:RuffeTransLW}, the variability on the log scale appears greater for ``small'' fish.  This is because the scale used to measure these fish lacked the required precision to distinguish weights of small fish over a wide length range.  It is apparent that fish with a log weight of less than -0.5 should be eliminated from this analysis because of scale imprecision for these fish.
+
+\subsection{Model Fitting in R \& Interpretation}
+\subsubsection{Fitting \& Basic Summary Results}
+The lengths and weights of Ruffe\footnote{Ruffe are a percid native to Europe that was found in the St. Louis River Harbor, Lake Superior, in the late 1980s.  Various U.S. federal agencies monitored the population there until the early 2000s.} captured in the St. Louis River Harbor, Lake Superior, in 1992 will be examined as an example for fitting the length-weight relationship.  These data are stored in the \R{RuffeSLRH92} data frame available in the \R{FSAdata} package that is loaded when \R{FSA} is loaded.  These data are loaded into R with
+<<>>=
+data(RuffeSLRH92)
+str(RuffeSLRH92)
+@
+Before beginning the length-weight model regression, this data frame needed to be ``cleaned'' by removing all records where mesures of either length or weight were missing.  This cleaning is accomplished with 
+<<>>=
+ruffe2 <- Subset(RuffeSLRH92,!is.na(weight) & !is.na(length))
+@
+
+Fitting a linear model to the log-log transformed length-weight data requires construction of the two new variables $log(L)$ and $log(W)$.  These values are appended to the \R{ruffe2} data frame with
+<<>>=
+ruffe2$logL <- log(ruffe2$length)
+ruffe2$logW <- log(ruffe2$weight)
+@
+
+In addition, as mentioned previously when reviewing \figref{fig:RuffeTransLW}, fish with a measured log weight less than -0.5 should be removed from the analysis because the scale used to weigh fish of these sizes was too imprecise.  Thus, these fish are removed with
+<<>>=
+ruffe3 <- Subset(ruffe2,logW >= -0.5)
+str(ruffe3)
+@
+
+The transformed model, \eqref{eqn:LWTransformModel}, is then fit with \R{lm()} by submitting a formula of the form \R{y}\verb"~"\R{x} as the first argument followed by a \R{data=} argument set equal to the data frame where the variables can be found.  The result should be saved to an object to allow extraction of summary information.  The model is fit with
+<<>>=
+lm1 <- lm(logW~logL,data=ruffe3)
+@
+A quick view of the data and model fit \figrefp{fig:RuffeFitLW} is produced by submitting the saved \R{lm()} object to \R{fitPlot()} as such,
+<<RuffeFitLW, fig.cap="Natural log transformed total length and weight of Ruffe from the St. Louis River Harbor, 1992, with best-fit line superimposed.">>=
+fitPlot(lm1,xlab="log Total Length (mm)",ylab="log Weight (g)",main="")
+@
+
+Basic summary information is extracted by submitting the saved \R{lm()} object to \R{summary()} as follows
+<<>>=
+summary(lm1)
+@
+<<echo=FALSE>>=
+log.a <- coef(lm1)[1]
+a <- exp(log.a)
+b <- coef(lm1)[2]
+@
+
+From this summary and \figrefp{fig:RuffeFitLW} it is seen that the model exhibits a tight fit to the transformed data ($R^{2}=$\Sexpr{formatC(summary(lm1)$r.squared,format="f",digits=2)}) with the possible exception of a few individuals.  The equation of the best-fit line is $log(W) = $\Sexpr{formatC(log.a,format="f",digits=2)}$+$\Sexpr{formatC(b,format="f",digits=2)}$*log(L)$ on the transformed scale and $W=$\Sexpr{formatC(a,format="f",digits=6)}$L^{\Sexpr{formatC(b,format="f",digits=2)}}$ on the original scale\footnote{Note that $a=e^{intercept}$ $=e^{\Sexpr{formatC(log.a,format="f",digits=2)}}$=\Sexpr{formatC(a,format="f",digits=6)}.}.
+
+
+\subsubsection{Inferences about Slope}
+If a fish grows without changing its shape or its density then the fish is said to  exhibit \emph{isometric}\index{isometric} growth.  In this case, the volume of the fish is proportional to any linear measure of its size.  If weight is taken as a surrogate of volume (which requires assuming a constant density) and length as the linear measure, then the modeled relationship between length and weight, \eqref{eqn:LWModel}, will have $b=3$ under isometric growth.  Isometric growth in fish is rare \citep{BolgerConnolly1989, McGurk1985}.  If a fish changes shape or density as it grows, then $b\neq3$ in \eqref{eqn:LWModel}, and the fish is said to exhibit \emph{allometric}\index{allometric} growth.  If $b>3$ then the fish tends to become ``plumper'' as the fish increases in length \citep{Blackwelletal2000}.
+
+A test of whether the fish in a population exhibit isometric growth or not can be obtained by noting that $b$ is the estimated slope from fitting the transformed length-weight model.  The slope is generically labeled with $\beta$ such that the test for allometry can be translated into the following statistical hypotheses:
+
+\begin{Itemize}
+  \item $H_{0}:\beta=3$ \hspace{24pt} $\Rightarrow H_{0}:$ ``Isometric growth''
+  \item $H_{A}:\beta\neq3$ \hspace{24pt} $\Rightarrow H_{A}:$ ``Allometric growth''
+\end{Itemize}
+
+Hypothesis tests regarding model parameters can be obtained with a t-test using
+
+\[ t = \frac{\hat{\beta}-\beta_{0}}{SE_{\hat{\beta}}} \]
+
+where $\hat{\beta}$, $SE_{\hat{\beta}}$ and the df are from the linear regression results and $\beta_{0}$ is the specified value in the $H_{0}$.  Nearly all statistical packages, R included, print the $t$ and corresponding $p-value$ for $H_{0}:\beta=0$ by default, but not for any hypothesized value other than zero.  However, \R{hoCoef()} can be used to efficiently compute the $t$ and corresponding $p-value$ for non-default hypotheses.  This function requires the following arguments:
+
+\begin{Itemize}
+  \item a linear model object,
+  \item a number indicating which term to use in the hypothesis test (1 for intercept, 2 for slope),
+  \item a number indicating the specific value in the null hypothesis (i.e., $\beta_{0}$), and
+  \item a character string indicating the direction of the alternative hypothesis (\R{"less"}, \R{"greater"}, or \R{"two.sided"} (default)).
+\end{Itemize}
+
+A test, and confidence interval for $b$, of whether Ruffe from the St. Louis River Harbor in 1992 exhibited allometric growth or not is constructed with
+<<echo=-3>>=
+hoCoef(lm1,2,3)
+confint(lm1)
+b.ci <- confint(lm1)[2,]
+@
+
+These results show that Ruffe exhibit allometric growth (\Sexpr{swvPvalue(hoCoef(lm1,2,3)[,"p value"])}) with an exponent parameter ($b$) between \Sexpr{formatC(b.ci[1],format="f",digits=2)} and \Sexpr{formatC(b.ci[2],format="f",digits=2)}, with 95\% confidence.
+
+\subsubsection{Predictions on Original Scale}
+Predictions of the mean value of the response variable given a value of the explanatory variable can be made with \R{predict()}.  In the length-weight regression, the value predicted is the mean log of weight.  Most often, of course, the researcher is interested in predicting the mean weight on the original scale.  An intuitive and common notion is that the log result can simply be back-transformed to the original scale by exponentiation.  However, back-transforming the mean value on the log scale in this manner underestimates the mean value on the original scale.  This observation stems from the fact that the back-transformed mean value from the log scale is equal to the geometric mean\footnote{The geometric mean is defined as the $n$th root of the product of the $n$ values.} of the values on the original scale.  The geometric mean is always less than the arithmetic mean\footnote{The mean discussed in introductory statistics courses where the values are summed and divided by $n$ is called the arithmetic mean.} and, thus, the back-transformed mean always underestimates the arithmetic mean from the original scale.
+
+A wide variety of ``corrections'' for this back-transformation bias with logarithms have been suggested in the literature.  The most common correction for log-transformed data is to multiply the exponentiated back-transformed value by
+\[ e^{\frac{s_{Y|X}^{2}}{2}} \]
+This correction factor is derived from analysis of normal and log-normal distributional theory.
+
+Predicted values on the logarithmic scale can be back-transformed to the original scale with \R{exp()}.  The correction factor to be applied to this back-transformed value requires isolating the value of $s_{Y|X}$ by appending \R{\$sigma} to \R{summary()} when a saved \R{lm} object is given, squaring that value, dividing by two, and then exponentiating that result with \R{exp()}.  The correction factor is computed with\footnote{The ``extra'' parentheses on the second command forces R to print the result when the result is being assigned to an object.}
+<<>>=
+syx <- summary(lm1)$sigma
+( cf <- exp((syx^2)/2) )            # this is the bias correction factor
+@
+
+The predicted mean log weight is found with \R{predict()} when the saved \R{lm} object is given as the first argument, a data frame with the logged length values is provided as the second argument, and the \R{interval=} argument is set to \R{"c"} (for ``confidence'').  It must be remembered that the data frame in the second argument must contain a variable that is exactly the same as the variable used on the right-hand-side of the formula when constructing the \R{lm} object (i.e., \R{logL} in this case).  The predicted mean log weight for all 100-mm Ruffe is computed with
+<<>>=
+( pred.log <- predict(lm1,data.frame(logL=log(100)),interval="c") )
+@
+This result can be used to form a biased predicted mean weight through exponentiation with
+<<>>=
+( bias.pred.orig <- exp(pred.log) ) # biased prediction on original scale
+@
+Finally, a bias-corrected back-transformed mean weight for all 100-mm fish is found by multiplying the biased back-transformed value by the correction factor from above.  This is illustrated with
+<<>>=
+( pred.orig <- cf*bias.pred.orig )  # corrected prediction on original scale
+@
+Thus, the mean weight of all 100-mm Ruffe in the St. Louis River Harbor in 1992 is between \Sexpr{formatC(pred.orig[2],format="f",digits=1)} and \Sexpr{formatC(pred.orig[3],format="f",digits=1)} g.
+
+
+\section{Comparing Length-Weight Regressions} \label{sect:LWComp}
+A common problem in fisheries research is to determine if the parameters from a simple linear regression fit are statistically different between two or more populations.  For example, a researcher may want to determine if $log(a)$ or $b$ in \eqref{eqn:LWTransformModel} differ between sexes, between species, between lakes, or between treatments.  These types of questions require fitting a more complicated regression model including indicator and interaction variables.  This section shows, through an example, how to use those methods within the context of analyzing length-weight relationships.
+
+Grafton Lake is a lake in the Kejimkujik National Park, Nova Scotia that was made larger by the construction of a dam in 1938.  In the early 1990s, the Park Management team decided to remove the dam.  Samples of Yellow Perch were collected in 1994 prior to dam removal and in 2000, several years after dam removal, to determine the effects of removing the dam on biological populations.  One aspect of this research was to determine if the parameters of the length-weight relationship had changed significantly between these two time periods.
+
+The Grafton Lake perch data set was recorded in the \R{YPerchGL} data frame distributed in the \R{FSAdata} package.  The \var{year} variable in this data frame is considered to be a numeric rather than group factor variable.  Thus, a new variable, \var{fyear}, must be constructed with the \R{factor()} function for use in the linear model.  The data are loaded, new transformed variables are created, and the new factor variable created with
+<<>>=
+data(YPerchGL)
+YPerchGL$logFL <- log(YPerchGL$fl)
+YPerchGL$logW <- log(YPerchGL$w)
+YPerchGL$fyear <- factor(YPerchGL$year)
+str(YPerchGL)
+@
+
+The full model with indicator and interaction terms is then fit and stored in an object with
+<<>>=
+lm1 <- lm(logW~logFL*fyear,data=YPerchGL)
+@
+The analysis of variable table is constructed by submitting the saved \R{lm} object to \R{anova()} as such
+<<>>=
+anova(lm1)
+@
+
+These results indicate that the interaction terms is not significant (\Sexpr{swvPvalue(anova(lm1)[3,"Pr(>F)"])}).  Thus, there is not enough evidence to conclude that there is difference in slopes in the length-weight relationship between years.  The p-value for the indicator variable suggests that there is a difference in intercepts between the two years (\Sexpr{swvPvalue(anova(lm1)[2,"Pr(>F)"])}).  Because the two years have statistically equal slopes but different intercepts, there is a constant difference between the log-transformed weights of fish from the two years regardless of the log-transformed lengths of the fish.
+
+Plots and confidence intervals should be constructed for the model without the interaction term, as it was not significant.  The confidence intervals, constructed with
+<<>>=
+lm2 <- lm(logW~logFL+fyear,data=YPerchGL)
+confint(lm2)
+@
+
+show that fish captured in 2000 are between \Sexpr{formatC(-confint(lm2)[3,2],format="f",digits=3)} and \Sexpr{formatC(-confint(lm2)[3,1],format="f",digits=3)} smaller, on the log scale, than fish captured in 1994 regardless of the length of the fish.  A plot \figrefp{fig:LWCompFit} depicting the final model can be constructed with \R{fitPlot()} as follows,
+<<LWCompFit, fig.cap="Fitted line from the ``parallel lines'' model fit to the Grafton Lake Yellow Perch data.">>=
+fitPlot(lm2,xlab="log Fork Length (mm)",ylab="log Weight (g)",legend="topleft",main="")
+@
+
+
+%BIBLIOGRAPHY -----------------------------------------------------------------------------------
+\cleardoublepage   %not sure why, this is needed so that TOC entry will point to right start page
+\phantomsection    %not sure why, this is needed so that TOC entry will point to right start page
+\addcontentsline{toc}{section}{References}    %Add a TOC entry
+\bibliography{c:/aaaWork/zGnrlLatex/DHO_bib}    %make the bibliography
+
+<<echo=FALSE, results='asis'>>=
+## will add the reproducibility information
+et <- proc.time() - stime
+swvFinish(rqrdPkgs=rqrd,newPage=FALSE,elapsed=et["user.self"]+et["sys.self"])
+@
+<<echo=FALSE, results='hide', include=FALSE>>=
+## Will create the script file
+swvCode(moreItems=c("source","rqrd","stime"))
+@
+
+\end{document} 

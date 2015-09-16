@@ -1,0 +1,357 @@
+\documentclass[a4paper]{article}
+\input{c:/aaaWork/zGnrlLatex/GnrlPreamble}
+\usepackage[toc,page]{appendix}
+\usepackage{rotating}                   %Allows landscape page -- \begin{sidewaystable} or \begin{sidewaysfigure}
+\usepackage{colortbl}                   %Allows usage of color in tables
+\input{c:/aaaWork/zGnrlLatex/JustRPreamble}
+\hypersetup{pdftitle = fishR Vignette -- Open Mark-Recapture}
+
+\begin{document}
+\titleFishR{Open Mark-Recapture Abundance Estimates}
+
+<<setup, echo=FALSE, include=FALSE>>=
+## Start time for keeping track of process time
+ stime <- proc.time()
+## load common knitr setup
+source("../knitr_Common.r")
+@
+
+The methods for estimating abundance described in other vignettes can be used only for populations that can be considered to be closed.  However, most realistic situations over reasonably long periods of time have individuals that leave the population through death and emigration and enter the population through birth, recruitment, or immigration.  The method described in \cite{Jolly1965}, modified in \cite{Seber1965}, and collectively referred to as the Jolly-Seber method provides a technique for estimating abundance in an open population where three or more samples of marked fish have been collected.  In addition, the method can be used to estimate the survival rate and additions to the population due to birth, recruitment, or immigration between sampling periods.
+
+This vignette requires functions from the \R{FSA} package maintained by the author.  This package is loaded into R with
+<<echo=-1, results='hide', warning=FALSE, message=FALSE>>=
+rqrd <- c("FSA","FSAdata")
+library(FSA)
+@
+
+
+\section{Sampling Scheme}
+Before examining the specific methodology of the Jolly-Seber technique let's examine the scheme by which the population of fish changes from sample period to sample period and how the specific data is collepresents the population of fish and the samples of fish for four sample periods ($i=1,2,3,4$).  At each sample period, the population is represented by two large squares with many dots (i.e., the individuals).  The left and right large squares at each sample period represent the population immediately before and immediately after, respectively, a sample of fish is taken.  The sample of fish is represented by the smaller grey square with dots at each sampling period.  The sampling periods begin in the upper-left corner and continue sequentially in a clockwise direction.
+
+\begin{sidewaysfigure}
+  \includegraphics[width=8in]{Figs/JollySeber_Scheme.jpg}
+  \caption{Schematic representation of the populations immediately before and after (i.e., large squares) four sample periods ($i=1,2,3,4$) of an open population.  See the text for detailed description and \tabref{tab:AbundanceMarkJollyNotation} for definitions of notation.}\label{fig:AbundanceMarkJollyScheme}
+\end{sidewaysfigure}
+
+The population consists of unmarked animals prior to the first sample.  All fish removed in the first sample are marked and returned to the population such that the population now consists of both marked (colored dots) and unmarked (black dots) fish.  Between the first and second time periods, fish are removed from the population through emigration and death (represented by the yellow box) and fish are added to the population through birth, recruitment, and immigration (represented by the cyan box).  Thus, immediately before the second sample there may be more or less fish in the population then at the first sample and there may be more or less marked fish than what were released after the first sample.  Of critical importance is realizing that we do not know either of these values -- the population size or the number marked -- because the population is open.
+
+Fish captured in the second sample are recorded as marked or unmarked and the marked fish are recorded as to when they were last ``seen.''  Because this is only the second sample it is known that all marked fish were last seen in the first sample.  All fish in this second sample are marked and returned to the population.  Typically fish will be marked with unique identifying tags but, at least, they must be marked such that the time that they were last ``seen'' can be determined.  Thus, in \figref{fig:AbundanceMarkJollyScheme} fish last seen in the first sample are still marked ``red'' and fish last seen in the second sample are marked ``blue.''  As before, some fish are lost and some fish are gained from the second to the third sample.
+
+Fish captured in the third sample are, again, recorded as marked or unmarked and the marked fish are recorded as to when they were last ``seen.''  In this third sample, the marked fish may have last been seen in the first sample (i.e., ``red'' marks, of which there was one) or the second sample (i.e., ``blue'' marks, of which there was none).  These fish are marked with a tag that identifies that they were last seen in the third sample (i.e., a ``green'' mark) and returned to the population.
+
+Fish captured in the fourth sample are recorded similarly (i.e., two fish in the sample were last seen in the third sample (``green'' marks) and two fish were last seen in the second sample (``blue'' marks)).
+
+The observations discussed here -- number of fish in each sample, number marked, number marked according to when they were last ``seen'' -- form the data required by the Jolly-Seber method to estimate the number of marked fish and population size for all but the first and last sample periods, the survival rate from sample period to sample period for all but the last two sample periods, and the number of individuals added to the population from sample period to sample period for all but the first and last two sample periods.  The methodology discussed in the next sections will show how these estimates are made with these data.
+
+
+
+\section{Jolly-Seber Estimate of Abundance} \label{sect:AbundanceMRJollySeber}
+All parameter estimates in the Jolly-Seber method are based on knowledge of the last time an individual was observed in a sample.  Thus, fish may be individually marked for other purposes, but all that is required for the Jolly-Seber method is that the last time a marked fish was observed must be identifiable from a marked fish's mark.  In other words, at the very least, marks must be specific to each sampling period and all previous marks are ultimately ignored.
+
+The central calculation in the Jolly-Seber method is the estimation of the number of marks extant in the population at the beginning of any sampling interval.  At first glance, this may appear to be a simple question as this was also of critical importance in the Petersen, Schnabel, and Schumacher-Eschmeyer methods.  However, as shown above, because we are now considering an open-population where marked fish may be leaving the population through emigration and death, the number of marked fish extant in the population is an unknown quantity that must be estimated.
+
+Before considering how to estimate the number of extant marks in the population at any time let's consider a concise method for recording the information in a Jolly-Seber experiment and definitions for statistics that will be recorded or computed.  All notation and definitions of this method are summarized in \tabref{tab:AbundanceMarkJollyNotation}.
+
+\begin{table}[htbp] \label{tab:AbundanceMarkJollyNotation}
+  \centering
+  \caption{Summary of notation used in the Jolly-Seber method.}
+  \begin{tabular}{cl}
+    \hline\hline
+    \widen{-2}{7}{Symbol} & \multicolumn{1}{c}{Meaning} \\
+    \hline
+    \multicolumn{2}{c}{\widen{-2}{8}{\emph{PARAMETERS}}} \\
+    \widen{-1}{6}{$N_{i}$}    & Unknown size of the population just prior to the $i$th sample.\\
+    \widen{-1}{6}{$\phi_{i}$} & Unknown rate of survival from the $i$th to the $(i+1)$th sample. \\
+                 & \widen{0}{5}{Unknown number of fish added to the population between the $i$th to the} \\
+    \rb{1.5}{$B_{i}$} & \widen{-1}{0}{ $(i+1)$th sample.} \\
+    \widen{-1}{6}{$M_{i}$}    & Unknown number of marked fish in the population just prior to the $i$th sample. \\
+    \multicolumn{2}{c}{\widen{-2}{8}{\emph{OBSERVABLES}}} \\
+    \widen{-1}{6}{$k$}     & Number of samples in the entire study (i.e., $i=1\ldots k$). \\
+    \widen{-1}{6}{$n_{i}$} & Number of fish captured in the $i$th sample. \\
+    \widen{-1}{6}{$m_{i}$} & Number of marked fish in the $i$th sample.  $m_{1}=0$. \\
+    \widen{-1}{6}{$m_{ji}$} & Number of marked fish in the $i$th sample last caught in the $j$th sample. \\
+    \widen{-1}{6}{$u_{i}$} & Number of unmarked fish in the $i$th sample. \\
+              & \widen{0}{5}{Number of marked fish returned to the population after the $i$th sample.} \\
+    \rb{1.5}{$R_{i}$} & \widen{-1}{0}{ ($i=1\ldots (k-1)$).} \\
+              & \widen{0}{5}{Number of the $R_{i}$ fish released in the $i$th sample that are subsequently} \\
+    \rb{1.5}{$r_{i}$} & \widen{-1}{0}{ captured.  ($i=1\ldots (k-1)$).} \\
+              & \widen{0}{5}{Number of fish captured before the $i$th sample, not captured in the $i$th} \\
+    \rb{1.5}{$z_{i}$} & \widen{-1}{0}{ sample, but captured subsequently.  ($i=2\ldots (k-1)$).} \\
+    \multicolumn{2}{c}{\widen{-2}{8}{\emph{ESTIMATES}}} \\
+                 & \widen{0}{5}{Estimated number of marked fish in the population just prior to the $i$th sample.} \\
+    \rb{1.5}{$\widehat{M}_{i}$} & \widen{-1}{0}{$M_{1}=0$.  ($i=1\ldots (k-1)$).} \\
+    \widen{-1}{6}{$\widehat{N}_{i}$} & Estimated population size just prior to the $i$th sample. ($i=2\ldots (k-1)$). \\
+    \widen{-1}{6}{$\widehat{\phi}_{i}$} & Estimated rate of survival from the $i$th to the $(i+1)$th sample.  ($i=1\ldots (k-2)$). \\
+                 & \widen{0}{5}{Estimated number of fish added to the population between the $i$th to} \\
+    \rb{1.5}{$\widehat{B}_{i}$} & \widen{-2}{0}{ the $(i+1)$th sample. ($i=2\ldots (k-2)$).} \\
+    \hline\hline
+  \end{tabular}
+\end{table}
+
+The $n_{i}$ fish caught in the $i$th sample period can be separated into $m_{i}$ marked and $u_{i}$ unmarked fish.  The marked fish can also be recorded as to when they were last captured.  Thus, $m_{ji}$ is used to record the number of fish captured in the $i$th sample that were last observed in the $j$th sample.  Immediately after the $i$th sample has been observed a total of $R_{i}$ marked fish are returned to the population.  The number of marked fish returned to the population is equal to the number of previously marked fish plus the number of newly marked fish minus the number of accidental deaths.
+
+The information just described is recorded by direct observation of the individuals in a sample.  This information is generally recorded in what is called a ``Method B table'' \citep{LeslieChitty1951}.  A Method B table records the cross-tabulation of the frequency of individuals by each ``time of capture'' and ``time of last capture'' (i.e., the $m_{ji}$ values) with four summary rows appended to the bottom of the table \tabrefp{tab:AbundanceMarkJollyMB1}.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Method B table for largemouth Bass captured in Par Pond.} \label{tab:AbundanceMarkJollyMB1}
+  \begin{tabular}{c|rrrrrr}
+\hline\hline
+\widen{-2}{7}{Time} & \multicolumn{6}{c}{Capture Time (Sampling Period)} \\
+\cline{2-7}
+\widen{0}{5}{Time Last} & May '80 & Aug '80 & Nov '80 & Feb '81 & May '81 & Aug '81 \\
+\widen{-2}{0}{Captured} & 1 & 2 & 3 & 4 & 5 & 6 \\
+\hline
+\widen{0}{5}{1} &  & 3 & 4 & 3 & 13 & 5 \\
+\widen{0}{0}{2} &  &  & 2 & 4 & 4 & 7 \\
+\widen{0}{0}{3} &  &  &  & 7 & 23 & 7 \\
+\widen{0}{0}{4} &  &  &  &  & 37 & 11 \\
+\widen{0}{0}{5} &  &  &  &  &  & 32 \\
+\widen{-2}{0}{6} &  &  &  &  &  &  \\
+\hline
+\widen{0}{5}{$m_{i}$} & 0 & 3 & 6 & 14 & 77 & 62 \\
+\widen{0}{0}{$u_{i}$} & 1015 & 414 & 600 & 775 & 1829 & 1089 \\
+\widen{0}{0}{$n_{i}$} & 1015 & 417 & 606 & 789 & 1906 & 1151 \\
+\widen{-2}{0}{$R_{i}$} & 1015 & 405 & 603 & 789 & 1880 & 0 \\
+\hline\hline
+  \end{tabular}
+\end{table}
+
+Estimation of the number of extant marks in the population just prior to the $i$th sample requires the calculation of two quantities from the data stored in the Method B table.  First, $r_{i}$ is the number of the $R_{i}$ marked individuals released at time $i$ that are caught at some later time.  This value is computed as the sum of the $i$th row of the Method B table.  Second, $z_{i}$ is the number of individuals marked before time $i$, not caught at time $i$, but caught at some time later than time $i$.  In other words, $z_{i}$ is the number of marked animals not ``seen'' at time $i$ that are ``seen'' after time $i$.  Geometrically, $z_{i}$ is computed as the sum of all individuals in the cells denoted by all rows before the $i$th row and all columns after the $i$th column.  The calculation of $r_{4}$ (dark grey cells) and $z_{4}$ (light grey cells) is illustrated in \tabref{tab:AbundanceMarkJollyMB2}.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Method B table for largemouth Bass captured in Par Pond with the calculation of $r_{4}$ (dark grey cells) and $z_{4}$ (light grey cells) illustrated.} \label{tab:AbundanceMarkJollyMB2}
+  \begin{tabular}{c|rrrrrr}
+\hline\hline
+\widen{-2}{7}{Time} & \multicolumn{6}{c}{Capture Time (Sampling Period)} \\
+\cline{2-7}
+\widen{0}{5}{Time Last} & May '80 & Aug '80 & Nov '80 & Feb '81 & May '81 & Aug '81 \\
+\widen{-2}{0}{Captured} & 1 & 2 & 3 & 4 & 5 & 6 \\
+\hline
+\widen{0}{5}{1} &  & 3 & 4 & 3 & \cellcolor[gray]{0.8}13 & \cellcolor[gray]{0.8}5 \\
+\widen{0}{0}{2} &  &  & 2 & 4 & \cellcolor[gray]{0.8}4 & \cellcolor[gray]{0.8}7 \\
+\widen{0}{0}{3} &  &  &  & 7 & \cellcolor[gray]{0.8}23 & \cellcolor[gray]{0.8}7 \\
+\widen{0}{0}{4} &  &  &  &  & \cellcolor[gray]{0.7}37 & \cellcolor[gray]{0.7}11 \\
+\widen{0}{0}{5} &  &  &  &  &  & 32 \\
+\widen{-2}{0}{6} &  &  &  &  &  &  \\
+\hline
+\widen{0}{5}{$m_{i}$} & 0 & 3 & 6 & 14 & 77 & 62 \\
+\widen{0}{0}{$u_{i}$} & 1015 & 414 & 600 & 775 & 1829 & 1089 \\
+\widen{0}{0}{$n_{i}$} & 1015 & 417 & 606 & 789 & 1906 & 1151 \\
+\widen{-2}{0}{$R_{i}$} & 1015 & 405 & 603 & 789 & 1880 & 0 \\
+\hline\hline
+  \end{tabular}
+\end{table}
+
+
+The number of extant marks in the population just prior to the $i$th sample, $M_{i}$, can be estimated from the quantities observed or calculated from the samples.  The derivation of this estimate begins with the simple equality,
+
+\[ M_{i} = m_{i} + \left(M_{i}-m_{i}\right) \]
+
+which states, simply, that the number of marks just prior to time $i$ is equal to the number of marks seen at time $i$ (i.e., $m_{i}$) and the number of marks not seen at time $i$ (i.e., $\left(M_{i}-m_{i}\right)$).  Most importantly, because $m_{i}$ is known, $M_{i}$ can be estimated if $\left(M_{i}-m_{i}\right)$ can be estimated.
+
+Let's consider two groups of fish in this setup -- the $\left(M_{i}-m_{i}\right)$ fish not seen at time $i$ and the $R_{i}$ fish seen at time $i$ and released to the population with a mark.  Of the $\left(M_{i}-m_{i}\right)$ group, $z_{i}$ will be seen at some later time.  Of the $R_{i}$ group, $r_{i}$ will be seen at some later time.  If we assume that the fates of these two groups are similar after time $i$ (i.e., fish in both groups have the same probability of capture, mortality rate, etc.) then the following relation should hold,
+
+\[ \frac{z_{i}}{\left(M_{i}-m_{i}\right)} = \frac{r_{i}}{R_{i}} \]
+
+This relation can be immediately rearranged to deliver,
+
+\[  \widehat{M}_{i} = m_{i}+\frac{z_{i}R_{i}}{r_{i}}  \]
+
+or, in a slightly less biased manner \citep{Seber1982},
+
+\begin{equation} \label{eqn:AbundanceMarkJollyM}
+  \widehat{M}_{i} = m_{i}+\frac{z_{i}\left(R_{i}+1\right)}{r_{i}+1}
+\end{equation}
+
+The population size at the beginning of each time period is then estimated by substituting the estimated number of marked fish prior to the time period, the number of marked fish observed in the sample, and the total number of fish observed in the sample into, essentially, the Chapman modified Petersen single-census formula,
+
+\begin{equation} \label{eqn:AbundanceMarkJolly}
+  \widehat{N}_{i} = \frac{\widehat{M}_{i}(n_{i}+1)}{(m_{i}+1)}
+\end{equation}
+
+For example, \cite{HightowerGilbert1984} examined the utility of the Jolly-Seber method to estimate the abundance, survival rate, and recruitment rate for largemouth bass in the man-made reservoir Par Pond, South Carolina.  Bass were collected via angling over a 2-d period during three months each of 1980 and 1982.  All captured fish longer than 150-mm were double-tagged (floy tag and fin-clip).  Fish surviving a short period after capture were returned to the population.  The Method B table for this study is shown in \tabref{tab:AbundanceMarkJollyMB1}.
+
+Information computed from the Method B table was used to construct a summary table used to estimate the number of extant marks and the population size prior to a sampling period \tabrefp{tab:AbundanceMarkJollySum1}.  The first three columns of this summary table are copied exactly from the Method B table \tabrefp{tab:AbundanceMarkJollyMB1} for convenience.  The $r_{i}$ and $z_{i}$ columns are computed directly from the Method B table and are illustrated below for the third sample period,
+
+\begin{itemize}
+  \item $r_{3} = 7 + 23 + 7 = 37$
+  \item $z_{3} = 3 + 13 + 5 + 4 + 4 + 7 = 36$
+\end{itemize}
+
+The final two columns are estimated with equations \eqref{eqn:AbundanceMarkJollyM} and \eqref{eqn:AbundanceMarkJolly}, respectively, using values found in the first five columns of the summary table.  These calculations are illustrated below for the third sample period,
+
+\begin{itemize}
+  \item $\widehat{M}_{3} = m_{3}+\frac{z_{3}(R_{3}+1)}{r_{3}+1} = 6+\frac{36*604}{38} = 578.2$
+  \item $\widehat{N}_{3} = \frac{\widehat{M}_{3}(n_{3}+1)}{(m_{3}+1)} = \frac{578.2*607}{7} = 50,139$
+\end{itemize}
+
+\begin{table}[htbp]
+  \centering
+  \caption{Summary table for estimating the number of extant marked and the abundance of largemouth Bass in Par Pond.} \label{tab:AbundanceMarkJollySum1}
+\begin{tabular}{c|rrrrrrr}
+\hline\hline
+\widen{0}{5}{Capture} &  &  &  &  &  &  &  \\
+\widen{-2}{0}{Time} & $m_{i}$ & $n_{i}$ & $R_{i}$ & $r_{i}$ & $z_{i}$ & $\widehat{M}_{i}$ & $\widehat{N}_{i}$ \\
+\hline
+\widen{0}{5}{1} & 0 & 1015 & 1015 & 28 & -- & -- & -- \\
+\widen{0}{0}{2} & 3 & 417 & 405 & 17 & 25 & 566.9 & 59239 \\
+\widen{0}{0}{3} & 6 & 606 & 603 & 37 & 36 & 578.2 & 50139 \\
+\widen{0}{0}{4} & 14 & 789 & 789 & 48 & 59 & 965.2 & 50835 \\
+\widen{0}{0}{5} & 77 & 1906 & 1880 & 32 & 30 & 1787.0 & 43690 \\
+\widen{-2}{0}{6} & 62 & 1151 & 0 & -- & -- & -- & -- \\
+\hline\hline
+\end{tabular}
+\end{table}
+
+\cite{Jolly1965} computed the large-sample standard error of $\widehat{N_{i}}$ with
+
+\[ SE(\widehat{N}_{i}) = \sqrt{\widehat{N}_{i}\left(\widehat{N}_{i}-n_{i}\right)\left[\frac{\widehat{M}_{i}-m_{i}+R_{i}}{\widehat{M}_{i}}\left(\frac{1}{r_{i}}-\frac{1}{R_{i}}\right)+\frac{1}{m_{i}}+\frac{1}{n_{i}}\right]} \]
+
+The Jolly-Seber method for estimating abundance can be efficiently implemented in R with \R{capHistSum()} and \R{mrOpen()}.  The \R{mrOpen()} function requires the top of the Method B table (i.e., the contingency table portion) as its first argument and the bottom of the Method B table (i.e., the sample summary portion) as its second argument.  The results of \R{mrOpen()} should be saved to an object.  The ``observables'' (i.e., $m$, $n$, $R$, $r$, and $z$) can be extracted from this object with \R{summary()} including the \R{type="observables"} argument.  The ``estimates'' ($M$,$N$,$\phi$, and $B$ with associated standard errors) can be extracted with \R{summary()} using the \R{type="estimates"} argument.  Both the ``observables'' and the ``estimates'' can be extracted by leaving the \R{type=} argument at the default value.  Confidence intervals for the ``estimates'' are obtained with \R{confint()}.
+
+The Method B tables can be constructed in two ways.  First, if the capture history of each animal in the study is recorded in a data frame then this data frame can be submitted to \R{capHistSum()}.  This function requires a matrix or data frame that contains the raw capture history data.  This matrix or data frame must contain only the capture history data and no other data (e.g., a column with the fish identification number must NOT be included).  The \R{cols=} argument can be used to identify just the columns containing the capture history information.  For example, if the capture history information is contained in columns two through seven then \R{cols=2:7} should be used.  Alternatively, if the capture history is contained in all columns except for the first three then \R{cols=-c(1:3)} should be used.  If the matrix or data frame contains just the capture history information then the \R{cols=} argument can be ignored.  The \R{capHistSum()} function returns a list of four parts,
+  \begin{Itemize}
+    \item \R{caphist}: A vector summarizing the frequency of fish with each unique capture history.
+    \item \R{sum}: A data frame containing the number of fish captured in each sample (\var{n}), the number of previously marked fish captured in each sample (\var{m}), the number of marked fish returned to the population following the sample (\var{R}), and the number of marked fish in the population just prior to the sample (\var{M}).
+    \item \R{methodB.top}: A matrix containing a contingency table of capture sample (columns) and last seen sample (rows).  This summary is the top of the Method B table used in the Jolly-Seber method.
+    \item \R{methodB.bot}: A data frame containing the number of marked fish in the sample (\var{m}), the number of unmarked fish in the sample (\var{u}), the total number of fish in the sample (\var{n}), and the number of marked fish returned to the population following the sample (\var{R}).  This summary is the bottom of the Method B table used in the Jolly-Seber method.
+  \end{Itemize}
+
+The items in the list returned from \R{capHistSum()} can be individually accessed by assigning the results of the function to an object and then appending the name of the item in the list to that object separated by a dollar sign.  The last two items are the summaries of interest for the Jolly-Seber method.
+
+Second, if the capture histories of each animal are not recorded but the information in the Method B table is known then this information can be manually entered into two matrices.  When doing this it is especially important that \R{NA} values be entered on the diagonal and the lower triangle of the matrix in the top portion of the Method B table.  This method is illustrated in the following example.
+
+For example, the top portion of the Method B table shown in \tabref{tab:AbundanceMarkJollyMB1} is entered into matrix form as follows
+<<>>=
+s1 <- rep(NA,6)
+s2 <- c(3,rep(NA,5))
+s3 <- c(4,2,rep(NA,4))
+s4 <- c(3,4,7,rep(NA,3))
+s5 <- c(13,4,23,37,NA,NA)
+s6 <- c(5,7,7,11,32,NA)
+mb.top <- cbind(s1,s2,s3,s4,s5,s6)
+@
+
+The bottom portion of the same Method B table is entered as
+<<>>=
+m <- c(0,3,6,14,77,62)
+u <- c(1015,414,600,775,1829,1089)
+n <- c(1015,417,606,789,1906,1151)
+R <- c(1015,405,603,789,1880,0)
+mb.bot <- rbind(m,u,n,R)
+@
+
+These matrices can then be sent to \R{mrOpen()} to compute $\widehat{M_{i}}$ and $\widehat{N_{i}}$ with confidence intervals.  Note that the default \R{ci.type="Jolly"} argument means that the confidence intervals are computed using normal distribution theory with Jolly's large-sample standard error.
+<<>>=
+mr1 <- mrOpen(mb.top,mb.bot)
+summary(mr1)
+confint(mr1)
+@
+
+Note the very large confidence interval widths for the second and third sample where the number of recaptured marked fish was very low.
+
+
+
+\section{Jolly-Seber Estimate of Survival}
+The Jolly-Seber method can also be used to estimate the survival rate from one sampling period to the next.  Briefly, the survival rate can be thought of as the proportion of animals alive at time $i$ that are alive at some later time.  In the context of mark-recapture sampling we want to estimate the survival rate defined as the proportion of animals alive at sampling period $i$ that are still alive at sampling period $i+1$.
+
+The fundamental assumption in estimating the survival rate for a period is that marked and unmarked fish experience the same survival rate for the period.  Thus, the calculation of survival rate focuses on following just the marked fish from immediately after sample $i$ to immediately before sample $i+1$.  Immediately after sample $i$ there is $\widehat{M}_{i}$ marked fish from just prior to sample $i$ plus $R_{i}-m_{i}$ additional new marks corrected for any accidental deaths.  Thus, immediately after sample $i$ there are $\widehat{M}_{i}+R_{i}-m_{i}$ marked fish in the population.  Just prior to time $i+1$ there are $\widehat{M}_{i+1}$ marked fish in the population.  Thus, the proportion of the $\widehat{M}_{i}+R_{i}-m_{i}$ marked fish at time $i$ that survived to time $i+1$ is,
+
+\begin{equation} \label{eqn:AbundanceMarkJollyphi}
+  \widehat{\phi}_{i} = \frac{\widehat{M}_{i+1}}{\widehat{M}_{i}+\left(R_{i}-m_{i}\right)}
+\end{equation}
+
+For example, the survival rates of the Par Pond largemouth bass can be computed directly from the previous calculations shown in \tabref{tab:AbundanceMarkJollySum1}.  The calculation of $\widehat{\phi}_{i}$ is illustrated below for the second and third sample periods,
+
+\begin{itemize}
+  \item $\widehat{\phi}_{2} = \frac{\widehat{M}_{3}}{\widehat{M}_{2}+\left(R_{2}-m_{2}\right)} = \frac{578.2}{566.9+\left(405-3\right)} = 0.597$
+  \item $\widehat{\phi}_{3} = \frac{\widehat{M}_{4}}{\widehat{M}_{3}+\left(R_{3}-m_{3}\right)} = \frac{965.2}{578.2+\left(603-6\right)} = 0.821$
+\end{itemize}
+
+The large sample standard error of $\widehat{\phi}_{i}$ was, again, given by \cite{Jolly1965} as,
+
+\[ SE(\widehat{\phi}_{i}) = \widehat{\phi}_{i}\sqrt{\frac{\left(\widehat{M}_{i+1}-m_{i+1}\right)\left(\widehat{M}_{i+1}-m_{i+1}+R_{i+1}\right)}{\widehat{M}_{i+1}^{2}}\left(\frac{1}{r_{i+1}}-\frac{1}{R_{i+1}}\right)+\frac{\widehat{M}_{i}-m_{i}}{\widehat{M}_{i}-m_{i}+R_{i}}\left(\frac{1}{r_{i}}-\frac{1}{R_{i}}\right)}
+\]
+
+This standard error, and all other standard errors mentioned in this section, refer to variability associated only with sampling.  The estimation of the survival rate is often centered on estimating the underlying survival probability \citep{Pollocketal1990} for an individual.  To relate this to a common statistical topic, the standard error shown above is analogous to the standard error of fit from regression (i.e., estimating the position of the line) whereas interest is most often in the value analogous to the standard error of prediction from regression (i.e., estimating for an individual).  \cite{Pollocketal1990} show that this standard error, referred to as $SD(\widehat{\phi}_{i})$ to separate it from the $SE(\widehat{\phi}_{i})$ above, is the same as above with an additional term from the binomial variance, is computed as $SD(\widehat{\phi}_{i})=\sqrt{Var(\widehat{\phi}_{i})}$, where
+
+\[ \begin{split}
+ Var(\widehat{\phi}_{i}) &= \widehat{\phi}_{i}^{2}\left[
+ \frac{\left(\widehat{M}_{i+1}-m_{i+1}\right)\left(\widehat{M}_{i+1}-m_{i+1}+R_{i+1}\right)}{\widehat{M}_{i+1}^{2}}\left(\frac{1}{r_{i+1}}-\frac{1}{R_{i+1}}\right) + \frac{\widehat{M}_{i}-m_{i}}{\widehat{M}_{i}-m_{i}+R_{i}}\left(\frac{1}{r_{i}}-\frac{1}{R_{i}}\right)\right] \\
+  &+ \frac{\widehat{\phi}_{i}(1-\widehat{\phi}_{i})}{\left(\widehat{M}_{i}-m_{i}+R_{i}\right)}
+ \end{split}
+\]
+
+The estimated survival rates, associated standard errors, and the confidence intervals according to Jolly's large-sample method are computed using \R{mrOpen()} exactly as described previously.  However, the type of error to compute for $\widehat{\phi}_{i}$ can be set with the \R{phi.type=} argument.  The standard error for the estimate (i.e., only sampling error) is computed by including \R{phi.type="SE"} whereas the standard error for an individual (i.e., sampling and individual variability) is computed with \R{phi.type="SD"} (the default, following the advice of \cite[p. 22]{Pollocketal1990}).
+
+
+\section{Jolly-Seber Estimate of Recruitment}
+The number of individuals ``added'' to the population between time $i$ and $i+1$ is simply estimated as the difference in the estimated population at time $i+1$ (i.e., $\widehat{N}_{i}$) and the number of individuals expected to survive from $i$ to $i+1$.  The expected number of survivors from $i$ to $i+1$ is computed as the survival rate, $\widehat{\phi}_{i}$, times the estimated number at time $i$, $\widehat{N}_{i}$, minus any accidental deaths, $n_{i}-R_{i}$.  Thus, the estimated number of individuals added to the population is calculated with
+
+\begin{equation} \label{eqn:AbundanceMarkJollyB}
+  \widehat{B}_{i} = \widehat{N}_{i+1} - \widehat{\phi}_{i}\left[\widehat{N}_{i}-\left(n_{i}-R_{i}\right)\right]
+\end{equation}
+
+
+The ``additional'' fish added to the Par Pond largemouth bass population can be computed directly from the previous calculations shown in \tabref{tab:AbundanceMarkJollySum1} and the estimates of $\widehat{\phi}_{i}$.  These calculations are illustrated below for the second and third sample periods,
+
+\begin{itemize}
+  \item $\widehat{B}_{2} = \widehat{N}_{3} - \widehat{\phi}_{2}\left[\widehat{N}_{2}-\left(n_{2}-R_{2}\right)\right] = 50139 - 0.597\left[59239-\left(417-405\right)\right] = 14793$
+  \item $\widehat{B}_{3} = \widehat{N}_{4} - \widehat{\phi}_{3}\left[\widehat{N}_{3}-\left(n_{3}-R_{3}\right)\right] = 50835 - 0.821\left[50139-\left(606-603\right)\right] = 9657$
+\end{itemize}
+
+The large sample standard error of $\widehat{B}_{i}$ was, again, given by \cite{Jolly1965} as $SE(\widehat{B}_{i})=\sqrt{Var(\widehat{B}_{i})}$ where,
+
+\[ \begin{split}
+Var(\widehat{B}_{i}) &= \frac{\widehat{B}_{i}^{2}(\widehat{M}_{i+1}-m_{i+1})(\widehat{M}_{i+1}-m_{i+1}+R_{i+1})}{\widehat{M}_{i+1}^2}\left(\frac{1}{r_{i+1}}-\frac{1}{R_{i+1}}\right) \\
+ &+
+\frac{\widehat{M}_{i}-m_{i}}{\widehat{M}_{i}-m_{i}+R_{i}}\frac{(\phi_{i}R_{i}(N_{i}-\widehat{M}_{i}))^2}{\widehat{M}_{i}^{2}}\left(\frac{1}{r_{i}}-\frac{1}{R_{i}}\right) \\
+ &+ \frac{(N_{i}-n_{i})(N_{i+1}-\widehat{B}_{i})(N_{i}-\widehat{M}_{i})(1-\phi_{i})}{N_{i}(\widehat{M}_{i}-m_{i}+R_{i})} \\
+ &+
+\frac{N_{i+1}(N_{i+1}-n_{i+1})(N_{i+1}-\widehat{M}_{i+1})}{N_{i+1}m_{i+1}} +
+\frac{\phi_{i}^{2}N_{i}(N_{i}-n_{i})(N_{i}-\widehat{M}_{i})}{N_{i}m_{i}}
+\end{split} \]
+
+The estimated number of ``additional'' fish, associated standard error, and the confidence intervals according to Jolly's large-sample method are computed with \R{mrOpen()} exactly as described previously.
+
+
+\section{Jolly-Seber Assumptions}
+The Jolly-Seber method has many of the same assumptions as the Petersen and Schnabel methods, except, very importantly, the population does not have to be closed.  Specifically the Jolly-Seber model makes the following assumptions \citep{Krebs1999}:
+
+\begin{Enumerate}
+  \item Every individual, marked or unmarked, has the same probability of being caught in the $i$th sample
+  \item Every marked individual has same probability of surviving from the $i$th to the $(i+1)$th sample.  (Note: if the survival rate estimates are to apply to all individuals of the population, not just the marked individuals, then it must also be assumed that the probability of survival is the same for both marked and unmarked fish).
+  \item Individuals do not lose their marks and marks are not overlooked at capture.
+  \item Sampling time is negligible in relation to intervals between samples.
+\end{Enumerate}
+
+The most critical of these assumptions is, as with the other methods, the assumption of equal catchability.
+
+
+\section{Additional Notes and Readings}
+We noted that constant catchability is a very important assumption of all models used to estimate population abundance presented here.  The problems of non-constant catchability are discussed in detail for the depletion methods by \cite{Schnute1983} and \cite{Otisetal1978}.  \cite{Schnute1983} provides a methodology for testing for non-constant catchability in depletion methods and, furthermore, provides a model where catchability is higher in the first sample and then lower in all subsequent samples.  As \cite{Pollocketal1990} note ``the effects of heterogeneity of capture probabilities on Jolly-Seber estimators have been well studied.''  For futher reading on this subject in terms of mark-recapture models, we refer the interested reader to \cite{Krebs1999}[Section 2.4] who provides a variety of statistical tests for identifying non-constant catchability, \cite{Otisetal1978} who discuss the concept in regard to closed-population models, \cite{Pollocketal1990} who discuss the concept in general and provide alternative models for open-population models, and the large body of work performed by Burnham, White, Anderson, and Pollock (also see below).
+
+
+The large-sample standard errors provided by \cite{Jolly1965} for the parameter estimates in the Jolly-Seber mark-recapture method have been shown by \cite{Manly1971} and \cite{Roff1973} to produce confidence intervals that are too narrow.  \cite{Manly1984} provided an alternative to these formulas but \cite{Pollocketal1990} criticized those alternatives as being arbitrary.  \cite{Krebs1999}, however, noted that Manly's alternative performed reasonably well and suggested it be used when constructing confidence intervals for $N_{i}$ and $\phi_{i}$ (\cite{Manly1984} did not provide a method to be used when estimating $B_{i}$).  Manly's methodology can be implemented by including the \R{ci.type="Manly"} argument in the \R{mrOpen()} function.
+
+Several computer programs have been created that efficiently estimate the values of the models and, more importantly, models that are extensions of the models discussed in this chapter.  \cite{MirandaBettoli2008} list several of these programs in their Table 6.3.  In addition, the interested user should examine the \R{Rcapture} package for R.
+
+
+
+%\cleardoublepage  %not sure why, this is needed so that TOC entry will point to right start page
+\phantomsection    %not sure why, this is needed so that TOC entry will point to right start page
+\addcontentsline{toc}{section}{References}       %Add a TOC entry
+\bibliography{c:/aaaWork/zGnrlLatex/DHO_bib}    %make the bibliography
+
+<<echo=FALSE, results='asis'>>=
+## will add the reproducibility information
+et <- proc.time() - stime
+swvFinish(rqrdPkgs=rqrd,newPage=TRUE,elapsed=et["user.self"]+et["sys.self"])
+@
+<<echo=FALSE, results='hide', include=FALSE>>=
+## Will create the script file
+swvCode(moreItems=c("source","rqrd","stime"))
+@
+\end{document} 

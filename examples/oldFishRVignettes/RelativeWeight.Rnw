@@ -1,0 +1,266 @@
+\documentclass[a4paper]{article}
+\input{c:/aaaWork/zGnrlLatex/GnrlPreamble}
+\usepackage{longtable}
+\usepackage[toc,page]{appendix}
+\input{c:/aaaWork/zGnrlLatex/JustRPreamble}
+\hypersetup{pdftitle = fishR Vignette -- Condition}
+
+\begin{document}
+\titleFishR{Fish Condition and Relative Weights}
+
+<<setup, echo=FALSE, include=FALSE>>=
+## Start time for keeping track of process time
+ stime <- proc.time()
+## load common knitr setup
+source("../knitr_Common.r")
+@
+
+Condition is a measure of the physical health of a population of fish based on the fish's relative plumpness or fatness. Most often condition is computed by comparing the actual weight of a fish to some expectation of weight based on the length of the fish.  In other words, measuring the condition of a particular fish is an exercise in determining if it weighs more or less than would be expected based on its length.  An overall measure of condition for an entire population is obtained by averaging the condition of all fish in a sample.
+
+The utility of measuring fish conditions was summarized by \cite{Blackwelletal2000} in the following manner:
+\begin{quote}
+Fish condition can be extremely important to fisheries managers.  Plump fish may be indicators of favorable environmental conditions (e.g., habitat conditions, ample prey availability), whereas thin fish may indicate less favorable environmental conditions.  Thus, being able to monitor fish well-being can be extremely useful for fisheries biologists who must make management recommendations concerning fish populations.
+\end{quote}
+
+There are at least eight metrics of condition \citep{BolgerConnolly1989} of which three are commonly used by fisheries managers \citep{Blackwelletal2000}.  These three measures are introduced in \sectref{sect:Condition} and discussed within the context of four properties that should be evident in all condition metrics \citep{Murphyetal1990}.  Those four properties are (1) consistency -- similar statistical properties and meaning regardless of species or length; (2) tractability -- analysis by standard statistical methods; (3) efficiency -- relative precision from small samples; and (4) robustness -- relative insensitivity to variations in the way the data was collected and analyzed.  The relative weight metric will then be examined in more detail in \sectref{sect:RelWeight}.
+
+This vignette requires functions in the \R{FSA} and \R{FSAdata} package maintained by the author.  In addition, the \R{multcomp} package is needed for computing multiple comparisons in \sectref{sect:Analysis} and the \R{plotrix} package is needed for plotting confidence intervals in \sectref{sect:Analysis}.  These packages are loaded into R with
+<<echo=-1, results='hide', warning=FALSE, message=FALSE>>=
+rqrd <- c("FSA","FSAdata","multcomp","plotrix")
+library(FSA)
+library(FSAdata)
+library(multcomp)  # for glht() and mcp()
+library(plotrix)   # for plotCI()
+@
+
+
+\section{Measures of Condition} \label{sect:Condition}
+\subsection{Fulton's Condition Factor}
+Fulton's condition factor is calculated with
+
+\[ K = \frac{W}{L^{3}}*constant \]
+
+where the constant is simply a scaling factor that is equal to $100000$ if metric units are used (i.e., grams and millimeters) or $10000$ if English units are used (i.e., pounds and inches)\footnote{These constants are used so that the values of $K$ are not extremely small fractions.}.  Fulton's condition factor \emph{assumes isometric growth}\footnote{See the length-weight vignette for a brief discussion of isometric and allometric growth.}.  If a fish stock does not exhibit isometric growth, which is often the case, then $K$ tends to differ depending on the length of the fish, violating the consistency property.  Furthermore, comparing $K$ between species is problematic because both species would need to exhibit isometric growth for the comparison to be valid.  Because of these limitations, Fulton's condition factor should be avoided.
+
+\subsection{LeCren's Relative Condition Factor}
+The relative condition factor, introduced by \cite{LeCren1951}, is calculated with
+
+\[ Kn = \frac{W}{W'} \]
+
+where $W'$ is the predicted length-specific mean weight for the population under study \citep{Blackwelletal2000}.  The average $Kn$ across all lengths and species is 1.0 \citep{AndersonNeumann1996}.  Thus, $Kn$ is consistent across lengths.  \cite{BolgerConnolly1989}, however, show that $Kn$ comparisons are restricted to species or regions that have the same slope ($b$) in the length-weight relationship.  Thus, $W'$ is generally predicted from length-weight equations developed for a population (perhaps from several years of data) or for a region.
+
+\subsection{Relative Weight}
+The relative weight, introduced by \cite{WegeAnderson1978}, is calculated with
+
+\begin{equation} \label{eqn:RelativeWeight}
+  Wr = \frac{W}{Ws}*100
+\end{equation}
+
+where $Ws$ is a ``standard weight'' for fish of the same length.  In simplistic terms, a standard weight equation for a particular species is a length-weight relationship designed to predict the 75th percentile\footnote{However, see \cite{OgleWinfield2009} for an equation that uses the 50th percentile in addition to the 75th percentile.} mean weight for a given value of length\footnote{Specific discussion of methods for computing the standard weight equations are discussed in detail in \cite{Murphyetal1990} and \cite{Blackwelletal2000}}.  Standard weight equations have been developed for a wide variety of species\footnote{In R, examine the \R{data(WSlit)} data frame for all known equations}.  It should be noted that the standard weight equations have been developed for either metric or English unit measurements but that the $log_{10}$ rather than the $log_{e}$ transformation is used\footnote{This is in contrast to what is shown in the length-weight vignette.}.  \cite{Blackwelletal2000} suggest that regional or population-specific $Ws$ equations should NOT be developed.  If regional or population-specific analysis is desired then $Kn$ should be used.
+
+Recent trends, following the work of \cite{Gerowetal2005}, have resulted in standard weight equations that are quadratic rather than linear.  Examples of the use of quadratic standard weight equations can be found in \cite{OgleWinfield2009} and \cite{CooneyKwak2010}.  While use of these types of standard weight equations is not illustrated in this vignette, their use is a simple and straightforward modification of what is demonstrated here.
+
+The relative weight measure has become the most popular measure of condition \citep{Blackwelletal2000}.  This popularity is partly due to the fact that relative weight summaries have been used as a surrogate measure of the general ``health'' of the fish (\citealt{BrownMurphy1991,NeumannMurphy1992,Jonasetal1996,BrownMurphy2004,Kaufmanetal2007,RennieVerdon2008}; but also see \citealt{Copelandetal2008}) as well as the environment \citep{Liaoetal1995,Blackwelletal2000,RennieVerdon2008}.  Thus, relative weight summaries may be used as an indirect means for evaluating ecological relationships and the effects of management strategies \citep{Murphyetal1991,Blackwelletal2000}.  In addition, \cite{Murphyetal1990} found the distributions of $Wr$ values to typically be symmetric (but not normal).  Because t-tests and analysis of variance tests are relatively robust to departures from normality, as long as the distribution is symmetric, typical parametric inferential statistics can be used with $Wr$ values.
+
+It should be noted, though, that Gerow (\cite{Gerowetal2004}, \cite{Gerowetal2005}, and \cite{Gerow2010}) has been critical of the idea that traditionally developed standard weight equations produce relative weight values that are not dependent on the length of the fish.
+
+\section{Relative Weights in R} \label{sect:RelWeight}
+Throughout this vignette, the total length (in) and weight (g) data from Bluegill (\textit{Lepomis macrochirus})  sampled in two years from a small catch-and-release lake in northern Wisconsin will be examined.  These data (along with other data) can be found in the \R{InchLake2} data frame in the \R{FSAdata} package.  The entire data frame is loaded into R and the structure and the first six rows of data are viewed with
+
+<<>>=
+data(InchLake2)
+str(InchLake2)
+head(InchLake2)
+@
+
+As the types of units for the length (inches) and weight (grams) measurements do not match, either the lengths need to be converted to mm or the weights converted to pounds.  Below, the length measurements are converted to the nearest whole mm and stored into a new variable
+
+<<>>=
+InchLake2$lenmm <- round(InchLake2$length*25.4,0)
+head(InchLake2)
+@
+
+The Bluegill data from 2007 are isolated with
+<<>>=
+bg <- Subset(InchLake2,year==2007 & species=="Bluegill")
+str(bg)
+@
+Note, from the data frame structure, that the number of observations in \R{bg} is reduced from the original data frame and that \var{species} has only one level -- the level of the species of interest.
+
+\subsection{``Manually'' Computing $Wr$}
+Computing relative weights is a two-step process.  First, the standard weight for each fish's observed length is computed by substituting each fish's observed length into the species-specific standard weight equation.  Second, the relative weights are computed by dividing each fish's observed weight by it's calculated standard weight.
+
+The coefficients for all known standard weight equations can be efficently found with \R{wsVal()}.  This function requires the desired species name, in quotes and spelled correctly\footnote{Note that part of spelling correctly here means that only the first word in compound named species is capitalized.}, as the first argument and the desired units of measurement in \R{units=} (either \R{"metric"} for use with mm and grams or \R{"English"} for use with inches and pounds).  Some standard weight equations have been developed for other than the 75th percentile (usually the 50th or, occasionally, also the 25th percentile).  The default is to return values for the 75th percentile but this can be altered by including a value for another percentile in \R{ref=}.  It should be noted that equations have not been developed for all species in both types of units and for other than 75th percentile reference points.  If you ask for a species in a situation (units and reference combination) in which the standard weight equation does not exist, then an error will be produced by \R{wsVal()}.
+
+The standard weight equation information for Bluegill is found and stored into an object called \R{bg.eqn} with\footnote{The ``extra'' parentheses around the second line simply forces R to print the results of the object at the time of assigning.}
+<<>>=
+( bg.eqn <- wsVal("Bluegill",units="metric") )
+@
+
+Note that the results will indicate if the standard weight equation is of the linear or quadratic form (in \var{type}), what the minimum (and occasionally maximum) length (in \var{min.len} as mm) over which the equation should be applied, and which length measurement is applicable (in \var{measure} and nearly always total length (TL)).
+
+As the standard weight equation is only valid for Bluegill of at least 80 mm, the \R{bg} data frame was reduced to only those fish larger than 80 mm with
+<<>>=
+bg80 <- Subset(bg,lenmm>=bg.eqn$min.len)
+@
+
+A column of standard weights for each fish in the data frame is then constructed by predicting the $log_{10}(Ws)$ from the observed $log_{10}(L)$ with the provided equation coefficients and by ``back-transforming'' these to the observed scale by raising the result to the power of 10.  This is accomplished with
+<<>>=
+bg80$ws <- 10^(bg.eqn$int+bg.eqn$slope*log10(bg80$lenmm))
+@
+  
+The relative weights are then calculated and appended to the data frame using \eqref{eqn:RelativeWeight} with
+<<>>=
+bg80$wr <- (bg80$weight/bg80$ws)*100
+@
+
+The modified data frame now consists of the original data frame with new columns containing the standard and relative weights appended.  The first six rows of this data frame are seen with
+<<>>=
+head(bg80)
+@
+
+\subsection{Convenience Functions}
+The \R{wrAdd()} can be used to efficiently add the standard weight and relative weight columns to a data frame for a given species.  This function requires a formula of the form \R{weight}\verb+~+\R{length} as the first argument with a corresponding data frame in \R{data=} and the species being examined in \R{species=}, the appropriate measurement units in \R{units=}, and the chosen reference value in \R{ref=} as described for \R{wsVal()}.  In addition, use \R{remove.submin=} to either completely remove (\R{=TRUE}) individuals below the minimum recommended length for application of the standard weight equation or simply have \R{NA} placed in the standard and relatve weight variables (\R{=FALSE}; default) for these individuals.  For example, the standard and relative weights are added to the \R{bg} data frame with
+<<>>=
+bg2 <- wrAdd(weight~lenmm,data=bg,species="Bluegill",units="metric",remove.submin=TRUE)
+head(bg2)
+@
+
+Finally, a fisheries scientist is often faced with the task of computing the $Wr$ values for a wide variety of species across a variety of groups (e.g., species, years, gear, lakes).  This process is made more efficient by using \R{wrDataPrep()} to create the $Ws$ and $Wr$ variables at one time for all species in a data frame for which the standard weight equations have been defined.  As might be expected, \R{wrDataPrep()} has some limitations.  First, only equations for the 75th percentile will be allowed (as these are the vast majority of $Ws$ equations).  Second, the species names in the original data frame must be spelled exactly as they appear in the \R{WSlit} data frame\footnote{Primarily full common names with the first letter capitalized only on the first name for species with compound names}.  For example, the species names in the original \R{InchLake2} data frame are not in the correct format (largely, the second names are capitalized)
+
+<<>>=
+levels(InchLake2$species)
+@
+
+The \R{recodeSpecies()} can be used to convert species names.  This function is flexible but in its simplest form it will simply ``re-capitalize'' the names to match the required form.  More complicated examples are illustrated in the \R{recodeSpecies()} help.  A simple conversion for the \R{InchLake2} data frame is completed with (note that the new variable name is the same as the old variable name but with a ``1'' appended)
+
+<<>>=
+InchLake2 <- recodeSpecies(~species,data=InchLake2)
+levels(InchLake2$species1)
+@
+
+The \R{wrDataPrep()} requires three arguments -- a formula of the form \R{weight}\verb+~+\R{length}+\R{species} in the first argument, the data frame in \R{data=}, and the units of measurement in \R{units=}.  Species for which no standard weight equation is known can be eliminated from the resulting data frame with \R{remove.other=TRUE}.  Individuals that are below the minimum length for which the standard weight quation does not apply can be removed with \R{remove.submin=TRUE}.  Removing the species without a known standard weight equation or those individual below the minimum length is not a requirement but it will speed-up the process and make the resulting tables less cluttered.  The \R{InchLake2} data frame can be appended with the length categorization variable with
+<<>>=
+InchLake2 <- wrDataPrep(weight~lenmm+species1,data=InchLake2,units="metric",
+                        remove.other=TRUE,remove.submin=TRUE)
+head(InchLake2)
+@
+
+The data could then be subsetted and summarized as described more thoroughly in \sectref{sect:Analysis}.  For example, the following illustrates how to compute the mean $Wr$ for each species and year combination
+<<>>=
+Summarize(wr~year*species,data=InchLake2,digits=1)
+@
+
+
+\section{Follow-up Analyses and Interpretation} \label{sect:Analysis}
+\subsection{Comparisons Among Length Categories}
+A measure of overall condition using $Wr$ should not be computed without first determining if the $Wr$ values differ across fish lengths \citep{Blackwelletal2000}.  In particular, \cite{Murphyetal1991} suggested that $Wr$ values should first be summarized within the usual five-cell length categories of \cite{Gabelhouse1984} \footnote{The five-cell length categorization scheme of \cite{Gabelhouse1984} was defined in the size structure vignette}.  Use of the five-cell model can be problematic at times because of small sample sizes in the larger length categories.  Thus, other authors have summarized by 25- or 50-mm length categories.  The mean $Wr$ values in the length categories are then tested with analysis of variance methods to determine if differences exist among the length categories.  Adjacent length categories that are statistically equal can then be pooled together.  If no statistical differences among categories exist, then all length categories can be pooled and an overall measure of condition for the population can be computed.  Relative weights should be reported as whole numbers \citep{Blackwelletal2000}.
+
+A new variable containing the five-cell length categories is appended to the \R{InchLake2} data frame using \R{pssDataPrep()} which has largely the same arguments as \R{wsDataPrep()} with the exception that the formula is of the form \R{length}\verb+~+\R{species} and the \R{units=} is set to \R{"mm"}, \R{"cm"}, or \R{"in"}, respectively.  For example,
+<<>>=
+InchLake2 <- pssDataPrep(lenmm~species1,data=InchLake2,units="mm")
+head(InchLake2)
+@
+
+As an illustration, the differences among length categories for Bluegill captured in 2007 were examined by first extracting this group of fish
+<<>>=
+bg07 <- Subset(InchLake2, species=="Bluegill" & year==2007)
+@
+
+One-way analysis of variance is then used to determine if significant differences in mean $Wr$ exist among the length categories.  The one-way ANOVA is fit and the ANOVA table is extracted with
+<<>>=
+lm1 <- lm(wr~PSScat,data=bg07)
+anova(lm1)
+@
+
+These results show that there is a significant difference in mean $Wr$ value among the length categories (\Sexpr{swvPvalue(anova(lm1)[1,"Pr(>F)"],digits=2)}).  Tukey's multiple comparisons are constructed as shown below.
+
+<<message=FALSE>>=
+mc1 <- glht(lm1,mcp(PSScat="Tukey"))
+summary(mc1)
+@
+
+These results suggest that the mean $Wr$ is significantly less for stock-size fish than quality- or preferred-size fish which have statistically equal means.  A plot of the fitted means with significance letters \figrefp{fig:BG07Means} is constructed with
+
+<<BG07Means, fig.cap="Mean relative weight of Inch Lake Bluegill captured in 2007 by length category.">>=
+nd <- expand.grid(PSScat=levels(bg07$PSScat))
+mm <- model.matrix(~PSScat,data=nd)
+nd <- within(nd,{
+  lvlnum <- as.numeric(PSScat)
+  Pred <- predict(lm1,nd)
+  SE <- sqrt(diag(mm %*% vcov(lm1) %*% t(mm)))
+  LCI <- Pred-1.96*SE
+  UCI <- Pred+1.96*SE
+  }
+)
+with(nd,plotCI(lvlnum,Pred,ui=UCI,li=LCI,pch=16,xaxt="n",ylim=c(75,103),
+                xlab="Length Category",ylab="Mean Relative Weight"))
+with(nd,axis(1,at=lvlnum,labels=PSScat)) 
+with(nd,text(x=lvlnum,y=UCI,labels=c("a","b","b"),pos=3))
+@
+
+The relatively small values of $Wr$ (i.e., much less than 100) for stock-sized fish suggests that Bluegill between 3 and 6 inches in Inch Lake in 2007 were relatively skinny fish.  Bluegills larger than 6 inches were very near the standard size.
+
+
+\subsection{Comparisons Among Years}
+The relative weight of Bluegill in Inch Lake was compared between years (2007 and 2008) to determine if the condition of Bluegill had changed between those two years.  Analysis for 2007 (see above) suggested that relative weight differed significantly among lenght categories.  Thus, these data are best analyzed with a two-way ANOVA.
+
+The Bluegills were isolated and a factored year variable created with
+<<>>=
+bg <- Subset(InchLake2,species=="Bluegill")
+bg$fyear <- factor(bg$year)
+str(bg)
+@
+
+A two-way ANOVA to compare the mean relative weight between the two years and among the length categories is conducted with
+<<>>=
+lm2 <- lm(wr~fyear*PSScat,data=bg)
+anova(lm2)
+@
+These results suggest that there is not a significant interaction between capture year and length category.  Thus, a model without the interaction is fit and multiple comparisons are constructed for each factor.
+<<>>=
+lm2a <- lm(wr~fyear+PSScat,data=bg)
+mc2y <- glht(lm2a,mcp(fyear="Tukey"))
+summary(mc2y)
+mc2l <- glht(lm2a,mcp(PSScat="Tukey"))
+summary(mc2l)
+@
+These results suggest that the mean $Wr$ is signficantly lower in 2008 for all length categories and that the mean $Wr$ increases progressively from stock- to quality- to preferred-size Bluegill within each year.
+
+<<BGMeans, fig.cap="Mean relative weight of Inch Lake Bluegill by length category and capture year.">>=
+nd <- expand.grid(fyear=levels(bg$fyear),PSScat=levels(bg$PSScat))
+mm <- model.matrix(~PSScat*fyear,data=nd)
+nd <- within(nd,{
+  lvlnum <- as.numeric(PSScat)
+  Pred <- predict(lm2,nd)
+  SE <- sqrt(diag(mm %*% vcov(lm2) %*% t(mm)))
+  LCI <- Pred-1.96*SE
+  UCI <- Pred+1.96*SE
+  }
+)
+with(Subset(nd,fyear==2007),plotCI(lvlnum-0.05,Pred,ui=UCI,li=LCI,pch=16,xaxt="n",
+                xlim=c(0.9,3.1),ylim=c(67,102),
+                xlab="Length Category",ylab="Mean Relative Weight"))
+with(Subset(nd,fyear==2008),plotCI(lvlnum+0.05,Pred,ui=UCI,li=LCI,pch=16,col="blue",add=TRUE))
+with(nd,axis(1,at=lvlnum,labels=PSScat))
+legend("topleft",levels(nd$fyear),pch=16,col=c("black","blue"),bty="n")
+@
+
+
+%BIBLIOGRAPHY -----------------------------------------------------------------------------------
+\cleardoublepage   %not sure why, this is needed so that TOC entry will point to right start page
+\phantomsection    %not sure why, this is needed so that TOC entry will point to right start page
+\addcontentsline{toc}{section}{References}    %Add a TOC entry
+\bibliography{c:/aaaWork/zGnrlLatex/DHO_bib}    %make the bibliography
+
+
+<<echo=FALSE, results='asis'>>=
+## will add the reproducibility information
+et <- proc.time() - stime
+swvFinish(rqrdPkgs=rqrd,newPage=TRUE,elapsed=et["user.self"]+et["sys.self"])
+@
+<<echo=FALSE, results='hide', include=FALSE>>=
+## Will create the script file
+swvCode(moreItems=c("source","rqrd","stime"))
+@
+\end{document} 

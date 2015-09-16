@@ -15,6 +15,6 @@ These are vignettes fromk the original **fishR** website.  Most of these have be
 * Mark-Recapture -- [Closed](oldFishRVignettes/MRClosed.pdf) / [Open](oldFishRVignettes/MROpen.pdf)
 * [Catch Curves](oldFishRVignettes/CatchCurve.pdf)
 * von Bertalanffy Growth -- [Intro](oldFishRVignettes/VonBertalanffy.pdf) /  [Extra](oldFishRVignettes/VonBertalanffyExtra.pdf)
+* [Weisberg Mixed-Effects Growth Models](http://users.stat.umn.edu/~sandy/courses/8053/handouts/fishgrowth.pdf) (from Dr. Weisberg’s webpage)
 * [Stock-Recruitment Models](oldFishRVignettes/StockRecruit.pdf)
 * [Maturity Schedules](oldFishRVignettes/Maturity.pdf)
-* [Weisberg Mixed-Effects Growth Models](http://users.stat.umn.edu/~sandy/courses/8053/handouts/fishgrowth.pdf) (from Dr. Weisberg’s webpage)

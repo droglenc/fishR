@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Two New Cumulative Sum Functions
+title: Bioenergetics in R
 tags: [R, Bioenergetics]
 ---
 

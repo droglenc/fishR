@@ -7,7 +7,7 @@
   margin-bottom: 30px;
   margin-left: auto;
   margin-right: auto;
-  width: 70%;
+  width: inherit;
 }
 .share-page a {
   font-weight: 700;

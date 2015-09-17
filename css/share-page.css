@@ -1,18 +1,14 @@
 .share-page {
-    text-align: center;
-    background: #398199;
-    color: #DCE5E8;
-    padding: 8px 15px;
-    border-radius: 5px;
-    margin: 30px 0;
-
-    a {
-        font-weight: 700;
-        color: #FFF;
-        margin-left: 10px;
-
-        &:hover {
-            border-bottom: 1px dashed #FFF;
-        }
-    }
+  text-align: center;
+  background-color: #f9f9f9;
+  padding: 8px 15px;
+  border-radius: 5px;
+  margin: 30px 0;
+}
+.share-page a {
+  font-weight: 700;
+  margin-left: 10px;
+}
+.share-page a :hover {
+  border-bottom: 1px dashed #000000;
 }

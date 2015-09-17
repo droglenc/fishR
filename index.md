@@ -1,6 +1,6 @@
 ---
 layout: page
-title: R for Fisheries Analyses
+subtitle: R for Fisheries Analyses
 ---
 
 The **fishR** website provides examples and resources for fisheries-related analyses performed in [R](https://www.r-project.org/).  It is my hope that these resources will help you to either use R or expand your knowledge of [R](https://www.r-project.org/) for fisheries-related analyses.  Take a look around!!

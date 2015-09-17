@@ -1,9 +1,9 @@
 .share-page {
   text-align: center;
-  background-color: #D2D5D6;
-  padding: 8px inherit;
+  background-color: #FFF5BF;
+  padding: 8px 15px;
   border-radius: 5px;
-  margin: 30px 0;
+  margin: 30px inherit;
 }
 .share-page a {
   font-weight: 700;

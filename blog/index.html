@@ -20,7 +20,10 @@ title: What's New!
     </a>
 
     <p class="post-meta">
-      Posted on {{ post.date | date: "%B %-d, %Y" }}
+      Posted on {{ page.date | date: "%B %-d, %Y" }}
+      {% if page.tags.size > 0 %}
+        with {{ page.tags | array_to_sentence_string }} <a href="../blog/tags.html">tags</a>
+      {% endif %}
     </p>
 
     <div class="post-entry">

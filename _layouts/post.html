@@ -11,7 +11,7 @@ layout: default
         <h2 class="post-subheading">{{ page.subtitle }}</h2>
         {% endif %}
         <span class="post-meta">Posted on {{ page.date | date: "%B %-d, %Y" }}</span>
-        <span style="padding-left: 100px;">Hello</span>
+        <span style="padding-left: 50px;">Tags: {% for tag in post.tags %} {{ tag }} {% if forloop.last != true %} {% endif %} {% endfor %}</span>
       </div>
      </div>
   </div>

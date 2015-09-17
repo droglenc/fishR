@@ -4,15 +4,15 @@
     color: #DCE5E8;
     padding: 8px 15px;
     border-radius: 5px;
-    margin: 1.5 * $spacing-unit 0;
+    margin: 30px 0;
 
     a {
         font-weight: 700;
-        color: #DCE5E8;
+        color: #FFF;
         margin-left: 10px;
 
         &:hover {
-            border-bottom: 1px dashed #DCE5E8;
+            border-bottom: 1px dashed #FFF;
         }
     }
 }

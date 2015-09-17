@@ -20,8 +20,8 @@ navbar-links:
   Examples: "examples"
   Blog: "blog"
   Packages: "packages"
-  Exposure: "exposure"
   Courses: "courses"
+  Exposure: "exposure"
   Contact: "contact"
   Home: ""
 

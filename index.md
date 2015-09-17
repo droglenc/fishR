@@ -2,7 +2,7 @@
 layout: page
 ---
 
-<div style="text-align:center; font-size: 1.5em">R for Fisheries Analyses</div>
+<div style="text-align:center; font-size: 2em; font-weight: bold">R for Fisheries Analyses</div>
 
 The **fishR** website provides examples and resources for fisheries-related analyses performed in [R](https://www.r-project.org/).  It is my hope that these resources will help you to either use R or expand your knowledge of [R](https://www.r-project.org/) for fisheries-related analyses.  Take a look around!!
 

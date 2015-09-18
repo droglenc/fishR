@@ -2,7 +2,7 @@
 layout: post
 title: Figure and Table Captions in Markdown
 date: "Friday, September 17, 2015"
-tags: [R, Markdown, captioner, Reproducible Research]
+tags: [R, Markdown, captioner, Reproducible_Research]
 output: html_document
 ---
 

@@ -3,9 +3,7 @@ layout: post
 title: Figure and Table Captions in Markdown
 date: "Friday, September 17, 2015"
 tags: [R, Markdown, captioner, Reproducible Research]
-output: 
-  html_document: 
-    fig_caption: yes
+output: html_document
 ---
 ```{r eval=FALSE, echo=FALSE}
 ## FOR COMPILING FOR THE WEBSITE
@@ -24,6 +22,7 @@ opts_chunk$set(dev="png",tidy=FALSE)
 I have been attempting to use RMarkdown rather than LaTeX to produce R examples.  One issue that has slowed my conversion has been my struggles with how to reference figures and tables.  The examples below illustrate how I have been using `captioner` to solve this problem.
 
 ## The Solution
+
 ### Foundation
 
 For a simple example, I load `FSAdata` for the `RuffeSLRH92` data, `FSA` for `hist()` and `summarize()`, and `knitr` for `kable` (to produce an RMarkdown table).  Additionally, `captioner` is loaded.
@@ -58,26 +57,33 @@ The results returned by this function are exploited, as shown in the next sectio
 
 ### Application
 
-The `figs` function may be used to add a figure caption to a figure.  For example, the code below is in an RMarkdown/knitr chunk that includes `fig.cap=figs("LenFreq1")`.  [However, make sure that `fig_caption: yes` is in the YAML header under `output:` and `html_document:`.]
-```{r ExHistL_Captioner, fig.cap=figs("LenFreq1")}
+The `figs` function may be used to add a figure caption to a figure.  For example, the chunk below is followed by an inline R chunk of `r figs("LenFreq1")`.
+```{r ExHistL_Captioner}
 hist(~length,data=RuffeSLRH92)
 ```
 
+`r figs("LenFreq1")`
+
 In addition, use inline R code to refer to the figure.  For example, `figs("LenFreq1",display="cite")` inside an inline R call would produce a reference to `r figs("LenFreq1",display="cite")`.
 
-As more functions are added, the figure numbers are incremented such that inline R code may refer to `r figs("WtFreq1",display="cite")` and `r figs("LenFreq1",display="cite")` and the `fig.cap` chunk option may still be used to add the caption below the figure.
+As more functions are added, the figure numbers are incremented such that inline R code may refer to `r figs("WtFreq1",display="cite")` and `r figs("LenFreq1",display="cite")`.
 
 ```{r ExHistW_Captioner, fig.cap=figs("WtFreq1")}
 hist(~weight,data=RuffeSLRH92)
 ```
 
+`r figs("WtFreq1")`
+
 Tables can be handled in the same way.  For example, see `r tbls("sumLW1",display="cite")`, which is related to `r figs("LenFreq1",display="cite")` and `r figs("WtFreq1",display="cite")`.
 ```{r results='hide'}
 tbls("SumLW1","Summary statistics of the length and weight of Ruffe captured in 1992.")
 ```
+
+`r tbls("SumLW1")`
+
 ```{r}
 sumLW <- rbind(Summarize(~length,data=RuffeSLRH92),
                Summarize(~length,data=RuffeSLRH92))
-kable(sumLW,digits=2,caption=tbls("SumLW1"))
+kable(sumLW,digits=2)
 ```
 

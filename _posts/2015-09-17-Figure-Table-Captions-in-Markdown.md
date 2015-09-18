@@ -3,9 +3,7 @@ layout: post
 title: Figure and Table Captions in Markdown
 date: "Friday, September 17, 2015"
 tags: [R, Markdown, captioner, Reproducible Research]
-output: 
-  html_document: 
-    fig_caption: yes
+output: html_document
 ---
 
 
@@ -16,6 +14,7 @@ output:
 I have been attempting to use RMarkdown rather than LaTeX to produce R examples.  One issue that has slowed my conversion has been my struggles with how to reference figures and tables.  The examples below illustrate how I have been using `captioner` to solve this problem.
 
 ## The Solution
+
 ### Foundation
 
 For a simple example, I load `FSAdata` for the `RuffeSLRH92` data, `FSA` for `hist()` and `summarize()`, and `knitr` for `kable` (to produce an RMarkdown table).  Additionally, `captioner` is loaded.
@@ -82,17 +81,19 @@ The results returned by this function are exploited, as shown in the next sectio
 
 ### Application
 
-The `figs` function may be used to add a figure caption to a figure.  For example, the code below is in an RMarkdown/knitr chunk that includes `fig.cap=figs("LenFreq1")`.  [However, make sure that `fig_caption: yes` is in the YAML header under `output:` and `html_document:`.]
+The `figs` function may be used to add a figure caption to a figure.  For example, the chunk below is followed by an inline R chunk of Figure  1: Length frequency of Ruffe captured in 1992..
 
 {% highlight r %}
 hist(~length,data=RuffeSLRH92)
 {% endhighlight %}
 
-![Figure  1: Length frequency of Ruffe captured in 1992.](../figures/ExHistL_Captioner-1.png) 
+![plot of chunk ExHistL_Captioner](../figures/ExHistL_Captioner-1.png) 
+
+Figure  1: Length frequency of Ruffe captured in 1992.
 
 In addition, use inline R code to refer to the figure.  For example, `figs("LenFreq1",display="cite")` inside an inline R call would produce a reference to Figure  1.
 
-As more functions are added, the figure numbers are incremented such that inline R code may refer to Figure  2 and Figure  1 and the `fig.cap` chunk option may still be used to add the caption below the figure.
+As more functions are added, the figure numbers are incremented such that inline R code may refer to Figure  2 and Figure  1.
 
 
 {% highlight r %}
@@ -101,16 +102,21 @@ hist(~weight,data=RuffeSLRH92)
 
 ![Figure  2: Weight frequency of Ruffe captured in 1992.](../figures/ExHistW_Captioner-1.png) 
 
+Figure  2: Weight frequency of Ruffe captured in 1992.
+
 Tables can be handled in the same way.  For example, see Table  1, which is related to Figure  1 and Figure  2.
 
 {% highlight r %}
 tbls("SumLW1","Summary statistics of the length and weight of Ruffe captured in 1992.")
 {% endhighlight %}
 
+Table  2: Summary statistics of the length and weight of Ruffe captured in 1992.
+
+
 {% highlight r %}
 sumLW <- rbind(Summarize(~length,data=RuffeSLRH92),
                Summarize(~length,data=RuffeSLRH92))
-kable(sumLW,digits=2,caption=tbls("SumLW1"))
+kable(sumLW,digits=2)
 {% endhighlight %}
 
 

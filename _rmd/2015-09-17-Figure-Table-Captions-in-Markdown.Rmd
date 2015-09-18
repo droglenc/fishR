@@ -79,11 +79,14 @@ Tables can be handled in the same way.  For example, see `r tbls("sumLW1",displa
 tbls("SumLW1","Summary statistics of the length and weight of Ruffe captured in 1992.")
 ```
 
-`r tbls("SumLW1")`
-
 ```{r}
 sumLW <- rbind(Summarize(~length,data=RuffeSLRH92),
                Summarize(~length,data=RuffeSLRH92))
-kable(sumLW,digits=2)
+```
+
+`r tbls("SumLW1")`
+
+```{r echo=FALSE, results='markup'}
+sumLW
 ```
 

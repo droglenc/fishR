@@ -110,19 +110,18 @@ Tables can be handled in the same way.  For example, see Table  1, which is rela
 tbls("SumLW1","Summary statistics of the length and weight of Ruffe captured in 1992.")
 {% endhighlight %}
 
-Table  2: Summary statistics of the length and weight of Ruffe captured in 1992.
-
 
 {% highlight r %}
 sumLW <- rbind(Summarize(~length,data=RuffeSLRH92),
                Summarize(~length,data=RuffeSLRH92))
-kable(sumLW,digits=2)
 {% endhighlight %}
 
+Table  2: Summary statistics of the length and weight of Ruffe captured in 1992.
 
 
-|   n| nvalid|   mean|    sd| min| Q1| median|  Q3| max| percZero|
-|---:|------:|------:|-----:|---:|--:|------:|---:|---:|--------:|
-| 738|    738| 101.08| 41.66|  13| 70|    103| 135| 192|        0|
-| 738|    738| 101.08| 41.66|  13| 70|    103| 135| 192|        0|
+{% highlight text %}
+##        n nvalid    mean       sd min Q1 median  Q3 max percZero
+## [1,] 738    738 101.084 41.65587  13 70    103 135 192        0
+## [2,] 738    738 101.084 41.65587  13 70    103 135 192        0
+{% endhighlight %}
 

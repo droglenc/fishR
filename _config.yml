@@ -13,7 +13,7 @@ description: Demonstrations for using R for fisheries analyses.
 
 # --- Navigation bar options --- #
 # Image to show in the navigation bar - image must be a square (width = height)
-avatar: "/img/fishRlogoSquareWhite.png"
+avatar: "/img/fishRlogo.JPG"
 
 # List of links in the navigation bar
 navbar-links:

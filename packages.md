@@ -5,7 +5,7 @@ title: Fishy Packages
 
 * [Multi-Purpose Packages](#multi-purpose-packages)
 * [Single-Purpose Packages](#single-purpose-packages)
-* [Packages for Capture-Recapture Analyses](#packages-for-capture-recpature-analyses)
+* [Packages for Capture-Recapture Analyses](#packages-for-capture-recapture-analyses)
 * [Packages to Access Online Databases](#packages-to-access-online-databases)
 * [Collections of Code](#collections-of-code-that-are-not-yet-a-package)
 * [Packages Not Actively Maintained](#packages-not-actively-maintained)
@@ -49,12 +49,27 @@ title: Fishy Packages
 ----
 
 ## Packages for Capture-Recapture Analyses
+### General or Traditional
 * [marked](https://cran.r-project.org/web/packages/marked/)
 * [mra](https://cran.r-project.org/web/packages/mra/)
 * [mrds](https://cran.r-project.org/web/packages/mrds/)
 * [Rcapture](http://cran.r-project.org/web/packages/Rcapture/index.html)
 * [RMark](http://www.phidot.org/software/mark/rmark/)
 * [unmarked](https://cran.r-project.org/web/packages/unmarked/)
+
+### Spactially Explicit
+* [admbsecr](https://github.com/b-steve/admbsecr)
+* [secr](https://cran.r-project.org/web/packages/secr/index.html)
+* [secrdesign](https://cran.r-project.org/web/packages/secrdesign/index.html)
+* [secrlinear](https://cran.r-project.org/web/packages/secrlinear/index.html)
+
+### Other
+* [BBRecapture](https://cran.r-project.org/web/packages/BBRecapture/index.html)
+* [CARE1](https://cran.r-project.org/web/packages/CARE1/index.html)
+* [dga](https://cran.r-project.org/web/packages/dga/index.html)
+* [estimateN](http://www.kent.ac.uk/smsas/personal/msr/estimateN.html)
+* [lllcrc](https://cran.r-project.org/web/packages/lllcrc/index.html)
+* [SCRbayes](https://sites.google.com/site/spatialcapturerecapture/scrbayes-r-package)
 
 ----
 

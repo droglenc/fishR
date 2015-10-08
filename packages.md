@@ -58,7 +58,7 @@ title: Fishy Packages
 * [RMark](http://www.phidot.org/software/mark/rmark/)
 * [unmarked](https://cran.r-project.org/web/packages/unmarked/)
 
-### Spactially Explicit
+### Spatially Explicit
 * [admbsecr](https://github.com/b-steve/admbsecr)
 * [secr](https://cran.r-project.org/web/packages/secr/index.html)
 * [secrdesign](https://cran.r-project.org/web/packages/secrdesign/index.html)

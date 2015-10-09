@@ -14,11 +14,7 @@ title: Fishy Packages
 
 ## How to Install Packages
 
-The following are instructions for how to install packages from within various ways to interact with R.
-
-* [Install Packages from within RStudio](http://derekogle.com/IFAR/supplements/installations/InstallPackagesRStudio.html)
-* [Install Packages from within the R GUI for Windows](http://derekogle.com/IFAR/supplements/installations/InstallPackagesRWin.html)
-* [Install Packages from within the R GUI for Macintosh OS](http://derekogle.com/IFAR/supplements/installations/InstallPackagesRMac.html)
+The following are instructions to install packages from within various ways to interact with R -- within [RStudio](http://derekogle.com/IFAR/supplements/installations/InstallPackagesRStudio.html), the [R GUI for Windows](http://derekogle.com/IFAR/supplements/installations/InstallPackagesRWin.html), or the [R GUI for Macintosh OS](http://derekogle.com/IFAR/supplements/installations/InstallPackagesRMac.html).
 
 ----
 

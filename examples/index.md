@@ -4,8 +4,8 @@ title: R in Action!
 ---
 
 ## Book-Related Resources
-* [Introducory Fisheries Analyses with R book](http://derekogle.com/IFAR/) (Ogle, 2015) -- *scripts, supplements, and errata for this book*
-* [Analysis and Interpretation of Freshwater Fisheries Data](http://derekogle.com/aiffd2007/) book (Guy and Brown, 2007) -- *scripts and detailed descriptions for many of the boxed examples (converted from SAS code)*
+* [*Introductory Fisheries Analyses with R*] book(http://derekogle.com/IFAR/) (Ogle, 2015) -- *scripts, supplements, and exercises for this book*
+* [*Analysis and Interpretation of Freshwater Fisheries Data*](http://derekogle.com/aiffd2007/) book (Guy and Brown, 2007) -- *scripts and detailed descriptions for many of the boxed examples (converted from SAS code)*
 
 ## Detailed Encompassing Examples
 * See above.

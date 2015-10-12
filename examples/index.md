@@ -8,13 +8,13 @@ title: R in Action!
 * [*Analysis and Interpretation of Freshwater Fisheries Data*](http://derekogle.com/aiffd2007/) book (Guy and Brown, 2007) -- *scripts and detailed descriptions for many of the boxed examples (converted from SAS code)*
 
 ## Detailed Examples
-* IFAR supplement -- [Backcalculation of Previous Length](http://derekogle.com/IFAR/supplements/backcalculation/)
-* IFAR supplement -- [Common Axis Labels on a Grid of Subplots](http://derekogle.com/IFAR/supplements/plotting/CommonAxisLabels.html)
-* IFAR Supplement -- [Complex Grid Layouts](http://derekogle.com/IFAR/supplements/plotting/ComplexLayouts.html)
-* IFAR Supplement -- [DVR with More than Two Groups](http://derekogle.com/IFAR/supplements/weightlength/index.html)
-* IFAR Supplement -- [Fitting Other VBGF Parameterizations](http://derekogle.com/IFAR/supplements/growth/OtherVBGFParams.html)
-* IFAR Supplement -- [Fitting Other Growth Functions](http://derekogle.com/IFAR/supplements/growth/OtherGrowthFuns.html)
-* IFAR Supplement -- [Additional Nonlinear Regression Algorithms](http://derekogle.com/IFAR/supplements/growth/OtherNLAlgorithms.html)
+* [Backcalculation of Previous Length](http://derekogle.com/IFAR/supplements/backcalculation/) (*an IFAR supplement*)
+* [Common Axis Labels on a Grid of Subplots](http://derekogle.com/IFAR/supplements/plotting/CommonAxisLabels.html) (*an IFAR supplement*)
+* [Complex Grid Layouts](http://derekogle.com/IFAR/supplements/plotting/ComplexLayouts.html) (*an IFAR supplement*)
+* [DVR with More than Two Groups](http://derekogle.com/IFAR/supplements/weightlength/index.html) (*an IFAR supplement*)
+* [Fitting Other VBGF Parameterizations](http://derekogle.com/IFAR/supplements/growth/OtherVBGFParams.html) (*an IFAR supplement*)
+* [Fitting Other Growth Functions](http://derekogle.com/IFAR/supplements/growth/OtherGrowthFuns.html) (*an IFAR supplement*)
+* [Additional Nonlinear Regression Algorithms](http://derekogle.com/IFAR/supplements/growth/OtherNLAlgorithms.html) (*an IFAR supplement*)
 
 ## Shorter Targeted Examples
 * [Age Comparison Results for Individual Fish]({{ site.baseurl }}/2015-09-05-Age-Comparison-Results-for-Individual-Fish/)

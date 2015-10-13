@@ -32,3 +32,6 @@ css: "../css/exposure-citation.css"
 1. Volta P, Jeppesen E, Campi B, Sala P, Emmrich M, Winfield IJ.  2013.  The population biology and life history traits of Eurasian ruffe [*Gymnocephalus cernuus* (L.), Pisces: Percidae] introduced into eutrophic and oligotrophic lakes in Northern Italy.  Journal of Limnology 72:280-290.  [PDF](http://www.jlimnol.it/index.php/jlimnol/article/download/jlimnol.2013.e22/pdf). [Growth -- Von Bertalanffy]
 1. Welch A, Hoenig R, Stieglitz J, Daugherty Z, Sardenberg B, Miralao S, Farkas D, Benetti D.  2013.  Growth rates of larval and juvenile bigeye scad *Selar crumenophthalmus* in captivity.  SpringerPlus 2:634.  [PDF](http://www.springerplus.com/content/2/1/634/abstract).  [Growth -- Von Bertalanffy]
 1. Winkelstern I, Surge D, Hudley JW.  2013.  Multiproxy sclerochronological evidence for Plio-Pleistocene regional warmth: United States Mid-Atlantic Coastal Plain.    Palaios 28:649-660.  [Abstract](http://www.bioone.org/doi/abs/10.2110/palo.2013.p13-010r).  [Growth -- Von Bertalanffy]
+
+-----
+<p style="text-align: center;">[Goto 2014 citations](exposure-citations15.html) | [Goto 2012 citations](exposure-citations13.html)</p>

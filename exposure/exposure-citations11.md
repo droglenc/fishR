@@ -23,3 +23,5 @@ css: "../css/exposure-citation.css"
 1. Ogle DH.  2009.  The effect of freezing on the length and weight measurements of ruffe (*Gymnocephalus cernuus*).  Fisheries Research 99:244-247.  [Abstract](http://www.sciencedirect.com/science/article/pii/S0165783609001763).
 1. Ogle DH, Winfield IJ.  2009.  Ruﬀe length-weight relationships with a proposed standard weight equation.  North American Journal of Fisheries Management 29:850-858.  [Abstract]http://afs.tandfonline.com/doi/abs/10.1577/M08-176.1). [Condition -- relative weight]
 
+-----
+<p style="text-align: center;">[Goto 2012 citations](exposure-citations15.html)</p>

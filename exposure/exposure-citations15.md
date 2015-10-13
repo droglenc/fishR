@@ -5,7 +5,7 @@ subtitle: fishR and FSA is Being Used!!
 css: "../css/exposure-citation.css"
 ---
 
-**fishR** or the **FSA** package were cited in the following <span id="contact-div">24</span> publications.
+**fishR** or the **FSA** package were cited in the following <span id="contact-div">25</span> publications.
 
 1. Bokhutlo T, Weyl OLF, Mosepele K, Wilson GG.  2015.  Age and growth of sharptooth catfish, *Clarias gariepinus* (Burchell, 1822) (Clariidae), in the Lower Okavango Delta, Botswana.  Marine and Freshwater Research XX:XXX-XXX.  [Abstract](http://www.publish.csiro.au/paper/MF13322.htm).  [Growth -- Von Bertalanffy]
 1. Cáceres‐Saez I, Dellabianca NA, Pimper LE, Pereyra‐Bonnet F, Cassini GH, Goodall RNP.  2015.  Sexual dimorphism and morphometric relationships in pelvic bones of Commerson's dolphins (*Cephalorhynchus c. commersonii*) from Tierra del Fuego, Argentina.  Marine Mammal Science.  31-734-747.  [Abstract](http://onlinelibrary.wiley.com/enhanced/doi/10.1111/mms.12172/). [Growth -- Von Bertalanffy ??].
@@ -34,4 +34,4 @@ css: "../css/exposure-citation.css"
 1. Zimmerman MS, Kinsel C, Beamer E, Connor EJ, Pflug DE.  2015.  Abundance, survival, and life history strategies of juvenile Chinook Salmon in the Skagit River, Washington.  Transactions of the American Fisheries Society  144:627-641.  [Abstract](http://www.tandfonline.com/doi/abs/10.1080/00028487.2015.1017658).  [???]
 
 -----
-<div style="text-align: center;">[Goto 2014](exposure-citations14.html)</div>
+<p style="text-align: center;">[Goto 2014 citations](exposure-citations14.html)</p>

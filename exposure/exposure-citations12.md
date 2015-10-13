@@ -26,3 +26,6 @@ css: "../css/exposure-citation.css"
 1. Satterthwaite WH, Hayes SA, Merz JE, Sogard SM, Frechette DM, Mangel M. 2012. State-dependent migration timing and use of multiple habitat types in anadromous salmonids. Transactions of the American Fisheries Society 141:781-794.  [Abstract](http://www.tandfonline.com/doi/abs/10.1080/00028487.2012.675912).  [Abundance -- mark-recapture]
 1. Surry AM, Fong KH, Rutherford DT.  2012.  Update to the assessment framework for the Pink and Spiny scallop (*Chlamys rubida* and *C. hastata*) dive fishery in waters of the west coast of Canada.  Canadian Science Advisory Secretariate Research Document 123.  [PDF](http://www.dfo-mpo.gc.ca/Csas-sccs/publications/resdocs-docrech/2011/2011_123-eng.pdf).  [Growth -- von Bertalanffy; Mortality -- catch curve, Chapman-Robson]
 1. Young JA, Koops MA. 2012. Recovery potential modelling of Silver Shiner (*Notropis photogenis*) in Canada. DFO Can. Sci. Advis. Sec. Res. Doc,131.  [PDF](http://publications.gc.ca/collections/collection_2013/mpo-dfo/Fs70-5-2012-131-eng.pdf).  [Age-Length Key]
+
+-----
+<p style="text-align: center;">[Goto 2013 citations](exposure-citations15.html) | [Goto 2011 & before citations](exposure-citations11.html)</p>

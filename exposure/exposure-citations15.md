@@ -34,4 +34,4 @@ css: "../css/exposure-citation.css"
 1. Zimmerman MS, Kinsel C, Beamer E, Connor EJ, Pflug DE.  2015.  Abundance, survival, and life history strategies of juvenile Chinook Salmon in the Skagit River, Washington.  Transactions of the American Fisheries Society  144:627-641.  [Abstract](http://www.tandfonline.com/doi/abs/10.1080/00028487.2015.1017658).  [???]
 
 -----
-<p style="text-align: center;">[Goto 2014 citations](exposure-citations14.html)</p>
+<p style="text-align: center;"><a href="exposure-citations14.html">Goto 2014 citations</a></p>

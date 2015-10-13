@@ -28,4 +28,4 @@ css: "../css/exposure-citation.css"
 1. Young JA, Koops MA. 2012. Recovery potential modelling of Silver Shiner (*Notropis photogenis*) in Canada. DFO Can. Sci. Advis. Sec. Res. Doc,131.  [PDF](http://publications.gc.ca/collections/collection_2013/mpo-dfo/Fs70-5-2012-131-eng.pdf).  [Age-Length Key]
 
 -----
-<p style="text-align: center;">[Goto 2013 citations](exposure-citations15.html) | [Goto 2011 & before citations](exposure-citations11.html)</p>
+<p style="text-align: center;"><a href="exposure-citations13.html">Goto 2013 citations</a> | <a href="exposure-citations11.html">Goto 2011 & Before citations</a></p>

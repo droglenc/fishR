@@ -34,4 +34,4 @@ css: "../css/exposure-citation.css"
 1. Winkelstern I, Surge D, Hudley JW.  2013.  Multiproxy sclerochronological evidence for Plio-Pleistocene regional warmth: United States Mid-Atlantic Coastal Plain.    Palaios 28:649-660.  [Abstract](http://www.bioone.org/doi/abs/10.2110/palo.2013.p13-010r).  [Growth -- Von Bertalanffy]
 
 -----
-<p style="text-align: center;">[Goto 2014 citations](exposure-citations15.html) | [Goto 2012 citations](exposure-citations13.html)</p>
+<p style="text-align: center;"><a href="exposure-citations14.html">Goto 2014 citations</a> | <a href="exposure-citations12.html">Goto 2012 citations</a></p>

@@ -30,4 +30,4 @@ css: "../css/exposure-citation.css"
 1. Yuksel F, Alp A, Gunduz F, Zulfu Coban M, Demirol F.  2014.  Estimation of the population size of *Capoeta umbla* (Heckel, 1843) in the Lake Hazar (Elazig) by removal method.  Digest Journal of Nanomaterials and Biostrutures 9:167-174.  [PDF](http://www.chalcogen.ro/167_Fahrettin.pdf).  [Abundance -- Depletion]
 
 -----
-<p style="text-align: center;">[Goto 2015 citations](exposure-citations15.html) | [Goto 2013 citations](exposure-citations13.html)</p>
+<p style="text-align: center;"><a href="exposure-citations15.html">Goto 2015 citations</a> | <a href="exposure-citations13.html">Goto 2013 citations</a></p>

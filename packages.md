@@ -7,6 +7,7 @@ title: Fishy Packages
 * [Single-Purpose Packages](#single-purpose-packages)
 * [Packages for Capture-Recapture Analyses](#packages-for-capture-recapture-analyses)
 * [Packages to Access Online Databases](#packages-to-access-online-databases)
+* [Packages for Limnological Data](#packages-for-limnological-data)
 * [Collections of Code](#collections-of-code-that-are-not-yet-a-package)
 * [Packages Not Actively Maintained](#packages-not-actively-maintained)
 
@@ -81,9 +82,18 @@ The following are instructions to install packages from within various ways to i
 ----
 
 ## Packages to Access Online Databases
-* [DATRAS](http://www.rforge.net/DATRAS/Tutorial.html) -- *Read and manipulate trawl survey data from the [DATRAS database](http://www.ices.dk/marine-data/data-portals/Pages/DATRAS.aspx)*
-* [rfishbase](https://github.com/ropensci/rfishbase) -- *A programmatic interface to [fishbase.org](http://fishbase.org/)*
-* [rfisheries](https://ropensci.org/tutorials/rfisheries_tutorial.html) -- *A programmatic interface to [OpenFisheries.org](http://openfisheries.org/)*
+* [DATRAS](http://www.rforge.net/DATRAS/Tutorial.html) -- *read and manipulate trawl survey data from the [DATRAS database](http://www.ices.dk/marine-data/data-portals/Pages/DATRAS.aspx)*
+* [LTERdata](https://github.com/GLEON/LTERdata) -- *functions for retrieving NTL LTER data*
+* [rfishbase](https://github.com/ropensci/rfishbase) -- *a programmatic interface to [fishbase.org](http://fishbase.org/)*
+* [rfisheries](https://ropensci.org/tutorials/rfisheries_tutorial.html) -- *a programmatic interface to [OpenFisheries.org](http://openfisheries.org/)*
+
+----
+
+## Packages for Limnological Data
+* [GLMr](https://github.com/GLEON/GLMr) -- *the [General Lake Model](http://aed.see.uwa.edu.au/research/models/GLM/) in R*
+* [glmtools](https://github.com/USGS-R/glmtools) -- *Tools for interacting with the [General Lake Model](http://aed.see.uwa.edu.au/research/models/GLM/) in R*
+* [LakeMetabolizer](https://github.com/GLEON/LakeMetabolizer) -- *collection of lake metabolism functions*
+* [rLakeAnalyzer](https://github.com/GLEON/rLakeAnalyzer) -- *standardized methods for calculating common important derived physical features of lakes*
 
 ----
 

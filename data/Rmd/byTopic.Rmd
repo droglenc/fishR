@@ -1,13 +1,9 @@
 ---
+layout: page
 title: "Fisheries Data by Major Topic"
-output: 
-  html_document: 
-    theme: readable
 ---
 
-```{r echo=FALSE, results="hide", message=FALSE, warning=FALSE}
-source("zzzListScriptInit.R")
-```
+<!-- This is meant to be run with aaaCompile.R, not as a standalone -->
 
 Fisheries-related data sets in the the `FSA` (v`r packageVersion("FSA")`) and `FSAdata` (v`r packageVersion("FSAdata")`) packages are listed below by analytical concept.  In addition to being available in these packages, these data sets may be viewed with ![view](`r iview`) and downloaded (as a CSV file) with ![download](`r idown`).  Documentation may be viewed with  ![documentation](`r idoc`).
 

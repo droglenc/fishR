@@ -1,8 +1,7 @@
 ---
+layout: page
 title: "Fisheries Data in FSA and FSAdata"
-output: 
-  html_document: 
-    theme: readable
+output: md_document
 ---
 
 ```{r echo=FALSE, results="hide", message=FALSE, warning=FALSE}

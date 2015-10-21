@@ -1,0 +1,967 @@
+---
+layout: page
+title: "Fisheries Data in FSA and FSAdata"
+---
+
+All fisheries-related data sets in the the `FSA` (v0.8.2) and `FSAdata`
+(v0.3.1) packages are listed below. In addition to being available in
+these packages, these data sets may be viewed with
+![view](../img/view.png) and downloaded (as a CSV file) with
+![download](../img/download.png). Documentation may be viewed with
+![documentation](../img/details.png).
+
+------------------------------------------------------------------------
+
+-   FSAdata::**AfricanRivers** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/AfricanRivers.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/AfricanRivers.csv)
+    [![documentation](../img/details.png)](data-html/AfricanRivers.html) --
+    *Characteristics of a sample of West African rivers.*
+-   FSAdata::**AHerringChile** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/AHerringChile.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/AHerringChile.csv)
+    [![documentation](../img/details.png)](data-html/AHerringChile.html) --
+    *Ages and lengths of Araucanian Herring from Chilean waters.*
+-   FSAdata::**AlewifeLH** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/AlewifeLH.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/AlewifeLH.csv)
+    [![documentation](../img/details.png)](data-html/AlewifeLH.html) --
+    *Ages of Lake Huron Alewife assigned from otoliths and scales.*
+-   FSAdata::**AnchovetaChile** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/AnchovetaChile.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/AnchovetaChile.csv)
+    [![documentation](../img/details.png)](data-html/AnchovetaChile.html) --
+    *Ages and lengths of Anchoveta from Chilean waters.*
+-   FSAdata::**BassFL** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/BassFL.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/BassFL.csv)
+    [![documentation](../img/details.png)](data-html/BassFL.html) --
+    *Catch-at-age for Suwanee and Largemouth Bass.*
+-   FSAdata::**BGHRfish** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/BGHRfish.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/BGHRfish.csv)
+    [![documentation](../img/details.png)](data-html/BGHRfish.html) --
+    *Fish information from samples collected from Big Hill Reservoir,
+    KS, 2014.*
+-   FSAdata::**BGHRsample** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/BGHRsample.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/BGHRsample.csv)
+    [![documentation](../img/details.png)](data-html/BGHRsample.html) --
+    *Information for each electrofishing sample from Big Hill Reservoir,
+    KS, 2014.*
+-   FSAdata::**BlackDrum2001** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/BlackDrum2001.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/BlackDrum2001.csv)
+    [![documentation](../img/details.png)](data-html/BlackDrum2001.html) --
+    *Biological data for Black Drum from Virginia waters of the Atlantic
+    Ocean, 2001.*
+-   FSAdata::**BloaterLH** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/BloaterLH.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/BloaterLH.csv)
+    [![documentation](../img/details.png)](data-html/BloaterLH.html) --
+    *Stock and recruitment data for Lake Huron Bloaters, 1981-1996.*
+-   FSAdata::**BlueCatfish** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/BlueCatfish.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/BlueCatfish.csv)
+    [![documentation](../img/details.png)](data-html/BlueCatfish.html) --
+    *Ages and lengths of Blue Catfish.*
+-   FSAdata::**BlueCrab** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/BlueCrab.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/BlueCrab.csv)
+    [![documentation](../img/details.png)](data-html/BlueCrab.html) --
+    *Catch and effort data for male Blue Crabs.*
+-   FSAdata::**BluefishAge** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/BluefishAge.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/BluefishAge.csv)
+    [![documentation](../img/details.png)](data-html/BluefishAge.html) --
+    *Ages of Bluefish assigned from otoliths by two readers.*
+-   FSA::**BluegillJL** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSA/blob/master/data-raw/BluegillJL.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSA/master/data-raw/BluegillJL.csv)
+    [![documentation](../img/details.png)](data-html/BluegillJL.html) --
+    *Capture histories (2 samples) of Bluegill from Jewett Lake, MI.*
+-   FSAdata::**BluegillLM** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/BluegillLM.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/BluegillLM.csv)
+    [![documentation](../img/details.png)](data-html/BluegillLM.html) --
+    *Lengths and weights for Bluegill from Lake Mary, MN.*
+-   FSAdata::**BluntnoseIL1** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/BluntnoseIL1.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/BluntnoseIL1.csv)
+    [![documentation](../img/details.png)](data-html/BluntnoseIL1.html) --
+    *Subampled lengths of Bluntnose Minnows from Inch Lake, WI.*
+-   FSAdata::**BrookTroutNC** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/BrookTroutNC.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/BrookTroutNC.csv)
+    [![documentation](../img/details.png)](data-html/BrookTroutNC.html) --
+    *Stock and recruitment data for Brook Trout from Ball Creek, NC,
+    1991-2004.*
+-   FSAdata::**BrookTroutNEWP** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/BrookTroutNEWP.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/BrookTroutNEWP.csv)
+    [![documentation](../img/details.png)](data-html/BrookTroutNEWP.html) --
+    *Catches in removal events for Brook Trout in the Nashwaak
+    Experimental Watersheds Project.*
+-   FSAdata::**BrookTroutNEWP1** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/BrookTroutNEWP1.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/BrookTroutNEWP1.csv)
+    [![documentation](../img/details.png)](data-html/BrookTroutNEWP1.html) --
+    *Catches in removal events for Brook Trout in the Nashwaak
+    Experimental Watersheds Project.*
+-   FSAdata::**BrookTroutOnt** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/BrookTroutOnt.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/BrookTroutOnt.csv)
+    [![documentation](../img/details.png)](data-html/BrookTroutOnt.html) --
+    *Summarized single mark-recapture data for Brook Trout across many
+    years.*
+-   FSA::**BrookTroutTH** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSA/blob/master/data-raw/BrookTroutTH.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSA/master/data-raw/BrookTroutTH.csv)
+    [![documentation](../img/details.png)](data-html/BrookTroutTH.html) --
+    *Catch-at-age for Tobin Harbor, Isle Royale Brook Trout.*
+-   FSAdata::**BrownTroutVC1** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/BrownTroutVC1.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/BrownTroutVC1.csv)
+    [![documentation](../img/details.png)](data-html/BrownTroutVC1.html) --
+    *Single census mark-recapture data with lengths for Brown Trout from
+    Valley Creek, MN.*
+-   FSAdata::**BSkateGB** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/BSkateGB.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/BSkateGB.csv)
+    [![documentation](../img/details.png)](data-html/BSkateGB.html) --
+    *Stock and recruitment data for Barndoor Skate from Georges Bank,
+    1966-2007.*
+-   FSAdata::**BullTroutRML1** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/BullTroutRML1.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/BullTroutRML1.csv)
+    [![documentation](../img/details.png)](data-html/BullTroutRML1.html) --
+    *Lengths and weights for Bull Trout from two Rocky Mountain lakes
+    and two eras.*
+-   FSAdata::**BullTroutRML2** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/BullTroutRML2.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/BullTroutRML2.csv)
+    [![documentation](../img/details.png)](data-html/BullTroutRML2.html) --
+    *Ages and lengths of Bull Trout from two Rocky Mountain lakes at two
+    times.*
+-   FSAdata::**BullTroutTC** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/BullTroutTC.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/BullTroutTC.csv)
+    [![documentation](../img/details.png)](data-html/BullTroutTC.html) --
+    *Catch-at-age for Bull Trout in Trestle Creek, ID.*
+-   FSAdata::**Cabezon** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/Cabezon.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/Cabezon.csv)
+    [![documentation](../img/details.png)](data-html/Cabezon.html) --
+    *Ages, lengths, and maturity for female Cabezon from Oregon.*
+-   FSAdata::**Casselman1990** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/Casselman1990.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/Casselman1990.csv)
+    [![documentation](../img/details.png)](data-html/Casselman1990.html) --
+    *Instantaneous growth rates for two calcified ageing structures.*
+-   FSAdata::**CCatfishNB** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/CCatfishNB.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/CCatfishNB.csv)
+    [![documentation](../img/details.png)](data-html/CCatfishNB.html) --
+    *Catch-at-age of Channel Catfish from two sections of the Platte
+    River, NB.*
+-   FSA::**ChinookArg** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSA/blob/master/data-raw/ChinookArg.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSA/master/data-raw/ChinookArg.csv)
+    [![documentation](../img/details.png)](data-html/ChinookArg.html) --
+    *Lengths and weights for Chinook Salmon from three locations in
+    Argentina.*
+-   FSAdata::**ChinookKR** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/ChinookKR.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/ChinookKR.csv)
+    [![documentation](../img/details.png)](data-html/ChinookKR.html) --
+    *Stock and recruitment data for Klamath River Chinook Salmon,
+    1979-2000.*
+-   FSAdata::**CiscoTL** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/CiscoTL.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/CiscoTL.csv)
+    [![documentation](../img/details.png)](data-html/CiscoTL.html) --
+    *Lengths, weights, and sex of Cisco from Trout Lake, WI.*
+-   FSA::**CodNorwegian** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSA/blob/master/data-raw/CodNorwegian.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSA/master/data-raw/CodNorwegian.csv)
+    [![documentation](../img/details.png)](data-html/CodNorwegian.html) --
+    *Stock and recruitment data for Norwegian cod, 1937-1960.*
+-   FSAdata::**CrappieARMS** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/CrappieARMS.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/CrappieARMS.csv)
+    [![documentation](../img/details.png)](data-html/CrappieARMS.html) --
+    *Stock and recruitment data for Crappies from four reservoirs in
+    Arkansas and Mississippi, USA.*
+-   FSAdata::**CreekChub** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/CreekChub.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/CreekChub.csv)
+    [![documentation](../img/details.png)](data-html/CreekChub.html) --
+    *Ages (subsample) and lengths (all fish) for Creek Chub.*
+-   FSAdata::**CreelMN** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/CreelMN.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/CreelMN.csv)
+    [![documentation](../img/details.png)](data-html/CreelMN.html) --
+    *Results of a large number of creel surveys in Minnestoa lakes.*
+-   FSAdata::**Croaker1** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/Croaker1.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/Croaker1.csv)
+    [![documentation](../img/details.png)](data-html/Croaker1.html) --
+    *Ages of Atlantic Croaker assigned from otoliths by two readers.*
+-   FSAdata::**Croaker2** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/Croaker2.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/Croaker2.csv)
+    [![documentation](../img/details.png)](data-html/Croaker2.html) --
+    *Ages, lengths, and sexes of Atlantic Croaker by sex.*
+-   FSA::**CutthroatAL** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSA/blob/master/data-raw/CutthroatAL.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSA/master/data-raw/CutthroatAL.csv)
+    [![documentation](../img/details.png)](data-html/CutthroatAL.html) --
+    *Capture histories (9 samples) of Cutthroat Trout from Auke Lake.*
+-   FSAdata::**CutthroatALf** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/CutthroatALf.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/CutthroatALf.csv)
+    [![documentation](../img/details.png)](data-html/CutthroatALf.html) --
+    *Capture histories (9 samples) of Cutthroat Trout from Auke Lake.*
+-   FSAdata::**DarterMahon** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/DarterMahon.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/DarterMahon.csv)
+    [![documentation](../img/details.png)](data-html/DarterMahon.html) --
+    *Catch and effort data for Fantail Darter.*
+-   FSAdata::**DarterOnt** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/DarterOnt.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/DarterOnt.csv)
+    [![documentation](../img/details.png)](data-html/DarterOnt.html) --
+    *Ages and lengths of Channel Darters from two locations.*
+-   FSAdata::**Deckeretal1999** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/Deckeretal1999.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/Deckeretal1999.csv)
+    [![documentation](../img/details.png)](data-html/Deckeretal1999.html) --
+    *Catches in removal events of Cutthroat Trout and Coho Salmon in
+    Little Stawamus Creek (British Columbia, Canada) in 1997.*
+-   FSA::**Ecoli** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSA/blob/master/data-raw/Ecoli.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSA/master/data-raw/Ecoli.csv)
+    [![documentation](../img/details.png)](data-html/Ecoli.html) --
+    *Population growth of Escherichia coli.*
+-   FSAdata::**EuroPerchTJ** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/EuroPerchTJ.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/EuroPerchTJ.csv)
+    [![documentation](../img/details.png)](data-html/EuroPerchTJ.html) --
+    *Ages, lengths, and sexes of European Perch.*
+-   FSAdata::**FHCatfish** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/FHCatfish.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/FHCatfish.csv)
+    [![documentation](../img/details.png)](data-html/FHCatfish.html) --
+    *Catch-at-age of Flathead Catfish from three southeastern rivers.*
+-   FSAdata::**FHCatfishATL** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/FHCatfishATL.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/FHCatfishATL.csv)
+    [![documentation](../img/details.png)](data-html/FHCatfishATL.html) --
+    *Catch-at-age of Flathead Catfish from three Atlantic rivers.*
+-   FSAdata::**FSAdata** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/FSAdata.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/FSAdata.csv)
+    [![documentation](../img/details.png)](data-html/FSAdata.html) --
+    *Data to support the FSA package.*
+-   FSAdata::**FWDrumLE1** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/FWDrumLE1.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/FWDrumLE1.csv)
+    [![documentation](../img/details.png)](data-html/FWDrumLE1.html) --
+    *Ages and lengths of Lake Erie Freshwater Drum.*
+-   FSAdata::**FWDrumLE2** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/FWDrumLE2.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/FWDrumLE2.csv)
+    [![documentation](../img/details.png)](data-html/FWDrumLE2.html) --
+    *Ages (subsample) and lengths (all fish) for Freshwater Drum from
+    Lake Erie.*
+-   FSAdata::**Ghats** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/Ghats.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/Ghats.csv)
+    [![documentation](../img/details.png)](data-html/Ghats.html) --
+    *Species accumulation data for fish of the Western Ghats of India.*
+-   FSAdata::**GreensCreekMine** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/GreensCreekMine.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/GreensCreekMine.csv)
+    [![documentation](../img/details.png)](data-html/GreensCreekMine.html) --
+    *Catches in removal events of Coho Salmon and Dolly Varden Char at
+    various locations near the Greens Creek (AK) Mine site.*
+-   FSAdata::**Hake** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/Hake.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/Hake.csv)
+    [![documentation](../img/details.png)](data-html/Hake.html) --
+    *Stock and recruitment data for Hake, 1982-1996.*
+-   FSAdata::**HalibutPAC** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/HalibutPAC.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/HalibutPAC.csv)
+    [![documentation](../img/details.png)](data-html/HalibutPAC.html) --
+    *Stock and recruitment data for Pacific Halibut, 1929-1991.*
+-   FSAdata::**Herman** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/Herman.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/Herman.csv)
+    [![documentation](../img/details.png)](data-html/Herman.html) --
+    *Lengths for Walleye, Yellow Perch, Black Crappie, and Black
+    Bullheads from Lake Herman, SD.*
+-   FSAdata::**HerringBWE** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/HerringBWE.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/HerringBWE.csv)
+    [![documentation](../img/details.png)](data-html/HerringBWE.html) --
+    *Stock and recruitment data for Blackwater Estuary Herring,
+    1962-1997.*
+-   FSAdata::**HerringISS** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/HerringISS.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/HerringISS.csv)
+    [![documentation](../img/details.png)](data-html/HerringISS.html) --
+    *Stock and recruitment data for Icelandic summer spawning Herring,
+    1946-1996.*
+-   FSAdata::**HumpbackWFCR** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/HumpbackWFCR.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/HumpbackWFCR.csv)
+    [![documentation](../img/details.png)](data-html/HumpbackWFCR.html) --
+    *Capture histories (2 sample) of Humpback Whitefish.*
+-   FSAdata::**InchLake1** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/InchLake1.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/InchLake1.csv)
+    [![documentation](../img/details.png)](data-html/InchLake1.html) --
+    *Lengths for all fish captured in Inch Lake, WI, in two years*
+-   FSAdata::**InchLake2** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/InchLake2.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/InchLake2.csv)
+    [![documentation](../img/details.png)](data-html/InchLake2.html) --
+    *Lengths and weights for fish captured in Inch Lake*
+-   FSAdata::**JobfishSIO** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/JobfishSIO.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/JobfishSIO.csv)
+    [![documentation](../img/details.png)](data-html/JobfishSIO.html) --
+    *Catch and effort data for South Indian Ocean Jobfish.*
+-   FSAdata::**JonesStockwell** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/JonesStockwell.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/JonesStockwell.csv)
+    [![documentation](../img/details.png)](data-html/JonesStockwell.html) --
+    *Catches in removal events of Brown and Rainbow Trout at various
+    locations.*
+-   FSAdata::**Jonubi1** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/Jonubi1.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/Jonubi1.csv)
+    [![documentation](../img/details.png)](data-html/Jonubi1.html) --
+    *Ages and lengths of male Jonubi.*
+-   FSAdata::**Jonubi2** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/Jonubi2.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/Jonubi2.csv)
+    [![documentation](../img/details.png)](data-html/Jonubi2.html) --
+    *Ages (subsample) and lengths (all fish) of Jonubi.*
+-   FSAdata::**KingCrabAK** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/KingCrabAK.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/KingCrabAK.csv)
+    [![documentation](../img/details.png)](data-html/KingCrabAK.html) --
+    *Stock and recruitment data for Red King Crab in Alaska, 1960-2004.*
+-   FSAdata::**LakeTroutALTER** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/LakeTroutALTER.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/LakeTroutALTER.csv)
+    [![documentation](../img/details.png)](data-html/LakeTroutALTER.html) --
+    *Biological data for Lake Trout from the Arctic LTER (AK).*
+-   FSAdata::**LakeTroutEggs** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/LakeTroutEggs.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/LakeTroutEggs.csv)
+    [![documentation](../img/details.png)](data-html/LakeTroutEggs.html) --
+    *Length and egg deposition of Lake Superior Lake Trout.*
+-   FSAdata::**LakeTroutGIS** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/LakeTroutGIS.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/LakeTroutGIS.csv)
+    [![documentation](../img/details.png)](data-html/LakeTroutGIS.html) --
+    *Stock and recruitment data for Lake Trout from Gull Island Shoal,
+    Lake Superior, 1964-1991.*
+-   FSAdata::**LakeTroutMI** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/LakeTroutMI.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/LakeTroutMI.csv)
+    [![documentation](../img/details.png)](data-html/LakeTroutMI.html) --
+    *Stock and recruitment data for Lake Trout in Lake Superior,
+    1971-1991.*
+-   FSAdata::**Lizardfish** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/Lizardfish.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/Lizardfish.csv)
+    [![documentation](../img/details.png)](data-html/Lizardfish.html) --
+    *Stock and recruitment data for Greater Lizardfish, 1955-1964.*
+-   FSAdata::**LJCisco** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/LJCisco.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/LJCisco.csv)
+    [![documentation](../img/details.png)](data-html/LJCisco.html) --
+    *Ages and lengths of Longjaw Cisco from two locations in Lake
+    Michigan.*
+-   FSAdata::**LMBassBL** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/LMBassBL.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/LMBassBL.csv)
+    [![documentation](../img/details.png)](data-html/LMBassBL.html) --
+    *Lengths for Largemouth Bass from Boomer Lake, OK.*
+-   FSAdata::**LMBassLCB** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/LMBassLCB.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/LMBassLCB.csv)
+    [![documentation](../img/details.png)](data-html/LMBassLCB.html) --
+    *Lengths for Largemouth Bass from Lake Carl Blackwell, OK.*
+-   FSAdata::**LobsterHI** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/LobsterHI.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/LobsterHI.csv)
+    [![documentation](../img/details.png)](data-html/LobsterHI.html) --
+    *Catch and effort data for Hawaiian Islands Slipper Lobster.*
+-   FSAdata::**LobsterPEI** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/LobsterPEI.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/LobsterPEI.csv)
+    [![documentation](../img/details.png)](data-html/LobsterPEI.html) --
+    *Catch and effort data for Prince Edward Island Lobster.*
+-   FSAdata::**Menhaden1** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/Menhaden1.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/Menhaden1.csv)
+    [![documentation](../img/details.png)](data-html/Menhaden1.html) --
+    *Catch-at-age for Gulf Menhaden, 1964-2004.*
+-   FSA::**Mirex** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSA/blob/master/data-raw/Mirex.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSA/master/data-raw/Mirex.csv)
+    [![documentation](../img/details.png)](data-html/Mirex.html) --
+    *Mirex concentration, weight, capture year, and species of Lake
+    Ontario salmon.*
+-   FSAdata::**Morwong1** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/Morwong1.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/Morwong1.csv)
+    [![documentation](../img/details.png)](data-html/Morwong1.html) --
+    *Ages of Morwong assigned from otoliths by Reader A at two times.*
+-   FSAdata::**Morwong2** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/Morwong2.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/Morwong2.csv)
+    [![documentation](../img/details.png)](data-html/Morwong2.html) --
+    *Ages of Morwong assigned from otoliths by Reader B at two times.*
+-   FSAdata::**Morwong3** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/Morwong3.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/Morwong3.csv)
+    [![documentation](../img/details.png)](data-html/Morwong3.html) --
+    *Ages of Morwong assigned from otoliths by two readers.*
+-   FSAdata::**Morwong4** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/Morwong4.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/Morwong4.csv)
+    [![documentation](../img/details.png)](data-html/Morwong4.html) --
+    *Ages and lengths of Morwong.*
+-   FSAdata::**Morwong4a** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/Morwong4a.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/Morwong4a.csv)
+    [![documentation](../img/details.png)](data-html/Morwong4a.html) --
+    *Ages (subsample) and lengths (all fish) for Morwong from Morwong4.*
+-   FSAdata::**MulletBS** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/MulletBS.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/MulletBS.csv)
+    [![documentation](../img/details.png)](data-html/MulletBS.html) --
+    *Ages of Red Mullet assigned from whole and broken-burnt otoliths.*
+-   FSAdata::**MuskieSLR** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/MuskieSLR.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/MuskieSLR.csv)
+    [![documentation](../img/details.png)](data-html/MuskieSLR.html) --
+    *Ages of Muskellunge assigned from scales and cleithra.*
+-   FSAdata::**MuskieWI06MR** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/MuskieWI06MR.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/MuskieWI06MR.csv)
+    [![documentation](../img/details.png)](data-html/MuskieWI06MR.html) --
+    *Summarized mark-recapture data for Muskellunge from many Wisconsin
+    Lakes, 2006.*
+-   FSAdata::**Pallid** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/Pallid.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/Pallid.csv)
+    [![documentation](../img/details.png)](data-html/Pallid.html) --
+    *Lengths and weights for Pallid Sturgeon from four locations in the
+    Missouri River.*
+-   FSAdata::**Pathfinder** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/Pathfinder.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/Pathfinder.csv)
+    [![documentation](../img/details.png)](data-html/Pathfinder.html) --
+    *Catch and effort for three Snapper species in a depletion
+    experiment.*
+-   FSAdata::**PikeHL** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/PikeHL.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/PikeHL.csv)
+    [![documentation](../img/details.png)](data-html/PikeHL.html) --
+    *Capture histories (2 samples) of Northern Pike from Harding Lake.*
+-   FSAdata::**PikeIL** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/PikeIL.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/PikeIL.csv)
+    [![documentation](../img/details.png)](data-html/PikeIL.html) --
+    *Catch and effort data for Northern Pike from Island Lake, NB.*
+-   FSA::**PikeNY** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSA/blob/master/data-raw/PikeNY.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSA/master/data-raw/PikeNY.csv)
+    [![documentation](../img/details.png)](data-html/PikeNY.html) --
+    *Summarized multiple mark-recapture data for all Northern Pike from
+    Buckthorn Marsh, NY.*
+-   FSA::**PikeNYPartial1** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSA/blob/master/data-raw/PikeNYPartial1.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSA/master/data-raw/PikeNYPartial1.csv)
+    [![documentation](../img/details.png)](data-html/PikeNYPartial1.html) --
+    *Capture histories (4 samples), in capture history format, of a
+    subset of Northern Pike from Buckthorn Marsh, NY.*
+-   FSAdata::**PikeNYPartial2** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/PikeNYPartial2.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/PikeNYPartial2.csv)
+    [![documentation](../img/details.png)](data-html/PikeNYPartial2.html) --
+    *Capture histories (4 samples) of a subset of Northern Pike from
+    Buckthorn Marsh.*
+-   FSAdata::**PikeWindermere** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/PikeWindermere.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/PikeWindermere.csv)
+    [![documentation](../img/details.png)](data-html/PikeWindermere.html) --
+    *Stock and recruitment data for Northern Pike from Lake Windermere,
+    1944-1981.*
+-   FSAdata::**PSalmonAK** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/PSalmonAK.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/PSalmonAK.csv)
+    [![documentation](../img/details.png)](data-html/PSalmonAK.html) --
+    *Stock and recruitment data for Alaskan Pink Salmon, 1960-1990.*
+-   FSAdata::**PygmyWFBC** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/PygmyWFBC.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/PygmyWFBC.csv)
+    [![documentation](../img/details.png)](data-html/PygmyWFBC.html) --
+    *Biological data for Pygmy Whitefish from Dina Lake \#1 (British
+    Columbia), 2000 and 2001.*
+-   FSAdata::**RBSmeltErie** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/RBSmeltErie.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/RBSmeltErie.csv)
+    [![documentation](../img/details.png)](data-html/RBSmeltErie.html) --
+    *Recruitment time-series for Rainbow Smelt in Lake Erie, 1977-1996.*
+-   FSAdata::**RBSmeltLM** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/RBSmeltLM.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/RBSmeltLM.csv)
+    [![documentation](../img/details.png)](data-html/RBSmeltLM.html) --
+    *Lengths for Rainbow Smelt from Lake Michigan, 1977.*
+-   FSAdata::**RBTroutKenai** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/RBTroutKenai.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/RBTroutKenai.csv)
+    [![documentation](../img/details.png)](data-html/RBTroutKenai.html) --
+    *Length-at-marking and recapture and time-at-large of Rainbow
+    Trout.*
+-   FSAdata::**RBTroutUNSP** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/RBTroutUNSP.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/RBTroutUNSP.csv)
+    [![documentation](../img/details.png)](data-html/RBTroutUNSP.html) --
+    *Capture histories (2 sample) of Rainbow Trout.*
+-   FSAdata::**RedDrum** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/RedDrum.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/RedDrum.csv)
+    [![documentation](../img/details.png)](data-html/RedDrum.html) --
+    *Ages and lengths for Red Drum from the Atlantic Coast.*
+-   FSAdata::**Riffleshell** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/Riffleshell.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/Riffleshell.csv)
+    [![documentation](../img/details.png)](data-html/Riffleshell.html) --
+    *Summarized multiple mark-recapture data for Tan Riffleshell.*
+-   FSAdata::**RockBassCL** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/RockBassCL.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/RockBassCL.csv)
+    [![documentation](../img/details.png)](data-html/RockBassCL.html) --
+    *Catch-at-age of Cayuga Lake Rock Bass.*
+-   FSAdata::**RockBassLO1** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/RockBassLO1.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/RockBassLO1.csv)
+    [![documentation](../img/details.png)](data-html/RockBassLO1.html) --
+    *Ages and lengths of Lake Ontario Rock Bass.*
+-   FSAdata::**RockBassLO2** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/RockBassLO2.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/RockBassLO2.csv)
+    [![documentation](../img/details.png)](data-html/RockBassLO2.html) --
+    *Ages (subsample) and lengths (all fish) for Rock Bass from Lake
+    Ontario.*
+-   FSAdata::**RuffeSLRH92** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/RuffeSLRH92.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/RuffeSLRH92.csv)
+    [![documentation](../img/details.png)](data-html/RuffeSLRH92.html) --
+    *Biological data for Ruffe captured from the St. Louis River in
+    1992.*
+-   FSAdata::**RuffeTL89** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/RuffeTL89.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/RuffeTL89.csv)
+    [![documentation](../img/details.png)](data-html/RuffeTL89.html) --
+    *Lengths of Ruffe captured from the St. Louis River in July, 1989.*
+-   FSAdata::**RWhitefishAI** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/RWhitefishAI.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/RWhitefishAI.csv)
+    [![documentation](../img/details.png)](data-html/RWhitefishAI.html) --
+    *Ages and lengths of Round Whitefish.*
+-   FSAdata::**RWhitefishIR** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/RWhitefishIR.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/RWhitefishIR.csv)
+    [![documentation](../img/details.png)](data-html/RWhitefishIR.html) --
+    *Ages and lengths of Round Whitefish.*
+-   FSAdata::**SalmonADP** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/SalmonADP.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/SalmonADP.csv)
+    [![documentation](../img/details.png)](data-html/SalmonADP.html) --
+    *Catches in removal events of salmon parr.*
+-   FSAdata::**SalmonidsMCCA** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/SalmonidsMCCA.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/SalmonidsMCCA.csv)
+    [![documentation](../img/details.png)](data-html/SalmonidsMCCA.html) --
+    *Catches in removal events of Cutthroate Trout and Steelhead of
+    various sizes in two reaches of McGarvey Creek (CA).*
+-   FSAdata::**SardineChile** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/SardineChile.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/SardineChile.csv)
+    [![documentation](../img/details.png)](data-html/SardineChile.html) --
+    *Ages and lengths of two year-classes of Sardine from Chilean
+    waters.*
+-   FSAdata::**SardineLK** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/SardineLK.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/SardineLK.csv)
+    [![documentation](../img/details.png)](data-html/SardineLK.html) --
+    *Ages and lengths of larval Lake Tanganyika Sardine.*
+-   FSAdata::**SardinesPacific** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/SardinesPacific.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/SardinesPacific.csv)
+    [![documentation](../img/details.png)](data-html/SardinesPacific.html) --
+    *Stock and recruitment data for Pacific Sardines, 1935-1990.*
+-   FSAdata::**SculpinALTER** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/SculpinALTER.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/SculpinALTER.csv)
+    [![documentation](../img/details.png)](data-html/SculpinALTER.html) --
+    *Biological data for Slimy Sculpin from the Arctic LTER (AK).*
+-   FSAdata::**ShadCR** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/ShadCR.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/ShadCR.csv)
+    [![documentation](../img/details.png)](data-html/ShadCR.html) --
+    *Ages of American Shad assigned from scales by three readers at two
+    times.*
+-   FSAdata::**ShrimpGuam** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/ShrimpGuam.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/ShrimpGuam.csv)
+    [![documentation](../img/details.png)](data-html/ShrimpGuam.html) --
+    *Catch and effort data for Deepwater Caridean Shrimp.*
+-   FSAdata::**SimonsonLyons** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/SimonsonLyons.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/SimonsonLyons.csv)
+    [![documentation](../img/details.png)](data-html/SimonsonLyons.html) --
+    *Catches in removal events of trout at various locations.*
+-   FSAdata::**SiscowetMI2004** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/SiscowetMI2004.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/SiscowetMI2004.csv)
+    [![documentation](../img/details.png)](data-html/SiscowetMI2004.html) --
+    *Ages (subsample) and lengths (all fish) for male and female
+    Siscowet Lake Trout captured at four locations in Michigan waters of
+    Lake Superior.*
+-   FSAdata::**SLampreyGL** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/SLampreyGL.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/SLampreyGL.csv)
+    [![documentation](../img/details.png)](data-html/SLampreyGL.html) --
+    *Stock and recruitment data for Sea Lamprey in the Great Lakes,
+    1997-2007.*
+-   FSA::**SMBassLS** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSA/blob/master/data-raw/SMBassLS.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSA/master/data-raw/SMBassLS.csv)
+    [![documentation](../img/details.png)](data-html/SMBassLS.html) --
+    *Catch-effort data for Little Silver Lake (Ont) Smallmouth Bass.*
+-   FSA::**SMBassWB** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSA/blob/master/data-raw/SMBassWB.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSA/master/data-raw/SMBassWB.csv)
+    [![documentation](../img/details.png)](data-html/SMBassWB.html) --
+    *Growth increment data for West Bearskin Lake, MN, Smallmouth Bass.*
+-   FSAdata::**Snapper** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/Snapper.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/Snapper.csv)
+    [![documentation](../img/details.png)](data-html/Snapper.html) --
+    *Lengths for Snapper from Australia.*
+-   FSAdata::**SnapperHG1** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/SnapperHG1.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/SnapperHG1.csv)
+    [![documentation](../img/details.png)](data-html/SnapperHG1.html) --
+    *Age (subsample) and length (all fish) of Snapper from two survey
+    locations.*
+-   FSAdata::**SnapperHG2** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/SnapperHG2.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/SnapperHG2.csv)
+    [![documentation](../img/details.png)](data-html/SnapperHG2.html) --
+    *Ages (subsample) and lengths (all fish) for Snapper.*
+-   FSAdata::**SockeyeKL** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/SockeyeKL.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/SockeyeKL.csv)
+    [![documentation](../img/details.png)](data-html/SockeyeKL.html) --
+    *Stock and recruitment data for Sockeye Salmon from Karluk Lake, AK,
+    1921-1948.*
+-   FSAdata::**SockeyeSR** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/SockeyeSR.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/SockeyeSR.csv)
+    [![documentation](../img/details.png)](data-html/SockeyeSR.html) --
+    *Stock and recruitment data for Skeena River Sockeye Salmon,
+    1940-1967.*
+-   FSAdata::**SpottedSucker1** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/SpottedSucker1.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/SpottedSucker1.csv)
+    [![documentation](../img/details.png)](data-html/SpottedSucker1.html) --
+    *Ages and lengths of Spotted Sucker.*
+-   FSA::**SpotVA1** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSA/blob/master/data-raw/SpotVA1.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSA/master/data-raw/SpotVA1.csv)
+    [![documentation](../img/details.png)](data-html/SpotVA1.html) --
+    *Age and length of spot.*
+-   FSAdata::**SpotVA2** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/SpotVA2.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/SpotVA2.csv)
+    [![documentation](../img/details.png)](data-html/SpotVA2.html) --
+    *Ages (subsample) and lengths (all fish) for Spot.*
+-   FSAdata::**StripedBass1** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/StripedBass1.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/StripedBass1.csv)
+    [![documentation](../img/details.png)](data-html/StripedBass1.html) --
+    *Ages of Striped Bass assigned from scales and otoliths.*
+-   FSAdata::**StripedBass2** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/StripedBass2.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/StripedBass2.csv)
+    [![documentation](../img/details.png)](data-html/StripedBass2.html) --
+    *Ages and lengths of Atlantic Ocean Striped Bass.*
+-   FSAdata::**StripedBass3** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/StripedBass3.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/StripedBass3.csv)
+    [![documentation](../img/details.png)](data-html/StripedBass3.html) --
+    *Ages (subsample) and lengths (all fish) for Striped Bass.*
+-   FSAdata::**StripedBass4** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/StripedBass4.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/StripedBass4.csv)
+    [![documentation](../img/details.png)](data-html/StripedBass4.html) --
+    *Ages of Striped Bass assigned from scales by two readers.*
+-   FSAdata::**StripedBass5** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/StripedBass5.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/StripedBass5.csv)
+    [![documentation](../img/details.png)](data-html/StripedBass5.html) --
+    *Ages of Striped Bass assigned from otoliths by two readers.*
+-   FSAdata::**StripedBass6** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/StripedBass6.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/StripedBass6.csv)
+    [![documentation](../img/details.png)](data-html/StripedBass6.html) --
+    *Ages of Striped Bass assigned from scales and otoliths.*
+-   FSAdata::**SturgeonBL** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/SturgeonBL.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/SturgeonBL.csv)
+    [![documentation](../img/details.png)](data-html/SturgeonBL.html) --
+    *Summarized multiple mark-recapture data for Lake Sturgeon.*
+-   FSAdata::**SturgeonGB** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/SturgeonGB.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/SturgeonGB.csv)
+    [![documentation](../img/details.png)](data-html/SturgeonGB.html) --
+    *Capture years and ages for Lake Sturgeon from Goulais Bay, Lake
+    Superior, Ont.*
+-   FSAdata::**SunfishIN** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/SunfishIN.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/SunfishIN.csv)
+    [![documentation](../img/details.png)](data-html/SunfishIN.html) --
+    *Summarized multiple mark-recapture data for Redear Sunfish.*
+-   FSAdata::**SunfishLP** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/SunfishLP.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/SunfishLP.csv)
+    [![documentation](../img/details.png)](data-html/SunfishLP.html) --
+    *Catch-at-age for Bluegill and Redear Sunfish in Florida.*
+-   FSAdata::**TPrawnsEG** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/TPrawnsEG.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/TPrawnsEG.csv)
+    [![documentation](../img/details.png)](data-html/TPrawnsEG.html) --
+    *Stock and recruitment data for Exmouth Gulf Tiger Prawn, 1970-83.*
+-   FSAdata::**TroutADP** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/TroutADP.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/TroutADP.csv)
+    [![documentation](../img/details.png)](data-html/TroutADP.html) --
+    *Catches in removal events of trout.*
+-   FSAdata::**TroutBR** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/TroutBR.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/TroutBR.csv)
+    [![documentation](../img/details.png)](data-html/TroutBR.html) --
+    *Ages and lengths of migratory Brown and Rainbow Trout.*
+-   FSAdata::**TroutperchLM1** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/TroutperchLM1.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/TroutperchLM1.csv)
+    [![documentation](../img/details.png)](data-html/TroutperchLM1.html) --
+    *Ages, lengths, and sexes of Troutperch.*
+-   FSAdata::**TroutperchLM2** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/TroutperchLM2.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/TroutperchLM2.csv)
+    [![documentation](../img/details.png)](data-html/TroutperchLM2.html) --
+    *Lengths for Troutperch from Lake Michigan, 1977.*
+-   FSAdata::**TroutperchLM3** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/TroutperchLM3.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/TroutperchLM3.csv)
+    [![documentation](../img/details.png)](data-html/TroutperchLM3.html) --
+    *Subsampled lengths of Troutperch from Lake Michigan, 1977.*
+-   FSAdata::**VendaceLP** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/VendaceLP.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/VendaceLP.csv)
+    [![documentation](../img/details.png)](data-html/VendaceLP.html) --
+    *Stock and recruitment data for Vendace from Lake Puulavesi,
+    1982-1996.*
+-   FSAdata::**VendaceLP2** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/VendaceLP2.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/VendaceLP2.csv)
+    [![documentation](../img/details.png)](data-html/VendaceLP2.html) --
+    *Stock and recruitment data for Vendace from Lake Pyhajarvi.*
+-   FSAdata::**WalleyeConsumption** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/WalleyeConsumption.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/WalleyeConsumption.csv)
+    [![documentation](../img/details.png)](data-html/WalleyeConsumption.html) --
+    *Consumption of prey by Walleye.*
+-   FSAdata::**WalleyeEL** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/WalleyeEL.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/WalleyeEL.csv)
+    [![documentation](../img/details.png)](data-html/WalleyeEL.html) --
+    *Stock and recruitment data for Walleye from Escanaba Lake, WI,
+    1958-1992.*
+-   FSAdata::**WalleyeErie** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/WalleyeErie.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/WalleyeErie.csv)
+    [![documentation](../img/details.png)](data-html/WalleyeErie.html) --
+    *Recruitment time-series for Walleye in Lake Erie, 1959-1972.*
+-   FSAdata::**WalleyeErie2** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/WalleyeErie2.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/WalleyeErie2.csv)
+    [![documentation](../img/details.png)](data-html/WalleyeErie2.html) --
+    *Biological data for Walleye from Lake Erie, 2003-2014.*
+-   FSAdata::**WalleyeKS** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/WalleyeKS.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/WalleyeKS.csv)
+    [![documentation](../img/details.png)](data-html/WalleyeKS.html) --
+    *Catch-at-age for Walleye from eight Kansas reservoirs.*
+-   FSAdata::**WalleyeML** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/WalleyeML.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/WalleyeML.csv)
+    [![documentation](../img/details.png)](data-html/WalleyeML.html) --
+    *Back-calculated lengths-at-age for Walleye from Lake Mille Lacs,
+    2000-2011.*
+-   FSAdata::**WalleyeMN06a** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/WalleyeMN06a.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/WalleyeMN06a.csv)
+    [![documentation](../img/details.png)](data-html/WalleyeMN06a.html) --
+    *Catch-at-age for Walleye.*
+-   FSAdata::**WalleyeMN06b** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/WalleyeMN06b.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/WalleyeMN06b.csv)
+    [![documentation](../img/details.png)](data-html/WalleyeMN06b.html) --
+    *Summarized multiple mark-recapture data for Walleye from four lakes
+    in Northern Minnesota.*
+-   FSAdata::**WalleyePL** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/WalleyePL.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/WalleyePL.csv)
+    [![documentation](../img/details.png)](data-html/WalleyePL.html) --
+    *Summarized multiple mark-recapture data for YOY walleye.*
+-   FSAdata::**WalleyePS** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/WalleyePS.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/WalleyePS.csv)
+    [![documentation](../img/details.png)](data-html/WalleyePS.html) --
+    *Ages of Walleye assigned from otoliths, scales, and spines.*
+-   FSAdata::**WalleyeRL** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/WalleyeRL.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/WalleyeRL.csv)
+    [![documentation](../img/details.png)](data-html/WalleyeRL.html) --
+    *Growth increment data for Red Lakes Walleye.*
+-   FSAdata::**WalleyeWad** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/WalleyeWad.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/WalleyeWad.csv)
+    [![documentation](../img/details.png)](data-html/WalleyeWad.html) --
+    *Catches-at-age for male and female Walleye from Lake Winnebago, WI,
+    2010.*
+-   FSAdata::**WalleyeWyrlng** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/WalleyeWyrlng.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/WalleyeWyrlng.csv)
+    [![documentation](../img/details.png)](data-html/WalleyeWyrlng.html) --
+    *Annual catches of yearling Walleye in bottom trawls from Lake
+    Winnebago, WI, 1986-2010.*
+-   FSAdata::**WhitefishGSL** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/WhitefishGSL.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/WhitefishGSL.csv)
+    [![documentation](../img/details.png)](data-html/WhitefishGSL.html) --
+    *Catch-at-age of Great Slave Lake Whitefish (commercial) by area.*
+-   FSA::**WhitefishLC** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSA/blob/master/data-raw/WhitefishLC.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSA/master/data-raw/WhitefishLC.csv)
+    [![documentation](../img/details.png)](data-html/WhitefishLC.html) --
+    *Assigned ages from two readers on three structures for Lake
+    Whitefish from Lake Champlain.*
+-   FSAdata::**WhitefishLS** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/WhitefishLS.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/WhitefishLS.csv)
+    [![documentation](../img/details.png)](data-html/WhitefishLS.html) --
+    *Landings and value of Lake Superior Lake Whitefish.*
+-   FSAdata::**WhitefishMB** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/WhitefishMB.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/WhitefishMB.csv)
+    [![documentation](../img/details.png)](data-html/WhitefishMB.html) --
+    *Ages of Lake Whitefish from four lakes assigned from scales and
+    fin-rays.*
+-   FSAdata::**WhitefishTB** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/WhitefishTB.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/WhitefishTB.csv)
+    [![documentation](../img/details.png)](data-html/WhitefishTB.html) --
+    *Stock and recruitment data for Lake Whitefish in Thunder Bay, Lake
+    Superior, 1975-1988.*
+-   FSAdata::**WhiteGrunt1** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/WhiteGrunt1.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/WhiteGrunt1.csv)
+    [![documentation](../img/details.png)](data-html/WhiteGrunt1.html) --
+    *Catch-at-age for White Grunt.*
+-   FSAdata::**WhiteGrunt2** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/WhiteGrunt2.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/WhiteGrunt2.csv)
+    [![documentation](../img/details.png)](data-html/WhiteGrunt2.html) --
+    *Ages, lengths, and sexes of White Grunt.*
+-   FSA::**WR79** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSA/blob/master/data-raw/WR79.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSA/master/data-raw/WR79.csv)
+    [![documentation](../img/details.png)](data-html/WR79.html) -- *Ages
+    and lengths for a hypothetical sample from Westerheim and Ricker
+    (1979).*
+-   FSAdata::**WShrimpGA** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/WShrimpGA.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/WShrimpGA.csv)
+    [![documentation](../img/details.png)](data-html/WShrimpGA.html) --
+    *Stock and recruitment data for White Shrimp off the coast of
+    Georgia (USA), 1979-2000.*
+-   FSAdata::**YERockfish** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/YERockfish.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/YERockfish.csv)
+    [![documentation](../img/details.png)](data-html/YERockfish.html) --
+    *Ages, lengths, and maturity for Yelloweye Rockfish.*
+-   FSAdata::**YPerchCB1** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/YPerchCB1.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/YPerchCB1.csv)
+    [![documentation](../img/details.png)](data-html/YPerchCB1.html) --
+    *Catch-at-age for Yellow Perch from Chequamegon Bay, Lake Superior.*
+-   FSAdata::**YPerchCB2** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/YPerchCB2.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/YPerchCB2.csv)
+    [![documentation](../img/details.png)](data-html/YPerchCB2.html) --
+    *Stock and recruitment data for Yellow Perch in Chequamegon Bay,
+    1975-1986.*
+-   FSAdata::**YPerchGB** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/YPerchGB.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/YPerchGB.csv)
+    [![documentation](../img/details.png)](data-html/YPerchGB.html) --
+    *Recruitment time-series for Yellow Perch in Green Bay, 1978-1992.*
+-   FSAdata::**YPerchGL** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/YPerchGL.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/YPerchGL.csv)
+    [![documentation](../img/details.png)](data-html/YPerchGL.html) --
+    *Lengths and weights of Yellow Perch from Grafton Lake (ME) by
+    year.*
+-   FSAdata::**YPerchRL** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/YPerchRL.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/YPerchRL.csv)
+    [![documentation](../img/details.png)](data-html/YPerchRL.html) --
+    *Recruitment time-series for Yellow Perch in Red Lakes, MN,
+    1942-1960.*
+-   FSAdata::**YPerchSB** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/YPerchSB.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/YPerchSB.csv)
+    [![documentation](../img/details.png)](data-html/YPerchSB.html) --
+    *Stock and recruitment data for Yellow Perch from South Bay, Lake
+    Huron, 1950-1983.*
+-   FSAdata::**YPerchSB1** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/YPerchSB1.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/YPerchSB1.csv)
+    [![documentation](../img/details.png)](data-html/YPerchSB1.html) --
+    *Lengths for Yellow Perch from two locations in Saginaw Bay, Lake
+    Michigan.*
+-   FSAdata::**YPerchTL** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/YPerchTL.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/YPerchTL.csv)
+    [![documentation](../img/details.png)](data-html/YPerchTL.html) --
+    *Lengths and weights for Yellow Perch from Trout Lake, WI.*
+-   FSAdata::**YTFlounder** --
+    [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/YTFlounder.csv)
+    [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/YTFlounder.csv)
+    [![documentation](../img/details.png)](data-html/YTFlounder.html) --
+    *Ages of Yellowtail Flounder assigned from scales and otoliths.*

@@ -1,4 +1,5 @@
 ---
+layout: page
 title: "Fisheries Data in R Packages"
 ---
 

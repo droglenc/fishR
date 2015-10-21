@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Growth increment data for West Bearskin Lake, MN, Smallmouth...</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="aaaStyleSheet.css" />
+</head><body>
+
+<table width="100%" summary="page for SMBassWB {FSA}"><tr><td>SMBassWB {FSA}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Growth increment data for West Bearskin Lake, MN, Smallmouth Bass.</h2>
+
+<h3>Description</h3>
+
+<p>Growth data from Smallmouth Bass (<em>Micropterus dolomieu</em>) captured in West Bearksin Lake, MN.  Five samples were collected over three years (1988-1990) with two gears (fall &ndash; trapnets, spring &ndash; electrofishing).
+</p>
+
+
+<h3>Format</h3>
+
+<p>A data frame of 445 observations on the following 20 variables:
+</p>
+
+<ul>
+<li>species: Species of the fish (<code>SMB</code> for each fish in this file)</li>
+<li>lake: Lake fish was captured in (<code>WB</code> for each fish in this file)</li>
+<li>gear: Gear used to capture the fish (<code>T</code>=Trapnet and <code>E</code>=Electrofishing)</li>
+<li>yearcap: Year fish was captured (<code>1988</code>, <code>1989</code>, or <code>1990</code>)</li>
+<li>fish: A unique identifier for each fish</li>
+<li>agecap: Assigned age-at-capture for the fish (from scales)</li>
+<li>lencap: Total length-at-capture for the fish (mm)</li>
+<li>anu1: Magnified scale radius (mm) to the 1st annulus</li>
+<li>anu2: Magnified scale radius (mm) to the 2nd annulus</li>
+<li>anu3: Magnified scale radius (mm) to the 3rd annulus</li>
+<li>anu4: Magnified scale radius (mm) to the 4th annulus</li>
+<li>anu5: Magnified scale radius (mm) to the 5th annulus</li>
+<li>anu6: Magnified scale radius (mm) to the 6th annulus</li>
+<li>anu7: Magnified scale radius (mm) to the 7th annulus</li>
+<li>anu8: Magnified scale radius (mm) to the 8th annulus</li>
+<li>anu9: Magnified scale radius (mm) to the 9th annulus</li>
+<li>anu10: Magnified scale radius (mm) to the 10th annulus</li>
+<li>anu11: Magnified scale radius (mm) to the 11th annulus</li>
+<li>anu12: Magnified scale radius (mm) to the 12th annulus</li>
+<li>radcap: Total scale radius at time of capture</li>
+</ul>
+
+
+<h3>Topic(s)</h3>
+
+
+<ul>
+<li><p> Growth increment analysis
+</p>
+</li>
+<li><p> Weisberg linear growth model
+</p>
+</li>
+<li><p> Back-Calculation
+</p>
+</li></ul>
+
+
+
+<h3>Note</h3>
+
+<p>Data are in one-fish-per-line format.
+</p>
+
+
+<h3>Source</h3>
+
+<p>Data from the linear growth modelling software distributed in support of Weisberg, S.  1993.  Using hard-part increment data to estimate age and environmental effects. Canadian Journal of Fisheries and Aquatic Sciences 50:1229-1237.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>See <code>wblake2</code> from <span class="pkg">alr3</span> for the same dataset with only the <code>agecap</code>, <code>lencap</code>, and <code>radcap</code> variables.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+data(SMBassWB)
+str(SMBassWB)
+head(SMBassWB)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>FSA</em> version 0.8.2 ]</div>
+</body></html>

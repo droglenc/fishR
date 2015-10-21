@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Stock and recruitment data for Norwegian cod, 1937-1960.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="aaaStyleSheet.css" />
+</head><body>
+
+<table width="100%" summary="page for CodNorwegian {FSA}"><tr><td>CodNorwegian {FSA}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Stock and recruitment data for Norwegian cod, 1937-1960.</h2>
+
+<h3>Description</h3>
+
+<p>Norwegian cod (<em>Gadus morhua</em>) stock and recruitment by year, 1937-1960.
+</p>
+
+
+<h3>Format</h3>
+
+<p>A data frame of 24 observations on the following 3 variables:
+</p>
+
+<ul>
+<li>year: Year of data</li>
+<li>recruits: Recruits &ndash; year-class strength index</li>
+<li>stock: Spawning stock index</li>
+</ul>
+
+
+<h3>Topic(s)</h3>
+
+
+<ul>
+<li><p> Stock-Recruit
+</p>
+</li>
+<li><p> Recruitment
+</p>
+</li></ul>
+
+
+
+<h3>Source</h3>
+
+<p>From Garrod, D.J. 1967.  Population dynamics of the Arcto-Norwegian cod.  Journal of the Fisheries Research Board of Canada, 24:145-190.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+data(CodNorwegian)
+str(CodNorwegian)
+head(CodNorwegian)
+op &lt;- par(mfrow=c(1,2))
+plot(recruits~year,data=CodNorwegian,type="l")
+plot(recruits~stock,data=CodNorwegian)
+par(op)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>FSA</em> version 0.8.2 ]</div>
+</body></html>

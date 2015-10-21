@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Age and length of spot.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="aaaStyleSheet.css" />
+</head><body>
+
+<table width="100%" summary="page for SpotVA1 {FSA}"><tr><td>SpotVA1 {FSA}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Age and length of spot.</h2>
+
+<h3>Description</h3>
+
+<p>Ages (from otoliths) and lengths of Virginia Spot (<em>Leiostomus xanthurus</em>).
+</p>
+
+
+<h3>Format</h3>
+
+<p>A data frame of 403 observations on the following 2 variables:
+</p>
+
+<ul>
+<li>tl: Measured total lengths (in inches)</li>
+<li>age: Ages assigned from examination of otoliths</li>
+</ul>
+
+
+<h3>Details</h3>
+
+<p>Final length measurements were simulated by adding a uniform error to the value at the beginning of the length category.
+</p>
+
+
+<h3>Topic(s)</h3>
+
+
+<ul>
+<li><p> Growth
+</p>
+</li>
+<li><p> von Bertalanffy
+</p>
+</li></ul>
+
+
+
+<h3>Source</h3>
+
+<p>Extracted from Table 1 in Chapter 8 (Spot) of the VMRC Final Report on Finfish Ageing, 2002 by the <a href="http://www.odu.edu/sci/research/cqfe">Center for Quantitative Fisheries Ecology</a> at Old Dominion University.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>See <code>SpotVA2</code> in <span class="pkg">FSAdata</span> for related data.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+data(SpotVA1)
+str(SpotVA1)
+head(SpotVA1)
+plot(tl~age,data=SpotVA1)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>FSA</em> version 0.8.2 ]</div>
+</body></html>

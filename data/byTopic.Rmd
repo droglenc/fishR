@@ -1,0 +1,50 @@
+---
+title: "Fisheries Data by Major Topic"
+output: 
+  html_document: 
+    theme: readable
+---
+
+```{r echo=FALSE, results="hide", message=FALSE, warning=FALSE}
+source("zzzListScriptInit.R")
+```
+
+fisheries-related data sets in the the `FSA` (v`r packageVersion("FSA")`) and `FSAdata` (v`r packageVersion("FSAdata")`) packages are listed below by analytical concept.  In addition to being available in these packages, these data sets may be viewed with ![view](`r iview`) and downloaded (as a CSV file) with ![download](`r idown`).  Documentation may be viewed with  ![documentation](`r idoc`).
+
+----
+
+# Quick Links to Major Topics
+
+```{r echo=FALSE, results='asis'}
+for (i in FSAdataTopics) {
+  cat("[",i,"](#",paste0(unlist(strsplit(tolower(i)," ")),collapse="-"),")",sep="")
+  if (i!=FSAdataTopics[length(FSAdataTopics)]) cat(" / ")
+}
+cat("\n")
+```
+
+----
+
+```{r echo=FALSE, results='asis'}
+for (i in FSAdataTopics) {
+  ## Find all data sets that meet the current topic
+  res <- help.search(i,package=pkgs,fields="concept")$matches[,c("Package","Topic","Title")]
+  ## remove the data sets that have lit in the name (PSDlit and WSlit)
+  res <- res[!grepl("lit",res$Topic),]
+  ## Sort by "Topic" (i.e., name of data set)
+  res <- res[order(res$Topic),]
+  ## Make a heading
+  cat("##",i,"\n")
+  ## Make an unnumbered list of those topics
+  for (j in 1:nrow(res)) {
+    tmp <- paste0("* ",res[j,"Package"],"::**",res[j,"Topic"],"** -- ")
+    tmp <- paste0(tmp,"[![view](",iview,")](",gh1,res[j,"Package"],gh2,res[j,"Topic"],".csv)  ")
+    tmp <- paste0(tmp,"[![download](",idown,")](",rgh1,res[j,"Package"],rgh2,res[j,"Topic"],".csv)  ")
+    tmp <- paste0(tmp,"[![documentation](",idoc,")](data-html/",res[j,"Topic"],".html) -- ")
+    tmp <- paste0(tmp,"*",res[j,"Title"],"*\n")
+    cat(tmp)
+  }
+  ## Add a space before the next heading
+  cat("\n")
+}
+```

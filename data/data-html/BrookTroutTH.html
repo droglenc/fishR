@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Catch-at-age for Tobin Harbor, Isle Royale Brook Trout.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="aaaStyleSheet.css" />
+</head><body>
+
+<table width="100%" summary="page for BrookTroutTH {FSA}"><tr><td>BrookTroutTH {FSA}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Catch-at-age for Tobin Harbor, Isle Royale Brook Trout.</h2>
+
+<h3>Description</h3>
+
+<p>Catch-at-age in fyke nets from 1996-1998 for &ldquo;Coaster&rdquo; Brook Trout (<em>Salvelinus fontinalis</em>) in Tobin Harbor, Isle Royale, Lake Superior.
+</p>
+
+
+<h3>Format</h3>
+
+<p>A data frame with 7 observations on the following 2 variables.
+</p>
+
+<ul>
+<li>age: A numeric vector of assigned ages</li>
+<li>catch: A numeric vector of number of Brook Trout caught</li>
+</ul>
+
+
+<h3>Topic(s)</h3>
+
+
+<ul>
+<li><p> Mortality
+</p>
+</li>
+<li><p> Catch Curve
+</p>
+</li>
+<li><p> Chapman-Robson
+</p>
+</li></ul>
+
+
+
+<h3>Source</h3>
+
+<p>Quinlan, H.R. 1999. Biological Characteristics of Coaster Brook Trout at Isle Royale National Park, Michigan, 1996-98. U.S. Fish and Wildlife Service Ashland Fishery Resources Office report. November 1999.  Was originally available at <a href="www.fws.gov/midwest/ashland/brook/biochar/biolchar.html">www.fws.gov/midwest/ashland/brook/biochar/biolchar.html</a>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+data(BrookTroutTH)
+str(BrookTroutTH)
+head(BrookTroutTH)
+plot(log(catch)~age,data=BrookTroutTH)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>FSA</em> version 0.8.2 ]</div>
+</body></html>

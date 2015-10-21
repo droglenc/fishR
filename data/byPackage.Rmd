@@ -1,0 +1,51 @@
+---
+title: "Fisheries Data by Package"
+output: 
+  html_document: 
+    theme: readable
+---
+
+```{r echo=FALSE, results="hide", message=FALSE, warning=FALSE}
+source("zzzListScriptInit.R")
+```
+
+Fisheries-related data sets in the **FSA** (v`r packageVersion("FSA")`), **FSAdata** (v`r packageVersion("FSAdata")`), and **fishmethods** (v`r packageVersion("fishmethods")`) packages are listed below by package.  The data sets in **FSA** and **FSAdata** may be viewed with ![view](`r iview`), downloaded (as a CSV file) with ![download](`r idown`), and the documentation may be viewed with ![documentation](`r idoc`).
+
+```{r echo=FALSE, results='asis'}
+## Cycle through the packages
+for (i in pkgs) {
+  ## Get all data sets in the package
+  res <- help.search(keyword="datasets",package=i)$matches[,c("Package","Topic","Title")]
+  ## Remove the data sets that have lit in the name (PSDlit and WSlit)
+  res <- res[!grepl("lit",res$Topic),]
+  ## Make a heading
+  cat("----\n\n")
+  cat("##",i,"\n")
+  ## Make an unnumbered list of the data sets
+  for (j in 1:nrow(res)) {
+    tmp <- paste0("* **",res[j,"Topic"],"** -- ")
+    tmp <- paste0(tmp,"[![view](",iview,")](",gh1,res[j,"Package"],gh2,res[j,"Topic"],".csv)  ")
+    tmp <- paste0(tmp,"[![download](",idown,")](",rgh1,res[j,"Package"],rgh2,res[j,"Topic"],".csv)  ")
+    tmp <- paste0(tmp,"[![documentation](",idoc,")](data-html/",res[j,"Topic"],".html) -- ")
+    tmp <- paste0(tmp,"*",res[j,"Title"],"*\n")
+    cat(tmp)
+  }
+  ## Add a space before the next heading
+  cat("\n")  
+}
+```
+
+----
+
+## fishmethods
+
+```{r echo=FALSE, results='asis'}
+## Get all data sets in the package
+res <- help.search(keyword="datasets",package="fishmethods")$matches[,c("Package","Topic","Title")]
+## Make an unnumbered list of the data sets
+for (j in 1:nrow(res)) {
+  tmp <- paste0("* **",res[j,"Topic"],"** -- ")
+  tmp <- paste0(tmp,"*",res[j,"Title"],"*\n")
+  cat(tmp)
+}
+```

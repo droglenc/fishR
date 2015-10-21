@@ -1,0 +1,32 @@
+---
+title: "Fisheries Data in FSA and FSAdata"
+output: 
+  html_document: 
+    theme: readable
+---
+
+```{r echo=FALSE, results="hide", message=FALSE, warning=FALSE}
+source("zzzListScriptInit.R")
+```
+
+All fisheries-related data sets in the the `FSA` (v`r packageVersion("FSA")`) and `FSAdata` (v`r packageVersion("FSAdata")`) packages are listed below.  In addition to being available in these packages, these data sets may be viewed with ![view](`r iview`) and downloaded (as a CSV file) with ![download](`r idown`).  Documentation may be viewed with ![documentation](`r idoc`).
+
+----
+
+```{r echo=FALSE, results='asis'}
+## Get all data sets in the package
+res <- help.search(keyword="datasets",package=pkgs)$matches[,c("Package","Topic","Title")]
+## Remove the data sets that have lit in the name (PSDlit and WSlit)
+res <- res[!grepl("lit",res$Topic),]
+## Sort by "Topic" (i.e., name of data set)
+res <- res[order(res$Topic),]
+## Make an unnumbered list of the data sets
+for (j in 1:nrow(res)) {
+  tmp <- paste0("* ",res[j,"Package"],"::**",res[j,"Topic"],"** -- ")
+  tmp <- paste0(tmp,"[![view](",iview,")](",gh1,res[j,"Package"],gh2,res[j,"Topic"],".csv)  ")
+  tmp <- paste0(tmp,"[![download](",idown,")](",rgh1,res[j,"Package"],rgh2,res[j,"Topic"],".csv)  ")
+  tmp <- paste0(tmp,"[![documentation](",idoc,")](data-html/",res[j,"Topic"],".html) -- ")
+  tmp <- paste0(tmp,"*",res[j,"Title"],"*\n")
+  cat(tmp)
+}
+```

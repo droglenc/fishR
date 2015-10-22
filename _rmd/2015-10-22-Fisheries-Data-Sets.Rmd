@@ -20,10 +20,8 @@ A large number of small data sets are available in the [**FSA**](https://github.
 
 There are at least two problems with delivering these data sets within an R package that limits their pedagogical utility.  I describe these problems below and explain my solutions so that these data sets will be available to instructors in a more useful format, while still being maintained in R packages.
 
-\ 
-\ 
-
 # First Problem
+
 ## Finding the Right Data Set
 
 Finding the "right" data set in a package, especially packages like **FSAdata** that contain many data sets, can be difficult.  This problem is ameliorated somewhat by the ability to search all data sets in a package with `help.search()` using `package=` and `keyword="datasets"` (note that the result will appear in the Help pane if using RStudio or a browser if using R).
@@ -56,10 +54,8 @@ The second of these lists is most useful because it allows one to easily see the
 
 Additionally, for each data set shown in these lists, there are icons that link to the data displayed in a spreadsheet-like format ([![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/AlewifeLH.csv)), to the data as a raw comma-separated values (CSV) text file ([![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/AlewifeLH.csv)), and to meta-data documentation ([![documentation](../img/details.png)](http://derekogle.com/fishR/data/data-html/AlewifeLH.html)).  Click the icons in the previous sentence for examples.
 
-\ 
-\ 
-
 # Second Problem
+
 ## Not the Real World
 
 Data sets distributed with packages are loaded into the R workspace by including the name of the data set within `data()`.  For example, the `AlewifeLH` data set distributed with the **FSAdata** package is loaded and its structure is examined below.
@@ -83,9 +79,6 @@ str(df)
 ```
 
 This may not be particularly useful because the address is so long (it can, however, be copied from the download icon in the lists) and the student is unlikely to have stored their own data at an internet site.
-
-\ 
-\ 
 
 # The Future
 

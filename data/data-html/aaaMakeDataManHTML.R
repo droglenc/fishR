@@ -17,6 +17,7 @@ library(stringr)
 ## Clean up the definitions list for the variables
 iClnHTMLDefns <- function(hf) {
   h <- readLines(hf)
+  ### This cleans up the variable definitions
   ## make some simple replacements in definitions list
   h <- str_replace(h,"<dl>","<ul>")
   h <- str_replace(h,"</dl>","</ul>")
@@ -28,6 +29,22 @@ iClnHTMLDefns <- function(hf) {
   h[tmp-1] <- str_replace(h[tmp-1],"</p>","</li>")
   # remove the </dd> tags
   h <- h[-tmp]
+  ### This cleans up the bad spacing around the topics
+  ## move all </p> tags on one line to the end of the line before
+  tmp <- which(h=="</p>")
+  h[tmp-1] <- paste0(h[tmp-1],h[tmp])
+  h <- h[-tmp]
+  ## move all </li> tags on one line to the end of the line before
+  tmp <- which(h=="</li>")
+  h[tmp-1] <- paste0(h[tmp-1],h[tmp])
+  h <- h[-tmp]
+  ## move the </li> of a </li></ul> tag on one line to the end of the line before
+  tmp <- which(h=="</li></ul>")
+  h[tmp-1] <- paste0(h[tmp-1],"</li>")
+  h[tmp] <- "</ul>"
+  ## replace any <li><p> and </li></p> with just the li
+  h <- str_replace(h,"<li><p>","<li>")
+  h <- str_replace(h,"</p></li>","</li>")
   ## write out the new html file
   writeLines(h,hf)
 }

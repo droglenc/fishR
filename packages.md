@@ -40,7 +40,7 @@ The following are instructions to install packages from within various ways to i
 * [kobe](https://cran.r-project.org/web/packages/kobe/index.html) -- *methods for summarising results from stock assessments and Management Strategy Evaluations in the Kobe format*
 * [mapplots](https://cran.r-project.org/web/packages/mapplots/index.html) -- *Create simple maps; add sub-plots like pie plots to a map or any other plot; format, plot and export gridded data*
 * [mixdist](http://ms.mcmaster.ca/peter/mix/mix.html) -- *fit mixture distributions — e.g., possibly separating age-classes from a length frequency*
-* [mizer](https://cran.r-project.org/web/packages/mizer/index.html) -- *https://cran.r-project.org/web/packages/mizer/index.html*
+* [mizer](https://cran.r-project.org/web/packages/mizer/index.html) -- *multispecies, trait based and community size spectrum ecological models, focussed on the marine environment*
 * [PBSmapping](https://cran.r-project.org/web/packages/PBSmapping/) -- *two-dimensional plotting features similar to those commonly available in a Geographic Information System*
 * [PBSmodelling](https://cran.r-project.org/web/packages/PBSmodelling/index.html) -- *facilitates the design, testing, and operation of computer models; focused on tools that make it easy to construct and edit a customized graphical user interface*
 * [r4ss](https://github.com/r4ss/r4ss) -- *analyze and plot the output from Stock Synthesis version 3, a fisheries stock assessment model written in ADMB*

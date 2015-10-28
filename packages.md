@@ -3,8 +3,8 @@ layout: page
 title: Fishy Packages
 ---
 
-* [Multi-Purpose Packages](#multi-purpose-packages)
-* [Single-Purpose Packages](#single-purpose-packages)
+* [General Packages](#general-packages)
+* [More Focused Packages](#more-focused-packages)
 * [Packages for Capture-Recapture Analyses](#packages-for-capture-recapture-analyses)
 * [Packages to Access Online Databases](#packages-to-access-online-databases)
 * [Packages for Limnological Data](#packages-for-limnological-data)
@@ -19,7 +19,7 @@ The following are instructions to install packages from within various ways to i
 
 ----
 
-## Multi-Purpose Packages
+## General Packages
 * [FSA: Fisheries Stock Assessment](https://github.com/droglenc/FSA#readme)
     * [FSAdata: Data for FSA](https://github.com/droglenc/FSAdata#readme)
 * [FLR: Fisheries Library in R](http://www.flr-project.org/index.html)
@@ -28,7 +28,7 @@ The following are instructions to install packages from within various ways to i
 
 ----
 
-## Single-Purpose Packages
+## More Focused Packages
 * [ALKr](http://cran.r-project.org/web/packages/ALKr/index.html) -- *age-length keys*
 * [Bioenergetics 4.0](https://bioenergetics4.shinyapps.io/bioenergetics4/) -- *a shiny app for bioenergetics modeling*
 * [Bioenergetics at ISEMP](http://www.isemp.org/action.php?chi=14) -- *bioenergetics modeling as part of the Integrated Status and Monitoring Program*
@@ -40,6 +40,7 @@ The following are instructions to install packages from within various ways to i
 * [kobe](https://cran.r-project.org/web/packages/kobe/index.html) -- *methods for summarising results from stock assessments and Management Strategy Evaluations in the Kobe format*
 * [mapplots](https://cran.r-project.org/web/packages/mapplots/index.html) -- *Create simple maps; add sub-plots like pie plots to a map or any other plot; format, plot and export gridded data*
 * [mixdist](http://ms.mcmaster.ca/peter/mix/mix.html) -- *fit mixture distributions — e.g., possibly separating age-classes from a length frequency*
+* [mizer](https://cran.r-project.org/web/packages/mizer/index.html) -- *https://cran.r-project.org/web/packages/mizer/index.html*
 * [PBSmapping](https://cran.r-project.org/web/packages/PBSmapping/) -- *two-dimensional plotting features similar to those commonly available in a Geographic Information System*
 * [PBSmodelling](https://cran.r-project.org/web/packages/PBSmodelling/index.html) -- *facilitates the design, testing, and operation of computer models; focused on tools that make it easy to construct and edit a customized graphical user interface*
 * [r4ss](https://github.com/r4ss/r4ss) -- *analyze and plot the output from Stock Synthesis version 3, a fisheries stock assessment model written in ADMB*

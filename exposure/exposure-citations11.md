@@ -2,7 +2,7 @@
 layout: page
 title: pre-2012 Citations
 subtitle: fishR and FSA is Being Used!!
-css: "../css/exposure-citation.css"
+css: "/css/exposure-citation.css"
 ---
 
 **fishR** or the **FSA** package were cited in the following <span id="contact-div">12</span> publications.

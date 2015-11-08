@@ -5,7 +5,7 @@ title: "Fisheries Data in FSA and FSAdata"
 
 <!-- This is meant to be run with aaaCompile.R, not as a standalone -->
 
-All fisheries-related data sets in the the `FSA` (v0.8.3) and `FSAdata` (v0.3.2) packages are listed below.  These data sets may be viewed with ![view](../img/view.png), downloaded (as a CSV file) with ![download](../img/download.png), and the meta-information documentation may be viewed with ![documentation](../img/details.png).
+All fisheries-related data sets in the the `FSA` (v0.8.4) and `FSAdata` (v0.3.2) packages are listed below.  These data sets may be viewed with ![view](../img/view.png), downloaded (as a CSV file) with ![download](../img/download.png), and the meta-information documentation may be viewed with ![documentation](../img/details.png).
 
 ----
 

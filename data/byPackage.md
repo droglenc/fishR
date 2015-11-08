@@ -5,7 +5,7 @@ title: "Fisheries Data by Package"
 
 <!-- This is meant to be run with aaaCompile.R, not as a standalone -->
 
-Fisheries-related data sets in the **FSA** (v0.8.3), **FSAdata** (v0.3.2), and **fishmethods** (v1.9.0) packages are listed below by package.  The data sets in **FSA** and **FSAdata** may be viewed with ![view](../img/view.png), downloaded (as a CSV file) with ![download](../img/download.png), and the meta-information documentation may be viewed with ![documentation](../img/details.png).
+Fisheries-related data sets in the **FSA** (v0.8.4), **FSAdata** (v0.3.2), and **fishmethods** (v1.9.0) packages are listed below by package.  The data sets in **FSA** and **FSAdata** may be viewed with ![view](../img/view.png), downloaded (as a CSV file) with ![download](../img/download.png), and the meta-information documentation may be viewed with ![documentation](../img/details.png).
 
 ----
 

@@ -5,7 +5,7 @@ title: "Fisheries Data by Major Topic"
 
 <!-- This is meant to be run with aaaCompile.R, not as a standalone -->
 
-Fisheries-related data sets in the the `FSA` (v0.8.3) and `FSAdata` (v0.3.2) packages are listed below by analytical concept.  These data sets may be viewed with ![view](../img/view.png), downloaded (as a CSV file) with ![download](../img/download.png), and the meta-information documentation may be viewed with ![documentation](../img/details.png).
+Fisheries-related data sets in the the `FSA` (v0.8.4) and `FSAdata` (v0.3.2) packages are listed below by analytical concept.  These data sets may be viewed with ![view](../img/view.png), downloaded (as a CSV file) with ![download](../img/download.png), and the meta-information documentation may be viewed with ![documentation](../img/details.png).
 
 ----
 
@@ -260,5 +260,4 @@ Fisheries-related data sets in the the `FSA` (v0.8.3) and `FSAdata` (v0.3.2) pac
 * FSA::**Ecoli** -- [![view](../img/view.png)](https://github.com/droglenc/FSA/blob/master/data-raw/Ecoli.csv)  [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSA/master/data-raw/Ecoli.csv)  [![documentation](../img/details.png)](data-html/Ecoli.html) -- *Population growth of Escherichia coli.*
 * FSAdata::**Ghats** -- [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/Ghats.csv)  [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/Ghats.csv)  [![documentation](../img/details.png)](data-html/Ghats.html) -- *Species accumulation data for fish of the Western Ghats of India.*
 * FSAdata::**LakeTroutEggs** -- [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/LakeTroutEggs.csv)  [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/LakeTroutEggs.csv)  [![documentation](../img/details.png)](data-html/LakeTroutEggs.html) -- *Length and egg deposition of Lake Superior Lake Trout.*
-* FSA::**Mirex** -- [![view](../img/view.png)](https://github.com/droglenc/FSA/blob/master/data-raw/Mirex.csv)  [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSA/master/data-raw/Mirex.csv)  [![documentation](../img/details.png)](data-html/Mirex.html) -- *Mirex concentration, weight, capture year, and species of Lake Ontario salmon.*
 * FSAdata::**WhitefishLS** -- [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/WhitefishLS.csv)  [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/WhitefishLS.csv)  [![documentation](../img/details.png)](data-html/WhitefishLS.html) -- *Landings and value of Lake Superior Lake Whitefish.*

@@ -15,7 +15,7 @@
 <h3>Format</h3>
 
 <p>A data frame with 122 observations on the following 4 variables.</p>
-
+ 
 <ul>
 <li>year: a numeric vector of capture years</li>
 <li>weight: a numeric vector of salmon weights (kg)</li>
@@ -37,6 +37,7 @@
 <li> Other</li>
 </ul>
 
+<p>@concept 'Linear Models' Other</p>
 
 
 <h3>Source</h3>
@@ -51,7 +52,8 @@ data(Mirex)
 Mirex$year &lt;- factor(Mirex$year)
 lm1 &lt;- lm(mirex~weight*year*species,data=Mirex)
 anova(lm1)
+
 </pre>
 
-<hr /><div style="text-align: center;">[Package <em>FSA</em> version 0.8.3 ]</div>
+<hr /><div style="text-align: center;">[Package <em>FSA</em> version 0.8.4 ]</div>
 </body></html>

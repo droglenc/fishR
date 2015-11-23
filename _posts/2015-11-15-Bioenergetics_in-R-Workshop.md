@@ -2,7 +2,7 @@
 layout: post
 title: Bioenergetics in R Workshop
 date: "Sunday, November 15, 2015"
-tags: [R, Bioenergetics]
+tags: [R, Bioenergetics, Workshop]
 ---
 
 It was just brought to my attention that there will be a workshop at the upcoming [Midwest Fish and Wildlife Conference](http://www.midwestfw.org/html/schedule.shtml) (Grand Rapids, MI) on the [Bioenergetics 4.0 shiny app](https://bioenergetics4.shinyapps.io/bioenergetics4/).  The announcement [from here](http://www.midwestfw.org/html/workshops.shtml#W2) (where there is a registration link) is below (I added the links):

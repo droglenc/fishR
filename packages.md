@@ -65,6 +65,7 @@ The following are instructions to install packages from within various ways to i
 * [Rcapture](http://cran.r-project.org/web/packages/Rcapture/index.html)
 * [RMark](http://www.phidot.org/software/mark/rmark/)
 * [unmarked](https://cran.r-project.org/web/packages/unmarked/)
+* [EasyMARK](https://cran.r-project.org/web/packages/EasyMARK/index.html)
 
 ### Spatially Explicit
 * [admbsecr](https://github.com/b-steve/admbsecr)

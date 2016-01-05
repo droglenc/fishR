@@ -7,6 +7,7 @@ title: Get the Word Out!
 
 * [Announcements](exposure-announcements)
 * Citations
+  * [2016](exposure-citations16)
   * [2015](exposure-citations15)
   * [2014](exposure-citations14)
   * [2013](exposure-citations13)

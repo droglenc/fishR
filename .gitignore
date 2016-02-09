@@ -5,6 +5,7 @@ _site/
 ## RStudio project files
 .Rproj.user
 fishR.Rproj
+.Rhistory
 
 ## Html files in the posts (left over from testing how the md files will look)
 _posts/*.html

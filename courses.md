@@ -4,7 +4,8 @@ title: Learn R!
 ---
 
 ## Upcoming Courses
-* None right now.
+* [*Introduction to R using the FM Database (Redux)*](http://derekogle.com/RcourseWiDNR2016/) — Wisconsin DNR, Wisconsin Dells, WI; 8 Mar 2016
+* *Age and Growth Analyses with R* — 146th Annual Meeting of the American Fisheries Society, Kansas City, MO; TBD August 2016
 
 ## Past Courses (*materials may be out-of-date*)
 * [*Age and Growth Analyses with R*](http://derekogle.com/RcoursePortland2015/) — 145th Annual Meeting of the American Fisheries Society, Portland, Oregon; 16 August 2015

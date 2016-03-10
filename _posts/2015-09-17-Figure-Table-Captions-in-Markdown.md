@@ -87,7 +87,7 @@ The `figs` function may be used to add a figure caption to a figure.  For exampl
 hist(~length,data=RuffeSLRH92)
 {% endhighlight %}
 
-![plot of chunk ExHistL_Captioner](../figures/ExHistL_Captioner-1.png) 
+![plot of chunk ExHistL_Captioner](http://derekogle.com/fishR/figures/ExHistL_Captioner-1.png) 
 
 Figure  1: Length frequency of Ruffe captured in 1992.
 
@@ -100,7 +100,7 @@ As more functions are added, the figure numbers are incremented such that inline
 hist(~weight,data=RuffeSLRH92)
 {% endhighlight %}
 
-![Figure  2: Weight frequency of Ruffe captured in 1992.](../figures/ExHistW_Captioner-1.png) 
+![Figure  2: Weight frequency of Ruffe captured in 1992.](http://derekogle.com/fishR/figures/ExHistW_Captioner-1.png) 
 
 Figure  2: Weight frequency of Ruffe captured in 1992.
 

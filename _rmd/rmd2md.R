@@ -18,7 +18,9 @@ rmd2md <- function(file,path_site="C:/aaaWork/Web/GitHub/fishR") {
   ## Set the output format to markdown
   opts_knit$set(out.format='markdown')
   ## Set the directory for the figures
-  opts_knit$set(base.url = "../",base.dir=path_site)
+  # this did not work with new gitHub
+  #opts_knit$set(base.url = "../",base.dir=path_site)
+  opts_knit$set(base.url="http://derekogle.com/fishR/")
   opts_chunk$set(fig.path = "figures/")
   ## Actually knit the RMD file
   knit(text=content, output=outFile)

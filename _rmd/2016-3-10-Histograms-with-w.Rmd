@@ -16,6 +16,8 @@ library(knitr)
 opts_chunk$set(dev="png",tidy=FALSE,fig.width=4,fig.height=4,par1=TRUE)
 ```
 
+----
+
 ## The Problem -- Binning for Length Frequency Histograms
 
 Fisheries scientists often make histograms of fish lengths.  For example, the code below uses `hist()` (actually `hist.formula()`) from the [`FSA` package](https://github.com/droglenc/FSA/blob/master/README.md) to construct a histogram of total lengths for Chinook Salmon from Argentinian waters.
@@ -56,8 +58,14 @@ This works well in a template because you only need to decide what bin width you
 
 The `w=` argument also works when multiple histograms are constructed.
 
-```{r wHistwMult}
+```{r wHistwMult,fig.width=6,fig.height=6}
 hist(tl~loc,data=ChinookArg,xlab="Total Length (cm)",w=5)
 ```
+
+----
+
+## Final Note
+
+The `hist.formula()` with `w=` is currently in the development version of  [`FSA` package](https://github.com/droglenc/FSA/blob/master/README.md) on GitHub (i.e., it is not available in v0.8.5 that is currently on CRAN).  Please let me know what you think of this addition.
 
 ----

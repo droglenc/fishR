@@ -8,6 +8,8 @@ tags: [R, FSA, Histograms, Length_Frequency]
 
 
 
+----
+
 ## The Problem -- Binning for Length Frequency Histograms
 
 Fisheries scientists often make histograms of fish lengths.  For example, the code below uses `hist()` (actually `hist.formula()`) from the [`FSA` package](https://github.com/droglenc/FSA/blob/master/README.md) to construct a histogram of total lengths for Chinook Salmon from Argentinian waters.
@@ -63,5 +65,11 @@ hist(tl~loc,data=ChinookArg,xlab="Total Length (cm)",w=5)
 {% endhighlight %}
 
 ![plot of chunk wHistwMult](http://derekogle.com/fishR/figures/wHistwMult-1.png)
+
+----
+
+## Final Note
+
+The `hist.formula()` with `w=` is currently in the development version of  [`FSA` package](https://github.com/droglenc/FSA/blob/master/README.md) on GitHub (i.e., it is not available in v0.8.5 that is currently on CRAN).  Please let me know what you think of this addition.
 
 ----

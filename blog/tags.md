@@ -14,7 +14,7 @@ title: Blog Tags
   <h3 id="{{ tag | escape }}">{{ tag }}</h3>
   <ul>
   {% for post in site.tags[tag] %}
-    <li><a href="{{site.baseurl}}{{ post.url }}">{{ post.title }}</a></li>
+    <li><a href="http://derekogle.com/fishR/blog/tags.html">{{ post.title }}</a></li>
   {% endfor %}
   </ul>
 {% endfor %}

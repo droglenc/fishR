@@ -60,3 +60,4 @@ The `w=` argument also works when multiple histograms are constructed.
 hist(tl~loc,data=ChinookArg,xlab="Total Length (cm)",w=5)
 ```
 
+----

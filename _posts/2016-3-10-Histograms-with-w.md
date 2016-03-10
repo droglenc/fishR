@@ -64,3 +64,4 @@ hist(tl~loc,data=ChinookArg,xlab="Total Length (cm)",w=5)
 
 ![plot of chunk wHistwMult](http://derekogle.com/fishR/figures/wHistwMult-1.png)
 
+----

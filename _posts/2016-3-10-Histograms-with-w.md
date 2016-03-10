@@ -2,7 +2,7 @@
 layout: post
 title: Histograms by Just Defining Bin Width
 date: "March 10, 2016"
-tags: [R, FSA, Histograms, Length Frequency]
+tags: [R, FSA, Histograms, Length_Frequency]
 ---
 
 

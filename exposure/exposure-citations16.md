@@ -5,7 +5,7 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">13</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">14</span> publications.
 
 1. Barreto RR, de Farias WKT, Andrade H, Santana FM, Lessa R.  2016.  Age, growth and spatial distribution of the life stages of the Shortfin Mako, *Isurus oxyrinchus* (Rafinesque, 1810) caught in the Western and Central Atlantic.  PLoS ONE 11(4):e0153062.  [Full Text](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0153062) [Age-Length Key]
 1. Bokhutlo T, Weyl OLF, Mosepele K, Wilson GG.  2016.  Influence of the annual flood-pulse on catch per unit effort, condition and reproduction of *Clarias gariepinus* from the upper Okavango Delta, Botswana.  African Journal of Aquatic Science ##:##-##. [Abstract](http://www.tandfonline.com/doi/abs/10.2989/16085914.2016.1138279) [??]
@@ -20,6 +20,7 @@ The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA
 1. Soares de Santana H, Rodrigues AC, Dei Tos C.  2016.  Patterns of reproduction and growth of the catfish *Iheringichthys labrosus* (Lütken, 1874) after a reservoir formation.  Journal of Applied Ichthyology XX:XXX-XXX.  [Abstract](http://onlinelibrary.wiley.com/doi/10.1111/jai.13059/abstract;jsessionid=55A28F85C697F3BE7C4F8720364F8D77.f04t04) [von Bertalanffy Growth]
 1. Staub NL.  2016.  The age of Plethodontid salamanders: A short review on longevity.  Copeia 2016:118-123. [Abstract](http://www.asihcopeiaonline.org/doi/abs/10.1643/OT-14-200) [von Bertalanffy Growth] 
 1. Stewart TR, Ogle DH, Gorman OT, Vinson MR.  2016.  Age, Growth, and Size of Lake Superior Pygmy Whitefish (*Prosopium coulterii*).  American Midland Naturalist 175:24-36. [Abstract](http://www.bioone.org/doi/10.1674/amid-175-01-24-36.1).  [Age Comparisons, von Bertalanffy Growth, Weight-Length]
+1. Tarkan AS, Vilizzi L.  2016.  A re-assessment of the growth index for quantifying growth in length of fish with application to Roach, *Rutilus rutilus* (L., 1758).  Journal of Limnology and Freshwater Fisheries Research 2:49-58.  [PDF](http://scholar.google.com/scholar_url?url=http://www.limnofish.org/article/download/5000127509/5000163990&hl=en&sa=X&scisig=AAGBfm2aCE3ZOH8I5CRXS40YGWKezUigDQ&nossl=1&oi=scholaralrt).  [von Bertalanffy Growth]
 
 -----
 <p style="text-align: center;"><a href="exposure-citations15.html">Goto 2015 citations</a></p>

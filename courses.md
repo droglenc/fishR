@@ -4,7 +4,8 @@ title: Learn R!
 ---
 
 ## Upcoming Courses
-* *Age and Growth Analyses with R* — 146th Annual Meeting of the American Fisheries Society, Kansas City, MO; TBD August 2016
+* *Introduction to R and Statistics with Fisheries Examples*, Iqaluit, Nunavut, Canada; 6-9 August 2016
+* *Age and Growth Analyses with R* — 146th Annual Meeting of the American Fisheries Society, Kansas City, MO; 20 August 2016; [Announcement](http://2016.fisheries.org/continuing-education-workshops/)
 
 ## Past Courses (*materials may be out-of-date*)
 * [*Introduction to R using the FM Database (Redux)*](http://derekogle.com/RcourseWiDNR2016/) — Wisconsin DNR, Wisconsin Dells, WI; 8 Mar 2016

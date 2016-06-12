@@ -1,0 +1,90 @@
+---
+layout: post
+title: Exploring the Half-Life Property of K
+date: "June 12, 2016"
+tags: [R, Growth, von Bertalanffy]
+---
+```{r eval=FALSE, echo=FALSE}
+## FOR COMPILING FOR THE WEBSITE
+## Make sure to setwd to source file location
+source("rmd2md.R")
+rmd2md("2016-6-12-Halflife-of-K")
+```
+
+```{r setup, echo=FALSE, results='hide'}
+library(knitr)
+opts_chunk$set(dev="png",tidy=FALSE,fig.width=4,fig.height=4,par1=TRUE)
+```
+
+----
+
+A colleague recently questioned whether the $\frac{log_{e}(2)}{K}$, where $K$ is the Brody growth coefficient in the typical parameterization of the von Bertalanffy growth function, represents the "amount of time it takes for a fish to grow from any length to a length halfway between the initial length and $L_{\infty}$".  This phenomenon is briefly illustrated below.
+
+- Create an R function for the typical von Bertalanffy growth function.
+
+```{r message=FALSE}
+library(FSA)
+vb <- vbFuns()
+```
+
+- Declare some parameter values.
+
+```{r}
+Linf <- 30
+K <- 0.3
+t0 <- -0.5
+```
+
+- Predict a mean length at the initial age.
+
+```{r}
+initA <- 1
+( initL <- vb(initA,Linf,K,t0) )
+```
+
+- Predict a mean length at the initial age plus $\frac{log_{e}(2)}{K}$.
+
+```{r}
+nextA <- initA+log(2)/K
+( nextL <- vb(nextA,Linf,K,t0) )
+```
+
+- Find the length that is halfway between the initial length and $L_{\infty}$.
+
+```{r}
+mean(c(initL,Linf))
+```
+
+Note that these last two values are equal, which illustrates the statement above about the "half-life" meaning of $K$.
+
+----
+
+This process is repeated below for several initial age values.  Note that the differences between the predicted mean length at the new age and the point halfway between the initial length and $L_{\infty}$ are equal (within machine precision) for each initial age.  Again, illustrating the statement about $K$.
+
+```{r}
+initA <- 1:20
+initL <- vb(initA,Linf,K,t0)
+nextA <- initA+log(2)/K
+nextL <- vb(nextA,Linf,K,t0)
+testL <- rowMeans(cbind(initL,Linf))
+cbind(nextL,testL,diff=nextL-testL)
+```
+
+----
+
+The code below illustrates the same phenomenon for a very different set of parameter values.
+
+```{r}
+Linf <- 300
+K <- 0.9
+t0 <- 1
+initA <- 1:20
+initL <- vb(initA,Linf,K,t0)
+nextA <- initA+log(2)/K
+nextL <- vb(nextA,Linf,K,t0)
+testL <- rowMeans(cbind(initL,Linf))
+cbind(nextL,testL,diff=nextL-testL)
+```
+
+
+----

@@ -2,7 +2,7 @@
 layout: post
 title: Exploring the Half-Life Property of K
 date: "June 12, 2016"
-tags: [R, Growth, von Bertalanffy]
+tags: [R, Growth, von_Bertalanffy]
 ---
 
 
@@ -10,7 +10,7 @@ tags: [R, Growth, von Bertalanffy]
 
 ----
 
-A colleague recently questioned whether the $\frac{log_{e}(2)}{K}$, where $K$ is the Brody growth coefficient in the typical parameterization of the von Bertalanffy growth function, represents the "amount of time it takes for a fish to grow from any length to a length halfway between the initial length and $L_{\infty}$".  This phenomenon is briefly illustrated below.
+A colleague recently questioned whether the loge(2)/K, where K is the Brody growth coefficient in the typical parameterization of the von Bertalanffy growth function, represents the "amount of time it takes for a fish to grow from any length to a length halfway between the initial length and the asymptotic mean length (Linf)".  This phenomenon is briefly illustrated below.
 
 - Create an R function for the typical von Bertalanffy growth function.
 
@@ -43,7 +43,7 @@ initA <- 1
 ## [1] 10.87116
 {% endhighlight %}
 
-- Predict a mean length at the initial age plus $\frac{log_{e}(2)}{K}$.
+- Predict a mean length at the initial age plus loge(2)/K.
 
 
 {% highlight r %}
@@ -57,7 +57,7 @@ nextA <- initA+log(2)/K
 ## [1] 20.43558
 {% endhighlight %}
 
-- Find the length that is halfway between the initial length and $L_{\infty}$.
+- Find the length that is halfway between the initial length and Linf.
 
 
 {% highlight r %}
@@ -70,11 +70,11 @@ mean(c(initL,Linf))
 ## [1] 20.43558
 {% endhighlight %}
 
-Note that these last two values are equal, which illustrates the statement above about the "half-life" meaning of $K$.
+Note that these last two values are equal, which illustrates the statement above about the "half-life" meaning of K.
 
 ----
 
-This process is repeated below for several initial age values.  Note that the differences between the predicted mean length at the new age and the point halfway between the initial length and $L_{\infty}$ are equal (within machine precision) for each initial age.  Again, illustrating the statement about $K$.
+This process is repeated below for several initial age values.  Note that the differences between the predicted mean length at the new age and the point halfway between the initial length and Linf are equal (within machine precision) for each initial age.  Again, illustrating the statement about K.
 
 
 {% highlight r %}

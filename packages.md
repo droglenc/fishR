@@ -25,7 +25,7 @@ The following are instructions to install packages from within various ways to i
 * [FLR: Fisheries Library in R](http://www.flr-project.org/index.html)
 * [fishmethods: Fisheries Methods and Models in R](https://cran.r-project.org/web/packages/fishmethods/index.html)
 * [fishdynr: Fisheries Science Related Population Dynamics Models](https://github.com/marchtaylor/fishdynr#readme)
-* [TropFishR](https://cran.r-project.org/web/packages/TropFishR/index.html) -- *collection of fisheries models based on the the FAO Manual "Introduction to tropical fish stock assessment" by P. Sparre and S.C. Venema.  Focus is the analysis of length-frequency data and data poor fisheries.*
+* [TropFishR: Tropical Fisheries Analysis with R](https://cran.r-project.org/web/packages/TropFishR/index.html) -- *collection of fisheries models based on the the FAO Manual "Introduction to tropical fish stock assessment" by P. Sparre and S.C. Venema.  Focus is the analysis of length-frequency data and data poor fisheries.*
 
 
 ----

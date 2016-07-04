@@ -50,7 +50,7 @@ The following are instructions to install packages from within various ways to i
 * [simecol](http://simecol.r-forge.r-project.org/) -- *implementation of dynamic simulation models*
 * [skewtools](http://cran.r-project.org/web/packages/skewtools/) -- *estimation of growth models parameters using the robust ECME method via heteroscedastic nonlinear regression growth model with scale mixture of skew-normal distributions*
 * [ss3sim](https://cran.r-project.org/web/packages/ss3sim/index.html) -- *framework for fisheries stock assessment simulation testing with Stock Synthesis 3*
-* [TropFishR](https://github.com/tokami/TropFishR) -- *collection of fisheries models based on the the FAO Manual "Introduction to tropical fish stock assessment" by P.Sparre and S.C. Venema.*
+* [TropFishR](https://cran.r-project.org/web/packages/TropFishR/index.html) -- *collection of fisheries models based on the the FAO Manual "Introduction to tropical fish stock assessment" by P.Sparre and S.C. Venema.  Focus is the analysis of length-frequency data and data poor fisheries.*
 * [VMSBase](http://www.vmsbase.org/) -- *vessel monitoring system and logbook data management and analysis*
 * [X2R with FishGraph](https://cran.r-project.org/contrib/extra/x2r/00ReadMe-X2R.html) -- *import the structured output from a given numerical model written in a compiled language (e.g., ADMB, fortran) into R for postprocessing (graphing, further analysis)*
 

@@ -5,8 +5,9 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">17</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">18</span> publications.
 
+1. Barkalow SLC, Brandenburg MA, Platania SP, Kennedy JL.  2016.  Reproductive ecoogy and early life history of Bluehead Sucker and Flannelmouth Sucker in the San Juan River.  Final Report to New Mexico Department of Game and Fish.  [Full Text](http://www.wildlife.state.nm.us/download/conservation/share-with-wildlife/reports/2015/Reproductive-Ecology-and-Early-Life-History-of-Bluehead-Sucker-and-Flannelmouth-Sucker-in-San-Juan-River-_-American-Southwest-Ichthyological.pdf) [Growth]
 1. Barreto RR, de Farias WKT, Andrade H, Santana FM, Lessa R.  2016.  Age, growth and spatial distribution of the life stages of the Shortfin Mako, *Isurus oxyrinchus* (Rafinesque, 1810) caught in the Western and Central Atlantic.  PLoS ONE 11(4):e0153062.  [Full Text](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0153062) [Age-Length Key]
 1. Bokhutlo T, Weyl OLF, Mosepele K, Wilson GG.  2016.  Influence of the annual flood-pulse on catch per unit effort, condition and reproduction of *Clarias gariepinus* from the upper Okavango Delta, Botswana.  African Journal of Aquatic Science ##:##-##. [Abstract](http://www.tandfonline.com/doi/abs/10.2989/16085914.2016.1138279) [??]
 1. Buhariwalla CF, MacMillan JL, Gregoire MJ, Dadswell MJ Stoksebury MJW.  2016.  Population characteristics of Striped Bass killed by cold shock during winter shutdown of a power plant in Nova Scotia.  Northeastern Naturalist 23:163-173.  [Abstract](http://www.bioone.org/doi/abs/10.1656/045.023.0113) [Weight-Length Relationships]

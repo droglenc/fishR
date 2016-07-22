@@ -5,7 +5,7 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">20</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">21</span> publications.
 
 1. Allen BE.  2016.  Growth, mortality, and genetic structure: Effects of harvest and management s
 trategies on Walleye (*Sander vitreus*) populations in Alberta, Canada.  Master's Thesis, Univ. Calgary.  [Full Text](http://theses.ucalgary.ca/jspui/bitstream/11023/3004/3/ucalgary_2016_allen_brandon.pdf) [Age-Length Key, Mortality]
@@ -25,6 +25,7 @@ trategies on Walleye (*Sander vitreus*) populations in Alberta, Canada.  Master'
 1. Romero-Caicedo AF, Galván-Magaña F, Hernández-Herrera A, Carrera-Fernández M.  2016. Reproductive parameters of the Pacific angel shark *Squatina californica* (Selachii: Squatinidae).  Journal of Fish Biology. doi:10.1111/jfb.12920.  [Abstract](http://onlinelibrary.wiley.com/doi/10.1111/jfb.12920/full) [Weight-Length, Maturity]
 1. Smart JJ, Chin A, Baje L, Green ME, Appleyard SA, Tobin AJ, Simpfendorfer CA, White WT.  2016.  Effects of including misidentified sharks in life history analyses: A case study on the Grey Reef Shark *Carcharhinus amblyrhynchos* from Papua New Guinea. PLoS ONE 11(4): e0153116. [Full Text](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0153116) [Age Comparisons]
 1. Soares de Santana H, Rodrigues AC, Dei Tos C.  2016.  Patterns of reproduction and growth of the catfish *Iheringichthys labrosus* (Lütken, 1874) after a reservoir formation.  Journal of Applied Ichthyology XX:XXX-XXX.  [Abstract](http://onlinelibrary.wiley.com/doi/10.1111/jai.13059/abstract;jsessionid=55A28F85C697F3BE7C4F8720364F8D77.f04t04) [von Bertalanffy Growth]
+1. Stanescu F, Marangoni F, Reinko I, Cogalniceanu D.  2016.  Life history traits of a Neotropical microhylid (*Dermatonotus muelleri*, Boettger 1885) from the Arid Chaco, Argentina.  Herpetological Journal 26:41-48.  [Full Text](http://www.ingentaconnect.com/content/bhs/thj/2016/00000026/00000001/art00006?crawler=true) [von Bertalanffy Growth]
 1. Staub NL.  2016.  The age of Plethodontid salamanders: A short review on longevity.  Copeia 2016:118-123. [Abstract](http://www.asihcopeiaonline.org/doi/abs/10.1643/OT-14-200) [von Bertalanffy Growth] 
 1. Stewart TR, Ogle DH, Gorman OT, Vinson MR.  2016.  Age, Growth, and Size of Lake Superior Pygmy Whitefish (*Prosopium coulterii*).  American Midland Naturalist 175:24-36. [Abstract](http://www.bioone.org/doi/10.1674/amid-175-01-24-36.1).  [Age Comparisons, von Bertalanffy Growth, Weight-Length]
 1. Tarkan AS, Vilizzi L.  2016.  A re-assessment of the growth index for quantifying growth in length of fish with application to Roach, *Rutilus rutilus* (L., 1758).  Journal of Limnology and Freshwater Fisheries Research 2:49-58.  [PDF](http://scholar.google.com/scholar_url?url=http://www.limnofish.org/article/download/5000127509/5000163990&hl=en&sa=X&scisig=AAGBfm2aCE3ZOH8I5CRXS40YGWKezUigDQ&nossl=1&oi=scholaralrt).  [von Bertalanffy Growth]

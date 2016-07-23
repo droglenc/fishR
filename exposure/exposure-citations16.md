@@ -5,7 +5,7 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">21</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">22</span> publications.
 
 1. Allen BE.  2016.  Growth, mortality, and genetic structure: Effects of harvest and management s
 trategies on Walleye (*Sander vitreus*) populations in Alberta, Canada.  Master's Thesis, Univ. Calgary.  [Full Text](http://theses.ucalgary.ca/jspui/bitstream/11023/3004/3/ucalgary_2016_allen_brandon.pdf) [Age-Length Key, Mortality]
@@ -29,6 +29,7 @@ trategies on Walleye (*Sander vitreus*) populations in Alberta, Canada.  Master'
 1. Staub NL.  2016.  The age of Plethodontid salamanders: A short review on longevity.  Copeia 2016:118-123. [Abstract](http://www.asihcopeiaonline.org/doi/abs/10.1643/OT-14-200) [von Bertalanffy Growth] 
 1. Stewart TR, Ogle DH, Gorman OT, Vinson MR.  2016.  Age, Growth, and Size of Lake Superior Pygmy Whitefish (*Prosopium coulterii*).  American Midland Naturalist 175:24-36. [Abstract](http://www.bioone.org/doi/10.1674/amid-175-01-24-36.1).  [Age Comparisons, von Bertalanffy Growth, Weight-Length]
 1. Tarkan AS, Vilizzi L.  2016.  A re-assessment of the growth index for quantifying growth in length of fish with application to Roach, *Rutilus rutilus* (L., 1758).  Journal of Limnology and Freshwater Fisheries Research 2:49-58.  [PDF](http://scholar.google.com/scholar_url?url=http://www.limnofish.org/article/download/5000127509/5000163990&hl=en&sa=X&scisig=AAGBfm2aCE3ZOH8I5CRXS40YGWKezUigDQ&nossl=1&oi=scholaralrt).  [von Bertalanffy Growth]
+1. Yerli SV, Korkmaz M, Mangit F.  2016.  Length-length and length-weight relationships for four endemic Cyprinid species in Kucuk Menderes River Basin, Turkey.  Journal of Applied Ichthyology.  XX:XXX-XXX.  [Abstract](http://onlinelibrary.wiley.com/doi/10.1111/jai.13133/abstract) [XXX]
 
 -----
 <p style="text-align: center;"><a href="exposure-citations15.html">Goto 2015 citations</a></p>

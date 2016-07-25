@@ -558,3 +558,13 @@ table tr th :last-child,
 table tr td :last-child {
   margin-bottom: 0;
 }
+
+
+/* --- Fixes problem related to header and internal anchor --- */
+/* --- from https://www.itsupportguides.com/tech-tips-tricks/how-to-offset-anchor-tag-link-using-css/ --- */
+:target:before {
+content:"";
+display:block;
+height:100px; /* fixed header height*/
+margin:-100px 0 0; /* negative fixed header height */
+}

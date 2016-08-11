@@ -5,12 +5,13 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">22</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">23</span> publications.
 
 1. Allen BE.  2016.  Growth, mortality, and genetic structure: Effects of harvest and management s
 trategies on Walleye (*Sander vitreus*) populations in Alberta, Canada.  Master's Thesis, Univ. Calgary.  [Full Text](http://theses.ucalgary.ca/jspui/bitstream/11023/3004/3/ucalgary_2016_allen_brandon.pdf) [Age-Length Key, Mortality]
 1. Barkalow SLC, Brandenburg MA, Platania SP, Kennedy JL.  2016.  Reproductive ecoogy and early life history of Bluehead Sucker and Flannelmouth Sucker in the San Juan River.  Final Report to New Mexico Department of Game and Fish.  [Full Text](http://www.wildlife.state.nm.us/download/conservation/share-with-wildlife/reports/2015/Reproductive-Ecology-and-Early-Life-History-of-Bluehead-Sucker-and-Flannelmouth-Sucker-in-San-Juan-River-_-American-Southwest-Ichthyological.pdf) [Growth]
 1. Barreto RR, de Farias WKT, Andrade H, Santana FM, Lessa R.  2016.  Age, growth and spatial distribution of the life stages of the Shortfin Mako, *Isurus oxyrinchus* (Rafinesque, 1810) caught in the Western and Central Atlantic.  PLoS ONE 11(4):e0153062.  [Full Text](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0153062) [Age-Length Key]
+1. Bazzichettoa M, Malavasi M, Acosta ATR, Carranza ML.  2016.  How does dune morphology shape coastal EC habitats occurrence? A remote sensing approach using airborne LiDAR on the Mediterranean coast.  Ecological Indicators 71:618-626.  [Abstract](http://www.sciencedirect.com/science/article/pii/S1470160X16304435) [Dunn Test]
 1. Bokhutlo T, Weyl OLF, Mosepele K, Wilson GG.  2016.  Influence of the annual flood-pulse on catch per unit effort, condition and reproduction of *Clarias gariepinus* from the upper Okavango Delta, Botswana.  African Journal of Aquatic Science ##:##-##. [Abstract](http://www.tandfonline.com/doi/abs/10.2989/16085914.2016.1138279) [??]
 1. Buhariwalla CF, MacMillan JL, Gregoire MJ, Dadswell MJ Stoksebury MJW.  2016.  Population characteristics of Striped Bass killed by cold shock during winter shutdown of a power plant in Nova Scotia.  Northeastern Naturalist 23:163-173.  [Abstract](http://www.bioone.org/doi/abs/10.1656/045.023.0113) [Weight-Length Relationships]
 1. Chiotti JA, Boase JC, Hondorp DW, Briggs AS.  Assigning Sex and Reproductive Stage to Adult Lake Sturgeon using Ultrasonography and Common Morphological Measurements.  North American Journal of Fisheries Management 36:21-29.  [Abstract](http://www.tandfonline.com/doi/abs/10.1080/02755947.2015.1103823).  [Age bias plot for sex comparisons]

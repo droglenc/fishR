@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Pauly *et al.* (1992) Seasonal Cessation in Growth Model
+title: Pauly et al. (1992) Seasonal Cessation in Growth Model
 date: "October 11, 2016"
 tags: [R, Growth, von_Bertalanffy, Seasonal]
 csl: ../american-fisheries-society.csl

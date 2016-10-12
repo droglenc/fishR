@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Ages and lengths of Eastern Mosquitofish from ten locations...</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="aaaStyleSheet.css" />
+</head><body>
+
+<table width="100%" summary="page for Mosquitofish {FSAdata}"><tr><td>Mosquitofish {FSAdata}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Ages and lengths of Eastern Mosquitofish from ten locations from southern France to southern Spain.</h2>
+
+<h3>Description</h3>
+
+<p>Ages and lengths of Eastern Mosquitofish (<em>Gambusia holbrooki</em>) from ten locations from southern France to southern Spain.</p>
+
+
+<h3>Format</h3>
+
+<p>A data frame with the following 8 variables:</p>
+
+<ul>
+<li>site: Site (as a name) of capture.</li>
+<li>sitenum: Site (as a number) of capture.</li>
+<li>day: Day of capture.</li>
+<li>month: Month of capture.</li>
+<li>year: Year of capture.</li>
+<li>sl: Standard length (to nearest 0.01 cm).</li>
+<li>age: Age in integer years.</li>
+<li>age2: Age in decimal years.</li>
+</ul>
+
+
+<h3>Topic(s)</h3>
+
+
+<ul>
+<li> Growth</li>
+<li> Seasonal Growth</li>
+<li> von Bertalanffy </li>
+<li> Somers model</li>
+</ul>
+
+
+
+<h3>Source</h3>
+
+<p>From figure 3 of Carmona-Catot, G., A.F.G.N. Santos, P.A. Tedesco, and E. Garcia-Berthou. 2014. Quantifying seasonality along a latitudinal gradient: From stream temperature to growth of invasive mosquitofish. Ecosphere 5:134.</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+data(Mosquitofish)
+str(Mosquitofish)
+head(Mosquitofish)
+plot(sl~age2,data=Mosquitofish)
+
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>FSAdata</em> version 0.3.5 ]</div>
+</body></html>

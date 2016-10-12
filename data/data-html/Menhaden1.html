@@ -38,11 +38,6 @@
 
 
 
-<h3>Source</h3>
-
-<p>From Table 2 in Vaughan, D.S., K.W. Shertzer, and J.W. Smith.  2007.  Gulf menhaden (<em>Brevoortia patronus</em>) in the U.S. Gulf of Mexico: Fishery characteristics and biological reference points for management.  Fisheries Research 83:263-275.  [Was (is?) from http://menhaden.gsmfc.org/FishRes_Vaughan_etal_2007-GM.pdf.]</p>
-
-
 <h3>Examples</h3>
 
 <pre>
@@ -53,7 +48,8 @@ ages &lt;- 0:6
 # Extract one year, delete year column (the -1), and transpose to be a vector
 ct &lt;- t(Menhaden1[Menhaden1$year==1974,-1])
 plot(ct~ages,pch=16,type="b",xlab="Age",ylab="Est. Catch (Millions)",main="year==1974")
+
 </pre>
 
-<hr /><div style="text-align: center;">[Package <em>FSAdata</em> version 0.3.2 ]</div>
+<hr /><div style="text-align: center;">[Package <em>FSAdata</em> version 0.3.5 ]</div>
 </body></html>

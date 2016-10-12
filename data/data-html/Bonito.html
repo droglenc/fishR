@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Ages and lengths of Australian Bonito.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="aaaStyleSheet.css" />
+</head><body>
+
+<table width="100%" summary="page for Bonito {FSAdata}"><tr><td>Bonito {FSAdata}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Ages and lengths of Australian Bonito.</h2>
+
+<h3>Description</h3>
+
+<p>Ages and lengths of Australian Bonito (<em>Sarda australis</em>).</p>
+
+
+<h3>Format</h3>
+
+<p>A data frame with the following 3 variables:</p>
+
+<ul>
+<li>sex: Sex (<code>Female</code>, <code>Juvenile</code>, <code>Male</code>).</li>
+<li>age: Age in decimal years.</li>
+<li>fl: Total length (to nearest 0.1 cm).</li>
+</ul>
+
+
+<h3>Topic(s)</h3>
+
+
+<ul>
+<li> Growth</li>
+<li> Seasonal Growth</li>
+<li> von Bertalanffy </li>
+<li> Somers model</li>
+</ul>
+
+
+
+<h3>Source</h3>
+
+<p>From figure 3 of Stewart, J., W. Robbins, K. Rowling, A. Hegarty, and A. Gould. 2013. A multifaceted approach to modelling growth of the Australian bonito, <em>Sarda australis</em> (Family Scombridae), with some observations on its reproductive biology. Marine and Freshwater Research 64:671-678.</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+data(Bonito)
+str(Bonito)
+head(Bonito)
+plot(fl~age,data=Bonito)
+
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>FSAdata</em> version 0.3.5 ]</div>
+</body></html>

@@ -17,11 +17,16 @@
 <p>A data frame with 159 observations on the following 5 variables.</p>
 
 <ul>
-<li>date: Date fish was collected</li>
-<li>length: Total length (cm)</li>
-<li>age: Otolith age</li>
-<li>maturity: Maturity state (<code>Immature</code> or <code>Mature</code>)</li>
-<li>stage: Stage of maturity (<code>1</code>:Immature, <code>2</code>:Maturing, <code>3</code>:Mature, <code>4</code>:Fertilized, <code>5</code>:Ripe, <code>6</code>:Spent, <code>7</code>:Resting</li>
+<li>date: Date fish was collected</p>
+</dd> 
+<li>length: Total length (cm)</p>
+</dd> 
+<li>age: Otolith age</p>
+</dd> 
+<li>maturity: Maturity state (<code>Immature</code> or <code>Mature</code>)</p>
+</dd> 
+<li>stage: Stage of maturity (<code>1</code>:Immature, <code>2</code>:Maturing, <code>3</code>:Mature, <code>4</code>:Fertilized, <code>5</code>:Ripe, <code>6</code>:Spent, <code>7</code>:Resting)</p>
+</dd> 
 </ul>
 
 
@@ -31,7 +36,7 @@
 <ul>
 <li> Growth</li>
 <li> Maturity</li>
-<li> von Bertalanffy</li>
+<li> von Bertalanffy </li>
 </ul>
 
 
@@ -57,7 +62,8 @@ tbl2 &lt;- with(YERockfish,table(length,maturity))
 (ptbl2 &lt;- prop.table(tbl2,margin=1))
 plot(ptbl2[,2]~as.numeric(row.names(ptbl2)),type="l",xlab="Age",ylab="Proportion Mature")
 par(op)
+
 </pre>
 
-<hr /><div style="text-align: center;">[Package <em>FSAdata</em> version 0.3.2 ]</div>
+<hr /><div style="text-align: center;">[Package <em>FSAdata</em> version 0.3.5 ]</div>
 </body></html>

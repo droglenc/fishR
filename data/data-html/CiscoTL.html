@@ -18,19 +18,21 @@
 
 <ul>
 <li>lakeid: Lake name (all <code>TR</code>=Trout Lake)</li>
-<li>year4: Year of capture</li>
+<li>year4: Year of capture</p>
+</dd> 
 <li>sampledate: Date of capture</li>
 <li>gearid: Capture gear type</li>
 <li>spname: Species name (all <code>CISCO</code>)</li>
 <li>length: Total length (nearest mm) at capture</li>
-<li>weight: Weight (nearest 0.1 or 1 g) at capture</li>
+<li>weight: Weight (nearest 0.1 or 1 g) at capture</p>
+</dd> 
 <li>sex: Sex (<code>F</code>=Female, <code>I</code>=Immature, <code>M</code>=Male)</li>
 </ul>
 
 
 <h3>Topic(s)</h3>
 
-
+ 
 <ul>
 <li> Weight-Length</li>
 <li> Length Frequency</li>
@@ -54,7 +56,8 @@ plot(weight~length,data=CiscoTL,subset=sex=="F",main="Female")
 plot(weight~length,data=CiscoTL,subset=sex=="M",main="Male")
 plot(weight~length,data=CiscoTL,subset=sex=="I",main="Immature")
 par(op)
+
 </pre>
 
-<hr /><div style="text-align: center;">[Package <em>FSAdata</em> version 0.3.2 ]</div>
+<hr /><div style="text-align: center;">[Package <em>FSAdata</em> version 0.3.5 ]</div>
 </body></html>

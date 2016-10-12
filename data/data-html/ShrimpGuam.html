@@ -17,10 +17,14 @@
 <p>A data frame with 15 observations on the following 4 variables.</p>
 
 <ul>
-<li>day: Day of the catch.  Day 9 is 9-Jan-1984.</li>
-<li>standard: Catch (kg) of of Shrimp in the standard traps.</li>
-<li>pyramid: Catch (kg) of of Shrimp in the pyramid traps.</li>
-<li>effort: Total effort (trap-nights) for the standard traps.</li>
+<li>day: Day of the catch.  Day 9 is 9-Jan-1984.</p>
+</dd> 
+<li>standard: Catch (kg) of of Shrimp in the standard traps.</p>
+</dd> 
+<li>pyramid: Catch (kg) of of Shrimp in the pyramid traps.</p>
+</dd> 
+<li>effort: Total effort (trap-nights) for the standard traps.</p>
+</dd> 
 </ul>
 
 
@@ -34,11 +38,11 @@
 
 
 <ul>
-<li> Population size</li>
-<li> Abundance</li>
+<li> Population size </li>
+<li> Abundance </li>
 <li> Depletion methods</li>
 <li> Leslie method</li>
-<li> DeLury method</li>
+<li> DeLury method </li>
 <li> Catchability</li>
 </ul>
 
@@ -63,7 +67,8 @@ ShrimpGuam$CPE &lt;- ShrimpGuam$standard/ShrimpGuam$effort
 ShrimpGuam$total &lt;- ShrimpGuam$standard+ShrimpGuam$pyramid
 # Cumulative catch in both traps (with the Ricker modification)
 ShrimpGuam$cumCatch &lt;- cumsum(ShrimpGuam$total)-ShrimpGuam$total/2
+
 </pre>
 
-<hr /><div style="text-align: center;">[Package <em>FSAdata</em> version 0.3.2 ]</div>
+<hr /><div style="text-align: center;">[Package <em>FSAdata</em> version 0.3.5 ]</div>
 </body></html>

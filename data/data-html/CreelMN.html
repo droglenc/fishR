@@ -18,7 +18,8 @@
 
 <ul>
 <li>species: species of fish that was targeted.</li>
-<li>harvest: number of fish of that species harvested by one angler.</li>
+<li>harvest: number of fish of that species harvested by one angler.</p>
+</dd> 
 </ul>
 
 
@@ -54,21 +55,22 @@ levels(CreelMN$species)
   op &lt;- par(mfrow=c(1,2),mar=c(3.5,3.5,0.5,0.5),mgp=c(2,0.5,0))
   barplot(waeptbl,xlab="Number of Walleye Harvested",ylab="Percentage of Individuals")
   barplot(waercum,xlab="Minimum Number of Walleye Harvested",ylab="Percentage of Individuals")
-  par(op)
-  ( ttlwae &lt;- sum(wae$harvest) )
-  wae$svd5 &lt;- wae$harvest-5             # Used to determine the number of fish
+  par(op)       
+  ( ttlwae &lt;- sum(wae$harvest) )                 
+  wae$svd5 &lt;- wae$harvest-5             # Used to determine the number of fish                
   xtabs(~svd5,data=wae)                 #   saved if limit was reduced to 5.
   ( svd5 &lt;- sum(wae$svd5[wae$svd5&gt;0]) ) #   Only sum positive numbers (i.e., saved)
   round(svd5/ttlwae*100,1)              # Show as a percentage
 
-  wae$svd1 &lt;- wae$harvest-1             # same but if reduced to 1 bag.
+  wae$svd1 &lt;- wae$harvest-1             # same but if reduced to 1 bag.    
   xtabs(~svd1,data=wae)
   ( svd1 &lt;- sum(wae$svd1[wae$svd1&gt;0]) )
   round(svd1/ttlwae*100,1)
 
 
 ## End(Not run)
+
 </pre>
 
-<hr /><div style="text-align: center;">[Package <em>FSAdata</em> version 0.3.2 ]</div>
+<hr /><div style="text-align: center;">[Package <em>FSAdata</em> version 0.3.5 ]</div>
 </body></html>

@@ -5,7 +5,7 @@ title: "Fisheries Data by Package"
 
 <!-- This is meant to be run with aaaCompile.R, not as a standalone -->
 
-Fisheries-related data sets in the **FSA** (v0.8.4), **FSAdata** (v0.3.2), and **fishmethods** (v1.9.0) packages are listed below by package.  The data sets in **FSA** and **FSAdata** may be viewed with ![view](../img/view.png), downloaded (as a CSV file) with ![download](../img/download.png), and the meta-information documentation may be viewed with ![documentation](../img/details.png).
+Fisheries-related data sets in the **FSA** (v0.8.11), **FSAdata** (v0.3.5), and **fishmethods** (v1.10.0) packages are listed below by package.  The data sets in **FSA** and **FSAdata** may be viewed with ![view](../img/view.png), downloaded (as a CSV file) with ![download](../img/download.png), and the meta-information documentation may be viewed with ![documentation](../img/details.png).
 
 ----
 
@@ -41,8 +41,10 @@ Fisheries-related data sets in the **FSA** (v0.8.4), **FSAdata** (v0.3.2), and *
 * **BlueCatfish** -- [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/BlueCatfish.csv)  [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/BlueCatfish.csv)  [![documentation](../img/details.png)](data-html/BlueCatfish.html) -- *Ages and lengths of Blue Catfish.*
 * **BlueCrab** -- [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/BlueCrab.csv)  [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/BlueCrab.csv)  [![documentation](../img/details.png)](data-html/BlueCrab.html) -- *Catch and effort data for male Blue Crabs.*
 * **BluefishAge** -- [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/BluefishAge.csv)  [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/BluefishAge.csv)  [![documentation](../img/details.png)](data-html/BluefishAge.html) -- *Ages of Bluefish assigned from otoliths by two readers.*
+* **BluegillIL** -- [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/BluegillIL.csv)  [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/BluegillIL.csv)  [![documentation](../img/details.png)](data-html/BluegillIL.html) -- *Length-at-marking and recapture and time-at-large of Bluegill.*
 * **BluegillLM** -- [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/BluegillLM.csv)  [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/BluegillLM.csv)  [![documentation](../img/details.png)](data-html/BluegillLM.html) -- *Lengths and weights for Bluegill from Lake Mary, MN.*
 * **BluntnoseIL1** -- [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/BluntnoseIL1.csv)  [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/BluntnoseIL1.csv)  [![documentation](../img/details.png)](data-html/BluntnoseIL1.html) -- *Subampled lengths of Bluntnose Minnows from Inch Lake, WI.*
+* **Bonito** -- [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/Bonito.csv)  [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/Bonito.csv)  [![documentation](../img/details.png)](data-html/Bonito.html) -- *Ages and lengths of Australian Bonito.*
 * **BrookTroutNC** -- [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/BrookTroutNC.csv)  [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/BrookTroutNC.csv)  [![documentation](../img/details.png)](data-html/BrookTroutNC.html) -- *Stock and recruitment data for Brook Trout from Ball Creek, NC, 1991-2004.*
 * **BrookTroutNEWP** -- [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/BrookTroutNEWP.csv)  [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/BrookTroutNEWP.csv)  [![documentation](../img/details.png)](data-html/BrookTroutNEWP.html) -- *Catches in removal events for Brook Trout in the Nashwaak Experimental Watersheds Project.*
 * **BrookTroutNEWP1** -- [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/BrookTroutNEWP1.csv)  [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/BrookTroutNEWP1.csv)  [![documentation](../img/details.png)](data-html/BrookTroutNEWP1.html) -- *Catches in removal events for Brook Trout in the Nashwaak Experimental Watersheds Project.*
@@ -102,6 +104,7 @@ Fisheries-related data sets in the **FSA** (v0.8.4), **FSAdata** (v0.3.2), and *
 * **Morwong3** -- [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/Morwong3.csv)  [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/Morwong3.csv)  [![documentation](../img/details.png)](data-html/Morwong3.html) -- *Ages of Morwong assigned from otoliths by two readers.*
 * **Morwong4** -- [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/Morwong4.csv)  [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/Morwong4.csv)  [![documentation](../img/details.png)](data-html/Morwong4.html) -- *Ages and lengths of Morwong.*
 * **Morwong4a** -- [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/Morwong4a.csv)  [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/Morwong4a.csv)  [![documentation](../img/details.png)](data-html/Morwong4a.html) -- *Ages (subsample) and lengths (all fish) for Morwong from Morwong4.*
+* **Mosquitofish** -- [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/Mosquitofish.csv)  [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/Mosquitofish.csv)  [![documentation](../img/details.png)](data-html/Mosquitofish.html) -- *Ages and lengths of Eastern Mosquitofish from ten locations from southern France to southern Spain.*
 * **MulletBS** -- [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/MulletBS.csv)  [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/MulletBS.csv)  [![documentation](../img/details.png)](data-html/MulletBS.html) -- *Ages of Red Mullet assigned from whole and broken-burnt otoliths.*
 * **MuskieSLR** -- [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/MuskieSLR.csv)  [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/MuskieSLR.csv)  [![documentation](../img/details.png)](data-html/MuskieSLR.html) -- *Ages of Muskellunge assigned from scales and cleithra.*
 * **MuskieWI06MR** -- [![view](../img/view.png)](https://github.com/droglenc/FSAdata/blob/master/data-raw/MuskieWI06MR.csv)  [![download](../img/download.png)](https://raw.githubusercontent.com/droglenc/FSAdata/master/data-raw/MuskieWI06MR.csv)  [![documentation](../img/details.png)](data-html/MuskieWI06MR.html) -- *Summarized mark-recapture data for Muskellunge from many Wisconsin Lakes, 2006.*
@@ -198,6 +201,7 @@ Fisheries-related data sets in the **FSA** (v0.8.4), **FSAdata** (v0.3.2), and *
 ## fishmethods
 
 * **Gerking** -- *Mark-Recapture Data for Sunfish in an Indiana Lake*
+* **Hightower** -- *Original data used in Hightower et al. (2001)*
 * **Hoenig** -- *Tag Data from Hoenig et al. (1998)*
 * **Jensen** -- *Age Frequency Data for Lake Whitefish By Individual Haul*
 * **Jiang** -- *Tag Data from Jiang (2005)*
@@ -220,7 +224,9 @@ Fisheries-related data sets in the **FSA** (v0.8.4), **FSAdata** (v0.3.2), and *
 * **nshrimp** -- *Data for Gulf of Maine northern shrimp*
 * **pinfish** -- *Length, age and sex data for pinfish (Lagodon rhomboides) from Tampa Bay, Florida*
 * **rockbass** -- *Age Frequency Data for Rock Bass*
+* **sblen** -- *Total length (inches) of striped bass collected by Massachusetts volunteer anglers in 2014*
 * **sbotos** -- *Otolith ages of striped bass made by two age readers*
 * **tanaka** -- *Simulated alfonsino data for Tanaka (2006*
+* **trout** -- *Mark-recapture data for Kenai River trout trout*
 * **wolffish** -- *Spring untransformed mean catch per tow for wolffish (Anarhichas lupus)*
 * **yellowtail** -- *Fall average catch per tow for southern New England yellowtail flounder*

@@ -9,7 +9,7 @@
 
 <h3>Description</h3>
 
-<p>Lengths and weights for Yellow Perch <em>Perca flavescens</em> from Trout Lake, WI, 1981-2006.  Fish were collected with a variety of gears.</p>
+<p>Lengths and weights for Yellow Perch (<em>Perca flavescens</em>) from Trout Lake, WI, 1981-2006.  Fish were collected with a variety of gears.</p>
 
 
 <h3>Format</h3>
@@ -18,12 +18,14 @@
 
 <ul>
 <li>lakeid: Lake name (all <code>TR</code>=Trout Lake)</li>
-<li>year4: Year of capture</li>
+<li>year4: Year of capture</p>
+</dd> 
 <li>sampledate: Date of capture</li>
-<li>gearid: Capture gear type</li>
+<li>gearid: Capture gear type &ndash; beach seine (<code>BSEINE</code>), crayfish trap (<code>CRAYTR</code>), electrofishing (<code>ELFISH</code>), fyke net (<code>FYKNET</code>), trammel net (<code>TRAMML</code>), vertical gillnets of different mesh sizes (<code>VBN0XX</code>), and different types of fyke nets (<code>FYKNED</code> and <code>FYKNEL</code>)</li>
 <li>spname: Species name (all <code>YELLOWPERCH</code>)</li>
 <li>length: Total Length (nearest mm) at capture</li>
-<li>weight: Weight (nearest 0.1 or 1 g) at capture</li>
+<li>weight: Weight (nearest 0.1 or 1 g) at capture</p>
+</dd> 
 </ul>
 
 
@@ -51,7 +53,8 @@ data(YPerchTL)
 str(YPerchTL)
 head(YPerchTL)
 plot(weight~length,data=YPerchTL)
+
 </pre>
 
-<hr /><div style="text-align: center;">[Package <em>FSAdata</em> version 0.3.2 ]</div>
+<hr /><div style="text-align: center;">[Package <em>FSAdata</em> version 0.3.5 ]</div>
 </body></html>

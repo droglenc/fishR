@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Length-at-marking and recapture and time-at-large of...</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="aaaStyleSheet.css" />
+</head><body>
+
+<table width="100%" summary="page for BluegillIL {FSAdata}"><tr><td>BluegillIL {FSAdata}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Length-at-marking and recapture and time-at-large of Bluegill.</h2>
+
+<h3>Description</h3>
+
+<p>Length-at-marking and recapture and time-at-large for Bluegill (<em>Lepomis macrochirus</em>) originally captured in Spring 2010 from Inch Lake, Wisconsin.</p>
+
+
+<h3>Format</h3>
+
+<p>A data frame with 61 observations on the following 5 variables:</p>
+
+<ul>
+<li>tag: Unique Floy tag number.</li>
+<li>Lm: length (mm) at tagging.</li>
+<li>Lr: Length (mm) at recapture.</li>
+<li>dL: Change in length (mm).</li>
+<li>dt: Time-at-large (yrs).</p>
+</dd> 
+</ul>
+
+
+<h3>Topic(s)</h3>
+
+
+<ul>
+<li> Growth </li>
+<li> von Bertalanffy </li>
+<li> Fabens method </li>
+</ul>
+
+
+
+<h3>Source</h3>
+
+<p>These unpublished data are from Derek H. Ogle, Northland College.  <b>Do not use for other than educational purposes without permission from the source.</b></p>
+
+
+<h3>Examples</h3>
+
+<pre>
+data(BluegillIL)
+str(BluegillIL)
+head(BluegillIL)
+plot((Lr-Lm)~dt,data=BluegillIL)
+
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>FSAdata</em> version 0.3.5 ]</div>
+</body></html>

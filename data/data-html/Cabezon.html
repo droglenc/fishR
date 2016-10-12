@@ -17,11 +17,15 @@
 <p>A data frame with 525 observations on the following 5 variables.</p>
 
 <ul>
-<li>date: Date fish was collected</li>
-<li>length: Total length (cm)</li>
-<li>age: Otolith age</li>
-<li>maturity: Maturity state (Immature or Mature)</li>
-<li>stage: Stage of maturity (1:Immature, 2:Maturing, 3:Mature, 4:Fertilized, 5:Ripe, 6:Spent, 7:Resting</li>
+<li>date: Date fish was collected</p>
+</dd> 
+<li>length: Total length (cm)</p>
+</dd> 
+<li>age: Otolith age</p>
+</dd> 
+<li>maturity: Maturity state (<code>Immature</code> or <code>Mature</code>)</p>
+</dd> 
+<li>stage: Stage of maturity (<code>1</code>:Immature, <code>2</code>:Maturing, <code>3</code>:Mature, <code>4</code>:Fertilized, <code>5</code>:Ripe, <code>6</code>:Spent, <code>7</code>:Resting)</li>
 </ul>
 
 
@@ -29,9 +33,9 @@
 
 
 <ul>
-<li> Maturity</li>
-<li> Growth</li>
-<li> von Bertalanffy</li>
+<li> Maturity </li>
+<li> Growth </li>
+<li> von Bertalanffy </li>
 </ul>
 
 
@@ -57,7 +61,8 @@ tbl2 &lt;- xtabs(~length+maturity,data=Cabezon)
 (ptbl2 &lt;- prop.table(tbl2,margin=1))
 plot(ptbl2[,2]~as.numeric(row.names(ptbl2)),type="l",xlab="Length",ylab="Proportion Mature")
 par(op)
+
 </pre>
 
-<hr /><div style="text-align: center;">[Package <em>FSAdata</em> version 0.3.2 ]</div>
+<hr /><div style="text-align: center;">[Package <em>FSAdata</em> version 0.3.5 ]</div>
 </body></html>

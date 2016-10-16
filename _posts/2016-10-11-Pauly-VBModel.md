@@ -4,17 +4,9 @@ title: Pauly et al. (1992) Seasonal Cessation in Growth Model
 date: "October 11, 2016"
 tags: [R, Growth, von_Bertalanffy, Seasonal]
 ---
-```{r eval=FALSE, echo=FALSE}
-## FOR COMPILING FOR THE WEBSITE
-## Make sure to setwd to source file location
-source("rmd2md.R")
-rmd2md("2016-10-11-Pauly-VBModel")
-```
 
-```{r setup, echo=FALSE, results='hide'}
-library(knitr)
-opts_chunk$set(dev="png",tidy=FALSE,fig.width=4,fig.height=4,par1=TRUE)
-```
+
+
 
 ----
 

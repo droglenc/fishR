@@ -116,28 +116,19 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Pauly <em>et al.</em> (1992) Seasonal Cessation in Growth Model</h1>
+<h1 class="title toc-ignore">Pauly et al. (1992) Seasonal Cessation in Growth Model</h1>
 <h4 class="date"><em>October 11, 2016</em></h4>
 
 </div>
 
 
 <hr />
-<p>I recently published a technical note in <em>Fisheries Research</em> that described an algorithm for implementing the “seasonal cessation in growth model” of <span class="citation">Pauly et al. (1992)</span>. Describing an algorithm for a growth model does not seem like a useful contribution to the literature, as fitting growth models is pretty standard fare for fisheries scientists. However, fitting the <span class="citation">Pauly et al. (1992)</span> model is complicated by the fact that the age data is modified by model parameters. This too may not seem particularly interesting given that <span class="math inline">\(t_{0}\)</span> in the typical von Bertalanffy growth function (VBGF) also modifies the age variable (i.e., <span class="math inline">\(age-t_{0}\)</span> appears in the VBGF equation). However, the modification of age in the <span class="citation">Pauly et al. (1992)</span> model is a shift AND a compression of the age variable, AND the degree of shift and compression is a function of age. This is different, and more complicated, than the simple shift along the age axis in the typical VBGF.</p>
-<p>As I demonstrate in my note, the <span class="citation">Pauly et al. (1992)</span> model has, for all practical purposes, not been used in the fisheries literature. I believe that this lack of use is largely attributable to lack of clarity in how to implement the model in computer code.<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a> My hope is that the algorithm in my note will clarify the implementation of this model. Fisheries scientists can then rigorously test whether this model provides any advantage over other growth models with a seasonal component.</p>
+<p>I recently published a technical note in <em>Fisheries Research</em> that described an algorithm for implementing the “seasonal cessation in growth model” of Pauly <em>et al.</em> (1992). Describing an algorithm for a growth model does not seem like a useful contribution to the literature, as fitting growth models is pretty standard fare for fisheries scientists. However, fitting the Pauly <em>et al.</em> (1992) model is complicated by the fact that the age data is modified by model parameters. This too may not seem particularly interesting given that <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAZABkAAD/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8QEBEQCgwSExIQEw8QEBD/wAALCAARABIBAREA/8QAFwAAAwEAAAAAAAAAAAAAAAAAAAcIBv/EACYQAAEEAgIBAwUBAAAAAAAAAAIBAwQFBgcAERIIMTITFBYXISL/2gAIAQEAAD8AsD1R59uyo2npzXeoMfhzTvLqTcTPq5Edb97Gr4rpvQ3VCO74METsclc/12SAHh0SkjhjbPxisl4/imwsnxPG83vorbreOLkDLr7jpJ0QRkcRpySKF2KGLSd9eye3NlxJbT1ptuZvPDNy62/ErRqgorKhkVWRTZMMWEmPxnDlx3WGXvJ3xjI2oGKCqL8kX2Q2751PAi+o/Xd+6x+zc6vKp/Aoxj3Ls2kr69qsOEPycGNOakk4oCqNEhmf8LyW5uHDhz//2Q==" alt="t_0" /> in the typical von Bertalanffy growth function (VBGF) also modifies the age variable (i.e., <em>age-</em> <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAZABkAAD/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8QEBEQCgwSExIQEw8QEBD/wAALCAARABIBAREA/8QAFwAAAwEAAAAAAAAAAAAAAAAAAAcIBv/EACYQAAEEAgIBAwUBAAAAAAAAAAIBAwQFBgcAERIIMTITFBYXISL/2gAIAQEAAD8AsD1R59uyo2npzXeoMfhzTvLqTcTPq5Edb97Gr4rpvQ3VCO74METsclc/12SAHh0SkjhjbPxisl4/imwsnxPG83vorbreOLkDLr7jpJ0QRkcRpySKF2KGLSd9eye3NlxJbT1ptuZvPDNy62/ErRqgorKhkVWRTZMMWEmPxnDlx3WGXvJ3xjI2oGKCqL8kX2Q2751PAi+o/Xd+6x+zc6vKp/Aoxj3Ls2kr69qsOEPycGNOakk4oCqNEhmf8LyW5uHDhz//2Q==" alt="t_0" /> appears in the VBGF equation). However, the modification of age in the Pauly <em>et al.</em> (1992) model is a shift AND a compression of the age variable, AND the degree of shift and compression is a function of age. This is different, and more complicated, than the simple shift along the age axis in the typical VBGF.</p>
+<p>As I demonstrate in my note, the Pauly <em>et al.</em> (1992) model has, for all practical purposes, not been used in the fisheries literature. I believe that this lack of use is largely attributable to lack of clarity in how to implement the model in computer code. [<em>Note that Pauly </em>et al.* (1992) did provide a brief description of their model, but not a detailed description of how the age variable was adjusted, and computer software for fitting their model, though that software, and its source code, have long been lost.*] My hope is that the algorithm in my note will clarify the implementation of this model. Fisheries scientists can then rigorously test whether this model provides any advantage over other growth models with a seasonal component.</p>
 <p>The <a href="http://derekogle.com/resources/pubs/Ogle_2017_PaulyetalModel.pdf">paper is available here</a> and full <a href="http://derekogle.com/resources/pubs/SeasonalGrowth_Analysis.R">R code is available here</a>. Implementation of the algorithm depends on my <strong>FSA</strong> package, which is available on CRAN. Please let me know what you think.</p>
 <hr />
-<div id="refs" class="references">
-<div id="ref-Paulyetal1992">
 <p>Pauly, D., M. Soriano-Bartz, J. Moreau, and A. Jarre-Teichmann. 1992. A new model accounting for seasonal cessation of growth in fishes. Australian Journal of Marine and Freshwater Research 43:1151–1156.</p>
-</div>
-</div>
-<div class="footnotes">
 <hr />
-<ol>
-<li id="fn1"><p><em>Note that <span class="citation">Pauly et al. (1992)</span> did provide a brief description of their model, but not a detailed description of how the age variable was adjusted, and computer software for fitting their model, though that software, and its source code, have long been lost.</em><a href="#fnref1">↩</a></p></li>
-</ol>
-</div>
 
 
 

@@ -8,7 +8,7 @@ fishR.Rproj
 .Rhistory
 
 ## Html files in the posts (left over from testing how the md files will look)
-_posts/*.html
+#_posts/*.html
 
 ## Intermediate files in the old fishR vignettes
 examples/oldFishRVignettes/*.bbl

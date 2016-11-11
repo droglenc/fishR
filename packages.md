@@ -79,6 +79,7 @@ The following are instructions to install packages from within various ways to i
 * [CARE1](https://cran.r-project.org/web/packages/CARE1/index.html)
 * [dga](https://cran.r-project.org/web/packages/dga/index.html)
 * [estimateN](http://www.kent.ac.uk/smsas/personal/msr/estimateN.html)
+* [IRATER](https://cran.r-project.org/web/packages/IRATER/index.html)
 * [lllcrc](https://cran.r-project.org/web/packages/lllcrc/index.html)
 * [SCRbayes](https://sites.google.com/site/spatialcapturerecapture/scrbayes-r-package)
 

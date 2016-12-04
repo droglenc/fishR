@@ -5,7 +5,7 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">31</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">32</span> publications.
 
 1. Allen BE.  2016.  Growth, mortality, and genetic structure: Effects of harvest and management s
 trategies on Walleye (*Sander vitreus*) populations in Alberta, Canada.  Master's Thesis, Univ. Calgary.  [Full Text](http://theses.ucalgary.ca/jspui/bitstream/11023/3004/3/ucalgary_2016_allen_brandon.pdf) [Age-Length Key, Mortality]
@@ -39,6 +39,7 @@ trategies on Walleye (*Sander vitreus*) populations in Alberta, Canada.  Master'
 1. Tarkan AS, Vilizzi L.  2016.  A re-assessment of the growth index for quantifying growth in length of fish with application to Roach, *Rutilus rutilus* (L., 1758).  Journal of Limnology and Freshwater Fisheries Research 2:49-58.  [PDF](http://scholar.google.com/scholar_url?url=http://www.limnofish.org/article/download/5000127509/5000163990&hl=en&sa=X&scisig=AAGBfm2aCE3ZOH8I5CRXS40YGWKezUigDQ&nossl=1&oi=scholaralrt).  [von Bertalanffy Growth]
 1. Thiem JD, Wooden IJ, Baumgartner LJ, Butler GL, Forbes JP, Conallin J.  Recovery from a fish kill in a semi-arid Australian river: Can stocking augment natural recruitment processes?  Austral Ecology XX:XXX-XXX.  [Abstract](http://onlinelibrary.wiley.com/doi/10.1111/aec.12424/full)  [Kolmogorov-Smirnov Test]
 1. Usseglio P, Friedlander AM, Koike H, Zimmerhackel J, Schuhbauer A, Eddy T, Salinas-de-Leon P. 2016. So long and thanks for all the fish: Overexploitation of the regionally endemic Galapagos Grouper *Mycteroperca olfax* (Jenyns, 1840). PLOS ONE 11.10 (2016): e0165167. [Full Text](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0165167) [Mortality - Chapman-Robson]
+1. Winfield IJ. 2016. Book review: Introductory Fisheries Analyses with R. Journal of Fish Biology 89:2468-2469. [Full Text](http://derekogle.com/IFAR/reviews/Winfield-2016-Journal_of_Fish_Biology.pdf) [Book Review] 
 1. Winter ER. 2016. The phenology of seaward migration of juvenile brown trout (Salmo trutta) in two European populations. MSc. Thesis, Durham University. [Full Text](http://etheses.dur.ac.uk/11544) [Depletion]
 1. Yerli SV, Korkmaz M, Mangit F.  2016.  Length-length and length-weight relationships for four endemic Cyprinid species in Kucuk Menderes River Basin, Turkey.  Journal of Applied Ichthyology.  XX:XXX-XXX.  [Abstract](http://onlinelibrary.wiley.com/doi/10.1111/jai.13133/abstract) [XXX]
 

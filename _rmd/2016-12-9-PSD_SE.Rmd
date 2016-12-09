@@ -1,0 +1,67 @@
+---
+layout: post
+title: Computing SE for PSD indices
+date: "December 9, 2016"
+tags: [R, PSD, Size_Structure]
+---
+```{r eval=FALSE, echo=FALSE}
+## FOR COMPILING FOR THE WEBSITE
+## Make sure to setwd to source file location
+source("rmd2md.R")
+rmd2md("2016-12-9-PSD_SE")
+```
+
+```{r setup, echo=FALSE, results='hide'}
+library(knitr)
+opts_chunk$set(dev="png",tidy=FALSE,fig.width=4,fig.height=4,par1=TRUE)
+```
+
+----
+
+A user of my [Introductory Fisheries Analyses with R book](http://derekogle.com/IFAR/) recently asked me how to compute standard errors (SE) for the various PSD indices by using the usual equation for the SE of a proportion (square root of p times (1-p) divided by n). Below is my response using the [Inch Lake data](http://derekogle.com/IFAR/scripts/InchLake1113.csv) from the book.
+
+- Load required packages.
+```{r results='hide', message=FALSE}
+library(FSA)
+library(magrittr)
+library(dplyr)
+```
+
+- Load (and prepare) the Inch Lake data used in the Size Structure chapter of the book (this and next step is from [this script](http://derekogle.com/IFAR/scripts/SizeStructure.R)).
+```{r}
+inchAlls <- read.csv("http://derekogle.com/IFAR/scripts/InchLake1113.csv") %>%
+  mutate(gcat=psdAdd(tl,species)) %>%
+  filterD(gcat!="substock")
+```
+
+- Compute the PSD-X values.
+```{r}
+( freq <- xtabs(~species+gcat,data=inchAlls) )
+iPSDs <- prop.table(freq,margin=1)*100
+( PSDs <- t(apply(iPSDs,MARGIN=1,FUN=rcumsum)) )
+```
+
+- Compute the row sums for the `freq` table to get the total number of fish (that are stock size or greater).  These will be n in the SE calculations.
+```{r}
+( sums <- rowSums(freq) )
+```
+
+- Compute the SE for PSD-Q.
+```{r}
+SEs <- sqrt(PSDs[,"quality"]*(100-iPSDs[,"quality"])/sums)
+round(SEs,1)
+```
+
+- Repeat for other size indices.  For example, for PSD-P.
+```{r}
+SEs <- sqrt(PSDs[,"preferred"]*(100-iPSDs[,"preferred"])/sums)
+round(SEs,1)
+```
+
+Note that the SE formula is usually used for proportions (and then multiplied by 100 to get a SE for percentages).  However, it can also be shown algebraically to be useful for percentages.
+
+----
+
+I would caution against using these standard errors to produce confidence intervals for the PSD-X values.  If confidence intervals are the end-product for this analysis, then I suggest using the methods described in my book.
+
+----

@@ -5,7 +5,6 @@ title: Learn R!
 
 ## Upcoming Courses
 * *Basic Abundance Estimation with R (TENTATIVE)* -- Annual Meeting of the Western Divison of the American Fisheries Society, Missoula, MT; 22 May 2017.
-* *Age and Growth Analyses with R (TENTATIVE)* — 147th Annual Meeting of the American Fisheries Society, Tampa, FL; 20 August 2017; [Announcement](http://2016.fisheries.org/continuing-education-workshops/)
 * *R for Fisheries Population Dynamics (TENTATIVE)* -- Student Symposium; Boise, ID; November 2017.
 
 ## Past Courses (*materials may be out-of-date*)

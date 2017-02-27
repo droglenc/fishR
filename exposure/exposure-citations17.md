@@ -5,8 +5,9 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">6</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">7</span> publications.
 
+1. Carim KJ, Vindenes Y, Eby LA, Barfoot C, Vollestad LA. 2017. Life history, population viability, and the potential for local adaptation in isolated trout populations. Global Ecology and Conservation 10:93-102. [Full Text](http://www.sciencedirect.com/science/article/pii/S2351989416301457). [???]
 1. de Santana HS, Minte-Vera CV. 2017. Age and growth of *Prochilodus lineatus* in a spatially structured population: is there concordance between otoliths and scales? Environmental Biology of Fish XX:XXX-XXX.  [Abstract](http://link.springer.com/article/10.1007/s10641-017-0574-5). [Back-Calculation]
 1. **Ogle DH.**  2017.  An algorithm for the von Bertalanffy seasonal cessation in growth function of Pauly et al. (1992).  Fisheries Research 185:1-7.  [Full Text](http://www.sciencedirect.com/science/article/pii/S0165783616303137).  [Seasonal von Bertalanffy]
 1. Ploetz RC, Konkol JL, Perez-Martinez JM, Fernandez R. 2017. Management of laurel wilt of avocado, caused by *Raffaelea lauricola*. European Journal of Plant Pathology XX:XXX-XXX. [Abstract](http://link.springer.com/article/10.1007/s10658-017-1173-1) [???]

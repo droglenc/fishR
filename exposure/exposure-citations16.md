@@ -5,7 +5,7 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">33</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">34</span> publications.
 
 1. Allen BE.  2016.  Growth, mortality, and genetic structure: Effects of harvest and management s
 trategies on Walleye (*Sander vitreus*) populations in Alberta, Canada.  Master's Thesis, Univ. Calgary.  [Full Text](http://theses.ucalgary.ca/jspui/bitstream/11023/3004/3/ucalgary_2016_allen_brandon.pdf) [Age-Length Key, Mortality]
@@ -32,6 +32,7 @@ trategies on Walleye (*Sander vitreus*) populations in Alberta, Canada.  Master'
 1. Olson AD, Martin TH.  2016.  Life History Traits of the Mirror Shiner, *Notropis spectrunculus*, in Western North Carolina.  Southeastern Naturalist 15:102-114.  [Abstract](http://www.bioone.org/doi/abs/10.1656/058.015.0108) [Von Bertalanffy Growth]
 1. Quelle P, Rodriquez-Martin E, Ruiz M, Arrizabalaga H. 2016. Age-Length keys availability for Atlantic Bluefin tuna captured in the Eastern management area. Working paper. [PDF](https://www.researchgate.net/publication/311724863_Age-Length_keys_avilability_for_Atlantic_Bluefin_tuna_captured_in_the_Eastern_management_area) [von Bertalanffy Growth]
 1. Romero-Caicedo AF, Galván-Magaña F, Hernández-Herrera A, Carrera-Fernández M.  2016. Reproductive parameters of the Pacific angel shark *Squatina californica* (Selachii: Squatinidae).  Journal of Fish Biology. doi:10.1111/jfb.12920.  [Abstract](http://onlinelibrary.wiley.com/doi/10.1111/jfb.12920/full) [Weight-Length, Maturity]
+1. Schlick CJC. 2016. Life history traits and population dynamics of River Herring, Alewife *Alosa pseudoharengus* and Blueback Herring *Alosa aestivalis* in Potomac River Tributaries. Dissertation, George Mason University. [PDF](http://search.proquest.com/openview/f8cdd1beebe188b4751776c58611a79e/1?pq-origsite=gscholar&cbl=18750&diss=y). [???]
 1. Smart JJ, Chin A, Baje L, Green ME, Appleyard SA, Tobin AJ, Simpfendorfer CA, White WT.  2016.  Effects of including misidentified sharks in life history analyses: A case study on the Grey Reef Shark *Carcharhinus amblyrhynchos* from Papua New Guinea. PLoS ONE 11(4): e0153116. [Full Text](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0153116) [Age Comparisons]
 1. Soares de Santana H, Rodrigues AC, Dei Tos C.  2016.  Patterns of reproduction and growth of the catfish *Iheringichthys labrosus* (Lütken, 1874) after a reservoir formation.  Journal of Applied Ichthyology XX:XXX-XXX.  [Abstract](http://onlinelibrary.wiley.com/doi/10.1111/jai.13059/abstract;jsessionid=55A28F85C697F3BE7C4F8720364F8D77.f04t04) [von Bertalanffy Growth]
 1. Stanescu F, Marangoni F, Reinko I, Cogalniceanu D.  2016.  Life history traits of a Neotropical microhylid (*Dermatonotus muelleri*, Boettger 1885) from the Arid Chaco, Argentina.  Herpetological Journal 26:41-48.  [Full Text](http://www.ingentaconnect.com/content/bhs/thj/2016/00000026/00000001/art00006?crawler=true) [von Bertalanffy Growth]

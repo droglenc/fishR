@@ -5,10 +5,11 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">13</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">14</span> publications.
 
 1. Beaty J., Chen Y. 2017. Can back-calculated lengths based on otoliths measuremetns provide reliable estimates of Atlantic halibut (*Hippoglossus hippoglossus*) growth in the Gulf of Maine (U.S.A.). Aquaculture and Fisheries XX:XXX-XXX. [Full Text](http://www.sciencedirect.com/science/article/pii/S2468550X17300023). [von Bertalanffy Growth]
 1. Carim KJ, Vindenes Y, Eby LA, Barfoot C, Vollestad LA. 2017. Life history, population viability, and the potential for local adaptation in isolated trout populations. Global Ecology and Conservation 10:93-102. [Full Text](http://www.sciencedirect.com/science/article/pii/S2351989416301457). [???]
+1. Capelle JJ, van Stralen MR, Wijsman JWM, Herman PMJ, Smaal AC. 2017. Population dynamics of subtidal blue mussels *Mytilus edulis* and the impact of cultivation. Aquaculture Environment Interactions 9:155-168. [Full Text](http://www.int-res.com/articles/aei2017/9/q009p155.pdf) [Seasonal von Bertalanffy Growth]
 1. Cogalniceanu D, Bancila RI, Plaiasu R, Rosioru D, Merila J. 2017. Small-scale spatial and temporal variation of life-history traits of common frogs (*Rana temporaria*) in sub-Arctic Finland. Polar Biology XX:XXX-XXX. [Abstract](http://link.springer.com/article/10.1007/s00300-017-2081-8). [von Bertalanffy Growth]
 1. Coulson PG, Hall NG, Potter IC. 2017. Variations in biological characteristics of temperate gonochoristic species of Platycephalidae and their implications: A review. Estuarine, Coastal and Shelf Science XX:XXX-XXX. [Abstract](http://www.sciencedirect.com/science/article/pii/S0272771416307740). [XXX]
 1. de Santana HS, Minte-Vera CV. 2017. Age and growth of *Prochilodus lineatus* in a spatially structured population: is there concordance between otoliths and scales? Environmental Biology of Fish XX:XXX-XXX.  [Abstract](http://link.springer.com/article/10.1007/s10641-017-0574-5). [Back-Calculation]

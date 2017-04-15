@@ -142,6 +142,30 @@ Let me know if you have other ideas for how these age bias plots could be modifi
 
 ----
 
+### UPDATES 1 (14-Apr-17)
+
+One Twitter follower said: "I think open and closed symbols say all that is needed about 95% confidence limits. Just show mean, range, and 1:1 line." It took some modifications to do this, but there is now a `show.CI=` argument that will turn off the confidence intervals when set to `FALSE`. In addition, the user can now control the color and line width of the range bars with `col.range=` and `lwd.range=`. I decided not to color code the mean symbol or range bar for significance because I felt that that would be misleading (i.e., the user would view the "interval" as a confidence interval rather than a range interval). However, the mean symbol still represents a significant difference. Below is one example of this type of plot (don't forget to ask for the range bars with `show.range=TRUE`). This might become my preference.
+
+{% highlight r %}
+plot(ab1,show.CI=FALSE,show.range=TRUE,col.range="black",
+     difference=TRUE,xHist=TRUE,yHist=TRUE)
+{% endhighlight %}
+
+![plot of chunk ABHansenMod](http://derekogle.com/fishR/figures/ABHansenMod-1.png)
+
+Another Twitter follower said: "Add border to outside of plot? Fill histogram bars or outline with same color as mean and CI intervals?" I tried the second request but did not like the look. Even that simple change in color or outlining seemed to clutter the plot, especially as it only reinforced the ages where a difference was detected. The first request can be accomplished by using `box()` following construction of the age bias plot. Just make sure to include `which="figure"`.
+
+{% highlight r %}
+plot(ab1,show.CI=FALSE,show.range=TRUE,col.range="black",
+     difference=TRUE,xHist=TRUE,yHist=TRUE)
+box(which="figure")
+{% endhighlight %}
+
+![plot of chunk ABVandergoot](http://derekogle.com/fishR/figures/ABVandergoot-1.png)
+
+
+----
+
 ### References
 
 * Campana, S.E., M.C. Annand, and J.I. McMillan. 1995. [Graphical and statistical methods for determining the consistency of age determinations.](https://www.researchgate.net/profile/Steven_Campana/publication/254328508_Graphical_and_Statistical_Methods_for_Determining_the_Consistency_of_Age_Determinations/links/546a55d20cf20dedafd386b5.pdf) Transactions of the American Fisheries Society 124:131-138.

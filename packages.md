@@ -22,7 +22,7 @@ The following are instructions to install packages from within various ways to i
 ## General Packages
 * [FSA: Fisheries Stock Assessment](https://github.com/droglenc/FSA#readme)
     * [FSAdata: Data for FSA](https://github.com/droglenc/FSAdata#readme)
-* [DLMtool: Data-Limited Methods Toolkit] -- *Implementation of management procedures for data-limited fisheries.*
+* [DLMtool: Data-Limited Methods Toolkit](https://cran.r-project.org/web/packages/DLMtool/index.html) -- *Implementation of management procedures for data-limited fisheries*
 * [fishmethods: Fisheries Methods and Models in R](https://cran.r-project.org/web/packages/fishmethods/index.html)
 * [fishdynr: Fisheries Science Related Population Dynamics Models](https://github.com/marchtaylor/fishdynr#readme)
 * [FLR: Fisheries Library in R](http://www.flr-project.org/index.html)
@@ -41,7 +41,7 @@ The following are instructions to install packages from within various ways to i
 * [fishmove](https://cran.r-project.org/web/packages/fishmove/index.html) -- *predict fish movement parameters*
 * [hafroAssmt](http://hafroassmt.r-forge.r-project.org/) -- *fisheries stock assessment at Hafro, the Marine Research Institute in Iceland*
 * [kobe](https://cran.r-project.org/web/packages/kobe/index.html) -- *methods for summarising results from stock assessments and Management Strategy Evaluations in the Kobe format*
-* [LBSPR: Length-Based Spawning Potential Ratio] -- *Simulate expected equilibrium length composition, YPR, and SPR using the LBSPR model. Fit the LBSPR model to length data to estimate selectivity, relative fishing mortality, and spawning potential ratio for data-limited fisheries*.
+* [LBSPR: Length-Based Spawning Potential Ratio](https://cran.r-project.org/web/packages/LBSPR/index.html) -- *Simulate expected equilibrium length composition, YPR, and SPR using the LBSPR model. Fit the LBSPR model to length data to estimate selectivity, relative fishing mortality, and spawning potential ratio for data-limited fisheries.*
 * [mapplots](https://cran.r-project.org/web/packages/mapplots/index.html) -- *Create simple maps; add sub-plots like pie plots to a map or any other plot; format, plot and export gridded data*
 * [mixdist](http://ms.mcmaster.ca/peter/mix/mix.html) -- *fit mixture distributions — e.g., possibly separating age-classes from a length frequency*
 * [mizer](https://cran.r-project.org/web/packages/mizer/index.html) -- *multispecies, trait based and community size spectrum ecological models, focussed on the marine environment*  See [Introduction to mizer](https://cran.r-project.org/web/packages/mizer/vignettes/mizer_vignette.pdf)
@@ -101,6 +101,7 @@ The following are instructions to install packages from within various ways to i
 * [glmtools](https://github.com/USGS-R/glmtools) -- *Tools for interacting with the [General Lake Model](http://aed.see.uwa.edu.au/research/models/GLM/) in R*
 * [LakeMetabolizer](https://github.com/GLEON/LakeMetabolizer) -- *collection of lake metabolism functions*
 * [rLakeAnalyzer](https://github.com/GLEON/rLakeAnalyzer) -- *standardized methods for calculating common important derived physical features of lakes*
+* [waterData](https://cran.r-project.org/web/packages/waterData/index.html) -- *Imports U.S. Geological Survey (USGS) daily hydrologic data from USGS web services, plots the data, addresses some common data problems, and calculates and plots anomalies*
 
 ----
 
@@ -114,4 +115,4 @@ The following are instructions to install packages from within various ways to i
 * [FishyR](https://github.com/ballengerj/FishyR)
 * [fsap](http://sourceforge.net/projects/fsap/)
 * [ichthyoanalysis](http://sourceforge.net/projects/ichthyoanalysis/)
-* [s6model](https://github.com/alko989/s6model) -- Data-poor fish stock assessment using the single species, size structured, steady state model.
+* [s6model](https://github.com/alko989/s6model) -- Data-poor fish stock assessment using the single species, size structured, steady state model

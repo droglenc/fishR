@@ -5,7 +5,7 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">17</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">19</span> publications.
 
 1. Beaty J., Chen Y. 2017. Can back-calculated lengths based on otoliths measuremetns provide reliable estimates of Atlantic halibut (*Hippoglossus hippoglossus*) growth in the Gulf of Maine (U.S.A.). Aquaculture and Fisheries XX:XXX-XXX. [Full Text](http://www.sciencedirect.com/science/article/pii/S2468550X17300023). [von Bertalanffy Growth]
 1. Carim KJ, Vindenes Y, Eby LA, Barfoot C, Vollestad LA. 2017. Life history, population viability, and the potential for local adaptation in isolated trout populations. Global Ecology and Conservation 10:93-102. [Full Text](http://www.sciencedirect.com/science/article/pii/S2351989416301457). [???]
@@ -17,6 +17,7 @@ The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA
 1. Merciai R, Molons-Sierra C, Sabater S, García-Berthou E. 2017. Water abstraction affects abundance, size-structure and growth of two threatened cyprinid fishes. PLoS ONE 12(4): e0175932. [Full Text](https://doi.org/10.1371/journal.pone.0175932) [Age Comparisons]
 1. Mildenberger TK, Taylor MH, Wolff M. 2017. TropFishR: an R package for fisheries analysis with length-frequency data. Methods in Ecology and Evolution. XX:XXX-XXX [Full Text](http://onlinelibrary.wiley.com/doi/10.1111/2041-210X.12791/epdf) [General]
 1. Moore MJ, Hallerman EM, Orth DJ. 2017. Densities and Population Sizes of Clinch Dace *Chrosomus* sp. cf. *saylori* in the Upper Clinch River Basin in Virginia. Copeia 105:92-99. [Abstract](http://www.bioone.org/doi/abs/10.1643/CI-16-506) [Mark-Recapture Abundance??]
+1. Neves A, Vieira AR, Sequeira V, Paiva RB, Gordo LS. 2017. Modelling the growth of a protogynous sparid species, *Spondyliosoma cantharus* (Teleostei: Sparidae). Hydrobiologia XX:XXX-XXX. [Full Text](http://link.springer.com/article/10.1007/s10750-017-3188-1) [von Bertalanffy Growth, Mortality]
 1. **Ogle DH.**  2017.  An algorithm for the von Bertalanffy seasonal cessation in growth function of Pauly et al. (1992).  Fisheries Research 185:1-7.  [Full Text](http://www.sciencedirect.com/science/article/pii/S0165783616303137).  [Seasonal von Bertalanffy]
 1. Ploetz RC, Konkol JL, Perez-Martinez JM, Fernandez R. 2017. Management of laurel wilt of avocado, caused by *Raffaelea lauricola*. European Journal of Plant Pathology XX:XXX-XXX. [Abstract](http://link.springer.com/article/10.1007/s10658-017-1173-1) [???]
 1. Reyes A. 2017. The state of Brant Lake, & Brant Lake management plan. Occasional Paper No. 53, State University of New York at Oneonta. [PDF](http://www.oneonta.edu/academics/biofld/PUBS/OP/OP-53-Reyes-BrantLake.pdf) [Size Structure Analysis]
@@ -24,6 +25,7 @@ The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA
 Species Caught in Indo-Pacific Fisheries. Dissertation, James Cook University. [Full Text](https://www.researchgate.net/profile/Jonathan_Smart/publication/315382513_Life_history_and_demographic_modelling_of_shark_species_caught_in_Indo-Pacific_fisheries/links/58cf595492851c374e170527/Life-history-and-demographic-modelling-of-shark-species-caught-in-Indo-Pacific-fisheries.pdf). [Age Comparisons -- Bias and Precision]
 1. Smart JJ, Chin A, Baje L, Tobin AJ, Simpfendorfer CA, White WT. 2017. Life history of the silvertip shark *Carcharhinus albimarginatus* from Papua New Guinea. Coral Reefs XX:XXX-XXX. [Abstract](http://link.springer.com/article/10.1007/s00338-016-1533-x). [???]
 1. Usseglio P, Selwyn JD, Downey-Wall AM, Hogan JD. 2017. Effectiveness of removals of the invasive lionfish: how many dives are needed to deplete a reef? PeerJ 5:e3043. [Full Text](https://peerj.com/articles/3043/). [Depletion Methods]
+1. Ventura D, Bonhomme V, Colangelo P, Bonifazi A, Lasinio GJ, Ardizzone G. 2017. Does morphology predict trophic niche differentiation? Relationship between feeding habits and body shape in four co-occurring juvenile species (Pisces: Perciformes, Sparidae). Estuarine, Coastal and Shelf Science 191:84-95. [Abstract](http://www.sciencedirect.com/science/article/pii/S0272771416306175) [Length-Weight?]
 1. Vicenzi S, Mangel M, Jesensek D, Garza JC, Crivelli AJ. 2017. Genetic and life-history consequences of extreme climate events. Proceedings of  the Royal Society B: Biological Sciences  XX:XXX-XXX. [Abstract](http://rspb.royalsocietypublishing.org/content/284/1848/20162118) [???]
 
 -----

@@ -45,8 +45,10 @@ The following are instructions to install packages from within various ways to i
 * [mapplots](https://cran.r-project.org/web/packages/mapplots/index.html) -- *Create simple maps; add sub-plots like pie plots to a map or any other plot; format, plot and export gridded data*
 * [mixdist](http://ms.mcmaster.ca/peter/mix/mix.html) -- *fit mixture distributions — e.g., possibly separating age-classes from a length frequency*
 * [mizer](https://cran.r-project.org/web/packages/mizer/index.html) -- *multispecies, trait based and community size spectrum ecological models, focussed on the marine environment*  See [Introduction to mizer](https://cran.r-project.org/web/packages/mizer/vignettes/mizer_vignette.pdf)
+* [oceanmap](https://cran.r-project.org/web/packages/oceanmap/index.html) -- *Plotting toolbox for 2D oceanographic data*
 * [PBSmapping](https://cran.r-project.org/web/packages/PBSmapping/) -- *two-dimensional plotting features similar to those commonly available in a Geographic Information System*
 * [PBSmodelling](https://cran.r-project.org/web/packages/PBSmodelling/index.html) -- *facilitates the design, testing, and operation of computer models; focused on tools that make it easy to construct and edit a customized graphical user interface*
+* [RchivalTag](https://cran.r-project.org/web/packages/RchivalTag/index.html) -- *functions to generate, access and analyze standard data products from archival tagging data*
 * [r4ss](https://github.com/r4ss/r4ss) -- *analyze and plot the output from Stock Synthesis version 3, a fisheries stock assessment model written in ADMB*
 * [scape](https://cran.r-project.org/web/packages/scape/) -- *import and plot results from statistical catch-at-age models; generally used to connect with ADMB.*
 * [select](https://www.stat.auckland.ac.nz/~millar/selectware/code.html) -- *a flexible and user-extendable framework for size-selectivity via the SELECT model*

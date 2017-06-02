@@ -5,10 +5,11 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">23</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">24</span> publications.
 
 1. Ajuzie CC. 2017. Status of *Oreochromis niloticus* (Linnaeus, 1758) fishery in Liberty Reservoir, Jos, Nigeria. International Journal of Fisheries and Aquatic Studies. 5(3):10-13. [Full Text](https://www.researchgate.net/profile/Cyril_Ajuzie/publication/316553825_International_Journal_of_Fisheries_and_Aquatic_Studies_2017_53_10-13/links/59037dd6a6fdccd580cffedf/International-Journal-of-Fisheries-and-Aquatic-Studies-2017-53-10-13.pdf) [Condition]
 1. Beaty J., Chen Y. 2017. Can back-calculated lengths based on otoliths measuremetns provide reliable estimates of Atlantic halibut (*Hippoglossus hippoglossus*) growth in the Gulf of Maine (U.S.A.). Aquaculture and Fisheries XX:XXX-XXX. [Full Text](http://www.sciencedirect.com/science/article/pii/S2468550X17300023). [von Bertalanffy Growth]
+1. Caddell DF, Park C-J, Thomas NC, Canlas PE, Ronald PC. 2017. Silencing of the rice genne *LRR1* compromises rice *Xa21* transcript accumulation and *XA21*-mediate immunity. Rice 10:XXX-XXX. [Full Text](https://link.springer.com/article/10.1186/s12284-017-0162-5). [Dunn Test]
 1. Carim KJ, Vindenes Y, Eby LA, Barfoot C, Vollestad LA. 2017. Life history, population viability, and the potential for local adaptation in isolated trout populations. Global Ecology and Conservation 10:93-102. [Full Text](http://www.sciencedirect.com/science/article/pii/S2351989416301457). [???]
 1. Capelle JJ, van Stralen MR, Wijsman JWM, Herman PMJ, Smaal AC. 2017. Population dynamics of subtidal blue mussels *Mytilus edulis* and the impact of cultivation. Aquaculture Environment Interactions 9:155-168. [Full Text](http://www.int-res.com/articles/aei2017/9/q009p155.pdf) [Seasonal von Bertalanffy Growth]
 1. Cogalniceanu D, Bancila RI, Plaiasu R, Rosioru D, Merila J. 2017. Small-scale spatial and temporal variation of life-history traits of common frogs (*Rana temporaria*) in sub-Arctic Finland. Polar Biology XX:XXX-XXX. [Abstract](http://link.springer.com/article/10.1007/s00300-017-2081-8). [von Bertalanffy Growth]

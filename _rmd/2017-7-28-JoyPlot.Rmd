@@ -1,0 +1,97 @@
+---
+title: "Joy Plot of Length Frequencies"
+layout: post
+date: "July 28, 2017"
+output:
+  html_document: default
+  pdf_document: default
+tags:
+- R
+- FSA
+- Length_Frequency
+---
+```{r eval=FALSE, echo=FALSE}
+## FOR COMPILING FOR THE WEBSITE
+## Make sure to setwd to source file location
+source("rmd2md.R")
+rmd2md("2017-7-28-JoyPlot")
+```
+
+```{r setup, echo=FALSE, results='hide', message=FALSE}
+library(knitr)
+knit_hooks$set(par1 = function(before, options, envir) {
+  if (before) par(mar=c(3.5,3.5,1,1),mgp=c(2.1,0.4,0),tcl=-0.2)
+})
+opts_chunk$set(dev="png",tidy=FALSE,fig.width=4,fig.height=4,par1=TRUE)
+options(show.signif.stars=FALSE)
+
+library(FSA)
+library(dplyr)
+library(ggplot2)
+library(ggjoy)
+library(captioner)
+figs <- captioner(prefix="Figure")
+figs(name="KiyiHist","Histograms of the total lengths of Lake Superior Kiyi from 2003 to 2014.")
+figs(name="KiyiJoy","Joyplot of the total lengths of Lake Superior Kiyi from 2003 to 2014.")
+
+lf <- read.csv("data/Kiyi_lenfreq_all.csv") %>%
+  mutate(year=factor(year)) %>%
+  filterD(year %in% 2003:2014) %>%
+  select(year,mon,tl)
+```
+
+----
+
+There has been a bit of a buzz recently about so-called "joyplots." [Wilke](https://cran.r-project.org/web/packages/ggjoy/vignettes/introduction.html) described joyplots as "partially overlapping line plots that create the impression of a mountain range." I would describe them as partially overlapping density plots (akin to a smoothed histogram). Examples of joyplots are [here](https://cran.r-project.org/web/packages/ggjoy/vignettes/gallery.html), [here](http://blog.revolutionanalytics.com/2017/07/joyplots.html), and [here](https://vuorre.netlify.com/post/2017/visualizing-varying-effects-posteriors-with-joyplots/) (from among many).
+
+I thought that joyplots might provide a nice visualization of length frequencies over time. For example, we have a paper forthcoming in the *North American Journal of Fisheries Management* that examines (among other things) the lengths of Kiyi (*Coregonus kiyi*) captured in trawl tows in Lake Superior from 2003 to 2014. `r figs("KiyiHist",display="cite")` is a modified version (stripped of code that increased fonts, changed colors, etc.) of the length frequency histograms we included in the paper. `r figs("KiyiJoy",display="cite")` is a near default joyplot of the same data.
+
+```{r KiyiHist, echo=FALSE, results='hide'}
+ggplot(lf,aes(x=tl)) +
+  scale_x_continuous(expand=c(0.02,0),limits=c(40,310),
+                     breaks=seq(0,350,50),
+                     labels=c("","",100,"",200,"",300,"")) +
+  geom_histogram(aes(y=..ncount..),binwidth=5,fill="gray40") +
+  facet_wrap(~year,nrow=4,dir="v") +
+  labs(x="Total Length (mm)",y="Relative Frequency") +
+  theme_bw() +
+  theme(axis.text.y=element_blank())
+```
+
+`r figs("KiyiHist")`
+
+```{r KiyiJoy, echo=FALSE, results='hide', message=FALSE}
+ggplot(lf,aes(x=tl,y=year)) +
+  geom_joy(rel_min_height = 0.01) +        # removes tails
+  scale_y_discrete(expand = c(0.01, 0)) +  # removes cutoff top
+  labs(x="Total Length (mm)",y="Year") +
+  theme_minimal()
+```
+
+`r figs("KiyiJoy")`
+
+In my opinion, the joyplot makes it easier to follow through time the strong year-classes that first appear in 2004 and 2010 and to see how fish in the strong year-classes grow and eventually merge in size with older fish. Joyplots look useful for displaying length (or age) data across many groups (years, locations, etc.). Some, however, like the specificity (less smoothing) of the histograms (see the last example in [Wilke](https://cran.r-project.org/web/packages/ggjoy/vignettes/introduction.html) for overlapping histograms).
+
+----
+
+### R Code
+
+The data file used in this example has the following structure.
+```{r}
+str(lf)
+```
+
+
+The histograms were constructed with the following code (requires the `ggplot2` package).
+
+```{r eval=FALSE}
+<<KiyiHist>>
+```
+
+The joyplot was constructed with the following code (requires the `ggplot2` and `ggjoy` packages). See the [introductory vignette by Wilke](https://cran.r-project.org/web/packages/ggjoy/vignettes/introduction.html) for how to further modify joyplots.
+
+```{r eval=FALSE}
+<<KiyiJoy>>
+```
+
+----

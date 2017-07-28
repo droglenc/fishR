@@ -3,8 +3,7 @@ title: "Joy Plot of Length Frequencies"
 layout: post
 date: "July 28, 2017"
 output:
-  html_document: default
-  pdf_document: default
+  html_document
 tags:
 - R
 - FSA

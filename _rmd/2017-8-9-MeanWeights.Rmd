@@ -1,0 +1,202 @@
+---
+title: "Mean Weights at Ages From Lengths"
+layout: post
+date: "August 9, 2017"
+output:
+  html_document
+tags:
+- Weight_Length
+- Mean_Weight
+---
+```{r eval=FALSE, echo=FALSE}
+## FOR COMPILING FOR THE WEBSITE
+## Make sure to setwd to source file location
+source("rmd2md.R")
+rmd2md("2017-8-9-MeanWeights")
+```
+
+```{r setup, echo=FALSE, results='hide', message=FALSE}
+library(knitr)
+knit_hooks$set(par1 = function(before, options, envir) {
+  if (before) par(mar=c(3.5,3.5,1,1),mgp=c(2.1,0.4,0),tcl=-0.2)
+})
+opts_chunk$set(dev="png",tidy=FALSE,fig.width=4,fig.height=4,par1=TRUE)
+options(show.signif.stars=FALSE)
+
+library(FSA)
+library(dplyr)
+library(magrittr)
+library(xtable)
+library(captioner)
+figs <- captioner(prefix="Figure")
+figs("Explore1","Histograms of lengths (upper left) and weights (upper right) and scatterplots of weight versus length (lower left) and length versus age (lower right). The line in the weight versus length scatterplot is the weights modeled without random error.")
+figs("NormEx","Histograms of 1000 lengths simulated from a normal distribution (left) and weigths predicted from those lengths with a weight-length regression (right) demonstrating how the normally distributed lengths will become right-skewed weights.")
+tabs <- captioner(prefix="Table")
+tabs("Sum1Tab","Summary table using weights without any error.")
+tabs("Sum2Tab","Summary table using weights with a small amount of error.")
+tabs("Sum3Tab","Summary table using weights without any error, but using b=2.5.")
+tabs("Sum4Tab","Summary table using weights without any error, but using b=3.0.")
+tabs("Sum5Tab","Summary table using weights without any error, but using b=3.5.")
+```
+
+----
+
+Recently I was tasked with estimating mean weights at age for data that contained no weights, but did contain lengths and ages (ages were from applying an age-length key). A weight-length relationship was available (derived from a smaller sample from the same population). A question arose about whether the weight-length relationship should be used to predict weights for individual fish and then summarized to estimate mean weights at age or whether the weight-length relationship should be applied to summarized mean lengths at age to estimate mean weights at age. I explore these two methods for estimating mean weights at age in this post.
+
+This post requires the `FSA`, `dplyr`, and `magrittr` packages.
+
+```{r eval=FALSE}
+library(FSA)
+library(dplyr)
+library(magrittr)
+```
+
+I also set the random number seed to make the results reproducible.
+```{r}
+set.seed(678394)
+```
+
+
+## Create A Sample of Data
+I used the following code to create a very simple population that consisted of lengths, weights, and ages of fish. Lengths were modeled as normal distributions within each age-class. Weights were predicted directly from a known weight-length relationship without any error (in `wt1`) and with a small amount of error (in `wt2`). Modeling data in this way is simple, but at least somewhat realistic (`r figs("Explore1",display="cite")`).
+
+```{r}
+# Generate some lengths
+ages <- 3:8
+ns <- c(100,80,50,30,15,5)
+mns <- c(300,450,525,560,575,590)
+sds <- rep(30,length(mns))
+lens <- NULL
+for (i in 1:length(ages)) lens <- c(lens,rnorm(ns[i],mean=mns[i],sd=sds[i]))
+
+# Parameters of a weight-length relationship
+loga <- -13.5
+b <- 3.2
+
+# Compute weights from the W-L relationship, w/ & w/o error
+df <- data.frame(age=rep(ages,ns),len=round(lens,0)) %>%
+  mutate(wt1=round(exp(loga+b*log(len)),0),
+         wt2=round(exp(loga+b*log(len)+rnorm(length(lens),mean=0,sd=0.1)),0))
+headtail(df)
+```
+
+```{r Explore1, echo=FALSE, fig.show='hold'}
+lenlbl <- "Length (mm)"
+wtlbl <- "Weight (g)"
+agelbl <- "Age (years)"
+par(mar=c(3,3,0.5,0.5),mgp=c(1.9,0.5,0),tcl=-0.2)
+hist(~len,data=df,w=10,xlab=lenlbl)
+hist(~wt1,data=df,w=25,xlab=wtlbl)
+plot(wt2~len,data=df,pch=19,col=col2rgbt("black",1/8),xlab=lenlbl,ylab=wtlbl)
+lines(wt1~len,data=df[order(df$len),],lwd=2)
+plot(len~age,data=df,pch=19,col=col2rgbt("black",1/8),xlab=agelbl,ylab=lenlbl)
+
+```
+
+`r figs("Explore1")`
+
+
+## Compare Mean Weights at Age from Different Methods
+The first two lines below (using `group_by()` and `summarize()`) compute the sample size (`n`), mean length (`mnlen`), and the true mean weight (i.e., the weight for individual modeled above; `true.mnwt`) for the weights without any error for each age. The next line (using `mutate()`) computes the predicted mean weight at each age using the weight-length regression coefficients and the mean lengths just computed. The fourth line computes the percentage difference between the predicted and true mean weights for each age.
+
+```{r Sum1}
+sum1 <- group_by(df,age) %>%
+  summarize(n=n(),mnlen=mean(len),true.mnwt=mean(wt1)) %>%
+  mutate(pred.mnwt=exp(loga+b*log(mnlen)),
+         diff.mnwt=(pred.mnwt-true.mnwt)/true.mnwt*100) %>%
+  as.data.frame()
+```
+
+The results for the weights without any error show that the mean weight predicted from the mean length is lower than the mean weight computed from individual weights predicted from individual lengths (`r tabs("Sum1Tab",display="cite")`).
+
+`r tabs("Sum1Tab")`
+
+```{r Sum1Tab, echo=FALSE, results="asis"}
+print(xtable(sum1,digits=c(0,0,0,0,0,0,2)),type="html",include.rownames=FALSE,comment=FALSE)
+```
+
+
+Of course, weight-length relationships are not perfect, so the weights with a small amount of random error were used to determine if the pattern of a negative bias when predicting mean weights from mean lengths persists with more realistic data. [Note that only a small error was added because the relationship between weight and length is very strong for most fishes. The $r^2$ for this relationship was a realistic `r formatC(summary(lm(log(wt2)~log(len),data=df))$r.squared,format="f",digits=3)`.] Similar results with these more realistic data showed a similar, though not as consistent, degree of negative bias when predicting mean weights from mean lengths (`r tabs("Sum2Tab",display="cite")`).
+
+`r tabs("Sum2Tab")`
+
+```{r Sum2Tab, echo=FALSE, results="asis"}
+sum2 <- group_by(df,age) %>%
+  summarize(n=n(),mnlen=mean(len),true.mnwt=mean(wt2)) %>%
+  mutate(pred.mnwt=exp(loga+b*log(mnlen)),
+         diff.mnwt=(pred.mnwt-true.mnwt)/true.mnwt*100) %>%
+  as.data.frame()
+print(xtable(sum2,digits=c(0,0,0,0,0,0,2)),type="html",include.rownames=FALSE,comment=FALSE)
+```
+
+Similar patterns were found using different values of the weight-length relationship b parameter (see Appendix).
+
+## Some Thoughts on Why
+The relationship between weight and length of most fishes follows an exponential model with an exponent parameter near 3 (usually between 2.5 and 3.5). One can think of this exponential function as a function that transforms length to weight. Applying the transformation function to the mean of the x variable will only result in the mean of the y variable if the transformation function is linear, because the linear transformation preserves the shape of the original distribution. The exponential function, in contrast, tends to compress differences between "small" values and spread out differences between "large" values (i.e., opposite of what a log transformation does). Thus, the shape of hte distribution of weights will be different then the shape of the distribution of lengths. For example, if lengths are normally distributed, then weights will tend to be right-skewed (i.e., a longer tail to the right because of the compressing of "smaller" values and the "spreading" of larger values; `r figs("NormEx",display="cite")`).
+
+```{r NormEx, echo=FALSE}
+lens <- rnorm(1000,mean=mns[1],sd=sds[1])
+wts <- exp(loga+b*log(lens))
+hist(~lens,w=10,xlab=lenlbl)
+hist(~wts,w=25,xlab=wtlbl)
+```
+
+`r figs("NormEx")`
+
+## Summary
+Mean weights at age appear to be estimated with bias when a weight-length relationship is applied to mean lengths at age. While this systematic bias may be negligible for an individual fish, it may become substantial if mean weights are multipled by the total number of fish to estimate total biomass. Additionally, the systematic bias may not be detectable in the face of natural variability and systematic measurement error.
+
+----
+
+## Appendix: Summaries Using Different Values of b
+
+`r tabs("Sum3Tab")`
+
+```{r Sum3Tab, echo=FALSE, results="asis"}
+b <- 2.5
+lens <- NULL
+for (i in 1:length(ages)) lens <- c(lens,rnorm(ns[i],mean=mns[i],sd=sds[i]))
+df <- data.frame(age=rep(ages,ns),len=round(lens,0)) %>%
+  mutate(wt1=round(exp(loga+b*log(len)),0))
+
+sum3 <- group_by(df,age) %>%
+  summarize(n=n(),mnlen=mean(len),true.mnwt=mean(wt1)) %>%
+  mutate(pred.mnwt=exp(loga+b*log(mnlen)),
+         diff.mnwt=(pred.mnwt-true.mnwt)/true.mnwt*100) %>%
+  as.data.frame()
+print(xtable(sum3,digits=c(0,0,0,0,1,1,2)),type="html",include.rownames=FALSE,comment=FALSE)
+```
+
+`r tabs("Sum4Tab")`
+
+```{r Sum4Tab, echo=FALSE, results="asis"}
+b <- 3.0
+lens <- NULL
+for (i in 1:length(ages)) lens <- c(lens,rnorm(ns[i],mean=mns[i],sd=sds[i]))
+df <- data.frame(age=rep(ages,ns),len=round(lens,0)) %>%
+  mutate(wt1=round(exp(loga+b*log(len)),0))
+
+sum4 <- group_by(df,age) %>%
+  summarize(n=n(),mnlen=mean(len),true.mnwt=mean(wt1)) %>%
+  mutate(pred.mnwt=exp(loga+b*log(mnlen)),
+         diff.mnwt=(pred.mnwt-true.mnwt)/true.mnwt*100) %>%
+  as.data.frame()
+print(xtable(sum4,digits=c(0,0,0,0,0,0,2)),type="html",include.rownames=FALSE,comment=FALSE)
+```
+
+`r tabs("Sum5Tab")`
+
+```{r Sum5Tab, echo=FALSE, results="asis"}
+b <- 3.5
+lens <- NULL
+for (i in 1:length(ages)) lens <- c(lens,rnorm(ns[i],mean=mns[i],sd=sds[i]))
+df <- data.frame(age=rep(ages,ns),len=round(lens,0)) %>%
+  mutate(wt1=round(exp(loga+b*log(len)),0))
+
+sum5 <- group_by(df,age) %>%
+  summarize(n=n(),mnlen=mean(len),true.mnwt=mean(wt1)) %>%
+  mutate(pred.mnwt=exp(loga+b*log(mnlen)),
+         diff.mnwt=(pred.mnwt-true.mnwt)/true.mnwt*100) %>%
+  as.data.frame()
+print(xtable(sum5,digits=c(0,0,0,0,0,0,2)),type="html",include.rownames=FALSE,comment=FALSE)
+```

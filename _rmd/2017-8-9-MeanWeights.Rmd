@@ -25,8 +25,6 @@ options(show.signif.stars=FALSE)
 
 library(FSA)
 library(dplyr)
-library(magrittr)
-library(xtable)
 library(captioner)
 figs <- captioner(prefix="Figure")
 figs("Explore1","Histograms of lengths (upper left) and weights (upper right) and scatterplots of weight versus length (lower left) and length versus age (lower right). The line in the weight versus length scatterplot is the weights modeled without random error.")
@@ -43,12 +41,11 @@ tabs("Sum5Tab","Summary table using weights without any error, but using b=3.5."
 
 Recently I was tasked with estimating mean weights at age for data that contained no weights, but did contain lengths and ages (ages were from applying an age-length key). A weight-length relationship was available (derived from a smaller sample from the same population). A question arose about whether the weight-length relationship should be used to predict weights for individual fish and then summarized to estimate mean weights at age or whether the weight-length relationship should be applied to summarized mean lengths at age to estimate mean weights at age. I explore these two methods for estimating mean weights at age in this post.
 
-This post requires the `FSA`, `dplyr`, and `magrittr` packages.
+This post requires the `FSA` and `dplyr` packages.
 
 ```{r eval=FALSE}
 library(FSA)
 library(dplyr)
-library(magrittr)
 ```
 
 I also set the random number seed to make the results reproducible.
@@ -90,7 +87,6 @@ hist(~wt1,data=df,w=25,xlab=wtlbl)
 plot(wt2~len,data=df,pch=19,col=col2rgbt("black",1/8),xlab=lenlbl,ylab=wtlbl)
 lines(wt1~len,data=df[order(df$len),],lwd=2)
 plot(len~age,data=df,pch=19,col=col2rgbt("black",1/8),xlab=agelbl,ylab=lenlbl)
-
 ```
 
 `r figs("Explore1")`
@@ -111,8 +107,8 @@ The results for the weights without any error show that the mean weight predicte
 
 `r tabs("Sum1Tab")`
 
-```{r Sum1Tab, echo=FALSE, results="asis"}
-print(xtable(sum1,digits=c(0,0,0,0,0,0,2)),include.rownames=FALSE,comment=FALSE)
+```{r Sum1Tab, echo=FALSE, comment="", background="white"}
+print(sum1,row.names=FALSE,digits=2)
 ```
 
 
@@ -120,13 +116,13 @@ Of course, weight-length relationships are not perfect, so the weights with a sm
 
 `r tabs("Sum2Tab")`
 
-```{r Sum2Tab, echo=FALSE, results="asis"}
+```{r Sum2Tab, echo=FALSE, comment="", background="white"}
 sum2 <- group_by(df,age) %>%
   summarize(n=n(),mnlen=mean(len),true.mnwt=mean(wt2)) %>%
   mutate(pred.mnwt=exp(loga+b*log(mnlen)),
          diff.mnwt=(pred.mnwt-true.mnwt)/true.mnwt*100) %>%
   as.data.frame()
-print(xtable(sum2,digits=c(0,0,0,0,0,0,2)),include.rownames=FALSE,comment=FALSE)
+print(sum2,row.names=FALSE,digits=2)
 ```
 
 Similar patterns were found using different values of the weight-length relationship b parameter (see Appendix).
@@ -152,7 +148,7 @@ Mean weights at age appear to be estimated with bias when a weight-length relati
 
 `r tabs("Sum3Tab")`
 
-```{r Sum3Tab, echo=FALSE, results="asis"}
+```{r Sum3Tab, echo=FALSE, comment="", background="white"}
 b <- 2.5
 lens <- NULL
 for (i in 1:length(ages)) lens <- c(lens,rnorm(ns[i],mean=mns[i],sd=sds[i]))
@@ -164,12 +160,12 @@ sum3 <- group_by(df,age) %>%
   mutate(pred.mnwt=exp(loga+b*log(mnlen)),
          diff.mnwt=(pred.mnwt-true.mnwt)/true.mnwt*100) %>%
   as.data.frame()
-print(xtable(sum3,digits=c(0,0,0,0,1,1,2)),include.rownames=FALSE,comment=FALSE)
+print(sum3,row.names=FALSE,digits=2)
 ```
 
 `r tabs("Sum4Tab")`
 
-```{r Sum4Tab, echo=FALSE, results="asis"}
+```{r Sum4Tab, echo=FALSE, comment="", background="white"}
 b <- 3.0
 lens <- NULL
 for (i in 1:length(ages)) lens <- c(lens,rnorm(ns[i],mean=mns[i],sd=sds[i]))
@@ -181,12 +177,12 @@ sum4 <- group_by(df,age) %>%
   mutate(pred.mnwt=exp(loga+b*log(mnlen)),
          diff.mnwt=(pred.mnwt-true.mnwt)/true.mnwt*100) %>%
   as.data.frame()
-print(xtable(sum4,digits=c(0,0,0,0,0,0,2)),include.rownames=FALSE,comment=FALSE)
+print(sum4,row.names=FALSE,digits=2)
 ```
 
 `r tabs("Sum5Tab")`
 
-```{r Sum5Tab, echo=FALSE, results="asis"}
+```{r Sum5Tab, echo=FALSE, comment="", background="white"}
 b <- 3.5
 lens <- NULL
 for (i in 1:length(ages)) lens <- c(lens,rnorm(ns[i],mean=mns[i],sd=sds[i]))
@@ -198,5 +194,5 @@ sum5 <- group_by(df,age) %>%
   mutate(pred.mnwt=exp(loga+b*log(mnlen)),
          diff.mnwt=(pred.mnwt-true.mnwt)/true.mnwt*100) %>%
   as.data.frame()
-print(xtable(sum5,digits=c(0,0,0,0,0,0,2)),include.rownames=FALSE,comment=FALSE)
+print(sum5,row.names=FALSE,digits=2)
 ```

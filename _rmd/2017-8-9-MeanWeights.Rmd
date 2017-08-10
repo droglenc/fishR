@@ -112,7 +112,7 @@ The results for the weights without any error show that the mean weight predicte
 `r tabs("Sum1Tab")`
 
 ```{r Sum1Tab, echo=FALSE, results="asis"}
-print(xtable(sum1,digits=c(0,0,0,0,0,0,2)),type="html",include.rownames=FALSE,comment=FALSE)
+print(xtable(sum1,digits=c(0,0,0,0,0,0,2)),include.rownames=FALSE,comment=FALSE)
 ```
 
 
@@ -126,7 +126,7 @@ sum2 <- group_by(df,age) %>%
   mutate(pred.mnwt=exp(loga+b*log(mnlen)),
          diff.mnwt=(pred.mnwt-true.mnwt)/true.mnwt*100) %>%
   as.data.frame()
-print(xtable(sum2,digits=c(0,0,0,0,0,0,2)),type="html",include.rownames=FALSE,comment=FALSE)
+print(xtable(sum2,digits=c(0,0,0,0,0,0,2)),include.rownames=FALSE,comment=FALSE)
 ```
 
 Similar patterns were found using different values of the weight-length relationship b parameter (see Appendix).
@@ -164,7 +164,7 @@ sum3 <- group_by(df,age) %>%
   mutate(pred.mnwt=exp(loga+b*log(mnlen)),
          diff.mnwt=(pred.mnwt-true.mnwt)/true.mnwt*100) %>%
   as.data.frame()
-print(xtable(sum3,digits=c(0,0,0,0,1,1,2)),type="html",include.rownames=FALSE,comment=FALSE)
+print(xtable(sum3,digits=c(0,0,0,0,1,1,2)),include.rownames=FALSE,comment=FALSE)
 ```
 
 `r tabs("Sum4Tab")`
@@ -181,7 +181,7 @@ sum4 <- group_by(df,age) %>%
   mutate(pred.mnwt=exp(loga+b*log(mnlen)),
          diff.mnwt=(pred.mnwt-true.mnwt)/true.mnwt*100) %>%
   as.data.frame()
-print(xtable(sum4,digits=c(0,0,0,0,0,0,2)),type="html",include.rownames=FALSE,comment=FALSE)
+print(xtable(sum4,digits=c(0,0,0,0,0,0,2)),include.rownames=FALSE,comment=FALSE)
 ```
 
 `r tabs("Sum5Tab")`
@@ -198,5 +198,5 @@ sum5 <- group_by(df,age) %>%
   mutate(pred.mnwt=exp(loga+b*log(mnlen)),
          diff.mnwt=(pred.mnwt-true.mnwt)/true.mnwt*100) %>%
   as.data.frame()
-print(xtable(sum5,digits=c(0,0,0,0,0,0,2)),type="html",include.rownames=FALSE,comment=FALSE)
+print(xtable(sum5,digits=c(0,0,0,0,0,0,2)),include.rownames=FALSE,comment=FALSE)
 ```

@@ -89,30 +89,42 @@ The results for the weights without any error show that the mean weight predicte
 
 Table  1: Summary table using weights without any error.
 
-<table border=1>
-<tr> <th> age </th> <th> n </th> <th> mnlen </th> <th> true.mnwt </th> <th> pred.mnwt </th> <th> diff.mnwt </th>  </tr>
-<tr> <td align="right"> 3 </td> <td align="right"> 100 </td> <td align="right"> 305 </td> <td align="right"> 127 </td> <td align="right"> 122 </td> <td align="right"> -3.47 </td> </tr>
-<tr> <td align="right"> 4 </td> <td align="right"> 80 </td> <td align="right"> 450 </td> <td align="right"> 433 </td> <td align="right"> 424 </td> <td align="right"> -2.17 </td> </tr>
-<tr> <td align="right"> 5 </td> <td align="right"> 50 </td> <td align="right"> 533 </td> <td align="right"> 739 </td> <td align="right"> 729 </td> <td align="right"> -1.24 </td> </tr>
-<tr> <td align="right"> 6 </td> <td align="right"> 30 </td> <td align="right"> 568 </td> <td align="right"> 904 </td> <td align="right"> 893 </td> <td align="right"> -1.22 </td> </tr>
-<tr> <td align="right"> 7 </td> <td align="right"> 15 </td> <td align="right"> 574 </td> <td align="right"> 929 </td> <td align="right"> 924 </td> <td align="right"> -0.48 </td> </tr>
-<tr> <td align="right"> 8 </td> <td align="right"> 5 </td> <td align="right"> 579 </td> <td align="right"> 954 </td> <td align="right"> 949 </td> <td align="right"> -0.52 </td> </tr>
-</table>
+\begin{table}[ht]
+\centering
+\begin{tabular}{rrrrrr}
+  \hline
+age & n & mnlen & true.mnwt & pred.mnwt & diff.mnwt \\ 
+  \hline
+3 & 100 & 305 & 127 & 122 & -3.47 \\ 
+  4 & 80 & 450 & 433 & 424 & -2.17 \\ 
+  5 & 50 & 533 & 739 & 729 & -1.24 \\ 
+  6 & 30 & 568 & 904 & 893 & -1.22 \\ 
+  7 & 15 & 574 & 929 & 924 & -0.48 \\ 
+  8 & 5 & 579 & 954 & 949 & -0.52 \\ 
+   \hline
+\end{tabular}
+\end{table}
 
 
 Of course, weight-length relationships are not perfect, so the weights with a small amount of random error were used to determine if the pattern of a negative bias when predicting mean weights from mean lengths persists with more realistic data. [Note that only a small error was added because the relationship between weight and length is very strong for most fishes. The $r^2$ for this relationship was a realistic 0.988.] Similar results with these more realistic data showed a similar, though not as consistent, degree of negative bias when predicting mean weights from mean lengths (Table  2).
 
 Table  2: Summary table using weights with a small amount of error.
 
-<table border=1>
-<tr> <th> age </th> <th> n </th> <th> mnlen </th> <th> true.mnwt </th> <th> pred.mnwt </th> <th> diff.mnwt </th>  </tr>
-<tr> <td align="right"> 3 </td> <td align="right"> 100 </td> <td align="right"> 305 </td> <td align="right"> 128 </td> <td align="right"> 122 </td> <td align="right"> -4.37 </td> </tr>
-<tr> <td align="right"> 4 </td> <td align="right"> 80 </td> <td align="right"> 450 </td> <td align="right"> 437 </td> <td align="right"> 424 </td> <td align="right"> -3.09 </td> </tr>
-<tr> <td align="right"> 5 </td> <td align="right"> 50 </td> <td align="right"> 533 </td> <td align="right"> 737 </td> <td align="right"> 729 </td> <td align="right"> -1.03 </td> </tr>
-<tr> <td align="right"> 6 </td> <td align="right"> 30 </td> <td align="right"> 568 </td> <td align="right"> 924 </td> <td align="right"> 893 </td> <td align="right"> -3.36 </td> </tr>
-<tr> <td align="right"> 7 </td> <td align="right"> 15 </td> <td align="right"> 574 </td> <td align="right"> 933 </td> <td align="right"> 924 </td> <td align="right"> -0.95 </td> </tr>
-<tr> <td align="right"> 8 </td> <td align="right"> 5 </td> <td align="right"> 579 </td> <td align="right"> 924 </td> <td align="right"> 949 </td> <td align="right"> 2.67 </td> </tr>
-</table>
+\begin{table}[ht]
+\centering
+\begin{tabular}{rrrrrr}
+  \hline
+age & n & mnlen & true.mnwt & pred.mnwt & diff.mnwt \\ 
+  \hline
+3 & 100 & 305 & 128 & 122 & -4.37 \\ 
+  4 & 80 & 450 & 437 & 424 & -3.09 \\ 
+  5 & 50 & 533 & 737 & 729 & -1.03 \\ 
+  6 & 30 & 568 & 924 & 893 & -3.36 \\ 
+  7 & 15 & 574 & 933 & 924 & -0.95 \\ 
+  8 & 5 & 579 & 924 & 949 & 2.67 \\ 
+   \hline
+\end{tabular}
+\end{table}
 
 Similar patterns were found using different values of the weight-length relationship b parameter (see Appendix).
 
@@ -132,36 +144,54 @@ Mean weights at age appear to be estimated with bias when a weight-length relati
 
 Table  3: Summary table using weights without any error, but using b=2.5.
 
-<table border=1>
-<tr> <th> age </th> <th> n </th> <th> mnlen </th> <th> true.mnwt </th> <th> pred.mnwt </th> <th> diff.mnwt </th>  </tr>
-<tr> <td align="right"> 3 </td> <td align="right"> 100 </td> <td align="right"> 302 </td> <td align="right"> 2.2 </td> <td align="right"> 2.2 </td> <td align="right"> -1.54 </td> </tr>
-<tr> <td align="right"> 4 </td> <td align="right"> 80 </td> <td align="right"> 453 </td> <td align="right"> 6.0 </td> <td align="right"> 6.0 </td> <td align="right"> -0.88 </td> </tr>
-<tr> <td align="right"> 5 </td> <td align="right"> 50 </td> <td align="right"> 523 </td> <td align="right"> 8.7 </td> <td align="right"> 8.6 </td> <td align="right"> -1.34 </td> </tr>
-<tr> <td align="right"> 6 </td> <td align="right"> 30 </td> <td align="right"> 555 </td> <td align="right"> 10.0 </td> <td align="right"> 9.9 </td> <td align="right"> -0.29 </td> </tr>
-<tr> <td align="right"> 7 </td> <td align="right"> 15 </td> <td align="right"> 586 </td> <td align="right"> 11.3 </td> <td align="right"> 11.4 </td> <td align="right"> 0.76 </td> </tr>
-<tr> <td align="right"> 8 </td> <td align="right"> 5 </td> <td align="right"> 620 </td> <td align="right"> 13.2 </td> <td align="right"> 13.1 </td> <td align="right"> -0.43 </td> </tr>
-</table>
+\begin{table}[ht]
+\centering
+\begin{tabular}{rrrrrr}
+  \hline
+age & n & mnlen & true.mnwt & pred.mnwt & diff.mnwt \\ 
+  \hline
+3 & 100 & 302 & 2.2 & 2.2 & -1.54 \\ 
+  4 & 80 & 453 & 6.0 & 6.0 & -0.88 \\ 
+  5 & 50 & 523 & 8.7 & 8.6 & -1.34 \\ 
+  6 & 30 & 555 & 10.0 & 9.9 & -0.29 \\ 
+  7 & 15 & 586 & 11.3 & 11.4 & 0.76 \\ 
+  8 & 5 & 620 & 13.2 & 13.1 & -0.43 \\ 
+   \hline
+\end{tabular}
+\end{table}
 
 Table  4: Summary table using weights without any error, but using b=3.0.
 
-<table border=1>
-<tr> <th> age </th> <th> n </th> <th> mnlen </th> <th> true.mnwt </th> <th> pred.mnwt </th> <th> diff.mnwt </th>  </tr>
-<tr> <td align="right"> 3 </td> <td align="right"> 100 </td> <td align="right"> 295 </td> <td lign="right"> 36 </td> <td align="right"> 35 </td> <td align="right"> -2.55 </td> </tr>
-<tr> <td align="right"> 4 </td> <td align="right"> 80 </td> <td align="right"> 450 </td> <td align="right"> 127 </td> <td align="right"> 125 </td> <td align="right"> -1.48 </td> </tr>
-<tr> <td align="right"> 5 </td> <td align="right"> 50 </td> <td align="right"> 523 </td> <td align="right"> 198 </td> <td align="right"> 196 </td> <td align="right"> -0.73 </td> </tr>
-<tr> <td align="right"> 6 </td> <td align="right"> 30 </td> <td align="right"> 561 </td> <td align="right"> 244 </td> <td align="right"> 241 </td> <td align="right"> -0.94 </td> </tr>
-<tr> <td align="right"> 7 </td> <td align="right"> 15 </td> <td align="right"> 580 </td> <td align="right"> 271 </td> <td align="right"> 268 </td> <td align="right"> -1.16 </td> </tr>
-<tr> <td align="right"> 8 </td> <td align="right"> 5 </td> <td align="right"> 565 </td> <td align="right"> 248 </td> <td align="right"> 248 </td> <td align="right"> -0.35 </td> </tr>
-</table>
+\begin{table}[ht]
+\centering
+\begin{tabular}{rrrrrr}
+  \hline
+age & n & mnlen & true.mnwt & pred.mnwt & diff.mnwt \\ 
+  \hline
+3 & 100 & 295 & 36 & 35 & -2.55 \\ 
+  4 & 80 & 450 & 127 & 125 & -1.48 \\ 
+  5 & 50 & 523 & 198 & 196 & -0.73 \\ 
+  6 & 30 & 561 & 244 & 241 & -0.94 \\ 
+  7 & 15 & 580 & 271 & 268 & -1.16 \\ 
+  8 & 5 & 565 & 248 & 248 & -0.35 \\ 
+   \hline
+\end{tabular}
+\end{table}
 
 Table  5: Summary table using weights without any error, but using b=3.5.
 
-<table border=1>
-<tr> <th> age </th> <th> n </th> <th> mnlen </th> <th> true.mnwt </th> <th> pred.mnwt </th> <th> diff.mnwt </th>  </tr>
-<tr> <td align="right"> 3 </td> <td align="right"> 100 </td> <td align="right"> 299 </td> <td align="right"> 674 </td> <td align="right"> 635 </td> <td align="right"> -5.78 </td> </tr>
-<tr> <td align="right"> 4 </td> <td align="right"> 80 </td> <td align="right"> 447 </td> <td align="right"> 2634 </td> <td align="right"> 2583 </td> <td align="right"> -1.95 </td> </tr>
-<tr> <td align="right"> 5 </td> <td align="right"> 50 </td> <td align="right"> 522 </td> <td align="right"> 4501 </td> <td align="right"> 4444 </td> <td align="right"> -1.28 </td> </tr>
-<tr> <td align="right"> 6 </td> <td align="right"> 30 </td> <td align="right"> 547 </td> <td align="right"> 5302 </td> <td align="right"> 5239 </td> <td align="right"> -1.20 </td> </tr>
-<tr> <td align="right"> 7 </td> <td align="right"> 15 </td> <td align="right"> 576 </td> <td align="right"> 6386 </td> <td align="right"> 6301 </td> <td align="right"> -1.33 </td> </tr>
-<tr> <td align="right"> 8 </td> <td align="right"> 5 </td> <td align="right"> 583 </td> <td align="right"> 6625 </td> <td align="right"> 6544 </td> <td align="right"> -1.22 </td> </tr>
-</table>
+\begin{table}[ht]
+\centering
+\begin{tabular}{rrrrrr}
+  \hline
+age & n & mnlen & true.mnwt & pred.mnwt & diff.mnwt \\ 
+  \hline
+3 & 100 & 299 & 674 & 635 & -5.78 \\ 
+  4 & 80 & 447 & 2634 & 2583 & -1.95 \\ 
+  5 & 50 & 522 & 4501 & 4444 & -1.28 \\ 
+  6 & 30 & 547 & 5302 & 5239 & -1.20 \\ 
+  7 & 15 & 576 & 6386 & 6301 & -1.33 \\ 
+  8 & 5 & 583 & 6625 & 6544 & -1.22 \\ 
+   \hline
+\end{tabular}
+\end{table}

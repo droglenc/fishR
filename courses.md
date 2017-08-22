@@ -4,10 +4,11 @@ title: Learn R!
 ---
 
 ## Upcoming Courses
-* [*Age and Growth Analyses with R*](https://afsannualmeeting.fisheries.org/continuing-education-workshops/) — 147th Annual Meeting of the American Fisheries Society, Tampa, FL; 20 August 2017
-* *R for Fisheries Population Dynamics (TENTATIVE)* -- Student Symposium; Boise, ID; 15 November 2017. [Announcement](https://afs-calneva.org/wp-content/uploads/sites/8/2017/07/Save-the-date_WD_Student_Colloquium.pdf)
+* *R for Fisheries Population Dynamics* -- Student Symposium; Boise, ID; 15 November 2017. [Announcement](https://afs-calneva.org/wp-content/uploads/sites/8/2017/07/Save-the-date_WD_Student_Colloquium.pdf)
+* *Introductory Fisheries Analyses with R* [TENTATVE] -- Midwest Fisheries and Wildlife Conference; Milwaukee, WI; 28 January 2018.
 
 ## Past Courses (*materials may be out-of-date*)
+* [*Age and Growth Analyses with R*](https://afsannualmeeting.fisheries.org/continuing-education-workshops/) — 147th Annual Meeting of the American Fisheries Society, Tampa, FL; 20 August 2017.
 * [*Basic Estimation of Abundance*](http://wdmtg.fisheries.org/workshops-trips/) -- Annual Meeting of the Western Divison of the American Fisheries Society, Missoula, MT; 22 May 2017. [Was cancelled.]
 * [*Designing Beautiful Figures in R*](http://wdmtg.fisheries.org/workshops-trips/) -- Annual Meeting of the Western Divison of the American Fisheries Society, Missoula, MT; 22 May 2017. [Was cancelled.]
 * "R Course for Fish Heads" -- Carleton University, Ottawa, Canada; January 2017; [taught by [Dr. Jake Brownscombe](http://www.fecpl.ca/people/jake-brownscombe/)]

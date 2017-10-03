@@ -4,7 +4,7 @@ title: Learn R!
 ---
 
 ## Upcoming Courses
-* *R for Fisheries Population Dynamics* -- Western Division of AFS Student Colloquium; McCall, ID; 15 November 2017. [Announcement](https://afs-calneva.org/wp-content/uploads/sites/8/2017/07/Save-the-date_WD_Student_Colloquium.pdf)
+* [*R for Fisheries Population Dynamics*](http://derekogle.com/RcourseIdaho2017/) -- Western Division of AFS Student Colloquium; McCall, ID; 15 November 2017. [Announcement](https://afs-calneva.org/wp-content/uploads/sites/8/2017/07/Save-the-date_WD_Student_Colloquium.pdf)
 * *Introductory Fisheries Analyses with R* -- Midwest Fisheries and Wildlife Conference; Milwaukee, WI; 28 January 2018.
 
 ## Past Courses (*materials may be out-of-date*)

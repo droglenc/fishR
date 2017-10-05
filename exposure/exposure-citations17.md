@@ -5,7 +5,7 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">41</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">42</span> publications.
 
 1. Ajuzie CC. 2017. Status of *Oreochromis niloticus* (Linnaeus, 1758) fishery in Liberty Reservoir, Jos, Nigeria. International Journal of Fisheries and Aquatic Studies. 5(3):10-13. [Full Text](https://www.researchgate.net/profile/Cyril_Ajuzie/publication/316553825_International_Journal_of_Fisheries_and_Aquatic_Studies_2017_53_10-13/links/59037dd6a6fdccd580cffedf/International-Journal-of-Fisheries-and-Aquatic-Studies-2017-53-10-13.pdf) [Condition]
 1. Beaty J., Chen Y. 2017. Can back-calculated lengths based on otoliths measuremetns provide reliable estimates of Atlantic halibut (*Hippoglossus hippoglossus*) growth in the Gulf of Maine (U.S.A.). Aquaculture and Fisheries XX:XXX-XXX. [Full Text](http://www.sciencedirect.com/science/article/pii/S2468550X17300023). [von Bertalanffy Growth]
@@ -31,6 +31,7 @@ The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA
 1. Merciai R, Molons-Sierra C, Sabater S, García-Berthou E. 2017. Water abstraction affects abundance, size-structure and growth of two threatened cyprinid fishes. PLoS ONE 12(4): e0175932. [Full Text](https://doi.org/10.1371/journal.pone.0175932) [Age Comparisons]
 1. Mildenberger TK, Taylor MH, Wolff M. 2017. TropFishR: an R package for fisheries analysis with length-frequency data. Methods in Ecology and Evolution. XX:XXX-XXX [Full Text](http://onlinelibrary.wiley.com/doi/10.1111/2041-210X.12791/epdf) [General]
 1. Moore MJ, Hallerman EM, Orth DJ. 2017. Densities and Population Sizes of Clinch Dace *Chrosomus* sp. cf. *saylori* in the Upper Clinch River Basin in Virginia. Copeia 105:92-99. [Abstract](http://www.bioone.org/doi/abs/10.1643/CI-16-506) [Mark-Recapture Abundance??]
+1. Moreira FD, Marques R, Sousa M, Rebelo R. 2017. Breeding in both lotic and lentic habitats explains the invasive potential of the African clawed frag (*Xenopus laevis*) in Portugal. Aquatic Invasions XX:XXX-XXX. [Full Text](http://www.aquaticinvasions.net/2017/ACCEPTED/AI_2017_Moreira_etal_correctedproof.pdf) [Kruskal-Wallis paired comparisons]
 1. Neves A, Vieira AR, Sequeira V, Paiva RB, Gordo LS. 2017. Modelling the growth of a protogynous sparid species, *Spondyliosoma cantharus* (Teleostei: Sparidae). Hydrobiologia XX:XXX-XXX. [Full Text](http://link.springer.com/article/10.1007/s10750-017-3188-1) [von Bertalanffy Growth, Mortality]
 1. **Ogle DH.**  2017.  An algorithm for the von Bertalanffy seasonal cessation in growth function of Pauly et al. (1992).  Fisheries Research 185:1-7.  [Full Text](http://www.sciencedirect.com/science/article/pii/S0165783616303137).  [Seasonal von Bertalanffy]
 1. **Ogle DH.** 2017. Estimating age at a specified length from the von Bertalanffy growth function. North American Journal of Fisheries Management. 37:1176-1180. [Abstract](https://www.researchgate.net/publication/319603644_Estimating_Age_at_a_Specified_Length_from_the_von_Bertalanffy_Growth_Function#share) [von Bertalanffy Growth]

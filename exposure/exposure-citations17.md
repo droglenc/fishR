@@ -5,7 +5,7 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">56</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">57</span> publications.
 
 1. Ajuzie CC. 2017. Status of *Oreochromis niloticus* (Linnaeus, 1758) fishery in Liberty Reservoir, Jos, Nigeria. International Journal of Fisheries and Aquatic Studies. 5(3):10-13. [Full Text](https://www.researchgate.net/profile/Cyril_Ajuzie/publication/316553825_International_Journal_of_Fisheries_and_Aquatic_Studies_2017_53_10-13/links/59037dd6a6fdccd580cffedf/International-Journal-of-Fisheries-and-Aquatic-Studies-2017-53-10-13.pdf) [Condition]
 1. Beaty J., Chen Y. 2017. Can back-calculated lengths based on otoliths measuremetns provide reliable estimates of Atlantic halibut (*Hippoglossus hippoglossus*) growth in the Gulf of Maine (U.S.A.). Aquaculture and Fisheries XX:XXX-XXX. [Full Text](http://www.sciencedirect.com/science/article/pii/S2468550X17300023). [von Bertalanffy Growth]
@@ -26,6 +26,7 @@ The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA
 1. Gayte IG, Moreno RB, Zonjic PS, Claros MG. 2017. DEgenes hunter - a flexible R pipeline for automated RNA-seq studies in organisms without reference genome. Genomics and Computational Biology 3:e31. [Full Text](https://genomicscomputbiol.org/ojs/index.php/GCB/article/view/31/58) [Multiple Comparisons]
 1. Herdter ES, Chambers DP, Stallings CD, Murawski SA. 2017. Did the *Deepwater Horizon* oil spill affect growth of Red Snapper in the Gulf of Mexico. Fisheries Research 191:60-68. [Abstract](http://www.sciencedirect.com/science/article/pii/S0165783617300656) [Von Bertalanffy Growth]
 1. Hicks BJ, Tempero GW, Powrie WS. 2017. Fish population and biomass estimates from mark-recapture for Lake Milicich, a shallow Waikato peat lake. ERI Report No. 88. Client report prepared for NIWA. Environmental Research Institute, School of Science, Faculty of Science and Engineering, University of Waikato, Hamilton, New Zealand. 19 pp. [Full Text](http://www.waikato.ac.nz/__data/assets/pdf_file/0018/333432/ERI_88.pdf) [Mark-Recapture]
+1. Jefferson AE. 2017. Distribution, abundance, age, and growth of Gray Triggerfish in the Alabama Artificial Reef Zone. M.Sc. Thesis University of South Alabama. [Preview](https://search.proquest.com/openview/ffa0a575ccd598d6b125a1e28a4521bc/1?pq-origsite=gscholar&cbl=18750&diss=y) [???]
 1. Karlin AT. 2017. Post-drought survey of freshwater mussels in the S
 aline and Smoky Hill Rivers with emphasis on the status of the Cylindr
 ical Papershell (*Anodontoides ferussacianus*) and effects of lowhead dams on growth of the Pimpleback (*Quadrula Pustulosa*) in the Neosho River, Kansas. M.Sc. Thesis, Fort Hays State University. [Full Text](http://scholars.fhsu.edu/cgi/viewcontent.cgi?article=1006&context=theses) [von Bertalanffy Growth]

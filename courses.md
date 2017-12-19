@@ -4,7 +4,7 @@ title: Learn R!
 ---
 
 ## Upcoming Courses
-* *Introductory Fisheries Analyses with R* -- Midwest Fisheries and Wildlife Conference; Milwaukee, WI; 28 January 2018. [Announcement](https://midwestfishwildlifeconferen2018.sched.com/event/Cde4/workshop-introductory-fisheries-analyses-with-r)
+* [*Introductory Fisheries Analyses with R*](http://derekogle.com/RcourseMidwest2018/) -- Midwest Fisheries and Wildlife Conference; Milwaukee, WI; 28 January 2018. [Announcement](https://midwestfishwildlifeconferen2018.sched.com/event/Cde4/workshop-introductory-fisheries-analyses-with-r)
 
 ## Past Courses (*materials may be out-of-date*)
 * [*R for Fisheries Population Dynamics*](http://derekogle.com/RcourseIdaho2017/) -- Western Division of AFS Student Colloquium; McCall, ID; 15 November 2017. [Announcement](https://afs-calneva.org/wp-content/uploads/sites/8/2017/07/Save-the-date_WD_Student_Colloquium.pdf) [Ogle]

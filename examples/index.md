@@ -18,8 +18,10 @@ title: R in Action!
 * [Additional Nonlinear Regression Algorithms](http://derekogle.com/IFAR/supplements/growth/OtherNLAlgorithms.html) (*an IFAR supplement*)
 
 ## Shorter Targeted Examples
-* [Age Comparison Results for Individual Fish]({{ site.baseurl }}/2015-09-05-Age-Comparison-Results-for-Individual-Fish/)
-* [Two New Cumulative Sum Functions]({{ site.baseurl }}/2015-09-06-Two-New-Cumulative-Sums/)
+* [Ridgeline Plots (nee Joy Plots) of Length Frequencies](http://derekogle.com/fishR/2017-07-28-JoyPlot)
+* [Age Bias Plots](http://derekogle.com/fishR/2017-04-26-AgeBias_inFSA)
+* [Age Comparison Results for Individual Fish](http://derekogle.com/fishR/2015-09-05-Age-Comparison-Results-for-Individual-Fish)
+* [Two New Cumulative Sum Functions](http://derekogle.com/fishR/2015-09-06-Two-New-Cumulative-Sums/)
 
 ## Potentially Out-Of-Date Examples
 * [**fishR** vignettes that were precursors to IFAR book above](oldFishRVignettes.html).

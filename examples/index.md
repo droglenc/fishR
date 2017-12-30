@@ -6,7 +6,7 @@ title: R in Action!
 ## Book-Related Resources
 * [*Introductory Fisheries Analyses with R*](http://derekogle.com/IFAR/) book (Ogle, 2015) -- *scripts, supplements, and exercises for this book*
 * [*Analysis and Interpretation of Freshwater Fisheries Data*](http://derekogle.com/aiffd2007/) book (Guy and Brown, 2007) -- *scripts and detailed descriptions for many of the boxed examples (converted from SAS code)*
-* [*Age and Growth of Fish: Principles and Techniques*](http://derekogle.com/AGF/) book (Quist and Isermann, in prep) -- *scripts and descriptions for many of the boxed exapmles in the Data Analysis and Summarization chapters*
+* [*Age and Growth of Fish: Principles and Techniques*](http://derekogle.com/AGF/) book (Quist and Isermann, 2017) -- *scripts and descriptions for many of the boxed exapmles in the Data Analysis and Summarization chapters*
 
 ## Detailed Examples
 * [Backcalculation of Previous Length](http://derekogle.com/IFAR/supplements/backcalculation/) (*an IFAR supplement*)

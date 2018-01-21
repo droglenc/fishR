@@ -5,7 +5,7 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">34</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">36</span> publications.
 
 1. Allen BE. 2016. Growth, mortality, and genetic structure: Effects of harvest and management s
 trategies on Walleye (*Sander vitreus*) populations in Alberta, Canada. Master's Thesis, Univ. Calgary. [Full Text](http://theses.ucalgary.ca/jspui/bitstream/11023/3004/3/ucalgary_2016_allen_brandon.pdf) [Age-Length Key, Mortality]
@@ -46,4 +46,4 @@ trategies on Walleye (*Sander vitreus*) populations in Alberta, Canada. Master's
 1. Yerli SV, Korkmaz M, Mangit F. 2016. Length-length and length-weight relationships for four endemic Cyprinid species in Kucuk Menderes River Basin, Turkey. Journal of Applied Ichthyology. 32:991-993. [Abstract](http://onlinelibrary.wiley.com/doi/10.1111/jai.13133/abstract) [XXX]
 
 -----
-<p style="text-align: center;"><a href="exposure-citations15.html">Goto 2015 citations</a></p>
+<p style="text-align: center;"><a href="exposure-citations17.html">Goto 2017 citations</a> | <p style="text-align: center;"><a href="exposure-citations15.html">Goto 2015 citations</a></p>

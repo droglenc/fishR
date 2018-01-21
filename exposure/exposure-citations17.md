@@ -5,7 +5,7 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">65</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">64</span> publications.
 
 1. Ajuzie CC. 2017. Status of *Oreochromis niloticus* (Linnaeus, 1758) fishery in Liberty Reservoir, Jos, Nigeria. International Journal of Fisheries and Aquatic Studies. 5(3):10-13. [Full Text](https://www.researchgate.net/profile/Cyril_Ajuzie/publication/316553825_International_Journal_of_Fisheries_and_Aquatic_Studies_2017_53_10-13/links/59037dd6a6fdccd580cffedf/International-Journal-of-Fisheries-and-Aquatic-Studies-2017-53-10-13.pdf) [Condition]
 1. Beaty J., Chen Y. 2017. Can back-calculated lengths based on otoliths measuremetns provide reliable estimates of Atlantic halibut (*Hippoglossus hippoglossus*) growth in the Gulf of Maine (U.S.A.). Aquaculture and Fisheries 2:24-33. [Full Text](http://www.sciencedirect.com/science/article/pii/S2468550X17300023). [von Bertalanffy Growth]
@@ -77,4 +77,4 @@ Species Caught in Indo-Pacific Fisheries. Dissertation, James Cook University. [
 1. Wilson KL, Honsey A, Moe B, Venturelli P. 2017. Growing the biphasic framework: techniques and recommendations for fitting emerging growth models. Methods in Ecology and Evolution XX:XXX-XXX [Abstract](http://onlinelibrary.wiley.com/doi/10.1111/2041-210X.12931/abstract) and [Supplementary Information](http://onlinelibrary.wiley.com/store/10.1111/2041-210X.12931/asset/supinfo/mee312931-sup-0001-Appendix.zip?v=1&s=71ac3f4362def7875d6dff7b7066d36a6ddf362f) [Growth]
 
 -----
-<p style="text-align: center;"><a href="exposure-citations16.html">Goto 2016 citations</a></p>
+<p style="text-align: center;"><a href="exposure-citations18.html">Goto 2018 citations</a> | <p style="text-align: center;"><a href="exposure-citations16.html">Goto 2016 citations</a></p>

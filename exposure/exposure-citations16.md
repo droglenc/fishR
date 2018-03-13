@@ -5,7 +5,7 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">36</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">37</span> publications.
 
 1. Allen BE. 2016. Growth, mortality, and genetic structure: Effects of harvest and management s
 trategies on Walleye (*Sander vitreus*) populations in Alberta, Canada. Master's Thesis, Univ. Calgary. [Full Text](http://theses.ucalgary.ca/jspui/bitstream/11023/3004/3/ucalgary_2016_allen_brandon.pdf) [Age-Length Key, Mortality]
@@ -19,6 +19,7 @@ trategies on Walleye (*Sander vitreus*) populations in Alberta, Canada. Master's
 1. Buhariwalla CF, MacMillan JL, Gregoire MJ, Dadswell MJ Stoksebury MJW. 2016. Population characteristics of Striped Bass killed by cold shock during winter shutdown of a power plant in Nova Scotia. Northeastern Naturalist 23:163-173. [Abstract](http://www.bioone.org/doi/abs/10.1656/045.023.0113) [Weight-Length Relationships]
 1. Chiotti JA, Boase JC, Hondorp DW, Briggs AS. Assigning Sex and Reproductive Stage to Adult Lake Sturgeon using Ultrasonography and Common Morphological Measurements. North American Journal of Fisheries Management 36:21-29. [Abstract](http://www.tandfonline.com/doi/abs/10.1080/02755947.2015.1103823). [Age bias plot for sex comparisons]
 1. Çiçeka K, Kumaş M, Ayaza D, Tokc CV. 2016. A skeletochronological study of age, growth and longevity in two freshwater turtles, *Emys orbicularis* and *Mauremys rivulata*, from Mediterranean Turkey (Reptilia: Testudines). Zoology in the Middle East 62:29-38. [Abstract](http://www.tandfonline.com/doi/abs/10.1080/09397140.2016.1144277)/[Article](https://www.researchgate.net/publication/293827479_A_skeletochronological_study_of_age_growth_and_longevity_in_two_freshwater_turtles_Emys_orbicularis_and_Mauremys_rivulata_from_Mediterranean_Turkey_Reptilia_Testudines) [von Bertalanffy Growth]
+1. De Giosa M, Czerniejewski P. 2016. A generalized, nonlinear regression approach to the length-weight relationship of European perch (*Perca fluviatilis* L.) from the Polish coast of the southern Baltic Sea. Archives of Polish Fisheries 24:169-175. [Full Text](http://www.infish.com.pl/wydawnictwo/Archives/Fasc/work_pdf/Vol24Fasc4/Vol24Fasc4_w01.pdf) [Weigh-Length Relationships]
 1. Dwyer KS, Treble MA, Campana SE. 2016. Age and growth of Greenland Halibut (*Reinhardtius hippoglossoides*) in the Northwest Atlantic: A changing perception based on bomb radiocarbon analyses. Fisheries Research 179:342-350. [Abstract](http://www.sciencedirect.com/science/article/pii/S0165783616300169) [von Bertalanffy Growth]
 1. Euclide PT, Hansson S, Stockwell JD. 2016. Partial diel vertical migration in an omnivorous macroinvertebrate, *Mysis diluviana*. Hydrobiologia 787:387-396. [Full Text](http://link.springer.com/article/10.1007/s10750-016-2982-5) [General]
 1. Ford AGP, Ruber L, Newton J, Dasmahapatra KK, Balarin JD, Bruun K, Day JJ. 2016. Niche divergence facilitated by fine‐scale ecological partitioning in a recent cichlid fish adaptive radiation. Evolution. 70:2718-2735. [Full Text](http://onlinelibrary.wiley.com/doi/10.1111/evo.13072/pdf) [Diet Overlap]

@@ -5,11 +5,12 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">14</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">15</span> publications.
 
 1. Blackman TE, Crisafulli CM, Cleason SM. 2018. Characteristics of a new Rainbow Trout population: Spirit Lake, Mount St. Helens Volcano, 2000–2015. pages 251-267 in Crisafulli CM and Dale VH. Ecological Responses at Mount St. Helens: Revisited 35 Years After the Eruption. [Abstract](https://link.springer.com/chapter/10.1007/978-1-4939-7451-1_14) [Depletion Estimates]
 1. Borah M, Mahanta DJ. 2018. An approach to estimate the parameters of von Bertalanffy growth models in forestry. The Indian Forester 144:XXX-XXX. [Abstract](http://www.indianforester.co.in/index.php/indianforester/article/view/121305) [von Bertalanffy Growth]
 1. Day DB, Xiang J, Mo J, Clyde MA, Weschler CJ, Li F, Gong J, Chung M, Zhang Y, Zhang J. 2018. Combined use of an electrostatic precipitator and a HEPA filter in building ventilation systems: Effects on cardiorespiratory health indicators in healthy adults. Indoor Air XX:XXX-XXX. [Abstract](http://onlinelibrary.wiley.com/doi/10.1111/ina.12447/full) [XXX]
+1. Fairbanks Jr DO, McArthur JV, Young CM, Rader RB. 2018. Consumption of terrestrial organic matter in the rocky intertidal zone along the central Oregon coast. Ecosphere 9:XXX-XXX. [Full Text](http://onlinelibrary.wiley.com/doi/10.1002/ecs2.2138/full) [Dunn'ts Test]
 1. Gawel JE, Crisafulli CM, Miller R. 2018. The new Spirit Lake: Changes to hydrology, nutrient cycling, and biological productivity. pages 71-95 in Crisafulli CM and Dale VH. Ecological Responses at Mount St. Helens: Revisited 35 Years After the Eruption. [Abstract](https://link.springer.com/chapter/10.1007/978-1-4939-7451-1_4) [Mark-Recapture]
 1. Grant MI, Smart JJ, White WT, Chin A, Baje L, Simpfendorfer CA. 2018. Life history characteristics of the silky shark *Carcharhinus falciformis* from the central west Pacific. Marine and Freshwater Research XX:XXX-XXX. [Abstract](http://www.publish.csiro.au/MF/MF17163) [Age Comparisons]
 1. Long JM, Holley CT, Taylor AT. 2018. Evaluation of ageing accuracy with complementary non-lethal methods for slow-growing, northern populations of shoal bass. Fisheries Management and Ecology 25:150-157. [Abstract](http://onlinelibrary.wiley.com/doi/10.1111/fme.12274/full) [von Bertalanffy Growth]

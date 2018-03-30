@@ -33,6 +33,7 @@ The following are instructions to install packages from within various ways to i
 
 ## More Focused Packages
 * [ALKr](http://cran.r-project.org/web/packages/ALKr/index.html) -- *age-length keys*
+* [AnglerCreelSurveySimulation](https://cran.r-project.org/package=AnglerCreelSurveySimulation) -- *simulate creel survey data*
 * [Bioenergetics 4.0](https://bioenergetics4.shinyapps.io/bioenergetics4/) -- *a shiny app for bioenergetics modeling*
 * [Bioenergetics at ISEMP](http://www.isemp.org/action.php?chi=14) -- *bioenergetics modeling as part of the Integrated Status and Monitoring Program*
 * [CatDyn](https://cran.r-project.org/web/packages/CatDyn/index.html) -- *population parameters from catch dynamics data*

@@ -4,6 +4,8 @@ title: Learn R!
 ---
 
 ## Upcoming Courses
+* [*Intro to R for Fisheries Biologists*](https://afsannualmeeting.fisheries.org/continuing-education-workshops/) -- 148th Annual Meeting of the American Fisheries Society, Atlantic City NJ; 18 August 2018. [???]
+* [*Unleashing the Power of R as a Graphing Tool*](https://afsannualmeeting.fisheries.org/continuing-education-workshops/) -- 148th Annual Meeting of the American Fisheries Society, Atlantic City NJ; 19 August 2018. [Doll]
 
 ## Past Courses (*materials may be out-of-date*)
 * [*Introductory Fisheries Analyses with R*](http://derekogle.com/RcourseMidwest2018/) -- Midwest Fisheries and Wildlife Conference; Milwaukee, WI; 28 January 2018. [Announcement](https://midwestfishwildlifeconferen2018.sched.com/event/Cde4/workshop-introductory-fisheries-analyses-with-r)

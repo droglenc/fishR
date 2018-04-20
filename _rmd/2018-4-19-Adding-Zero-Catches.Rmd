@@ -1,0 +1,232 @@
+---
+title: "Adding Zero Catches"
+layout: post
+date: "April 19, 2018"
+output:
+  html_document
+tags:
+- R
+- data_wrangling
+
+---
+```{r eval=FALSE, echo=FALSE}
+## FOR COMPILING FOR THE WEBSITE
+## Make sure to setwd to source file location
+source("rmd2md.R")
+rmd2md("2018-4-19-Adding-Zero-Catches")
+```
+
+```{r setup, echo=FALSE, results='hide', message=FALSE}
+library(knitr)
+knit_hooks$set(par1 = function(before, options, envir) {
+  if (before) par(mar=c(3.5,3.5,1,1),mgp=c(2.1,0.4,0),tcl=-0.2)
+})
+opts_chunk$set(dev="png",tidy=FALSE,fig.width=4,fig.height=4,par1=TRUE)
+options(show.signif.stars=FALSE)
+
+library(FSA)
+library(tidyr)
+library(dplyr)
+```
+
+----
+
+## Introduction
+
+Much of my work is with undergraduates who are first learning to analyze fisheries data. A common "learning opportunity" occurs when students are asked to compute the mean catch (or CPE), along with a standard deviation (SD), across multiple gear sets for each species. The learning opportunity occurs because some species will invariably not be caught in some gear sets. When the students summarize the number of fish caught for each species in each gear set those species not caught in a particular gear set will not "appear" in their data. Thus, when calculating the mean, the student will get the correct numerator (sum of catch across all gear sets) but not denominator (they use number of catches summed rather than total number of gear sets), which inflates (over-estimates) the mean catch and (usually) deflates (under-estimates) the SD of catches. Once confronted with this issue, they easily realize how to correct the mean calculation, but calculating the standard deviation is still an issue. These problems are exacerbated when using software to compute these summary statistics across many individual gear sets.
+
+In software, the "trick" is to add a zero for each species not caught in a specific gear set that was caught in at least one of all of the gear sets. For example, if Bluegill were caught in at least one gear set but not in the third gear set, then a zero must be added as the catch of Bluegill in the third gear set. The `addZeroCatch()` function in the `FSA` package was an attempt to efficiently add these zeroes. This function has proven useful over the years, but I have become dissatisfied with its clunkiness. Additionally, I recently became aware of the `complete()` function in the `tidyr` package which holds promise for handling the same task. In this post, I explore the use of `complete()` for handling this issue.
+
+This post requires the `dplyr` and `tidyr` packages. It also uses `FSA` behind the scenes.
+
+```{r eval=FALSE}
+library(FSA)      # for mapvalues()
+library(dplyr)    # for %>%, group_by(), summarize(), mutate(), right_join()
+library(tidyr)    # for complete(), nesting()
+```
+```{r echo=FALSE}
+## Use for reproducibility of randomly created data
+set.seed(678394)
+```
+
+\  
+
+----
+
+## Example 1 - Very Simple Data
+In this first example, the data consists of `species` and `length` recorded for each captured fish organized by the gear set identification number (`ID`) and held in the `fishdat` data.frame.
+```{r echo=FALSE}
+tmp1 <- data.frame(ID=1,
+                   species=rep(c("BLG","LMB","YEP"),c(10,5,5)),
+                   tl=round(c(rnorm(10,150,5),rnorm(5,250,10),rnorm(5,100,5)),0))
+tmp2 <- data.frame(ID=2,
+                   species=rep(c("BLG","LMB","YEP"),c(0,9,7)),
+                   tl=round(c(rnorm(0,150,5),rnorm(9,250,10),rnorm(7,100,5)),0))
+tmp3 <- data.frame(ID=3,
+                   species=rep(c("BLG","LMB","YEP"),c(12,0,7)),
+                   tl=round(c(rnorm(12,150,5),rnorm(0,250,10),rnorm(7,100,5)),0))
+tmp4 <- data.frame(ID=4,
+                   species=rep(c("BLG","LMB","YEP"),c(1,11,11)),
+                   tl=round(c(rnorm(1,150,5),rnorm(11,250,10),rnorm(11,100,5)),0))
+tmp5 <- data.frame(ID=5,
+                   species=rep(c("BLG","LMB","YEP"),c(9,0,0)),
+                   tl=round(c(rnorm(9,150,5),rnorm(0,250,10),rnorm(0,100,5)),0))
+fishdat <- rbind(tmp1,tmp2,tmp3,tmp4,tmp5)
+```
+```{r}
+head(fishdat)
+```
+
+The catch of each species in each gear set may be found using `group_by()` and `summarize()` with `n()`. Note that `as.data.frame()` is used simply to remove the `tibble` structure returned by `group_by()`.[^tibbleannoyance]
+```{r}
+catch <- fishdat %>%
+  group_by(ID,species) %>%
+  summarize(num=n()) %>%
+  as.data.frame()
+catch
+```
+
+From this it is seen that three species ("BLG", "LMB", and "YEP") were captured in all nets, but that "BLG" were not captured in "ID=2", "LMB" were not captured in "ID=3", and "LMB" and "YEP" were not captured in "ID=5". The sample size, mean, and SD of catches per species from these data may be found by again using `group_by()` and `summarize()`. However, note that these calculations are **INCORRECT** because they do not include the zero catches of "BLG" in "ID=2", "LMB" in "ID=3", and "LMB" and "YEP" in "ID=5". The problem is most evident in the sample sizes, which should be five (gear sets) for each species.
+```{r}
+## Example of INCORRECT summaries because not using zeroes
+catch %>% group_by(species) %>%
+  summarize(n=n(),mn=mean(num),sd=sd(num)) %>%
+  as.data.frame()
+```
+
+The `complete()` function can be used to add rows to a data.frame for variables (or combinations of variables) that should be present in the data.frame (relative to other values that are present) but are not. The `complete()` function takes a data.frame as its first argument (but will be "piped" in below with `%>%`) and the variable or variables that will be used to identify which items are missing. For example, with these data, a zero should be added to `num` for missing combinations defined by `ID` and `species`.
+```{r}
+## Example of default complete ... see below to add zeroes, not NAs
+catch %>% complete(ID,species) %>%
+  as.data.frame()
+```
+
+From this result, it is seen that `complete()` added a row for "BLG" in "ID=2", "LMB" in "ID=3", and "LMB" and "YEP" in "ID=5", as we had hoped. However, `complete()` adds `NA`s by default. The value to add can be changed with `fill=`, which takes a list that includes the name of the variable to which the `NA`s were added (`num` in this case) set equal to the value to be added (`0` in this case).
+```{r}
+catch <- catch %>%
+  complete(ID,species,fill=list(num=0)) %>%
+  as.data.frame()
+catch
+```
+
+These correct catch data can then be summarized as above to show the correct sample size, mean, and SD of catches per species.
+```{r}
+catch %>% group_by(species) %>%
+  summarize(n=n(),mn=mean(num),sd=sd(num)) %>%
+  as.data.frame()
+```
+
+\  
+
+\  
+
+----
+
+## Example 2 - Multiple Values to Receive Zeroes
+Suppose that the fish data included a column that indicates whether the fish was marked and returned to the waterbody or not.
+```{r echo=FALSE}
+fishdat2 <- fishdat %>%
+  mutate(marked=base::sample(c("YES","no"),nrow(fishdat),replace=TRUE))
+```
+```{r}
+head(fishdat2)
+```
+
+The catch and number of fish marked and returned per gear set ID and species may again be computed with `group_by()` and `summarize()`. Note, however, the use of `ifelse()` to use a `1` if the fish was marked and a `0` if it was not. Summing these values returns the number of fish that were marked. Giving this data.frame to `complete()` as before will add zeroes for both the `num` and `nmarked` variables as long as both are included in the list given to `fill=`.
+```{r}
+catch2 <- fishdat2 %>%
+  group_by(ID,species) %>%
+  summarize(num=n(),
+            nmarked=sum(ifelse(marked=="YES",1,0))) %>%
+  complete(ID,species,fill=list(num=0,nmarked=0)) %>%
+  as.data.frame()
+catch2
+```
+
+\  
+
+\  
+
+----
+
+## Example 3 - More Information that Does Not Get Zeroes
+Suppose that a data.frame called `geardat` contains information specific to each gear set.
+```{r echo=FALSE}
+geardat <- data.frame(ID=1:5,mon="May",year=2018,
+                      lake=c("round","round","round","twin","twin"),
+                      run=c(1,2,3,1,2),
+                      effort=c(1.34,1.87,1.56,0.92,0.67))
+```
+```{r}
+geardat
+```
+
+And, for the purposes of this example, let's suppose that we have summarized catch data WITHOUT the zeroes having been added.
+```{r}
+catch3 <- fishdat2 %>%
+  group_by(ID,species) %>%
+  summarize(num=n(),
+            nmarked=sum(ifelse(marked=="YES",1,0))) %>%
+  as.data.frame()
+catch3
+```
+
+Finally, suppose that these summarized catch data are joined with the gear data such that the gear set specific information is shown with each catch.
+```{r}
+catch3 <- right_join(geardat,catch3,by="ID")
+catch3
+```
+
+These data simulate what might be seen from a flat database.
+
+With these data, zeroes still need to be added as defined by missing combinations of `ID` and `species`. However, if only these two variables are included in `complete()` then `NA`s, zeroes, or something else (if we define that) will be added `mon`, `year`, `lake`, `run`, and `effort`, which is not desired. These five variables are "nested" with the `ID` variable (i.e., if you know `ID` then you know these variables) and should be treated as a group. Nesting of variables can be handled in `complete()` by including these variables within `nesting()`.
+```{r}
+catch3 %>% complete(nesting(ID,mon,year,lake,run,effort),species,
+                    fill=list(num=0,nmarked=0)) %>%
+  as.data.frame()
+```
+
+It is possible to have nesting with `species` as well. Suppose, for example, that the scientific name for the species was included in the original `fishdata2` that was summarized (using a combination of the examples from above, but not shown here) to `catch4`.
+```{r echo=FALSE}
+catch4 <- fishdat2 %>%
+  mutate(spsci=mapvalues(species,from=c("BLG","LMB","YEP"),
+                         to=c("Lepomis macrochirus",
+                              "Micropterus dolomieu",
+                              "Perca flavescens"))) %>%
+  group_by(ID,species,spsci) %>%
+  summarize(num=n(),
+            nmarked=sum(ifelse(marked=="YES",1,0))) %>%
+  right_join(geardat,.,by="ID") %>%
+  as.data.frame()
+```
+```{r}
+catch4
+```
+
+The zeroes are then added to this data.frame making sure to note the nesting of `species` and `spsci`.
+```{r}
+catch4 %>% complete(nesting(ID,mon,year,lake,run,effort),
+                    nesting(species,spsci),
+                    fill=list(num=0,nmarked=0)) %>%
+  as.data.frame()
+```
+
+\  
+
+\  
+
+----
+
+## Comments
+
+This is my first explorations with `complete()` and it looks promising for this task of adding zeroes to data frames of catch by gear set for gear sets in which a species was not caught. I will be curious to hear what others think of this function and how it might fit in their workflow.
+
+\  
+
+\  
+
+----
+
+## Footnotes
+
+[^tibbleannoyance]: I find the tibble structure to be annoying with simple data.frames like this. Thus, I usually use `as.data.frame()` to remove it.

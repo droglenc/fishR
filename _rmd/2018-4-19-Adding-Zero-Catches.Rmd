@@ -49,7 +49,7 @@ library(tidyr)    # for complete(), nesting()
 set.seed(678394)
 ```
 
-\  
+<br>
 
 ----
 
@@ -116,9 +116,9 @@ catch %>% group_by(species) %>%
   as.data.frame()
 ```
 
-\  
+<br>
 
-\  
+<br>
 
 ----
 
@@ -143,9 +143,9 @@ catch2 <- fishdat2 %>%
 catch2
 ```
 
-\  
+<br>
 
-\  
+<br>
 
 ----
 
@@ -211,9 +211,9 @@ catch4 %>% complete(nesting(ID,mon,year,lake,run,effort),
   as.data.frame()
 ```
 
-\  
+<br>
 
-\  
+<br>
 
 ----
 
@@ -221,9 +221,9 @@ catch4 %>% complete(nesting(ID,mon,year,lake,run,effort),
 
 This is my first explorations with `complete()` and it looks promising for this task of adding zeroes to data frames of catch by gear set for gear sets in which a species was not caught. I will be curious to hear what others think of this function and how it might fit in their workflow.
 
-\  
+<br>
 
-\  
+<br>
 
 ----
 

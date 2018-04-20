@@ -5,12 +5,11 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">65</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">64</span> publications.
 
 1. Ajuzie CC. 2017. Status of *Oreochromis niloticus* (Linnaeus, 1758) fishery in Liberty Reservoir, Jos, Nigeria. International Journal of Fisheries and Aquatic Studies. 5(3):10-13. [Full Text](https://www.researchgate.net/profile/Cyril_Ajuzie/publication/316553825_International_Journal_of_Fisheries_and_Aquatic_Studies_2017_53_10-13/links/59037dd6a6fdccd580cffedf/International-Journal-of-Fisheries-and-Aquatic-Studies-2017-53-10-13.pdf) [Condition]
 1. Beaty J., Chen Y. 2017. Can back-calculated lengths based on otoliths measuremetns provide reliable estimates of Atlantic halibut (*Hippoglossus hippoglossus*) growth in the Gulf of Maine (U.S.A.). Aquaculture and Fisheries 2:24-33. [Full Text](http://www.sciencedirect.com/science/article/pii/S2468550X17300023). [von Bertalanffy Growth]
 1. Boretto JM, Cabezas-Cartes F, Ibarguengoytia NR. 2017. Slow life histories in lizards living in the highlands of the Andes Mountains. Journal of Comparative Physiology B XX:XXX-XXX. [Abstract](https://link.springer.com/article/10.1007/s00360-017-1136-z). [von Bertalanffy Growth]
-1. Brauer TA, Rhea DT, Walrath JD, Quist MC. 2017. Efficacy of using data from angler-caught Burbot to estimate population rate functions. North American Journal of Fisheries Management. [Abstract](https://www.researchgate.net/publication/324444698_Efficacy_of_Using_Data_from_Angler-Caught_Burbot_to_Estimate_Population_Rate_Functions) [XXX]
 1. Caddell DF, Park C-J, Thomas NC, Canlas PE, Ronald PC. 2017. Silencing of the rice gene *LRR1* compromises rice *Xa21* transcript accumulation and *XA21*-mediate immunity. Rice 10:23. [Full Text](https://link.springer.com/article/10.1186/s12284-017-0162-5). [Dunn Test]
 1. Carim KJ, Vindenes Y, Eby LA, Barfoot C, Vollestad LA. 2017. Life history, population viability, and the potential for local adaptation in isolated trout populations. Global Ecology and Conservation 10:93-102. [Full Text](http://www.sciencedirect.com/science/article/pii/S2351989416301457). [???]
 1. Capelle JJ, van Stralen MR, Wijsman JWM, Herman PMJ, Smaal AC. 2017. Population dynamics of subtidal blue mussels *Mytilus edulis* and the impact of cultivation. Aquaculture Environment Interactions 9:155-168. [Full Text](http://www.int-res.com/articles/aei2017/9/q009p155.pdf) [Seasonal von Bertalanffy Growth]

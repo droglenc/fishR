@@ -46,6 +46,8 @@ Because I am creating random example data below, I set the random number seed to
 set.seed(678394)
 ```
 
+<br>
+
 ## Create A Sample of Data
 The following creates a very simple sample of 250 individuals on which the species (as a short abbreviation) and year of capture were recorded.
 
@@ -56,6 +58,8 @@ dat <- data.frame(species=sample(c("BLG","LMB","PKS","WAE","YEP","CRP"),
                   year=sample(1980:2017,n,replace=TRUE))
 head(dat)
 ```
+
+<br>
 
 ## Example 1 -- Recode and Collapse Categories
 
@@ -92,6 +96,8 @@ Note in the code above that the use of `plyr::` in front of `mapvalues()` allows
 
 Note that this use of `mapvalues()` and `mutate()` is described in Section 2.2.7 of my book [Introductory Fisheries Analyses with R](http://derekogle.com/IFAR/).
 
+<br>
+
 ## Example 2 -- Collapse Values into Categories
 
 The `case_when()` function (from `dplyr`) may be used to efficiently collapse discrete values into categories.[^3] This function also operates on vectors and, thus, must be used with `mutate()` to add a variable to a data.frame. The arguments to `case_when()` are a series of two-sided formulae where the left-side is a conditioning statement based on the original data and the right-side is the value that should appear in the new variable when that condition is `TRUE`. For example, the first line in `case_when()` below asks "if the year variable is in the values from 1980 to 1989 then the new category should be '1980s'."[^4] For example, the code below creates a new variable called `decade` that identifies the decade that corresponds to the year-of-capture variable.
@@ -119,14 +125,16 @@ head(dat)
 str(dat)
 ```
 
+<br>
+
 ----
 
 ## Footnotes
 
-[^1] This may not be a concern with recent versions of `plyr` and `dplyr`. However, I have been bitten by enough problems when I have both of these packages loaded that I prefer to use the cautionary approach that I take in this post.
+[^1]: This may not be a concern with recent versions of `plyr` and `dplyr`. However, I have been bitten by enough problems when I have both of these packages loaded that I prefer to use the cautionary approach that I take in this post.
 
-[^2] The `FSA` package imports `mapvalues` from `plyr` and then exports it. Thus, if you have loaded the `FSA` package then you will not need to use the `plyr::` idiom.
+[^2]: The `FSA` package imports `mapvalues` from `plyr` and then exports it. Thus, if you have loaded the `FSA` package then you will not need to use the `plyr::` idiom.
 
-[^3] You may also want to consider `cut()` for this purpose or, for collapsing continuous data into categories, `lencat()` from the `FSA` package.
+[^3]: You may also want to consider `cut()` for this purpose or, for collapsing continuous data into categories, `lencat()` from the `FSA` package.
 
-[^4] The colon operator creates a sequence of all integers between the two numbers separated by the colon. The `%in%` is used on conditional statements to determine if a value is contained with a vector, returning `TRUE` if it is and `FALSE` if it is not.
+[^4]: The colon operator creates a sequence of all integers between the two numbers separated by the colon. The `%in%` is used on conditional statements to determine if a value is contained with a vector, returning `TRUE` if it is and `FALSE` if it is not.

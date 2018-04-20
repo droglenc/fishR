@@ -33,6 +33,8 @@ Because I am creating random example data below, I set the random number seed to
 set.seed(678394)
 {% endhighlight %}
 
+<br>
+
 ## Create A Sample of Data
 The following creates a very simple sample of 250 individuals on which the species (as a short abbreviation) and year of capture were recorded.
 
@@ -56,6 +58,8 @@ head(dat)
 ## 5     LMB 2009
 ## 6     CRP 1994
 {% endhighlight %}
+
+<br>
 
 ## Example 1 -- Recode and Collapse Categories
 
@@ -125,6 +129,8 @@ head(dat)
 Note in the code above that the use of `plyr::` in front of `mapvalues()` allows the user to use the `mapvalues()` function from `plyr` without loading the entire `plyr` package.[^2] As noted previously, this idiom is used here to avoid potential conflicts between `plyr` and `dplyr`.
 
 Note that this use of `mapvalues()` and `mutate()` is described in Section 2.2.7 of my book [Introductory Fisheries Analyses with R](http://derekogle.com/IFAR/).
+
+<br>
 
 ## Example 2 -- Collapse Values into Categories
 
@@ -197,14 +203,16 @@ str(dat)
 ##  $ decade2 : num  1980 1990 1980 2000 2000 1990 2000 2000 1990 1990 ...
 {% endhighlight %}
 
+<br>
+
 ----
 
 ## Footnotes
 
-[^1] This may not be a concern with recent versions of `plyr` and `dplyr`. However, I have been bitten by enough problems when I have both of these packages loaded that I prefer to use the cautionary approach that I take in this post.
+[^1]: This may not be a concern with recent versions of `plyr` and `dplyr`. However, I have been bitten by enough problems when I have both of these packages loaded that I prefer to use the cautionary approach that I take in this post.
 
-[^2] The `FSA` package imports `mapvalues` from `plyr` and then exports it. Thus, if you have loaded the `FSA` package then you will not need to use the `plyr::` idiom.
+[^2]: The `FSA` package imports `mapvalues` from `plyr` and then exports it. Thus, if you have loaded the `FSA` package then you will not need to use the `plyr::` idiom.
 
-[^3] You may also want to consider `cut()` for this purpose or, for collapsing continuous data into categories, `lencat()` from the `FSA` package.
+[^3]: You may also want to consider `cut()` for this purpose or, for collapsing continuous data into categories, `lencat()` from the `FSA` package.
 
-[^4] The colon operator creates a sequence of all integers between the two numbers separated by the colon. The `%in%` is used on conditional statements to determine if a value is contained with a vector, returning `TRUE` if it is and `FALSE` if it is not.
+[^4]: The colon operator creates a sequence of all integers between the two numbers separated by the colon. The `%in%` is used on conditional statements to determine if a value is contained with a vector, returning `TRUE` if it is and `FALSE` if it is not.

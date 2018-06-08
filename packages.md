@@ -6,6 +6,7 @@ title: Fishy Packages
 * [General Packages](#general-packages)
 * [More Focused Packages](#more-focused-packages)
 * [Packages for Capture-Recapture Analyses](#packages-for-capture-recapture-analyses)
+* [Packages of Data](#packages-of-data)
 * [Packages to Access Online Databases](#packages-to-access-online-databases)
 * [Packages for Limnological Data](#packages-for-limnological-data)
 * [Collections of Code](#collections-of-code-that-are-not-yet-a-package)
@@ -21,7 +22,6 @@ The following are instructions to install packages from within various ways to i
 
 ## General Packages
 * [FSA: Fisheries Stock Assessment](https://github.com/droglenc/FSA#readme)
-    * [FSAdata: Data for FSA](https://github.com/droglenc/FSAdata#readme)
 * [DLMtool: Data-Limited Methods Toolkit](https://cran.r-project.org/web/packages/DLMtool/index.html) -- *Implementation of management procedures for data-limited fisheries*
 * [fishmethods: Fisheries Methods and Models in R](https://cran.r-project.org/web/packages/fishmethods/index.html)
 * [fishdynr: Fisheries Science Related Population Dynamics Models](https://github.com/marchtaylor/fishdynr#readme)
@@ -37,6 +37,8 @@ The following are instructions to install packages from within various ways to i
 * [Bioenergetics 4.0](https://bioenergetics4.shinyapps.io/bioenergetics4/) -- *a shiny app for bioenergetics modeling*
 * [Bioenergetics at ISEMP](http://www.isemp.org/action.php?chi=14) -- *bioenergetics modeling as part of the Integrated Status and Monitoring Program*
 * [CatDyn](https://cran.r-project.org/web/packages/CatDyn/index.html) -- *population parameters from catch dynamics data*
+* [cuttlefish.model](https://cran.r-project.org/web/packages/cuttlefish.model/index.html) -- *Perform LPUE standardization and stock assessment of the English Channel cuttlefish stock using a two-stage biomass model*
+* [fecR](https://cran.r-project.org/web/packages/fecR/index.html) -- *Calculates fishing effort following the DG MARE Ad-Hoc Workshops on Transversal Variables in Zagreb (2015) and Nicosia (2016)*
 * [FSAWs](https://github.com/droglenc/FSAWs) -- *construct and validate standard weight (Ws) equations*
 * [fishMod](https://cran.r-project.org/web/packages/fishMod/index.html) -- *fits models to catch and effort data*
 * [fishmove](https://cran.r-project.org/web/packages/fishmove/index.html) -- *predict fish movement parameters*
@@ -57,6 +59,8 @@ The following are instructions to install packages from within various ways to i
 * [simecol](http://simecol.r-forge.r-project.org/) -- *implementation of dynamic simulation models*
 * [skewtools](http://cran.r-project.org/web/packages/skewtools/) -- *estimation of growth models parameters using the robust ECME method via heteroscedastic nonlinear regression growth model with scale mixture of skew-normal distributions*
 * [ss3sim](https://cran.r-project.org/web/packages/ss3sim/index.html) -- *framework for fisheries stock assessment simulation testing with Stock Synthesis 3*
+* [stacomiR](https://cran.r-project.org/web/packages/stacomiR/index.html) -- *Graphical outputs and treatment for a database of fish pass monitoring*
+* [swfscMisc](https://cran.r-project.org/web/packages/swfscMisc/index.html) -- *Collection of conversion, analytical, geodesic, mapping, and plotting functions used by the Southwest Fisheries Science Center*
 * [tRophicPosition](https://cran.r-project.org/package=tRophicPosition) -- *Bayesian estimation of trophic position from consumer stable isotope ratios*
 * [VMSBase](http://www.vmsbase.org/) -- *vessel monitoring system and logbook data management and analysis*
 * [X2R with FishGraph](https://cran.r-project.org/contrib/extra/x2r/00ReadMe-X2R.html) -- *import the structured output from a given numerical model written in a compiled language (e.g., ADMB, fortran) into R for postprocessing (graphing, further analysis)*
@@ -88,6 +92,13 @@ The following are instructions to install packages from within various ways to i
 * [IRATER](https://cran.r-project.org/web/packages/IRATER/index.html)
 * [lllcrc](https://cran.r-project.org/web/packages/lllcrc/index.html)
 * [SCRbayes](https://sites.google.com/site/spatialcapturerecapture/scrbayes-r-package)
+
+----
+
+## Packages of Data
+* [FSAdata: Data for FSA](https://github.com/droglenc/FSAdata#readme) -- *Collection of many fisheries-related data sets*
+* [fishkirkko2015](https://cran.r-project.org/web/packages/fishkirkko2015/index.html) -- *Length and weight measurements of fish species at Kirkkojarvi Lake, Finland*
+* [fishdata](https://cran.r-project.org/web/packages/fishdata/index.html) -- *Four datasets (fish size and per-day growth history) of migratory fish, from 2015-2016, in the Wellington region of New Zealand*
 
 ----
 

@@ -21,7 +21,7 @@ The following are instructions to install packages from within various ways to i
 ----
 
 ## General Packages
-* [FSA: Fisheries Stock Assessment](https://github.com/droglenc/FSA#readme)
+* [FSA: Fisheries Stock Assessment](http://derekogle.com/FSA/)
 * [DLMtool: Data-Limited Methods Toolkit](https://cran.r-project.org/web/packages/DLMtool/index.html) -- *Implementation of management procedures for data-limited fisheries*
 * [fishmethods: Fisheries Methods and Models in R](https://cran.r-project.org/web/packages/fishmethods/index.html)
 * [fishdynr: Fisheries Science Related Population Dynamics Models](https://github.com/marchtaylor/fishdynr#readme)
@@ -53,6 +53,7 @@ The following are instructions to install packages from within various ways to i
 * [PBSmodelling](https://cran.r-project.org/web/packages/PBSmodelling/index.html) -- *facilitates the design, testing, and operation of computer models; focused on tools that make it easy to construct and edit a customized graphical user interface*
 * [RchivalTag](https://cran.r-project.org/web/packages/RchivalTag/index.html) -- *functions to generate, access and analyze standard data products from archival tagging data*
 * [r4ss](https://github.com/r4ss/r4ss) -- *analyze and plot the output from Stock Synthesis version 3, a fisheries stock assessment model written in ADMB*
+* [RFishBC](http://derekogle.com/RFishBC/) -- *helps fisheries scientists collect growth data from calcified structures and back-calculate estimated lengths at previous ages*
 * [scape](https://cran.r-project.org/web/packages/scape/) -- *import and plot results from statistical catch-at-age models; generally used to connect with ADMB.*
 * [select](https://www.stat.auckland.ac.nz/~millar/selectware/code.html) -- *a flexible and user-extendable framework for size-selectivity via the SELECT model*
 * [shapeR](https://github.com/lisalibungan/shapeR) -- *study otolith shape variation among fish populations*

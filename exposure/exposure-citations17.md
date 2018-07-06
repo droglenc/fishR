@@ -77,4 +77,5 @@ Species Caught in Indo-Pacific Fisheries. Dissertation, James Cook University. [
 1. Wilson KL, Honsey A, Moe B, Venturelli P. 2017. Growing the biphasic framework: techniques and recommendations for fitting emerging growth models. Methods in Ecology and Evolution XX:XXX-XXX [Abstract](http://onlinelibrary.wiley.com/doi/10.1111/2041-210X.12931/abstract) and [Supplementary Information](http://onlinelibrary.wiley.com/store/10.1111/2041-210X.12931/asset/supinfo/mee312931-sup-0001-Appendix.zip?v=1&s=71ac3f4362def7875d6dff7b7066d36a6ddf362f) [Growth]
 
 -----
-<p style="text-align: center;"><a href="exposure-citations18.html">Goto 2018 citations</a> | <p style="text-align: center;"><a href="exposure-citations16.html">Goto 2016 citations</a></p>
+
+<p style="text-align: center;"><a href="exposure-citations18.html">Goto 2018 citations</a> | <a href="exposure-citations16.html">Goto 2016 citations</a></p>

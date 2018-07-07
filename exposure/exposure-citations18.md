@@ -5,7 +5,7 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">43</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">44</span> publications.
 
 1. Agbani PO, Kafoutchoni KM, Salako KV, Gbedomon RC, Kegbe AM, Karen H, Sinsin B. 2018. Traditional ecological knowledge-based assessment of threatened woody species and their potential substitutes in the Atakora mountain chain, a threatened hotspot of biodiversity in Northwestern Benin, West Africa. Journal of Ethnobiology and Ethnomedicine 14:21. [Full Text](https://ethnobiomed.biomedcentral.com/articles/10.1186/s13002-018-0219-6) [Dunn's Test]
 1. Babaluk JA, Knopp JA, Reist JD. 2018. Assessment of fish populations in six lakes near Sach Harbour, Banks Island, Northwest Territories, 1993-1994. Canada/Inuvialuit Fisheries Joint Management Committee Reort 2018-01. [Full Text](https://www.researchgate.net/profile/John_Babaluk/publication/323547130_Assessment_of_fish_populations_in_six_lakes_near_Sachs_Harbour_Banks_Island_Northwest_Territories_1993-1994/links/5a9c0c8baca2721e3f320937/Assessment-of-fish-populations-in-six-lakes-near-Sachs-Harbour-Banks-Island-Northwest-Territories-1993-1994.pdf) [von Bertalanffy Growth]

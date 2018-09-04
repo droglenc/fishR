@@ -5,7 +5,7 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">57</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">61</span> publications.
 
 1. Agbani PO, Kafoutchoni KM, Salako KV, Gbedomon RC, Kegbe AM, Karen H, Sinsin B. 2018. Traditional ecological knowledge-based assessment of threatened woody species and their potential substitutes in the Atakora mountain chain, a threatened hotspot of biodiversity in Northwestern Benin, West Africa. Journal of Ethnobiology and Ethnomedicine 14:21. [Full Text](https://ethnobiomed.biomedcentral.com/articles/10.1186/s13002-018-0219-6) [Dunn's Test]
 1. Avila BW, Winkelman DL, Fetherma ER. 2018. Survival of whirling-disease-resistant Rainbow Trout fry in the wild: A comparison of two strains. Journal of Aquatic Animal Health XX:XXX-XXX. [Abstract](https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1002/aah.10040) [Removal Method]

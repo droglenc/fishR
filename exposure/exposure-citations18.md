@@ -93,4 +93,6 @@ The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA
 1. Zhu P, Grueter CC, Garber PA, Li D, Xiang Z, Ren B, Li M. 2018. Seasonal changes in social cohesion among males in a same‐sex primate group. American Journal of Primatology XX;XXX-XXX. [Abstract](https://onlinelibrary.wiley.com/doi/abs/10.1002/ajp.22914) [Dunn's Test]
 
 -----
-<p style="text-align: center;"><a href="exposure-citations17.html">Goto 2017 citations</a></p>
+
+<p style="text-align: center;"><a href="exposure-citations19.html">Goto 2019 citations</a> | <a href="exposure-citations17.html">Goto 2017 citations</a></p>
+

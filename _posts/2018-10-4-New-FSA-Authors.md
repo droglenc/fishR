@@ -1,0 +1,24 @@
+---
+title: "New FSA Authors"
+layout: post
+date: "November 4, 2018"
+output:
+  html_document
+tags:
+- R
+- FSA
+
+---
+
+
+----
+
+It was always my hope that the Fisheries Stock Assessment (FSA) R package would become a community endeavor. With the recent release on CRAN of v0.8.21 that hope has finally come to fruition. This version has two new co-authors.
+
+[Alexis Dinno](https://alexisdinno.com/) is the author of the [**dunn.test** package](https://cran.r-project.org/web/packages/dunn.test/index.html). The [`dunnTest()` function in **FSA**](http://derekogle.com/FSA/reference/dunnTest.html) is simply a wrapper for `dunn.test()` in her package. In other words, the foundational "guts" of `dunnTest()` were written by Alexis. This has been acknowledged in the last several versions of **FSA**, but by including Alexis as a co-author on **FSA** she will finally get some credit whenever **FSA** is cited for `dunnTest()`.
+
+Powell Wheeler is a fisheries biologist in North Carolina who expanded [`removal()` in FSA](http://derekogle.com/FSA/reference/removal.html) by coding the "Burnham method" as implemented in the popular (but compiled and commercial) MicroFish software. Adding this functionality to **FSA** has been on my "to-do list" since receiving a query for it from biologists in Idaho a few years ago. It now finally exists in **FSA**, thanks to Powell's good work.
+
+Check out the new version of FSA, welcome Alexis and Powell, and thank them for their important contributions to **FSA**.
+
+If you have something to contribute to **FSA**, please [contact me](mailto:derek@derekogle.com).

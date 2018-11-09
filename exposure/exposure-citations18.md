@@ -5,7 +5,7 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">86</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">87</span> publications.
 
 1. Agbani PO, Kafoutchoni KM, Salako KV, Gbedomon RC, Kegbe AM, Karen H, Sinsin B. 2018. Traditional ecological knowledge-based assessment of threatened woody species and their potential substitutes in the Atakora mountain chain, a threatened hotspot of biodiversity in Northwestern Benin, West Africa. Journal of Ethnobiology and Ethnomedicine 14:21. [Full Text](https://ethnobiomed.biomedcentral.com/articles/10.1186/s13002-018-0219-6) [Dunn's Test]
 1. Anderson J, McDonald D, Bumguardner B, Olsen Z, Ferguson JW. 2018. Patterns of maturity, seasonal migration, and spawning of Atlantic Croaker in the western Gulf of Mexico. Gulf of Mexico Science 34:XXX-XXX. [Full Text](https://aquila.usm.edu/cgi/viewcontent.cgi?article=1598&context=goms) [Growth]
@@ -45,6 +45,7 @@ The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA
 1. Hayes JW, Goodwin EO, Clapcott JE, Shearer KA. 2018. The influence of natural flow and temperature and introduced brown trout on the temporal variation in native fish abundance in a ‘reference’ stream. Canadian Journal of Fisheries and Aquatic Sciences XX:XXX-XXX. [Abstract](http://www.nrcresearchpress.com/doi/abs/10.1139/cjfas-2018-0033) [Removal]
 1. Herdrich AT, Winkelman DL, Venarsky MP, Walters DM, Wohl E. 2018. The loss of large wood affects rocky mountain trout populations. Ecology of Freshwater Fish XX:XXX-XXX. [Abstract](https://onlinelibrary.wiley.com/doi/abs/10.1111/eff.12412) [von Bertalanffy Growth]
 1. Honkanen HM, Boylan P, Dodd JA, Adams CE. 2018. Life stage‐specific, stochastic environmental effects overlay density dependence in an Atlantic salmon population. Ecology of Freshwater Fish XX:XXX-XXX [Abstract](https://onlinelibrary.wiley.com/doi/10.1111/eff.12439) [Stock-Recruitment]
+1. Hue HTT, Pradit S, Jarunee C, Lim A, Nitiratsuwan T, Goncalo C. 2018. Physical properties of three Songkhla Lagoon fish species in the lower Gulf of Thailand during and after monsoon season. Applied Ecology and Environmental Research 16:6113-6127. [Full Text](http://www.aloki.hu/pdf/1605_61136127.pdf) [Weight-Length]
 1. Jain P, Mentzer R. Mannan SM. 2018. Resilience metrics for improved process-risk decision making: Survey, analysis and application. Safety Science 108:13-28. [Abstract](https://www.sciencedirect.com/science/article/pii/S0925753517313802) [???]
 1. Jarrin JRM, Andrade-Vera S, Reyes-Ojedis C, Salina-de-Leon P. 2018. Life history of the Mottled Scorpionfish, *Pontius clemensi*, in the Galapagos Marine Reserve. Copeia 106:515-523. [Abstract](http://www.bioone.org/doi/abs/10.1643/CI-17-706) [Growth?]
 1. Koch J, Neely B, Sowards B. 2018. Precision of three structures for Saugeye age estimation. North American Journal of Fisheries Management. 38:31-38. [Abstract](http://onlinelibrary.wiley.com/doi/10.1002/nafm.10019/abstract) [Age Comparisons??]

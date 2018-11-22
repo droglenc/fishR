@@ -30,7 +30,7 @@ I have introduced and described the primary functionality of the package with th
 1. [Short Introduction to Back-Calculation](http://derekogle.com/RFishBC/articles/BCIntro/BCIntro.html)
 1. [Collect Radial Measurements from a Calcified Structure by Interactively Selecting Annuli](http://derekogle.com/RFishBC/articles/MeasureRadii/collectRadiiData.html)
 1. [Visualize Points Selected on a Calcified Structure](http://derekogle.com/RFishBC/articles/MeasureRadii/seeRadiiData.html)
-1. [Computed Back-Calculated Lengths](http://derekogle.com/RFishBC/articles/BCCalc/BCCalc.html)
+1. [Compute Back-Calculated Lengths](http://derekogle.com/RFishBC/articles/BCCalc/BCCalc.html)
 
 A fifth vignette provides a [suggested workflow](http://derekogle.com/RFishBC/articles/Workflow/BCWorkflow.html). The R Documentation (i.e., "help files") for each function [are also available on the webpage](http://derekogle.com/RFishBC/reference/index.html) (including output from the examples).
 

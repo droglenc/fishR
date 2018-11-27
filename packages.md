@@ -65,6 +65,7 @@ The following are instructions to install packages from within various ways to i
 * [tRophicPosition](https://cran.r-project.org/package=tRophicPosition) -- *Bayesian estimation of trophic position from consumer stable isotope ratios*
 * [VMSBase](http://www.vmsbase.org/) -- *vessel monitoring system and logbook data management and analysis*
 * [X2R with FishGraph](https://cran.r-project.org/contrib/extra/x2r/00ReadMe-X2R.html) -- *import the structured output from a given numerical model written in a compiled language (e.g., ADMB, fortran) into R for postprocessing (graphing, further analysis)*
+* [ypr](https://poissonconsulting.github.io/ypr/index.html) -- *yield-per-recruit analysis*
 
 ----
 

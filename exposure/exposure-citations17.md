@@ -5,7 +5,7 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">64</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">58</span> publications.
 
 1. Ajuzie CC. 2017. Status of *Oreochromis niloticus* (Linnaeus, 1758) fishery in Liberty Reservoir, Jos, Nigeria. International Journal of Fisheries and Aquatic Studies. 5(3):10-13. [Full Text](https://www.researchgate.net/profile/Cyril_Ajuzie/publication/316553825_International_Journal_of_Fisheries_and_Aquatic_Studies_2017_53_10-13/links/59037dd6a6fdccd580cffedf/International-Journal-of-Fisheries-and-Aquatic-Studies-2017-53-10-13.pdf) [Condition]
 1. Beaty J., Chen Y. 2017. Can back-calculated lengths based on otoliths measuremetns provide reliable estimates of Atlantic halibut (*Hippoglossus hippoglossus*) growth in the Gulf of Maine (U.S.A.). Aquaculture and Fisheries 2:24-33. [Full Text](http://www.sciencedirect.com/science/article/pii/S2468550X17300023). [von Bertalanffy Growth]

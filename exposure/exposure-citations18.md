@@ -5,7 +5,7 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">104</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">108</span> publications.
 
 1. Agbani PO, Kafoutchoni KM, Salako KV, Gbedomon RC, Kegbe AM, Karen H, Sinsin B. 2018. Traditional ecological knowledge-based assessment of threatened woody species and their potential substitutes in the Atakora mountain chain, a threatened hotspot of biodiversity in Northwestern Benin, West Africa. Journal of Ethnobiology and Ethnomedicine 14:21. [Full Text](https://ethnobiomed.biomedcentral.com/articles/10.1186/s13002-018-0219-6) [Dunn's Test]
 1. Anderson J, McDonald D, Bumguardner B, Olsen Z, Ferguson JW. 2018. Patterns of maturity, seasonal migration, and spawning of Atlantic Croaker in the western Gulf of Mexico. Gulf of Mexico Science 34:XXX-XXX. [Full Text](https://aquila.usm.edu/cgi/viewcontent.cgi?article=1598&context=goms) [Growth]

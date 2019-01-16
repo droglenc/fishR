@@ -5,7 +5,7 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">17</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">18</span> publications.
 
 1. Brauer TA, Quist MC, Rhea DT, Laughlin TW, Walrath JD. 2019. Population Characteristics and Management of Lentic Populations of Nonnative Burbot in the Green River System, Wyoming. North American Journal of Fisheries Management. XX:XXX-XXX. [Abstract](https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1002/nafm.10247) [von Bertalanffy Growth]
 1. Carroll J, Lowerre-Barbieri SK. 2019. Interactions of dimorphic growth, reproductive behavior, and a size-regulated fishery: a case study using Spotted Seatrout *Cynoscion nebulosus*. Marine Ecology Progress Series 608:233-245. [Abstract](https://www.int-res.com/abstracts/meps/v608/p233-245) [von Bertalanffy Growth]
@@ -14,6 +14,7 @@ The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA
 1. Fernandez DA, Bruno DO, Llompart FM. 2019. Length–weight relationship of six notothenioid species from sub‐Antarctic waters (Beagle Channel, Argentina). Journal of Applied Ichthyology XX:XXX-XXX. [Abstract](https://onlinelibrary.wiley.com/doi/abs/10.1111/jai.13833) [Weight-Length]
 1. Fisk II JM, Morgeson CW, Polera ME. 2019. Evaluation of recreational hand‐crank electrofishing on introduced catfish species in southeastern North Carolina. North American Journal of Fisheries Management [Abstract](https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1002/nafm.10255) [Chapman-Robson]
 1. Gonzalez-Gonzales LDV, Ehermann NR. 2019. Length-weight relationships of six elasmobranch species captured at the artisinal fishery of Margarita Island, Venezuela. Journal of Applied Ichthyology XX:XXX-XXX. [Abstract](https://onlinelibrary.wiley.com/doi/abs/10.1111/jai.13832) [Weight-Length]
+1. Harris HE, Patterson III WF, Ahrens RNM, Allen MS. 2019. Detection and removal efficiency of invasive lionfish in the northern Gulf of Mexico. Fisheries Research 213:22-32. [Abstract](https://www.sciencedirect.com/science/article/pii/S0165783619300025) [Depletion]
 1. Hayes JW, Goodwin EO, Clapcott JE, Shearer KA. 2019. The influence of natural flow and temperature and introduced brown trout on the temporal variation in native fish abundance in a ‘reference’ stream. Canadian Journal of Fisheries and Aquatic Sciences XX:XXX-XXX. [Abstract](http://www.nrcresearchpress.com/doi/abs/10.1139/cjfas-2018-0033) [Removal]
 1. Honkanen HM, Boylan P, Dodd JA, Adams CE. 2019. Life stage‐specific, stochastic environmental effects overlay density dependence in an Atlantic salmon population. Ecology of Freshwater Fish 28:156-166 [Abstract](https://onlinelibrary.wiley.com/doi/10.1111/eff.12439) [Stock-Recruitment]
 1. Knight CT, Kraus RT, Panos DA, Gorman AM, Leonhardt BS, Robinson J, Thomas M. 2019. Is barotrauma an important factor in the discard mortality of Yellow Perch. Journal of Fisheries and Wildlife Management XX:XXX-XXX. [Full Text](http://www.fwspubs.org/doi/pdf/10.3996/062018-JFWM-056) [Bootstrapping]

@@ -5,7 +5,7 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">18</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">19</span> publications.
 
 1. Brauer TA, Quist MC, Rhea DT, Laughlin TW, Walrath JD. 2019. Population Characteristics and Management of Lentic Populations of Nonnative Burbot in the Green River System, Wyoming. North American Journal of Fisheries Management. XX:XXX-XXX. [Abstract](https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1002/nafm.10247) [von Bertalanffy Growth]
 1. Carroll J, Lowerre-Barbieri SK. 2019. Interactions of dimorphic growth, reproductive behavior, and a size-regulated fishery: a case study using Spotted Seatrout *Cynoscion nebulosus*. Marine Ecology Progress Series 608:233-245. [Abstract](https://www.int-res.com/abstracts/meps/v608/p233-245) [von Bertalanffy Growth]
@@ -27,6 +27,8 @@ The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA
 1. Watkins HV, Blouin-Demers G. 2019. Body size, not age, predicts parasite load in Clark's Spiny Lizards (*Sceloporus clarkii*). Canadian Journal of Zoology XX:XXX-XXX. [Abstract](http://www.nrcresearchpress.com/doi/abs/10.1139/cjz-2017-0328) [von Bertalanffy Growth]
 1. Wei J, Lavergne E, Kurita Y, Todate K, Kasai A, Fuji T, Yamashita Y. 2019. Age determination and growth pattern of temperate seabass Lateolabrax japonicus in Tango Bay and Sendai Bay, Japan. Fisheries Science XX:XXX-XXX. [Abstract](https://www.researchgate.net/publication/328999471_Age_determination_and_growth_pattern_of_temperate_seabass_Lateolabrax_japonicus_in_Tango_Bay_and_Sendai_Bay_Japan) [Growth]
 1. Weltersback MS, Lewin W-C, Groger JP, Strehlow HV. 2019. Effect of lure and bait type on catch, size, hooking location, injury and bycatch in the western Baltic Sea recreational cod fishery. Fisheries Research 210:121-130. [Abstract](https://www.researchgate.net/publication/328531070_Effect_of_lure_and_bait_type_on_catch_size_hooking_location_injury_and_bycatch_in_the_western_Baltic_Sea_recreational_cod_fishery) [???]
+1. Young A. 2019. Anadromy versus non-anadromy in the Canadian Arctic: variation in the lake 
+ecology and life history of two allopatric Arctic charr (*Salvelinus alpinus*) populations in Cumberland Sound on South Baffin Island, Nunavut. MS Thesis, Univ. Manitoba. [Full Text](https://mspace.lib.umanitoba.ca/bitstream/handle/1993/33682/Angela_Young.pdf?sequence=1) [Growth, Age-Length Key]
 
 -----
 <p style="text-align: center;"><a href="exposure-citations18.html">Goto 2018 citations</a></p>

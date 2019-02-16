@@ -4,10 +4,12 @@ title: Learn R!
 ---
 
 ## Upcoming Courses
-* [*Intro to R for Fisheries Biologists*](https://afsannualmeeting.fisheries.org/continuing-education-workshops/) -- 148th Annual Meeting of the American Fisheries Society, Atlantic City NJ; 18 August 2018. [???]
-* [*Unleashing the Power of R as a Graphing Tool*](https://afsannualmeeting.fisheries.org/continuing-education-workshops/) -- 148th Annual Meeting of the American Fisheries Society, Atlantic City NJ; 19 August 2018. [Doll]
 
 ## Past Courses (*materials may be out-of-date*)
+* [*A Primer of Multilevel (mixed) Modeling Using R*](https://midwestfishwildlifeconferen2019.sched.com/event/IPbq/workshop-a-primer-of-multilevel-mixed-modeling-using-r) [Qian]
+-- Midwest Fisheries and Wildlife Conference; Cleveland, OH; 29 January 2018
+* [*Intro to R for Fisheries Biologists*](https://afsannualmeeting.fisheries.org/continuing-education-workshops/) -- 148th Annual Meeting of the American Fisheries Society, Atlantic City NJ; 18 August 2018. [???]
+* [*Unleashing the Power of R as a Graphing Tool*](https://afsannualmeeting.fisheries.org/continuing-education-workshops/) -- 148th Annual Meeting of the American Fisheries Society, Atlantic City NJ; 19 August 2018. [Doll]
 * [*Introductory Fisheries Analyses with R*](http://derekogle.com/RcourseMidwest2018/) -- Midwest Fisheries and Wildlife Conference; Milwaukee, WI; 28 January 2018. [Announcement](https://midwestfishwildlifeconferen2018.sched.com/event/Cde4/workshop-introductory-fisheries-analyses-with-r)
 * *An Introduction to R: Getting Comfortable with the Basics* -- Michigan Chapter of the American Fisheries Society; Traverse City, MI; 20/21 January 2018. [Announcement](http://michigan.fisheries.org/wp-content/uploads/2017/08/MIAFS-R-Workshop-Announcement.pdf) [[Erickson](https://www.umesc.usgs.gov/staff/bios/rae0.html) and [Eager](https://sites.google.com/a/uwlax.edu/eric-eager/home)]
 * [*R for Fisheries Population Dynamics*](http://derekogle.com/RcourseIdaho2017/) -- Western Division of AFS Student Colloquium; McCall, ID; 15 November 2017. [Announcement](https://afs-calneva.org/wp-content/uploads/sites/8/2017/07/Save-the-date_WD_Student_Colloquium.pdf) [Ogle]

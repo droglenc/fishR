@@ -5,7 +5,7 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">30</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">31</span> publications.
 
 1. Aslan CE, Shiels AB, Haines W, Liang CT. 2019. Non‐native insects dominate daytime pollination in a high‐elevation Hawaiian dryland ecosystem. American Journal of Botany XX:XXX-XXX. [Abstract](https://bsapubs.onlinelibrary.wiley.com/doi/abs/10.1002/ajb2.1233) [???]
 1. Brauer TA, Quist MC, Rhea DT, Laughlin TW, Walrath JD. 2019. Population Characteristics and Management of Lentic Populations of Nonnative Burbot in the Green River System, Wyoming. North American Journal of Fisheries Management. XX:XXX-XXX. [Abstract](https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1002/nafm.10247) [von Bertalanffy Growth]
@@ -22,6 +22,7 @@ The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA
 1. Harris HE, Patterson III WF, Ahrens RNM, Allen MS. 2019. Detection and removal efficiency of invasive lionfish in the northern Gulf of Mexico. Fisheries Research 213:22-32. [Abstract](https://www.sciencedirect.com/science/article/pii/S0165783619300025) [Depletion]
 1. Harry A, Butcher PA, Macbeth WG, Morgan JAT, Taylor SM, Geraghty PT. 2019. Life history of the common blacktip shark, *Carcharhinus limbatus*, from central eastern Australia and comparative demography of a cryptic shark complex. Marine and Freshwater Research XX:XXX-XXX. [Abstract](http://www.publish.csiro.au/MF/MF18141) [XXX]
 1. Hayes JW, Goodwin EO, Clapcott JE, Shearer KA. 2019. The influence of natural flow and temperature and introduced brown trout on the temporal variation in native fish abundance in a ‘reference’ stream. Canadian Journal of Fisheries and Aquatic Sciences XX:XXX-XXX. [Abstract](http://www.nrcresearchpress.com/doi/abs/10.1139/cjfas-2018-0033) [Removal]
+1. Herdter E, Mahmoudi B, Peebles E, Murawski SA. 2019. Spatial variability in size structure, growth, and recruitment of Spotted Seatrout among six Florida estuaries. Marine and Coastal Fisheries Dynamics, Management, and Ecosystem Science. 11:97-111. [Full Text](https://afspubs.onlinelibrary.wiley.com/doi/pdf/10.1002/mcf2.10063) [von Bertalanffy growth]
 1. Hickerson BT, Walters AW. 2019. Evaluation of potential translocation sites for an imperiled cyprinid, the Hornyhead Chub. North American Journal of Fisheries Management XX:XXX-XXX. [Abstract](https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1002/nafm.10261) [Removal]
 1. Honkanen HM, Boylan P, Dodd JA, Adams CE. 2019. Life stage‐specific, stochastic environmental effects overlay density dependence in an Atlantic salmon population. Ecology of Freshwater Fish 28:156-166 [Abstract](https://onlinelibrary.wiley.com/doi/10.1111/eff.12439) [Stock-Recruitment]
 1. Knight CT, Kraus RT, Panos DA, Gorman AM, Leonhardt BS, Robinson J, Thomas M. 2019. Is barotrauma an important factor in the discard mortality of Yellow Perch. Journal of Fisheries and Wildlife Management XX:XXX-XXX. [Full Text](http://www.fwspubs.org/doi/pdf/10.3996/062018-JFWM-056) [Bootstrapping]

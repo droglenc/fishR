@@ -5,7 +5,7 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">39</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">40</span> publications.
 
 1. Aslan CE, Shiels AB, Haines W, Liang CT. 2019. Non‐native insects dominate daytime pollination in a high‐elevation Hawaiian dryland ecosystem. American Journal of Botany XX:XXX-XXX. [Abstract](https://bsapubs.onlinelibrary.wiley.com/doi/abs/10.1002/ajb2.1233) [???]
 1. Brauer TA, Quist MC, Rhea DT, Laughlin TW, Walrath JD. 2019. Population Characteristics and Management of Lentic Populations of Nonnative Burbot in the Green River System, Wyoming. North American Journal of Fisheries Management. XX:XXX-XXX. [Abstract](https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1002/nafm.10247) [von Bertalanffy Growth]
@@ -37,6 +37,7 @@ The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA
 1. Morissette O, Sirois P, Wilson CC, Laporte M, Bernatchez L. 2019. The role of ecotype‐environment interactions in intraspecific trophic niche partitioning subsequent to stocking. Ecological Applications XX:XXX-XXX. [Abstract](https://esajournals.onlinelibrary.wiley.com/doi/abs/10.1002/eap.1857) [von Bertalanffy Growth]
 1. Payne RB, Ghosh U, May HD, Marshall CW, Sowers KR. 2019. A pilot-scale field study: In situ treatment of PCB-impacted sediments with bioamended activated carbon. Environmental Science and Technology XX:XXX-XXX. [Abstract](https://pubs.acs.org/doi/abs/10.1021/acs.est.8b05019) [???]
 1. Porter KDH, Quilliam RS, Reaney SM, Oliver DM. 2019. High resolution characterisation of *E. coli* proliferation profiles in livestock faeces. Waste Management 87:537-545. [Full Text](https://www.sciencedirect.com/science/article/pii/S0956053X19301084) [???]
+1. Rosa D, Mas F, Mathers A, Natanson LJ, Domingo A, Carlson J. Coelho R. 2019. Age and growth of Shortfin Mako in the South Atlantic. Collect. Vol. Sci. Pap. ACCAT 75:457-475. [Ful Text](https://www.iccat.int/Documents/CVSP/CV075_2018/n_3/CV075030457.pdf) [von Bertalanffy Growth]
 1. Soeth M, Favaro LF, Spach HL, Daros FA, Wolrich AE. 2019. Age, growth, and reproductive biology of the Atlantic Spadefish *Chaetodipterus faber* in southern Brazil. Ichthyological Research XX:XXX-XXX. [Full Text](https://link.springer.com/article/10.1007/s10228-018-0663-2) [Ageing Precision; von Bertalanffy Growth]
 1. Stalder GL, Pinior B, Zwirzitz B, Loncaric I, Jakupović D, Vetter SG, Smith S, Posautz A, Hoelzl F, Wagner M, Hoffmann D, Kübber-Heiss A, Mann E. 2019. Gut microbiota of the European Brown Hare (*Lepus europaeus*). Nature Scientific Reports XX:XXX-XXX. [Full Text](https://www.nature.com/articles/s41598-019-39638-9) [Dunn's Test]
 1. Tuttle LJ, Robinson HE, Takagi D, Strickler JR, Lenz PH, Harline DK. 2019. Going with the flow: hydrodynamic cues trigger directed escapes from a stalking predator. Journal of the Royal Society Interface XX:XXX-XXX. [Abstract](https://royalsocietypublishing.org/doi/abs/10.1098/rsif.2018.0776) [Dunn's Test]

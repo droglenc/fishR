@@ -38,13 +38,17 @@
 <p>From Figure 4 in Soto, D., I. Arismendi, C. Di Prinzio, and F. Jara.  2007.  Establishment of Chinook salmon (<em>Oncorhynchus tshawytscha</em>) in Pacific basins of southern South America and its potential ecosystem implications.  Revista Chilena d Historia Natural, 80:81-98.  [Was (is?) from http://www.scielo.cl/pdf/rchnat/v80n1/art07.pdf.]</p>
 
 
+<h3>See Also</h3>
+
+<p>Used in <code>lwCompPreds</code> examples.</p>
+
+
 <h3>Examples</h3>
 
 <pre>
-data(ChinookArg)
 str(ChinookArg)
 head(ChinookArg)
-op &lt;- par(mfrow=c(2,2),pch=19)
+op &lt;- par(mfrow=c(2,2),pch=19,mar=c(3,3,0.5,0.5),mgp=c(1.9,0.5,0),tcl=-0.2)
 plot(w~tl,data=ChinookArg,subset=loc=="Argentina")
 plot(w~tl,data=ChinookArg,subset=loc=="Petrohue")
 plot(w~tl,data=ChinookArg,subset=loc=="Puyehue")
@@ -52,5 +56,5 @@ par(op)
 
 </pre>
 
-<hr /><div style="text-align: center;">[Package <em>FSA</em> version 0.8.11 ]</div>
+<hr /><div style="text-align: center;">[Package <em>FSA</em> version 0.8.22 ]</div>
 </body></html>

@@ -37,23 +37,26 @@
 <li> Other</li>
 </ul>
 
-<p>@concept 'Linear Models' Other</p>
 
 
 <h3>Source</h3>
 
-<p>From (actual data) Makarewicz, J.C., E.Damaske, T.W. Lewis, and M. Merner.  2003.  Trend analysis reveals a recent reduction in mirex concentrations in coho (<em>Oncorhynchus kistuch</em>) and chinook (<em>O. tshawytscha</em>) salmon from Lake Ontario.  Environmental Science and Technology, 37:1521-1527.</p>
+<p>From (actual data) Makarewicz, J.C., E.Damaske, T.W. Lewis, and M. Merner.  2003.  Trend analysis reveals a recent reduction in mirex concentrations in coho (<em>Oncorhynchus kisutch</em>) and chinook (<em>O. tshawytscha</em>) salmon from Lake Ontario.  Environmental Science and Technology, 37:1521-1527.</p>
+
+
+<h3>See Also</h3>
+
+<p>Used in <code>fitPlot</code>, <code>residPlot</code>, <code>compSlopes</code>, <code>compIntercepts</code>, <code>hoCoef</code>, and <code>rSquared</code> examples.</p>
 
 
 <h3>Examples</h3>
 
 <pre>
-data(Mirex)
 Mirex$year &lt;- factor(Mirex$year)
 lm1 &lt;- lm(mirex~weight*year*species,data=Mirex)
 anova(lm1)
 
 </pre>
 
-<hr /><div style="text-align: center;">[Package <em>FSA</em> version 0.8.11 ]</div>
+<hr /><div style="text-align: center;">[Package <em>FSA</em> version 0.8.22 ]</div>
 </body></html>

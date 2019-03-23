@@ -18,10 +18,10 @@
 
 <ul>
 <li>tag: Unique Floy tag number.</li>
-<li>Lm: length (mm) at tagging.</li>
-<li>Lr: Length (mm) at recapture.</li>
-<li>dL: Change in length (mm).</li>
-<li>dt: Time-at-large (yrs).</p>
+<li>lenMark: length (mm) at tagging.</li>
+<li>lenRecap: Length (mm) at recapture.</li>
+<li>deltaLen: Change in length (mm).</li>
+<li>deltaTime: Time-at-large (yrs).</p>
 </dd> 
 </ul>
 
@@ -48,9 +48,9 @@
 data(BluegillIL)
 str(BluegillIL)
 head(BluegillIL)
-plot((Lr-Lm)~dt,data=BluegillIL)
+plot((lenRecap-lenMark)~deltaTime,data=BluegillIL)
 
 </pre>
 
-<hr /><div style="text-align: center;">[Package <em>FSAdata</em> version 0.3.5 ]</div>
+<hr /><div style="text-align: center;">[Package <em>FSAdata</em> version 0.3.6.9000 ]</div>
 </body></html>

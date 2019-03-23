@@ -38,18 +38,22 @@
 <p>From Garrod, D.J. 1967.  Population dynamics of the Arcto-Norwegian cod.  Journal of the Fisheries Research Board of Canada, 24:145-190.</p>
 
 
+<h3>See Also</h3>
+
+<p>Used in <code>srStarts</code>, <code>srFuns</code>, and <code>nlsTracePlot</code> examples.</p>
+
+
 <h3>Examples</h3>
 
 <pre>
-data(CodNorwegian)
 str(CodNorwegian)
 head(CodNorwegian)
-op &lt;- par(mfrow=c(1,2))
+op &lt;- par(mfrow=c(1,2),pch=19,mar=c(3,3,0.5,0.5),mgp=c(1.9,0.5,0),tcl=-0.2)
 plot(recruits~year,data=CodNorwegian,type="l")
 plot(recruits~stock,data=CodNorwegian)
 par(op)
 
 </pre>
 
-<hr /><div style="text-align: center;">[Package <em>FSA</em> version 0.8.11 ]</div>
+<hr /><div style="text-align: center;">[Package <em>FSA</em> version 0.8.22 ]</div>
 </body></html>

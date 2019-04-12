@@ -5,7 +5,7 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">47</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">48</span> publications.
 
 1. Aslan CE, Shiels AB, Haines W, Liang CT. 2019. Non‐native insects dominate daytime pollination in a high‐elevation Hawaiian dryland ecosystem. American Journal of Botany XX:XXX-XXX. [Abstract](https://bsapubs.onlinelibrary.wiley.com/doi/abs/10.1002/ajb2.1233) [???]
 1. Altenritter ME, Walthier BD. 2019. The legacy of hypoxia: tracking carryover effects of low oxygen exposure in a demersal fish using geochemical tracers. Transactions of the American Fisheries Society XX:XXX-XXX. [Abstract](https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1002/tafs.10159) [von Bertalanffy Growth]
@@ -39,6 +39,7 @@ The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA
 1. Moore C, Lynch D, Clarke M, Officer R, Mills J, Louis-Defour J, Brophy D. 2019. Age verification of north Atlantic Sprat. Fisheries Research 213:144-150. [Abstract](https://www.sciencedirect.com/science/article/abs/pii/S0165783619300189) [Age Comparisons] 
 1. Morissette O, Sirois P, Wilson CC, Laporte M, Bernatchez L. 2019. The role of ecotype‐environment interactions in intraspecific trophic niche partitioning subsequent to stocking. Ecological Applications XX:XXX-XXX. [Abstract](https://esajournals.onlinelibrary.wiley.com/doi/abs/10.1002/eap.1857) [von Bertalanffy Growth]
 1. Payne RB, Ghosh U, May HD, Marshall CW, Sowers KR. 2019. A pilot-scale field study: In situ treatment of PCB-impacted sediments with bioamended activated carbon. Environmental Science and Technology XX:XXX-XXX. [Abstract](https://pubs.acs.org/doi/abs/10.1021/acs.est.8b05019) [???]
+1. Poole JR, Bajer PG. 2019. A small native predator reduces reproductive success of a large invasive fish as revealed by whole-lake experiments. PLOS One. [Full Text](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0214009) [Schnabel]
 1. Porter KDH, Quilliam RS, Reaney SM, Oliver DM. 2019. High resolution characterisation of *E. coli* proliferation profiles in livestock faeces. Waste Management 87:537-545. [Full Text](https://www.sciencedirect.com/science/article/pii/S0956053X19301084) [???]
 1. Rosa D, Mas F, Mathers A, Natanson LJ, Domingo A, Carlson J. Coelho R. 2019. Age and growth of Shortfin Mako in the South Atlantic. Collect. Vol. Sci. Pap. ACCAT 75:457-475. [Ful Text](https://www.iccat.int/Documents/CVSP/CV075_2018/n_3/CV075030457.pdf) [von Bertalanffy Growth]
 1. Schall BJ, Schoenebeck C, Koupal KD. 2019. Population characteristics of co-managed White Bass and hybrid Striped Bass in Lake McConaughy, Nebraska. Transactions of the Nebraska Academy of Sciences 39:1-9. [Full Text](https://digitalcommons.unl.edu/cgi/viewcontent.cgi?article=1534&context=tnas) [Age-Length Key]

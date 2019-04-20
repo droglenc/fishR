@@ -44,7 +44,7 @@ trategies on Walleye (*Sander vitreus*) populations in Alberta, Canada. Master's
 1. Usseglio P, Friedlander AM, Koike H, Zimmerhackel J, Schuhbauer A, Eddy T, Salinas-de-Leon P. 2016. So long and thanks for all the fish: Overexploitation of the regionally endemic Galapagos Grouper *Mycteroperca olfax* (Jenyns, 1840). PLOS ONE 11.10 (2016): e0165167. [Full Text](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0165167) [Mortality - Chapman-Robson]
 1. Winfield IJ. 2016. Book review: Introductory Fisheries Analyses with R. Journal of Fish Biology 89:2468-2469. [Full Text](http://derekogle.com/IFAR/reviews/Winfield-2016-Journal_of_Fish_Biology.pdf) [Book Review] 
 1. Winter ER. 2016. The phenology of seaward migration of juvenile brown trout (Salmo trutta) in two European populations. MSc. Thesis, Durham University. [Full Text](http://etheses.dur.ac.uk/11544) [Depletion]
-1. Yerli SV, Korkmaz M, Mangit F. 2016. Length-length and length-weight relationships for four endemic Cyprinid species in Kucuk Menderes River Basin, Turkey. Journal of Applied Ichthyology. 32:991-993. [Abstract](http://onlinelibrary.wiley.com/doi/10.1111/jai.13133/abstract) [XXX]
+1. Yerli SV, Korkmaz M, Mangit F. 2016. Length-length and length-weight relationships for four endemic Cyprinid species in Kucuk Menderes River Basin, Turkey. Journal of Applied Ichthyology. 32:991-993. [Abstract](http://onlinelibrary.wiley.com/doi/10.1111/jai.13133/abstract) [Length-weight]
 
 -----
 <p style="text-align: center;"><a href="exposure-citations17.html">Goto 2017 citations</a> | <a href="exposure-citations15.html">Goto 2015 citations</a></p>

@@ -5,7 +5,7 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">51</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">52</span> publications.
 
 1. Aslan CE, Shiels AB, Haines W, Liang CT. 2019. Non‐native insects dominate daytime pollination in a high‐elevation Hawaiian dryland ecosystem. American Journal of Botany XX:XXX-XXX. [Abstract](https://bsapubs.onlinelibrary.wiley.com/doi/abs/10.1002/ajb2.1233) [???]
 1. Altenritter ME, Walthier BD. 2019. The legacy of hypoxia: tracking carryover effects of low oxygen exposure in a demersal fish using geochemical tracers. Transactions of the American Fisheries Society XX:XXX-XXX. [Abstract](https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1002/tafs.10159) [von Bertalanffy Growth]
@@ -29,6 +29,7 @@ The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA
 1. Herdter E, Mahmoudi B, Peebles E, Murawski SA. 2019. Spatial variability in size structure, growth, and recruitment of Spotted Seatrout among six Florida estuaries. Marine and Coastal Fisheries Dynamics, Management, and Ecosystem Science. 11:97-111. [Full Text](https://afspubs.onlinelibrary.wiley.com/doi/pdf/10.1002/mcf2.10063) [von Bertalanffy growth]
 1. Hickerson BT, Walters AW. 2019. Evaluation of potential translocation sites for an imperiled cyprinid, the Hornyhead Chub. North American Journal of Fisheries Management XX:XXX-XXX. [Abstract](https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1002/nafm.10261) [Removal]
 1. Honkanen HM, Boylan P, Dodd JA, Adams CE. 2019. Life stage‐specific, stochastic environmental effects overlay density dependence in an Atlantic salmon population. Ecology of Freshwater Fish 28:156-166 [Abstract](https://onlinelibrary.wiley.com/doi/10.1111/eff.12439) [Stock-Recruitment]
+1. Jankowska M, LapiedB, JankowskiW, Stankiewicz M. 2019. The unusual action of essential oil component, menthol, in potentiating the effect of the carbamate insecticide, bendiocarb. Pesticide Biochemistry and Physiology XX:XXX-XXX. [Abstract](https://www.sciencedirect.com/science/article/abs/pii/S0048357518304541) [Dunn Test]
 1. Jones DA, Akbaripasand A, Nakagawa S, Closs GP. 2019. Landscape features determine Brown Trout population structure and recruitment dynamics. Ecology of Freshwater Fish XX:XXX-XXX. [Abstract](https://onlinelibrary.wiley.com/doi/abs/10.1111/eff.12474) [???]
 1. Kelson SJ, Carlson SM. 2019. Do precipitation extremes drive growth and migration timing of a Pacific salmonid fish in Mediterranean-climate streams? Ecosphere 10:XXX-XXX. [Abstract](https://www.researchgate.net/publication/331908792_Do_precipitation_extremes_drive_growth_and_migration_timing_of_a_Pacific_salmonid_fish_in_Mediterranean-climate_streams/references) [Depletion]
 1. Knight CT, Kraus RT, Panos DA, Gorman AM, Leonhardt BS, Robinson J, Thomas M. 2019. Is barotrauma an important factor in the discard mortality of Yellow Perch. Journal of Fisheries and Wildlife Management XX:XXX-XXX. [Full Text](http://www.fwspubs.org/doi/pdf/10.3996/062018-JFWM-056) [Bootstrapping]

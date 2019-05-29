@@ -5,7 +5,7 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">59</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">60</span> publications.
 
 1. Aslan CE, Shiels AB, Haines W, Liang CT. 2019. Non‐native insects dominate daytime pollination in a high‐elevation Hawaiian dryland ecosystem. American Journal of Botany XX:XXX-XXX. [Abstract](https://bsapubs.onlinelibrary.wiley.com/doi/abs/10.1002/ajb2.1233) [???]
 1. Altenritter ME, Walthier BD. 2019. The legacy of hypoxia: tracking carryover effects of low oxygen exposure in a demersal fish using geochemical tracers. Transactions of the American Fisheries Society XX:XXX-XXX. [Abstract](https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1002/tafs.10159) [von Bertalanffy Growth]
@@ -19,6 +19,7 @@ The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA
 1. Doss SS, Murphy BR, Castello L, Williams JA, Copeland J, DiCenzo VJ. 2019. Field evaluation and simulation modeling of length limits and their effects on fishery quality for New River, Virginia Muskellunge. North American Journal of Fisheries Management XX:XXX-XXX. [Abstract](https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1002/nafm.10251) [Growth and Mortality]
 1. Espunyes J, Lurgi M, Buntgen U, Bartolome J, Calleja JA, Galvez-Ceron A, Penuelas J, Serrano E. 2019. Different effects of alpine woody plant expansion on domestic and wild ungulates. Global Change Biology XX:XXX-XXX. [Abstract](https://onlinelibrary.wiley.com/doi/abs/10.1111/gcb.14587) [Dunn-Test]
 1. Fernandez DA, Bruno DO, Llompart FM. 2019. Length–weight relationship of six notothenioid species from sub‐Antarctic waters (Beagle Channel, Argentina). Journal of Applied Ichthyology XX:XXX-XXX. [Abstract](https://onlinelibrary.wiley.com/doi/abs/10.1111/jai.13833) [Weight-Length]
+1. Filous A, Lennox RJ, Coleman RR, Friedlander AM, Clua EEG, Danylchuk AJ. 2019. Life-history characteristics of an exploited bonefish *Albula glossodonta* population in a remote South Pacific atoll. Journal of Fish Biology XX:XXX-XXX. [Abstract](https://onlinelibrary.wiley.com/doi/abs/10.1111/jfb.14057) [von Bertalanffy Growth??]
 1. Fisk II JM, Morgeson CW, Polera ME. 2019. Evaluation of recreational hand‐crank electrofishing on introduced catfish species in southeastern North Carolina. North American Journal of Fisheries Management [Abstract](https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1002/nafm.10255) [Chapman-Robson]
 1. Ford BM, Roberts JD. 2019. Evolutionary histories impart structure into marie fish heterospecific co-occurrence networks. Global Ecology and Biogeography. XX:XXX-XXX. [Abstract](https://onlinelibrary.wiley.com/doi/abs/10.1111/geb.12934) [Dunn Test]
 1. Gonzalez-Gonzales LDV, Ehermann NR. 2019. Length-weight relationships of six elasmobranch species captured at the artisinal fishery of Margarita Island, Venezuela. Journal of Applied Ichthyology XX:XXX-XXX. [Abstract](https://onlinelibrary.wiley.com/doi/abs/10.1111/jai.13832) [Weight-Length]

@@ -5,7 +5,7 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">61</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">62</span> publications.
 
 1. Aslan CE, Shiels AB, Haines W, Liang CT. 2019. Non‐native insects dominate daytime pollination in a high‐elevation Hawaiian dryland ecosystem. American Journal of Botany XX:XXX-XXX. [Abstract](https://bsapubs.onlinelibrary.wiley.com/doi/abs/10.1002/ajb2.1233) [???]
 1. Altenritter ME, Walthier BD. 2019. The legacy of hypoxia: tracking carryover effects of low oxygen exposure in a demersal fish using geochemical tracers. Transactions of the American Fisheries Society XX:XXX-XXX. [Abstract](https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1002/tafs.10159) [von Bertalanffy Growth]

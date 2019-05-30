@@ -5,7 +5,7 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">60</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">61</span> publications.
 
 1. Aslan CE, Shiels AB, Haines W, Liang CT. 2019. Non‐native insects dominate daytime pollination in a high‐elevation Hawaiian dryland ecosystem. American Journal of Botany XX:XXX-XXX. [Abstract](https://bsapubs.onlinelibrary.wiley.com/doi/abs/10.1002/ajb2.1233) [???]
 1. Altenritter ME, Walthier BD. 2019. The legacy of hypoxia: tracking carryover effects of low oxygen exposure in a demersal fish using geochemical tracers. Transactions of the American Fisheries Society XX:XXX-XXX. [Abstract](https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1002/tafs.10159) [von Bertalanffy Growth]
@@ -22,6 +22,7 @@ The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA
 1. Filous A, Lennox RJ, Coleman RR, Friedlander AM, Clua EEG, Danylchuk AJ. 2019. Life-history characteristics of an exploited bonefish *Albula glossodonta* population in a remote South Pacific atoll. Journal of Fish Biology XX:XXX-XXX. [Abstract](https://onlinelibrary.wiley.com/doi/abs/10.1111/jfb.14057) [von Bertalanffy Growth??]
 1. Fisk II JM, Morgeson CW, Polera ME. 2019. Evaluation of recreational hand‐crank electrofishing on introduced catfish species in southeastern North Carolina. North American Journal of Fisheries Management [Abstract](https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1002/nafm.10255) [Chapman-Robson]
 1. Ford BM, Roberts JD. 2019. Evolutionary histories impart structure into marie fish heterospecific co-occurrence networks. Global Ecology and Biogeography. XX:XXX-XXX. [Abstract](https://onlinelibrary.wiley.com/doi/abs/10.1111/geb.12934) [Dunn Test]
+1. Francis MP, Maolagain CO. 2019. Growth‐band counts from Elephantfish *Callorhinchus milii* fin spines do not correspond with independently estimated ages. Journal of Fish Biology XX:XXX-XXX. [Abstract](https://onlinelibrary.wiley.com/doi/abs/10.1111/jfb.14060) [von Bertalanffy Growth]
 1. Gonzalez-Gonzales LDV, Ehermann NR. 2019. Length-weight relationships of six elasmobranch species captured at the artisinal fishery of Margarita Island, Venezuela. Journal of Applied Ichthyology XX:XXX-XXX. [Abstract](https://onlinelibrary.wiley.com/doi/abs/10.1111/jai.13832) [Weight-Length]
 1. Gegner J, Baudach A, Mukherjee K, Halitschke R, Vogel H, Vilcinskas A. 2019. Epigenetic mechanisms are involved in sex-specific *trans*-generational immune priming in the Lepidopteran model host *Manduca sexta*. Frontiers in Physiology XX:XXX-XXX. [Full Text](https://www.frontiersin.org/articles/10.3389/fphys.2019.00137/full) [Dunn's Test; Summarize]
 1. Gelan MT. 2019. Forest ecosystem services and resilience of the social-ecological system in a protected forest of the central highlands of Ethiopia. Ph.D. Dissertation, KU Leueven Science, Engineering, & Technology. [Full Text](http://scholar.google.com/scholar_url?url=https://lirias.kuleuven.be/retrieve/537647&hl=en&sa=X&d=8666473075266225366&scisig=AAGBfm09_cPi66H70Qm7XWGhA_8Nr7AnVw&nossl=1&oi=scholaralrt) [Dunn's Test]

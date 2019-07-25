@@ -5,7 +5,7 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">91</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">92</span> publications.
 
 1. Aslan CE, Shiels AB, Haines W, Liang CT. 2019. Non‐native insects dominate daytime pollination in a high‐elevation Hawaiian dryland ecosystem. American Journal of Botany XX:XXX-XXX. [Abstract](https://bsapubs.onlinelibrary.wiley.com/doi/abs/10.1002/ajb2.1233) [???]
 1. Altenritter ME, Walthier BD. 2019. The legacy of hypoxia: tracking carryover effects of low oxygen exposure in a demersal fish using geochemical tracers. Transactions of the American Fisheries Society XX:XXX-XXX. [Abstract](https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1002/tafs.10159) [von Bertalanffy Growth]
@@ -79,6 +79,7 @@ amphibian conservation. Aquatic Conservation: Marine and Freshwater Ecosystems X
 1. Poole JR, Bajer PG. 2019. A small native predator reduces reproductive success of a large invasive fish as revealed by whole-lake experiments. PLOS One. [Full Text](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0214009) [Schnabel]
 1. Porter KDH, Quilliam RS, Reaney SM, Oliver DM. 2019. High resolution characterisation of *E. coli* proliferation profiles in livestock faeces. Waste Management 87:537-545. [Full Text](https://www.sciencedirect.com/science/article/pii/S0956053X19301084) [???]
 1. Rebert AL. 2019. Evaluating potential age structures for three Alaskan crustacean species. M.Sc. Thesis University of Alaska Fairbanks. [Full Text](https://search.proquest.com/openview/06d97b7a49549e27512983b55a8c6493/1) [Age Comparisons]
+1. Reboucas R, da Silva HR, Sanuy D, Sole M. 2019. Sexual maturity and growth of male toads (*Rhinella ornata*): a comparison between insular and mainland populations. Zoologischer Anzeiger XX:XXX-XXX. [Abstract](https://www.sciencedirect.com/science/article/pii/S0044523119300798) [???]
 1. Rosa D, Mas F, Mathers A, Natanson LJ, Domingo A, Carlson J. Coelho R. 2019. Age and growth of Shortfin Mako in the South Atlantic. Collect. Vol. Sci. Pap. ACCAT 75:457-475. [Ful Text](https://www.iccat.int/Documents/CVSP/CV075_2018/n_3/CV075030457.pdf) [von Bertalanffy Growth]
 1. Sguotti C, Otto SA, Cormon X, Werner KM, Deyle E, Sugihara G, Mollmann C. 2019. Non-linearity in stock–recruitment relationships of Atlantic cod: insights from a multi-model approach. ICES Journal of Marine Science XX:XXX-XXX. [Full Text](https://academic.oup.com/icesjms/advance-article/doi/10.1093/icesjms/fsz113/5522545) [Stock-Recruitment]
 1. Schall BJ, Schoenebeck C, Koupal KD. 2019. Population characteristics of co-managed White Bass and hybrid Striped Bass in Lake McConaughy, Nebraska. Transactions of the Nebraska Academy of Sciences 39:1-9. [Full Text](https://digitalcommons.unl.edu/cgi/viewcontent.cgi?article=1534&context=tnas) [Age-Length Key]

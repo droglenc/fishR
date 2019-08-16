@@ -5,7 +5,7 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">106</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">107</span> publications.
 
 1. Albert LT, Junge C, Myrlund MK. 2019. Young mums are rebuilding the Spurdog stock (*Squalus acanthias* L.) in Norwegian waters. ICES Journal of Marine Science XX:XXX-XXX. [Abstract](https://academic.oup.com/icesjms/advance-article-abstract/doi/10.1093/icesjms/fsz156/5543885) [???]
 1. Aslan CE, Shiels AB, Haines W, Liang CT. 2019. Non‐native insects dominate daytime pollination in a high‐elevation Hawaiian dryland ecosystem. American Journal of Botany XX:XXX-XXX. [Abstract](https://bsapubs.onlinelibrary.wiley.com/doi/abs/10.1002/ajb2.1233) [???]
@@ -113,6 +113,7 @@ amphibian conservation. Aquatic Conservation: Marine and Freshwater Ecosystems X
 1. Wei J, Lavergne E, Kurita Y, Todate K, Kasai A, Fuji T, Yamashita Y. 2019. Age determination and growth pattern of temperate seabass Lateolabrax japonicus in Tango Bay and Sendai Bay, Japan. Fisheries Science XX:XXX-XXX. [Abstract](https://www.researchgate.net/publication/328999471_Age_determination_and_growth_pattern_of_temperate_seabass_Lateolabrax_japonicus_in_Tango_Bay_and_Sendai_Bay_Japan) [Growth]
 1. Weigel DE, Adams JR, Jepson MA, Waits LP, Caudill CC. 2019. Introgressive hybridization between native and non‐localsteelhead (*Oncorhynchus mykiss*) of hatchery origin. Aquatic Conservation in Marine and Freshwater Ecosystems 29:292-302. [Full Text](https://www.researchgate.net/profile/Dana_Weigel/publication/328876444_Introgressive_Hybridization_Between_Native_and_Hatchery-origin_Non-native_Steelhead_Oncorhynchus_mykiss/links/5c6ad598299bf1e3a5b24ab0/Introgressive-Hybridization-Between-Native-and-Hatchery-origin-Non-native-Steelhead-Oncorhynchus-mykiss.pdf) [Dunn's Test]
 1. Weltersback MS, Lewin W-C, Groger JP, Strehlow HV. 2019. Effect of lure and bait type on catch, size, hooking location, injury and bycatch in the western Baltic Sea recreational cod fishery. Fisheries Research 210:121-130. [Abstract](https://www.researchgate.net/publication/328531070_Effect_of_lure_and_bait_type_on_catch_size_hooking_location_injury_and_bycatch_in_the_western_Baltic_Sea_recreational_cod_fishery) [???]
+1. Wollman, KM. 2019. Assessing freshwater mussel(*Bivalvia: Unionidae*) assemblages and effects of eutrophication on *Pyganodon grandis* in lakes of eastern South Dakota. M.Sc. Thesis, South Dakota State University. [Full Text](https://openprairie.sdstate.edu/cgi/viewcontent.cgi?article=4395&context=etd) [Age-Length Key; Catch Curve]
 1. Young A. 2019. Anadromy versus non-anadromy in the Canadian Arctic: variation in the lake 
 ecology and life history of two allopatric Arctic charr (*Salvelinus alpinus*) populations in Cumberland Sound on South Baffin Island, Nunavut. MS Thesis, Univ. Manitoba. [Full Text](https://mspace.lib.umanitoba.ca/bitstream/handle/1993/33682/Angela_Young.pdf?sequence=1) [Growth, Age-Length Key]
 

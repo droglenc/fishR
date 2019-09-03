@@ -5,7 +5,7 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">113</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">115</span> publications.
 
 1. Albert LT, Junge C, Myrlund MK. 2019. Young mums are rebuilding the Spurdog stock (*Squalus acanthias* L.) in Norwegian waters. ICES Journal of Marine Science XX:XXX-XXX. [Abstract](https://academic.oup.com/icesjms/advance-article-abstract/doi/10.1093/icesjms/fsz156/5543885) [???]
 1. Aslan CE, Shiels AB, Haines W, Liang CT. 2019. Non‐native insects dominate daytime pollination in a high‐elevation Hawaiian dryland ecosystem. American Journal of Botany XX:XXX-XXX. [Abstract](https://bsapubs.onlinelibrary.wiley.com/doi/abs/10.1002/ajb2.1233) [???]
@@ -82,6 +82,8 @@ amphibian conservation. Aquatic Conservation: Marine and Freshwater Ecosystems X
 1. Lin, SP. 2019. Adaptation and diversification in bluebells (*Mertensia* spp., Boraginaceae). Ph.D. Dissertation, University of Ottawa. [Full Text](https://ruor.uottawa.ca/bitstream/10393/39285/1/Lin_Shang-Yao_Peter_2019_thesis.pdf) [Dunn's Test]
 1. Little CJ, Altermatt F. 2019. Differential resource consumption in leaf litter mixtures by native and non-native amphipods. Aquatic Ecology XX:XXX-XXX. [Abstract](https://link.springer.com/article/10.1007/s10452-019-09679-3) [Dunn's Test]
 1. Lopez-Nunez FA, Ribeiro S, Marchante H, Heleno RH, Marchanged E. 2019. Life inside a gall: diversity, phenology and structure of Portuguese gall communities, their hosts, parasitoids and inquilines. Arthropod-Plant Interactions XX:XXX-XXX. [Abstract](https://link.springer.com/article/10.1007/s11829-018-9655-4) [Dunn's Test]
+1. Loudon AH. 2019. Host specificity of bacterial communities: Natural history, ecology and conservation. Ph.D. Thesis, University of British Columbia. [Full Text](https://open.library.ubc.ca/cIRcle/collections/ubctheses/24/items/1.0380660) [Dunn's Test]
+1. Loyd KN. 2019. Encapsulation of plant growth promoting bacteria in electrospun biodegradable nanofibers. M.Sc. Thesis, North Carolina State University. [Full Text](https://repository.lib.ncsu.edu/bitstream/handle/1840.20/36924/etd.pdf?sequence=1) [Dunn's Test]
 1. MacNaughton CJ, Kovachik C, Enders EC. 2019. Standard metabolic rate models for Carmine Shiner (*Notropis percobromus*) and Common Shiner (*Luxilus cornutus*) across different temperature regimes. Journal of Fish Biology XX:XXX-XXX. [Abstract](https://onlinelibrary.wiley.com/doi/abs/10.1111/jfb.13869) [Nonlinear Modeling]
 1. Marien B, Balzarolo M, Dox I, Leys S, Marchand LJ, Geron C, Portillo-Estrada M, AbdElgawad H, Asard H, Campioloi M. 2019. Detecting the onset of autumn leaf senescence in deciduous forest trees of the temperature zone. New Phytologist XX:XXX-XXX. [Abstract](https://nph.onlinelibrary.wiley.com/doi/abs/10.1111/nph.15991) [Dunn's Test]
 1. Marques P. 2019. Characterizing the effects of urbanization on stream biota using a trait-based approach. Ph.D. Dissertation, University of Victoria. [Full Text](http://dspace.library.uvic.ca/bitstream/handle/1828/11058/Marques_Piata_PhD_2019-1.pdf?sequence=3&isAllowed=y) [Depletion]

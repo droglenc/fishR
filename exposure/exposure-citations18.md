@@ -5,7 +5,7 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">96</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">97</span> publications.
 
 1. Agbani PO, Kafoutchoni KM, Salako KV, Gbedomon RC, Kegbe AM, Karen H, Sinsin B. 2018. Traditional ecological knowledge-based assessment of threatened woody species and their potential substitutes in the Atakora mountain chain, a threatened hotspot of biodiversity in Northwestern Benin, West Africa. Journal of Ethnobiology and Ethnomedicine 14:21. [Full Text](https://ethnobiomed.biomedcentral.com/articles/10.1186/s13002-018-0219-6) [Dunn's Test]
 1. Anderson J, McDonald D, Bumguardner B, Olsen Z, Ferguson JW. 2018. Patterns of maturity, seasonal migration, and spawning of Atlantic Croaker in the western Gulf of Mexico. Gulf of Mexico Science 34:19-31. [Full Text](https://aquila.usm.edu/cgi/viewcontent.cgi?article=1598&context=goms) [Growth]
@@ -95,6 +95,7 @@ e0203537. [Full Text](https://journals.plos.org/plosone/article?id=10.1371/journ
 1. Tilami SK, Sampels S, Zajic T, Krejsa J, Masilko J, Mraz J. 2018. Nutritional value of several commercially important river fish species from the Czech Republic. PeerJ. [Full Text](https://peerj.com/articles/5729/) [Dunn Test]
 1. Tokash AF. 2018. Somatic growth in head-started Diamond-backed Terrapins, *Malaclemys terrapin*, and their wild counterparts. M.Sc. Thesis, Ohio University. 92 pp. [Full Text](http://www.dtwg.org/Bibliography/Theses/Tokash%25202018.pdf) [Growth]
 1. Tuffley E-J, de Lestang S, How J, Langlois T. 2018. Methodological comparison for sampling populations of a commercially important rock lobster species. Bulletin of Marine Science 94:1035-1054. [Abstract](https://www.ingentaconnect.com/contentone/umrsmas/bullmar/2018/00000094/00000003/art00031) [Schnabel Mark-Recapture]
+1. van der Veer HW, Cardoso JFMF, Mateo I, Witte JIJ, van Duyl FC. 2018. Ocurrence and life history characteristics of tropical flatfishes at the coral reefs of Curacao, Dutch Caribbean. Journal of Sea Research 142:157-166. [Full Text](http://www.vliz.be/imisdocs/publications/09/320109.pdf) [von Bertalanffy Growth]
 1. Vasey N, Mogilewsky M, Schatz GE. 2018. Infant nest and stash sites of Variegated Lemurs (*Varecia rubra*): The extended phenotype. American Journal of Primatology 80:e22911. [Abstract](https://onlinelibrary.wiley.com/doi/abs/10.1002/ajp.22911) [Poisson model(?)]
 1. Vasquez HE, Zheng X, Zhan X, Gu Z, Wang A. 2018. Byssus growth in Winged Peral Oyster *Pteria penguin* (Roding, 1798). Journal of Shellfish Research 37:515-519. [Abstract](http://www.bioone.org/doi/abs/10.2983/035.037.0307) [XXX]
 1. Vukov D, Ilic M, Cuk M, Radulovic S, Igic R, Janauer GA. 2018. Combined effects of physical environmental conditions and anthropogenic alterations are associated with macrophyte habitat fragmentation in rivers - Study of the Danube in Serbia. Science of the Total Environment 634:780-790. [Abstract](https://www.sciencedirect.com/science/article/pii/S0048969718311288) [Dunn's Test]

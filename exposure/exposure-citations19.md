@@ -5,7 +5,7 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">124</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">125</span> publications.
 
 1. Achilleos K, Smith AM, Gordon DP. 2019. The articulated bryozoan genus *Cellaria* in the southern Zealandian Region: distribution and associated fauna. Marine Biodiversiety XX:XXX-XXX. [Abstract](https://link.springer.com/article/10.1007/s12526-019-01009-y) [???]
 1. Albert LT, Junge C, Myrlund MK. 2019. Young mums are rebuilding the Spurdog stock (*Squalus acanthias* L.) in Norwegian waters. ICES Journal of Marine Science XX:XXX-XXX. [Abstract](https://academic.oup.com/icesjms/advance-article-abstract/doi/10.1093/icesjms/fsz156/5543885) [???]
@@ -55,6 +55,7 @@ amphibian conservation. Aquatic Conservation: Marine and Freshwater Ecosystems X
 1. Garcia-Seoane R, Fernandez JA, Chila A, Aboal JR. 2019. Improving the uptake of pollutants in moss bags: The wind effect. Ecological Indicators XX:XXX-XXX. [Abstract](https://www.sciencedirect.com/science/article/pii/S1470160X19305692) [???]
 1. Gebremedhin S, Bekaert K, Getahun A, Bruneel S, Anteneh W, Goethals P, Torreele E. 2019. Comparison of otolith readability and reproducibility of counts of translucent zones using different otolith preparation methods for four endemic *Labeobarbus* species in Lake Tana, Ethiopia. Water XX:XXX-XXX. [Full Text](https://www.mdpi.com/2073-4441/11/7/1336/pdf) [Age-Bias Plots]
 1. Gegner J, Baudach A, Mukherjee K, Halitschke R, Vogel H, Vilcinskas A. 2019. Epigenetic mechanisms are involved in sex-specific *trans*-generational immune priming in the Lepidopteran model host *Manduca sexta*. Frontiers in Physiology XX:XXX-XXX. [Full Text](https://www.frontiersin.org/articles/10.3389/fphys.2019.00137/full) [Dunn's Test; Summarize]
+1. Gegner J, Gegner T, Vogel H, Vilcinskas A. 2019. Silencing of the DMAP1 gene in the invasive ladybird Harmonia axyridis implicates a role of the DNMT1‐DMAP1 complex in female fecundity. Insect Molecular Biology XX:XXX-XXX. [Abstract](https://onlinelibrary-wiley-com.ezproxy.uwsp.edu/doi/abs/10.1111/imb.12616) [Dunn's Test]
 1. Gelan MT. 2019. Forest ecosystem services and resilience of the social-ecological system in a protected forest of the central highlands of Ethiopia. Ph.D. Dissertation, KU Leueven Science, Engineering, & Technology. [Full Text](https://lirias.kuleuven.be/retrieve/537647) [Dunn's Test]
 1. Ghosal S, Casal Jr C, Quilloy FA, Septingsih EM, Mendioro MS, Dixit S. 2019. Deciphering genetics underlying stable anaerobic germination in rice: Phenotyping, QTL identification, and interaction analysis. Rice XX:XXX-XXX. [Full Text](https://thericejournal.springeropen.com/articles/10.1186/s12284-019-0305-y) [Dunn's Test]
 1. Gonzalez-Gonzales LDV, Ehermann NR. 2019. Length-weight relationships of six elasmobranch species captured at the artisinal fishery of Margarita Island, Venezuela. Journal of Applied Ichthyology XX:XXX-XXX. [Abstract](https://onlinelibrary.wiley.com/doi/abs/10.1111/jai.13832) [Weight-Length]

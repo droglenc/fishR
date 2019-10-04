@@ -5,7 +5,7 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">128</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">129</span> publications.
 
 1. Achilleos K, Smith AM, Gordon DP. 2019. The articulated bryozoan genus *Cellaria* in the southern Zealandian Region: distribution and associated fauna. Marine Biodiversiety XX:XXX-XXX. [Abstract](https://link.springer.com/article/10.1007/s12526-019-01009-y) [???]
 1. Albert LT, Junge C, Myrlund MK. 2019. Young mums are rebuilding the Spurdog stock (*Squalus acanthias* L.) in Norwegian waters. ICES Journal of Marine Science XX:XXX-XXX. [Abstract](https://academic.oup.com/icesjms/advance-article-abstract/doi/10.1093/icesjms/fsz156/5543885) [???]
@@ -69,6 +69,7 @@ amphibian conservation. Aquatic Conservation: Marine and Freshwater Ecosystems X
 1. Harry A, Butcher PA, Macbeth WG, Morgan JAT, Taylor SM, Geraghty PT. 2019. Life history of the common blacktip shark, *Carcharhinus limbatus*, from central eastern Australia and comparative demography of a cryptic shark complex. Marine and Freshwater Research XX:XXX-XXX. [Abstract](http://www.publish.csiro.au/MF/MF18141) [XXX]
 1. Haxton T, Friday M. 2019. Interaction of sauger *Sander canadensis* and walleye *Sander vitreus* in a large, shallow northern river. Journal of Fish Biology XX:XXX-XXX. [Abstract](https://onlinelibrary.wiley.com/doi/abs/10.1111/jfb.14080) [???]
 1. Hayes JW, Goodwin EO, Clapcott JE, Shearer KA. 2019. The influence of natural flow and temperature and introduced brown trout on the temporal variation in native fish abundance in a ‘reference’ stream. Canadian Journal of Fisheries and Aquatic Sciences XX:XXX-XXX. [Abstract](http://www.nrcresearchpress.com/doi/abs/10.1139/cjfas-2018-0033) [Removal]
+1. Hensel E. 2019. Power of Predators – The Role of Marine Fishes as Consumers and Nutrient Providers in a Changing Tropical Back-reef Ecosystem. PhD Dissertaion, North Carolina State University. [Abstract](https://search.proquest.com/openview/4965b26dfd2a4c109b85a074b4ee88af/1) [???]
 1. Herdter E, Mahmoudi B, Peebles E, Murawski SA. 2019. Spatial variability in size structure, growth, and recruitment of Spotted Seatrout among six Florida estuaries. Marine and Coastal Fisheries Dynamics, Management, and Ecosystem Science. 11:97-111. [Full Text](https://afspubs.onlinelibrary.wiley.com/doi/pdf/10.1002/mcf2.10063) [von Bertalanffy growth]
 1. Hickerson BT, Maitland BM, Walters AW. 2019. Effectos of multiple nonnative fish on an imperiled cyprinid, Hornyhead Chub *Nocomis biguttatus*. Transactions of the American Fisheries Society XX:XXX-XXX. [Abstract](https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1002/tafs.10203) [???]
 1. Hickerson BT, Walters AW. 2019. Evaluation of potential translocation sites for an imperiled cyprinid, the Hornyhead Chub. North American Journal of Fisheries Management XX:XXX-XXX. [Abstract](https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1002/nafm.10261) [Removal]

@@ -5,7 +5,7 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">136</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">137</span> publications.
 
 1. Achilleos K, Smith AM, Gordon DP. 2019. The articulated bryozoan genus *Cellaria* in the southern Zealandian Region: distribution and associated fauna. Marine Biodiversiety XX:XXX-XXX. [Abstract](https://link.springer.com/article/10.1007/s12526-019-01009-y) [???]
 1. Albert LT, Junge C, Myrlund MK. 2019. Young mums are rebuilding the Spurdog stock (*Squalus acanthias* L.) in Norwegian waters. ICES Journal of Marine Science XX:XXX-XXX. [Abstract](https://academic.oup.com/icesjms/advance-article-abstract/doi/10.1093/icesjms/fsz156/5543885) [???]
@@ -49,6 +49,7 @@ amphibian conservation. Aquatic Conservation: Marine and Freshwater Ecosystems X
 1. Filous A, Lennox RJ, Coleman RR, Friedlander AM, Clua EEG, Danylchuk AJ. 2019. Life-history characteristics of an exploited bonefish *Albula glossodonta* population in a remote South Pacific atoll. Journal of Fish Biology XX:XXX-XXX. [Abstract](https://onlinelibrary.wiley.com/doi/abs/10.1111/jfb.14057) [von Bertalanffy Growth??]
 1. Fischer JR, Kwak TJ, Flowers HJ, Cope WG, Rash JM, Besler DA. 2019. Growth, condition, and trophic relations of stocked trout in southern Appalachian mountain streams. Transactions of the American Fisheries Society XX:XXX-XXX. [Abstract](https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1002/tafs.10170) [???]
 1. Fisk II JM, Morgeson CW, Polera ME. 2019. Evaluation of recreational hand‐crank electrofishing on introduced catfish species in southeastern North Carolina. North American Journal of Fisheries Management [Abstract](https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1002/nafm.10255) [Chapman-Robson]
+1. Flinn S, Midway S, Ostrowski A. 2019. Age and growth of Hardhead Catfish and Gafftopsail Catfish in coastal Louisiana, USA. Marine and Coastal Fisheries Dynamics, Management, and Ecosystem Science 11:362-371. [Full Text]() [Age Comparisons]
 1. Ford BM, Roberts JD. 2019. Evolutionary histories impart structure into marie fish heterospecific co-occurrence networks. Global Ecology and Biogeography. XX:XXX-XXX. [Abstract](https://onlinelibrary.wiley.com/doi/abs/10.1111/geb.12934) [Dunn Test]
 1. Fossett MT. 2019. Life history of a clear stream minnos: Growth, reproduction, habitat use, and diet of *Notropis boops* (Bigeye Shiner) in Triplett Creek. MS Thesis, Morehead State University. [Preview](https://search.proquest.com/openview/e35a5cd137f02f1d12d41cf60f066ade/1?pq-origsite=gscholar&cbl=18750&diss=y) [Growth]
 1. Francis MP, Maolagain CO. 2019. Growth‐band counts from Elephantfish *Callorhinchus milii* fin spines do not correspond with independently estimated ages. Journal of Fish Biology XX:XXX-XXX. [Abstract](https://onlinelibrary.wiley.com/doi/abs/10.1111/jfb.14060) [von Bertalanffy Growth]

@@ -5,7 +5,7 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">152</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">153</span> publications.
 
 1. Achilleos K, Smith AM, Gordon DP. 2019. The articulated bryozoan genus *Cellaria* in the southern Zealandian Region: distribution and associated fauna. Marine Biodiversiety XX:XXX-XXX. [Abstract](https://link.springer.com/article/10.1007/s12526-019-01009-y) [???]
 1. Albert LT, Junge C, Myrlund MK. 2019. Young mums are rebuilding the Spurdog stock (*Squalus acanthias* L.) in Norwegian waters. ICES Journal of Marine Science XX:XXX-XXX. [Abstract](https://academic.oup.com/icesjms/advance-article-abstract/doi/10.1093/icesjms/fsz156/5543885) [???]
@@ -21,6 +21,7 @@ The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA
 1. Bertold M, Manuela B, Inge D, Sebastien L, Lorene MJ, Charly G, Miguel P-E, Hamada A, Han A, Matteo C. 2019. Detecting the onset ofautumn leaf senescence in deciduous forest trees of the temperate zone. New Phytologist XX:XXX-XXX. [Full Text](https://www.researchgate.net/profile/Bertold_Marien/publication/333846465_Detecting_the_onset_of_autumn_leaf_senescence_in_deciduous_forest_trees_of_the_temperate_zone/links/5d19c4e5a6fdcc2462b4a66c/Detecting-the-onset-of-autumn-leaf-senescence-in-deciduous-forest-trees-of-the-temperate-zone.pdf) [Dunn's Test]
 1. Blackburn SE, Gingras ML, DuBois J, Jackson ZJ, Quist MC. 2019. Population dynamics and evaluation of management scenarios for White Sturgeon in the Sacramento–San Joaquin River Basin. North American Journal of Fisheries Management XX:XXX-XXX. [Abstract](https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1002/nafm.10316) [???]
 1. Brauer TA, Quist MC, Rhea DT, Laughlin TW, Walrath JD. 2019. Population Characteristics and Management of Lentic Populations of Nonnative Burbot in the Green River System, Wyoming. North American Journal of Fisheries Management. XX:XXX-XXX. [Abstract](https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1002/nafm.10247) [von Bertalanffy Growth]
+1. Briggs EE. 2019. The Impacts of Urbanization on Stream Fishes in the Southeastern United States. M.Sc. Thesis, North Carolina State University. [Full Text](https://repository.lib.ncsu.edu/bitstream/handle/1840.20/37104/etd.pdf?sequence=1) [Removal; Size Structure]
 1. Brunett NP, Koehl MAR. 2019. Mechanical properties of the wave-swept kelp, Egregia menziesii, change with season, growth rate, and herbivore wounds. Journal of Experimental Biology XX:XXX-XXX. [Abstract](http://jeb.biologists.org/content/early/2019/01/23/jeb.190595.abstract) [Dunn's Test]
 1. Buono V, Bissattini AM, Vignoli L. 2019. Can a cow save a newt? The role of cattle drinking troughs in
 amphibian conservation. Aquatic Conservation: Marine and Freshwater Ecosystems XX:XXX-XXX. [Abstract](https://onlinelibrary.wiley.com/doi/abs/10.1002/aqc.3126) [Removal]

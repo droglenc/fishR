@@ -27,12 +27,12 @@ library(ggplot2)
 
 I am **finally** learning `ggplot2` for elegant graphics. One of the first plots that I wanted to make was a length frequency histogram. As it turns out, there are a few "tricks" to make the histogram appear as I expect most fisheries folks would want it to appear -- primarily, left-inclusive (i.e., 100 would be in the 100-110 bin and not the 90-100 bin). Below are length frequency histograms that I like.
 
-The data I use are lengths of Lake Erie Walleye (*Sander vitreus*) captured during October-November, 2003-2014. These data are available in my [`FSAdata` package](https://github.com/droglenc/FSAdata) and formed ma of the examples in Chapter 12 of the [**Age and Growth of Fishes: Principles and Techniques book**](https://derekogle.com/AGF/). My primary interest is in the `tl` (total length in mm), `sex`, and `loc` variables ([see here for more details](https://derekogle.com/fishR/data/data-html/WalleyeErie2.html)) and I will focus on 2010 (as an example).
+The data I use are lengths of Lake Erie Walleye (*Sander vitreus*) captured during October-November, 2003-2014. These data are available in my [`FSAdata` package](https://github.com/droglenc/FSAdata) and formed many of the examples in Chapter 12 of the [**Age and Growth of Fishes: Principles and Techniques book**](https://derekogle.com/AGF/). My primary interest is in the `tl` (total length in mm), `sex`, and `loc` variables ([see here for more details](https://derekogle.com/fishR/data/data-html/WalleyeErie2.html)) and I will focus on 2014 (as an example).
 
 
 {% highlight r %}
 data(WalleyeErie2)
-WE <- dplyr::filter(WalleyeErie2,year==2010)
+WE <- dplyr::filter(WalleyeErie2,year==2014)
 {% endhighlight %}
 
 &nbsp;
@@ -124,7 +124,7 @@ lenfreq1 + facet_grid(rows=vars(loc),cols=vars(sex),scales="free_y")
 
 ## Final Thoughts
 
-This post is likely not news to those of you that are familiar with `ggplot2`. However, I am going to try to post some examples here as I learn `ggplot2` in hopes that hit will help others. This is the first of what I hope will be more frequent posts.
+This post is likely not news to those of you that are familiar with `ggplot2`. However, I am going to try to post some examples here as I learn `ggplot2` in hopes that it will help others. This is the first of what I hope will be more frequent posts.
 
 Other related (non-`ggplot2`) posts are 
 

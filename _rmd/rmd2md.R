@@ -1,4 +1,6 @@
-#' This R script will process a R mardown files in the current working directory to a markdown file to be placed in the '_posts' directory and figures to be placed in the 'figures' directory.
+#' This R script will process an R markdown files in the current working
+#' directory to a markdown file to be placed in the '_posts' directory and
+#' figures to be placed in the 'figures' directory.
 #' @param file A base filename without an extension (assumed to be '.Rmd').
 #' @param path_site Path to the local root storing the site files.
 #' @return nothing.
@@ -24,5 +26,9 @@ rmd2md <- function(file,path_site="C:/aaaWork/Web/GitHub/fishR") {
   opts_chunk$set(fig.path = "figures/")
   ## Actually knit the RMD file
   knit(text=content, output=outFile)
-  invisible()
+  ## Move the figures to the proper folder for the posts
+  figs <- list.files(file.path(path_site,"_rmd","figures"),pattern=".png",
+                     full.names=TRUE)
+  file.copy(from=figs,to=file.path(path_site,"figures"),overwrite=TRUE)
+  file.remove(figs)
 }

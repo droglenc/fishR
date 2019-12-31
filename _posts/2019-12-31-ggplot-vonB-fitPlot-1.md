@@ -80,7 +80,7 @@ Methods for fitting a von Bertalannfy growth function (VBGF) are detailed in my 
 ##   Linf*(1-exp(-K*(t-t0)))
 ##   }
 ## <bytecode: 0x0000026cd7aa2768>
-## <environment: 0x0000026ce7ee9ed8>
+## <environment: 0x0000026cdfc6ccf0>
 {% endhighlight %}
 
 Reasonable starting values for the optimization algorithm may be obtained with `vbStarts()`, where the first argument is a formula of the form `lengths~ages` where `lengths` and `ages` are replaced with the actual variable names containing the observed lengths and ages, respectively, and `data=` is set to the data.frame containing those variables.

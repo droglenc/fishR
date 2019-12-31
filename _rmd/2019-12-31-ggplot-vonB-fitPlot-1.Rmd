@@ -23,7 +23,7 @@ library(knitr)
 knit_hooks$set(par1 = function(before, options, envir) {
   if (before) par(mar=c(3.5,3.5,1,1),mgp=c(2.1,0.4,0),tcl=-0.2)
 })
-opts_chunk$set(dev="png",tidy=FALSE,fig.width=3.5,fig.height=3.5,par1=TRUE)
+opts_chunk$set(dev="png",tidy=FALSE,fig.width=4.5,fig.height=4.5,par1=TRUE)
 options(show.signif.stars=FALSE)
 set.seed(88834)
 ```

@@ -13,6 +13,7 @@ _posts/*.html
 ## Data files and cache directories in the posts
 _rmd/data/
 _rmd/*_cache/
+_rmd/cache/
 _rmd/*_files/
 _rmd/*.html
 _rmd/figures/

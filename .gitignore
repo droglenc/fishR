@@ -10,8 +10,12 @@ fishR.Rproj
 ## Html files in the posts (left over from testing how the md files will look)
 _posts/*.html
 
-## Data files in the posts
+## Data files and cache directories in the posts
 _rmd/data/
+_rmd/*_cache/
+_rmd/*_files/
+_rmd/*.html
+_rmd/figures/
 
 ## Intermediate files in the old fishR vignettes
 examples/oldFishRVignettes/*.bbl

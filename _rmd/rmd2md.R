@@ -31,4 +31,5 @@ rmd2md <- function(file,path_site="C:/aaaWork/Web/GitHub/fishR") {
                      full.names=TRUE)
   file.copy(from=figs,to=file.path(path_site,"figures"),overwrite=TRUE)
   file.remove(figs)
+  file.remove(file.path(path_site,"_rmd",paste0(file,".html")))
 }

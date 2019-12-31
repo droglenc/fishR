@@ -218,7 +218,7 @@ makeVBEqnLabel <- function(fit) {
   t0 <- cfs[["t0"]]
   t0 <- paste0(ifelse(t0<0,"+","-"),formatC(abs(t0),format="f",digits=3))
   # Put together and return
-  paste0("TL==",Linf,"*e^{-",K,"*(age",t0,")}")
+  paste0("TL==",Linf,"~bgroup('(',1-e^{-",K,"~(age",t0,")},')')")
 }
 
 vbFitPlot + annotate(geom="text",label=makeVBEqnLabel(f.fit),parse=TRUE,

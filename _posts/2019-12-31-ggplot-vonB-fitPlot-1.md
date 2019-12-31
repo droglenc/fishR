@@ -80,7 +80,7 @@ Methods for fitting a von Bertalannfy growth function (VBGF) are detailed in my 
 ##   Linf*(1-exp(-K*(t-t0)))
 ##   }
 ## <bytecode: 0x0000026cd7aa2768>
-## <environment: 0x0000026cdfc6ccf0>
+## <environment: 0x0000026ce4e1acc8>
 {% endhighlight %}
 
 Reasonable starting values for the optimization algorithm may be obtained with `vbStarts()`, where the first argument is a formula of the form `lengths~ages` where `lengths` and `ages` are replaced with the actual variable names containing the observed lengths and ages, respectively, and `data=` is set to the data.frame containing those variables.
@@ -326,7 +326,7 @@ makeVBEqnLabel <- function(fit) {
   t0 <- cfs[["t0"]]
   t0 <- paste0(ifelse(t0<0,"+","-"),formatC(abs(t0),format="f",digits=3))
   # Put together and return
-  paste0("TL==",Linf,"*e^{-",K,"*(age",t0,")}")
+  paste0("TL==",Linf,"~bgroup('(',1-e^{-",K,"~(age",t0,")},')')")
 }
 
 vbFitPlot + annotate(geom="text",label=makeVBEqnLabel(f.fit),parse=TRUE,

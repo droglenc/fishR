@@ -11,48 +11,38 @@ tags:
 - Growth
 
 ---
-```{r eval=FALSE, echo=FALSE}
-## FOR COMPILING FOR THE WEBSITE
-## Make sure to setwd to source file location
-source("rmd2md.R")
-rmd2md("2020-1-2-ggplot-vonB-fitPlot-2")
-```
 
-```{r setup, echo=FALSE, results='hide', message=FALSE}
-library(knitr)
-knit_hooks$set(par1 = function(before, options, envir) {
-  if (before) par(mar=c(3.5,3.5,1,1),mgp=c(2.1,0.4,0),tcl=-0.2)
-})
-opts_chunk$set(dev="png",tidy=FALSE,fig.width=4,fig.height=4,par1=TRUE)
-options(show.signif.stars=FALSE)
-set.seed(343434344)
-```
+
+
 
 ----
 
 ## Introduction
 
-```{r packages, message=FALSE, warning=FALSE}
+
+{% highlight r %}
 library(FSAdata) # for data
 library(FSA)     # for vbFuns(), vbStarts(), confint.bootCase()
 library(car)     # for Boot()
 library(dplyr)   # for filter(), mutate()
 library(ggplot2)
-```
+{% endhighlight %}
 
 In [a previous post](http://derekogle.com/fishR/2019-12-31-ggplot-vonB-fitplot-1) I demonstrated how to make a plot that illustrated the fit of a von Bertalanffy growth function (VBGF) to data. In this post, I will demonstrate how to show the VBGF fits for two or more groups (e.g., sexes, locations, years). Here I will again use the lengths and ages of Lake Erie Walleye (*Sander vitreus*) captured during October-November, 2003-2014. These data are available in my [`FSAdata` package](https://github.com/droglenc/FSAdata) and formed many of the examples in Chapter 12 of the [**Age and Growth of Fishes: Principles and Techniques book**](https://derekogle.com/AGF/). My primary interest is in the `tl` (total length in mm), `age`, and `sex` variables ([see here for more details](https://derekogle.com/fishR/data/data-html/WalleyeErie2.html)). I will focus initially on Walleye from location "1" captured in 2014 (as an example).
 
-```{r data}
+
+{% highlight r %}
 data(WalleyeErie2)
 w14T <- filter(WalleyeErie2,year==2014,loc==1)
-```
+{% endhighlight %}
 
 The workflow below requires the `predict2()` and `vb()` functions that were created in the previous post.
 
-```{r}
+
+{% highlight r %}
 vb <- vbFuns()
 predict2 <- function(x) predict(x,data.frame(age=ages))
-```
+{% endhighlight %}
 
 &nbsp;
 
@@ -62,26 +52,57 @@ The key to constructing plots with multiple VBGF trajectories is to create a "lo
 
 Begin by finding the range of ages for both sexes so that the confidence polygon can be restricted to observed ages.
 
-```{r}
+
+{% highlight r %}
 agesum <- group_by(w14T,sex) %>%
   summarize(minage=min(age),maxage=max(age))
 agesum
-```
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## # A tibble: 2 x 3
+##   sex    minage maxage
+##   <fct>   <int>  <int>
+## 1 female      0     11
+## 2 male        1     11
+{% endhighlight %}
 
 To simplify coding below, the levels and number of "groups" are saved into objects.
-```{r}
+
+{% highlight r %}
 ( sexes <- levels(w14T$sex) )
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## [1] "female" "male"
+{% endhighlight %}
+
+
+
+{% highlight r %}
 ( nsexes <- length(sexes) )
-```
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## [1] 2
+{% endhighlight %}
 
 In the loop across sexes, the VBGF will be fit for each sex and parameter estimates will be saved into `cfs`, confidence intervals for the parameter estimates into `cis`, predicted mean lengths-at-age for all ages considered in `preds1`, and predicted mean lengths-at-age for only observed ages in `preds2`. These objects are initialized with `NULL` prior to starting the loop.[^paramsNotNeeded]
-```{r}
+
+{% highlight r %}
 cfs <- cis <- preds1 <- preds2 <- NULL
-```
+{% endhighlight %}
 
 The code inside the loop follows the same logic as shown in [the previous post](http://derekogle.com/fishR/2019-12-31-ggplot-vonB-fitplot-1) for fitting the VBGF to one group.[^loopNote]
 
-```{r message=FALSE, cache=TRUE}
+
+{% highlight r %}
 for (i in 1:nsexes) {
   ## Loop notification (for peace of mind)
   cat(sexes[i],"Loop\n")
@@ -107,21 +128,80 @@ for (i in 1:nsexes) {
   tmp2 <- filter(tmp2,age>=agesum$minage[i],age<=agesum$maxage[i])
   preds2 <- rbind(preds2,tmp2)
 }
-```
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## female Loop
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## Error in eval(object$data): object 'tmp1' not found
+{% endhighlight %}
 
 The `cfs`, `cis`, `preds1`, and `preds2` objects will have poorly named rows, columns, or both after the loop. These deficiencies are corrected below.
-```{r}
+
+{% highlight r %}
 rownames(cfs) <- rownames(cis) <- sexes
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## Error in `rownames<-`(`*tmp*`, value = c("female", "male")): attempt to set 'rownames' on an object with no dimensions
+{% endhighlight %}
+
+
+
+{% highlight r %}
 colnames(cis) <- paste(rep(c("Linf","K","t0"),each=2),
                        rep(c("LCI","UCI"),times=2),sep=".")
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## Error in `colnames<-`(`*tmp*`, value = c("Linf.LCI", "Linf.UCI", "K.LCI", : attempt to set 'colnames' on an object with less than two dimensions
+{% endhighlight %}
+
+
+
+{% highlight r %}
 colnames(preds1) <- colnames(preds2) <- c("sex","age","fit","LCI","UCI")
-```
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## Error in `colnames<-`(`*tmp*`, value = c("sex", "age", "fit", "LCI", "UCI": attempt to set 'colnames' on an object with less than two dimensions
+{% endhighlight %}
 
 The `preds1` and `preds2` objects now contain the predicted mean lengths-at-age with associated confidence intervals in the desired long format.
-```{r}
+
+{% highlight r %}
 headtail(preds1) # predicted lengths-at-age w/ CIs for ALL ages
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## Error: 'x' must be a matrix or data.frame.
+{% endhighlight %}
+
+
+
+{% highlight r %}
 headtail(preds2) # predicted lengths-at-age w/ CIs for OBSERVED ages
-```
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## Error: 'x' must be a matrix or data.frame.
+{% endhighlight %}
 
 &nbsp;
 
@@ -129,7 +209,8 @@ headtail(preds2) # predicted lengths-at-age w/ CIs for OBSERVED ages
 
 Constructing the plot with multiple VBGF trajectories is similar to what was shown for one group in [the previous post](http://derekogle.com/fishR/2019-12-31-ggplot-vonB-fitplot-1). Note, however, that colors will depend on the sex variable for the confidence polygon because of `fill=sex` in `geom_ribbon()`, the points because of `color=sex` in `geom_point()`, and the lines because of `color=sex` in `geom_line()`. The default colors can be changed in a variety of ways but are set manually to two colors for both fill and color aesthetics below with `scale_color_manual()`.[^chooseColors] Also note that `position_dodge()` is used in `geom_point()` to shift the points for the groups slightly left and right to minimize overlap of points between groups. Finally, `legend.position=` in `theme()` is used to place the legend inside the plot centered at approximately 80% of the way along the x-axis and 20% of the way up the y-axis, and `legend.title=` removes the title on the legend (was just the word "sex").
 
-```{r vbCompFit1}
+
+{% highlight r %}
 vbFitPlot1 <- ggplot() + 
   geom_ribbon(data=preds2,aes(x=age,ymin=LCI,ymax=UCI,fill=sex),alpha=0.2) +
   geom_point(data=w14T,aes(y=tl,x=age,color=sex),alpha=0.25,size=2,
@@ -146,11 +227,20 @@ vbFitPlot1 <- ggplot() +
         legend.position=c(0.8,0.2),
         legend.title=element_blank())
 vbFitPlot1
-```
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## Error in FUN(X[[i]], ...): object 'age' not found
+{% endhighlight %}
+
+![plot of chunk vbCompFit1](http://derekogle.com/fishR/figures/vbCompFit1-1.png)
 
 Some people may prefer to just see model fits. If so, then simply omit `geom_point()`.
 
-```{r vbCompFit2}
+
+{% highlight r %}
 vbFitPlot2 <- ggplot() + 
   geom_ribbon(data=preds2,aes(x=age,ymin=LCI,ymax=UCI,fill=sex),alpha=0.2) +
   geom_line(data=preds1,aes(y=fit,x=age,color=sex),size=1,linetype=2) +
@@ -165,14 +255,23 @@ vbFitPlot2 <- ggplot() +
         legend.position=c(0.8,0.2),
         legend.title=element_blank())
 vbFitPlot2
-```
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## Error in FUN(X[[i]], ...): object 'age' not found
+{% endhighlight %}
+
+![plot of chunk vbCompFit2](http://derekogle.com/fishR/figures/vbCompFit2-1.png)
 
 &nbsp;
 
 ## Multiple VBGFs in Separate Plots
 An alternative to putting multiple VBGF trajectories in one plot is to separate them into individual plots. This is easily handled by including the "grouping" variable name within `vars()` within `facet_wrap()`.[^removedColors]
 
-```{r vbFitFacet1, fig.width=7,fig.height=3.5,par1=TRUE}
+
+{% highlight r %}
 vbFitPlot3 <- ggplot() + 
   geom_ribbon(data=preds2,aes(x=age,ymin=LCI,ymax=UCI),alpha=0.2) +
   geom_point(data=w14T,aes(y=tl,x=age),alpha=0.25,size=2) +
@@ -185,10 +284,19 @@ vbFitPlot3 <- ggplot() +
   theme_bw() +
   theme(panel.grid=element_blank())
 vbFitPlot3
-```
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## Error in if (empty(data)) {: missing value where TRUE/FALSE needed
+{% endhighlight %}
+
+![plot of chunk vbFitFacet1](http://derekogle.com/fishR/figures/vbFitFacet1-1.png)
 
 Faceting is more interesting when there are more "groups." The plot below shows different VBGF fits across all available years for female Walleye from location "1."  The code is basically the same as above (i.e., strategically replacing `sex` with `fyear` and making sure to use the new data.frame).
-```{r cache=TRUE}
+
+{% highlight r %}
 wfT <- filter(WalleyeErie2,sex=="female",loc==1)
 
 agesum <- group_by(wfT,year) %>%
@@ -224,14 +332,59 @@ for (i in 1:nyears) {
   tmp2 <- filter(tmp2,age>=agesum$minage[i],age<=agesum$maxage[i])
   preds2 <- rbind(preds2,tmp2)
 }
+{% endhighlight %}
 
+
+
+{% highlight text %}
+## 2003 Loop
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## Error in eval(object$data): object 'tmp1' not found
+{% endhighlight %}
+
+
+
+{% highlight r %}
 rownames(cfs) <- rownames(cis) <- years
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## Error in `rownames<-`(`*tmp*`, value = 2003:2014): attempt to set 'rownames' on an object with no dimensions
+{% endhighlight %}
+
+
+
+{% highlight r %}
 colnames(cis) <- paste(rep(c("Linf","K","t0"),each=2),
                        rep(c("LCI","UCI"),times=2),sep=".")
-colnames(preds1) <- colnames(preds2) <- c("year","age","fit","LCI","UCI")
-```
+{% endhighlight %}
 
-```{r vbFitFacet2, fig.width=7,fig.height=9,par1=TRUE}
+
+
+{% highlight text %}
+## Error in `colnames<-`(`*tmp*`, value = c("Linf.LCI", "Linf.UCI", "K.LCI", : attempt to set 'colnames' on an object with less than two dimensions
+{% endhighlight %}
+
+
+
+{% highlight r %}
+colnames(preds1) <- colnames(preds2) <- c("year","age","fit","LCI","UCI")
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## Error in `colnames<-`(`*tmp*`, value = c("year", "age", "fit", "LCI", : attempt to set 'colnames' on an object with less than two dimensions
+{% endhighlight %}
+
+
+{% highlight r %}
 vbFitPlot4 <- ggplot() + 
   geom_ribbon(data=preds2,aes(x=age,ymin=LCI,ymax=UCI),alpha=0.2) +
   geom_point(data=wfT,aes(y=tl,x=age),alpha=0.25,size=2) +
@@ -244,18 +397,57 @@ vbFitPlot4 <- ggplot() +
   theme_bw() +
   theme(panel.grid=element_blank())
 vbFitPlot4
-```
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## Error in if (empty(data)) {: missing value where TRUE/FALSE needed
+{% endhighlight %}
+
+![plot of chunk vbFitFacet2](http://derekogle.com/fishR/figures/vbFitFacet2-1.png)
 
 &nbsp;
 
 ## BONUS -- Plots of Parameter Estimates
 A bonus for keeping track of the parameter point and interval estimates through this entire post is to plot the estimates across years. I will leave this up to you to decipher, but note that the years must be added to the `cfs` and `cis` data.frames to make the plot shown here.
-```{r}
-( cfs <- data.frame(year=years,cfs) )
-( cis <- data.frame(year=years,cis) )
-```
 
-```{r LinfPlot, fig.width=4,fig.height=3,par1=TRUE}
+{% highlight r %}
+( cfs <- data.frame(year=years,cfs) )
+{% endhighlight %}
+
+
+
+{% highlight text %}
+##    year     Linf        K       t0
+## 1  2003 540.1804 1.684325 1.077078
+## 2  2004 540.1804 1.684325 1.077078
+## 3  2005 540.1804 1.684325 1.077078
+## 4  2006 540.1804 1.684325 1.077078
+## 5  2007 540.1804 1.684325 1.077078
+## 6  2008 540.1804 1.684325 1.077078
+## 7  2009 540.1804 1.684325 1.077078
+## 8  2010 540.1804 1.684325 1.077078
+## 9  2011 540.1804 1.684325 1.077078
+## 10 2012 540.1804 1.684325 1.077078
+## 11 2013 540.1804 1.684325 1.077078
+## 12 2014 540.1804 1.684325 1.077078
+{% endhighlight %}
+
+
+
+{% highlight r %}
+( cis <- data.frame(year=years,cis) )
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## Error in data.frame(year = years, cis): arguments imply differing number of rows: 12, 0
+{% endhighlight %}
+
+
+{% highlight r %}
 p.Linfs <- ggplot() +
   geom_point(data=cfs,aes(x=year,y=Linf)) +
   geom_line(data=cfs,aes(x=year,y=Linf),color="gray80") +
@@ -266,10 +458,19 @@ p.Linfs <- ggplot() +
   theme(panel.grid=element_blank(),
         axis.text.x=element_text(angle=90,vjust=0.5))
 p.Linfs
-```
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## Error in FUN(X[[i]], ...): object 'year' not found
+{% endhighlight %}
+
+![plot of chunk LinfPlot](http://derekogle.com/fishR/figures/LinfPlot-1.png)
 
 This is repeated for the other two parameters.
-```{r}
+
+{% highlight r %}
 p.K <- ggplot() +
   geom_point(data=cfs,aes(x=year,y=K)) +
   geom_line(data=cfs,aes(x=year,y=K),color="gray80") +
@@ -289,13 +490,22 @@ p.t0 <- ggplot() +
   theme_bw() +
   theme(panel.grid=element_blank(),
         axis.text.x=element_text(angle=90,vjust=0.5))
-```
+{% endhighlight %}
 
 Which can then be neatly placed on top of each other with the `patchwork` package.
-```{r vbParamsPlot, fig.width=5,fig.height=7,par1=TRUE}
+
+{% highlight r %}
 library(patchwork)
 p.K / p.t0 / p.Linfs
-```
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## Error in FUN(X[[i]], ...): object 'year' not found
+{% endhighlight %}
+
+![plot of chunk vbParamsPlot](http://derekogle.com/fishR/figures/vbParamsPlot-1.png)
 
 &nbsp;
 

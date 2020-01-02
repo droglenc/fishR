@@ -26,6 +26,8 @@ knit_hooks$set(par1 = function(before, options, envir) {
 opts_chunk$set(dev="png",tidy=FALSE,fig.width=4,fig.height=4,par1=TRUE)
 options(show.signif.stars=FALSE)
 set.seed(343434344)
+library(car)
+library(boot)
 ```
 
 ----
@@ -81,7 +83,7 @@ cfs <- cis <- preds1 <- preds2 <- NULL
 
 The code inside the loop follows the same logic as shown in [the previous post](http://derekogle.com/fishR/2019-12-31-ggplot-vonB-fitplot-1) for fitting the VBGF to one group.[^loopNote]
 
-```{r message=FALSE, cache=TRUE}
+```{r message=FALSE}
 for (i in 1:nsexes) {
   ## Loop notification (for peace of mind)
   cat(sexes[i],"Loop\n")
@@ -188,7 +190,7 @@ vbFitPlot3
 ```
 
 Faceting is more interesting when there are more "groups." The plot below shows different VBGF fits across all available years for female Walleye from location "1."  The code is basically the same as above (i.e., strategically replacing `sex` with `fyear` and making sure to use the new data.frame).
-```{r cache=TRUE}
+```{r}
 wfT <- filter(WalleyeErie2,sex=="female",loc==1)
 
 agesum <- group_by(wfT,year) %>%

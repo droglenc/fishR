@@ -315,6 +315,6 @@ I am trying to post examples here as I learn `ggplot2`. My other `ggplot2`-relat
 
 [^loopNote]: I inclued the notification in `cat()` as it gives me peace of mind to see where the loop is at. This is useful here because this loop can take a while given the two sets of bootstraps.
 
-[^chooseColors]: I used [this resource](https://gka.github.io/palettes/#/2|d|00429d,96ffea|ffffe0,ff005e,93003a|1|1) to help choose two divergent colors that were "color-blind safe."
+[^chooseColors]: I used <a href="https://gka.github.io/palettes/#/2|d|00429d,96ffea|ffffe0,ff005e,93003a|1|1">this resource</a> to help choose two divergent colors that were "color-blind safe."
 
 [^removedColors]: All `fill=sex` and `color=sex` items were removed from the previous code as leaving them in would result in each facet using a different color (which is redundant with the labels).

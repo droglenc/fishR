@@ -134,49 +134,16 @@ for (i in 1:nsexes) {
 
 {% highlight text %}
 ## female Loop
-{% endhighlight %}
-
-
-
-{% highlight text %}
-## Error in eval(object$data): object 'tmp1' not found
+## male Loop
 {% endhighlight %}
 
 The `cfs`, `cis`, `preds1`, and `preds2` objects will have poorly named rows, columns, or both after the loop. These deficiencies are corrected below.
 
 {% highlight r %}
 rownames(cfs) <- rownames(cis) <- sexes
-{% endhighlight %}
-
-
-
-{% highlight text %}
-## Error in `rownames<-`(`*tmp*`, value = c("female", "male")): attempt to set 'rownames' on an object with no dimensions
-{% endhighlight %}
-
-
-
-{% highlight r %}
 colnames(cis) <- paste(rep(c("Linf","K","t0"),each=2),
                        rep(c("LCI","UCI"),times=2),sep=".")
-{% endhighlight %}
-
-
-
-{% highlight text %}
-## Error in `colnames<-`(`*tmp*`, value = c("Linf.LCI", "Linf.UCI", "K.LCI", : attempt to set 'colnames' on an object with less than two dimensions
-{% endhighlight %}
-
-
-
-{% highlight r %}
 colnames(preds1) <- colnames(preds2) <- c("sex","age","fit","LCI","UCI")
-{% endhighlight %}
-
-
-
-{% highlight text %}
-## Error in `colnames<-`(`*tmp*`, value = c("sex", "age", "fit", "LCI", "UCI": attempt to set 'colnames' on an object with less than two dimensions
 {% endhighlight %}
 
 The `preds1` and `preds2` objects now contain the predicted mean lengths-at-age with associated confidence intervals in the desired long format.
@@ -188,7 +155,13 @@ headtail(preds1) # predicted lengths-at-age w/ CIs for ALL ages
 
 
 {% highlight text %}
-## Error: 'x' must be a matrix or data.frame.
+##         sex  age       fit       LCI      UCI
+## V1   female -1.0  63.17547  12.47969 105.7263
+## V2   female -0.8 103.98483  62.48840 138.8930
+## V3   female -0.6 141.94750 108.32876 170.5116
+## V641   male 11.6 568.09475 552.38131 582.0849
+## V651   male 11.8 568.48780 552.59109 582.7325
+## V661   male 12.0 568.85535 552.79664 583.5140
 {% endhighlight %}
 
 
@@ -200,7 +173,13 @@ headtail(preds2) # predicted lengths-at-age w/ CIs for OBSERVED ages
 
 
 {% highlight text %}
-## Error: 'x' must be a matrix or data.frame.
+##        sex  age      fit      LCI      UCI
+## 1   female  0.0 240.6728 224.6318 254.2693
+## 2   female  0.2 269.1007 257.1073 279.3463
+## 3   female  0.4 295.5456 286.6625 302.9567
+## 105   male 10.6 565.6806 551.1223 578.3807
+## 106   male 10.8 566.2303 551.4202 579.2471
+## 107   male 11.0 566.7443 551.6947 580.1122
 {% endhighlight %}
 
 &nbsp;
@@ -229,12 +208,6 @@ vbFitPlot1 <- ggplot() +
 vbFitPlot1
 {% endhighlight %}
 
-
-
-{% highlight text %}
-## Error in FUN(X[[i]], ...): object 'age' not found
-{% endhighlight %}
-
 ![plot of chunk vbCompFit1](http://derekogle.com/fishR/figures/vbCompFit1-1.png)
 
 Some people may prefer to just see model fits. If so, then simply omit `geom_point()`.
@@ -255,12 +228,6 @@ vbFitPlot2 <- ggplot() +
         legend.position=c(0.8,0.2),
         legend.title=element_blank())
 vbFitPlot2
-{% endhighlight %}
-
-
-
-{% highlight text %}
-## Error in FUN(X[[i]], ...): object 'age' not found
 {% endhighlight %}
 
 ![plot of chunk vbCompFit2](http://derekogle.com/fishR/figures/vbCompFit2-1.png)
@@ -284,12 +251,6 @@ vbFitPlot3 <- ggplot() +
   theme_bw() +
   theme(panel.grid=element_blank())
 vbFitPlot3
-{% endhighlight %}
-
-
-
-{% highlight text %}
-## Error in if (empty(data)) {: missing value where TRUE/FALSE needed
 {% endhighlight %}
 
 ![plot of chunk vbFitFacet1](http://derekogle.com/fishR/figures/vbFitFacet1-1.png)
@@ -338,49 +299,63 @@ for (i in 1:nyears) {
 
 {% highlight text %}
 ## 2003 Loop
+## 
+##  Number of bootstraps was 631 out of 999 attempted 
+## 
+##  Number of bootstraps was 615 out of 999 attempted
 {% endhighlight %}
 
 
 
 {% highlight text %}
-## Error in eval(object$data): object 'tmp1' not found
+## Warning in confint.boot(boot2): BCa method fails for this problem. Using 'perc' instead
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## 2004 Loop
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## Warning: Starting value for Linf is very different from the observed maximum
+## length, which suggests a model fitting problem. See a Walford or
+## Chapman plot to examine the problem. Consider either using the mean
+## length for several of the largest fish (i.e., use 'oldAge' in 
+## 'methLinf=') or manually setting Linf in the starting value list
+## to the maximum observed length.
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## 2005 Loop
+## 
+##  Number of bootstraps was 994 out of 999 attempted 
+## 
+##  Number of bootstraps was 994 out of 999 attempted 
+## 2006 Loop
+## 
+##  Number of bootstraps was 998 out of 999 attempted 
+## 2007 Loop
+## 2008 Loop
+## 2009 Loop
+## 2010 Loop
+## 2011 Loop
+## 2012 Loop
+## 2013 Loop
+## 2014 Loop
 {% endhighlight %}
 
 
 
 {% highlight r %}
 rownames(cfs) <- rownames(cis) <- years
-{% endhighlight %}
-
-
-
-{% highlight text %}
-## Error in `rownames<-`(`*tmp*`, value = 2003:2014): attempt to set 'rownames' on an object with no dimensions
-{% endhighlight %}
-
-
-
-{% highlight r %}
 colnames(cis) <- paste(rep(c("Linf","K","t0"),each=2),
                        rep(c("LCI","UCI"),times=2),sep=".")
-{% endhighlight %}
-
-
-
-{% highlight text %}
-## Error in `colnames<-`(`*tmp*`, value = c("Linf.LCI", "Linf.UCI", "K.LCI", : attempt to set 'colnames' on an object with less than two dimensions
-{% endhighlight %}
-
-
-
-{% highlight r %}
 colnames(preds1) <- colnames(preds2) <- c("year","age","fit","LCI","UCI")
-{% endhighlight %}
-
-
-
-{% highlight text %}
-## Error in `colnames<-`(`*tmp*`, value = c("year", "age", "fit", "LCI", : attempt to set 'colnames' on an object with less than two dimensions
 {% endhighlight %}
 
 
@@ -402,7 +377,7 @@ vbFitPlot4
 
 
 {% highlight text %}
-## Error in if (empty(data)) {: missing value where TRUE/FALSE needed
+## Warning: Removed 11 rows containing missing values (geom_path).
 {% endhighlight %}
 
 ![plot of chunk vbFitFacet2](http://derekogle.com/fishR/figures/vbFitFacet2-1.png)
@@ -419,19 +394,19 @@ A bonus for keeping track of the parameter point and interval estimates through 
 
 
 {% highlight text %}
-##    year     Linf        K       t0
-## 1  2003 540.1804 1.684325 1.077078
-## 2  2004 540.1804 1.684325 1.077078
-## 3  2005 540.1804 1.684325 1.077078
-## 4  2006 540.1804 1.684325 1.077078
-## 5  2007 540.1804 1.684325 1.077078
-## 6  2008 540.1804 1.684325 1.077078
-## 7  2009 540.1804 1.684325 1.077078
-## 8  2010 540.1804 1.684325 1.077078
-## 9  2011 540.1804 1.684325 1.077078
-## 10 2012 540.1804 1.684325 1.077078
-## 11 2013 540.1804 1.684325 1.077078
-## 12 2014 540.1804 1.684325 1.077078
+##      year     Linf         K         t0
+## 2003 2003 540.1804 1.6843248  1.0770783
+## 2004 2004 660.1222 0.3768720 -0.6210112
+## 2005 2005 743.4416 0.1972271 -1.9791564
+## 2006 2006 673.1494 0.2815995 -1.4618985
+## 2007 2007 724.7986 0.2086957 -2.4787931
+## 2008 2008 628.1655 0.3978859 -1.1359461
+## 2009 2009 633.4864 0.4015328 -0.9812580
+## 2010 2010 625.2466 0.4755051 -0.7492581
+## 2011 2011 665.2861 0.3639903 -1.1207619
+## 2012 2012 657.7450 0.3470683 -1.3561054
+## 2013 2013 648.4110 0.3284681 -1.4754777
+## 2014 2014 648.2084 0.3615400 -1.2836315
 {% endhighlight %}
 
 
@@ -443,7 +418,19 @@ A bonus for keeping track of the parameter point and interval estimates through 
 
 
 {% highlight text %}
-## Error in data.frame(year = years, cis): arguments imply differing number of rows: 12, 0
+##      year Linf.LCI Linf.UCI     K.LCI     K.UCI     t0.LCI     t0.UCI
+## 2003 2003 520.1261 557.3760 1.2259640 4.4428648  0.8088490  1.6059014
+## 2004 2004 600.0443 698.6215 0.3104360 0.5082734 -0.8378565 -0.3766676
+## 2005 2005 656.3570 999.5913 0.1072387 0.2762094 -3.0291481 -1.3073267
+## 2006 2006 564.1173 799.5650 0.1815560 0.4936468 -2.0096527 -0.8289888
+## 2007 2007 700.3794 756.5561 0.1823259 0.2379983 -2.8480065 -2.1156217
+## 2008 2008 594.8101 682.2763 0.2723284 0.5447125 -1.7646474 -0.6974854
+## 2009 2009 605.2833 670.3782 0.3308667 0.4758375 -1.2515718 -0.7680478
+## 2010 2010 601.6751 644.2715 0.4212676 0.5569010 -0.9090219 -0.5701648
+## 2011 2011 643.2538 692.5918 0.3084859 0.4245175 -1.3758088 -0.8968716
+## 2012 2012 637.8887 680.3622 0.3082670 0.3940670 -1.5642523 -1.1527836
+## 2013 2013 606.3430 683.4810 0.2787034 0.4037914 -1.7522694 -1.2037142
+## 2014 2014 620.3367 687.8268 0.2998104 0.4270895 -1.5388048 -1.0630093
 {% endhighlight %}
 
 
@@ -458,12 +445,6 @@ p.Linfs <- ggplot() +
   theme(panel.grid=element_blank(),
         axis.text.x=element_text(angle=90,vjust=0.5))
 p.Linfs
-{% endhighlight %}
-
-
-
-{% highlight text %}
-## Error in FUN(X[[i]], ...): object 'year' not found
 {% endhighlight %}
 
 ![plot of chunk LinfPlot](http://derekogle.com/fishR/figures/LinfPlot-1.png)
@@ -497,12 +478,6 @@ Which can then be neatly placed on top of each other with the `patchwork` packag
 {% highlight r %}
 library(patchwork)
 p.K / p.t0 / p.Linfs
-{% endhighlight %}
-
-
-
-{% highlight text %}
-## Error in FUN(X[[i]], ...): object 'year' not found
 {% endhighlight %}
 
 ![plot of chunk vbParamsPlot](http://derekogle.com/fishR/figures/vbParamsPlot-1.png)

@@ -5,7 +5,7 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">164</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">165</span> publications.
 
 1. Achilleos K, Smith AM, Gordon DP. 2019. The articulated bryozoan genus *Cellaria* in the southern Zealandian Region: distribution and associated fauna. Marine Biodiversiety XX:XXX-XXX. [Abstract](https://link.springer.com/article/10.1007/s12526-019-01009-y) [???]
 1. Albert LT, Junge C, Myrlund MK. 2019. Young mums are rebuilding the Spurdog stock (*Squalus acanthias* L.) in Norwegian waters. ICES Journal of Marine Science XX:XXX-XXX. [Abstract](https://academic.oup.com/icesjms/advance-article-abstract/doi/10.1093/icesjms/fsz156/5543885) [???]
@@ -173,6 +173,7 @@ kempii*) somatic growth and population dynamics. PhD Dissertation, Oregon State 
 1. Wollman, KM. 2019. Assessing freshwater mussel(*Bivalvia: Unionidae*) assemblages and effects of eutrophication on *Pyganodon grandis* in lakes of eastern South Dakota. M.Sc. Thesis, South Dakota State University. [Full Text](https://openprairie.sdstate.edu/cgi/viewcontent.cgi?article=4395&context=etd) [Age-Length Key; Catch Curve]
 1. Yan L, Herrmann M, Kampe B, Lehmann R, Totsch KU, Kussel K. 2019. Environmental selection shapes the formation of near-surface groundwater microbiomes. Water Research XX:XXX-XXX. [Abstract](https://www.sciencedirect.com/science/article/abs/pii/S0043135419311157) [Dunn's Test]
 1. Young A. 2019. Anadromy versus non-anadromy in the Canadian Arctic: variation in the lake ecology and life history of two allopatric Arctic charr (*Salvelinus alpinus*) populations in Cumberland Sound on South Baffin Island, Nunavut. MS Thesis, Univ. Manitoba. [Full Text](https://mspace.lib.umanitoba.ca/bitstream/handle/1993/33682/Angela_Young.pdf?sequence=1) [Growth, Age-Length Key]
+1. Zuk CK, Abobi SM, Campion BB. 2019. Comparative assessment of age, growth and food habit of the Black-Chinned Tilapia *Sarotherodon melanotheron* (Ruppell, 1852) from a closed and open lagoon, Ghana. Fisheries and Aquatic Sciences XX:XXX-XXX. [Full Text](https://www.researchgate.net/publication/338187387_Comparative_assessment_of_age_growth_and_food_habit_of_the_black-chinned_tilapia_Sarotherodon_melanotheron_Ruppell_1852_from_a_closed_and_open_lagoon_Ghana/references) [Length-weight Regression]
 
 -----
 <p style="text-align: center;"><a href="exposure-citations18.html">Goto 2018 citations</a>|<a href="exposure-citations20.html">Goto 2020 citations</a></p>

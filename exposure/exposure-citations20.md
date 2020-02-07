@@ -5,7 +5,7 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">15</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">16</span> publications.
 
 1. Barnett SE, Youngblut ND, Buckley DH. 2019. Soil characteristics and land-use drive bacterial community assembly patterns. FEMS Microbial Ecology 96:XXX-XXX. [Abstract](https://academic.oup.com/femsec/advance-article-abstract/doi/10.1093/femsec/fiz194/5675623) [Dunn's Test]
 1. Chialva M, Ghignone S, Novero M, Hozzein WN, Lanfranco L, Bonfante P. 2020. Tomato RNA-seq data mining reveals the taxonomic and functional diversity of root-associated microbiota. Microorganisms 8:XXX-XXX. [Full Text](https://www.mdpi.com/2076-2607/8/1/38/pdf) [Dunn's Test]
@@ -20,6 +20,7 @@ The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA
 1. Maier SR, Bannister RJ, van Oevelen D, Kutti T. 2020. Seasonal controls on the diet, metabolic activity, tissue reserves and growth of the cold-water coral *Lophelia pertusa*. Coral Reefs XX:XXX-XXX. [Abstract](https://link.springer.com/article/10.1007/s00338-019-01886-6) [Dunn's Test]
 1. Mantino A, Volpi I, Micci M, Pecchioni G, Bosco S, Droagoni F, Mele M, Ragaglini G. 2019. Effect of tree presence and soil characteristics on soybean yield and quality in an innovative alley-cropping system. Agronomy XX:XXX-XXX. [Full Text](https://www.mdpi.com/2073-4395/10/1/52/pdf) [Dunn's Test]
 1. Oesterwind D, Bobowski BTC, Brunsch A, Laptikhovsky V, van Hal R, Sell AF, Pierce GJ. 2020. First evidence of a new spawning stock of *Illex coindetii* in the North Sea (NE-Atlantic). Fisheries Research 221:XXX-XXX. [Abstract](https://www.sciencedirect.com/science/article/pii/S0165783619302395) [Growth]
+1. Sanchez-Gonzales JR, Arbones A, Casals F. 2020. Variation over time of length–weight relationships and condition factors for four exotic fish species from a restored shallow lake in NE Iberian Peninsula. Fishes XX:XXX-XXX. [Full Text](https://www.researchgate.net/publication/339022518_Variation_over_Time_of_Length-Weight_Relationships_and_Condition_Factors_for_Four_Exotic_Fish_Species_from_a_Restored_Shallow_Lake_in_NE_Iberian_Peninsula/references) [Condition]
 1. Stypinska B, Wajda A, Walczuk E, Olesinska M, Lewandowska A, Walczyk M, Pardowska-Gorycka A. 2020. The serum cell-free microRNA expression profile in
 MCTD, SLE, SSc, and RA patients. Journal of Clinical Medicine XX:XXX-XXX. [Full Text](https://www.mdpi.com/2077-0383/9/1/161/pdf) [Dunn's Test]
 1. Taylor TN, Cross BK, Moore BC. 2020. Modeling Brook Trout carrying capacity in Owhi Lake, Washington, using bioenergetics. North American Journal of Fisheries Management. XX:XXX-XXX. [Abstract](https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1002/nafm.10378) [???]

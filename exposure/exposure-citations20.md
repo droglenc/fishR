@@ -5,7 +5,7 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">30</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">32</span> publications.
 
 1. Arntzen JW, Zuiderwijk A. 2020. Sampling efficiency, bias and shyness in funnel trapping aquatic newts. Amphibia-Reptilia XX:XXX-XXX. [Abstract](https://brill.com/view/journals/amre/aop/article-10.1163-15685381-bja10004/article-10.1163-15685381-bja10004.xml) [???]
 1. Barkalow SLC, Brandenburg MA, Platania SP. 2020. Otoliths reveal spawning ecology and early life history of sympatric catostomids. North American Journal of Fisheries Management XX:XXX-XXX. [Abstract](https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1002/nafm.10423) [???]
@@ -29,6 +29,7 @@ The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA
 1. Maier SR, Bannister RJ, van Oevelen D, Kutti T. 2020. Seasonal controls on the diet, metabolic activity, tissue reserves and growth of the cold-water coral *Lophelia pertusa*. Coral Reefs XX:XXX-XXX. [Abstract](https://link.springer.com/article/10.1007/s00338-019-01886-6) [Dunn's Test]
 1. Mantino A, Volpi I, Micci M, Pecchioni G, Bosco S, Droagoni F, Mele M, Ragaglini G. 2019. Effect of tree presence and soil characteristics on soybean yield and quality in an innovative alley-cropping system. Agronomy XX:XXX-XXX. [Full Text](https://www.mdpi.com/2073-4395/10/1/52/pdf) [Dunn's Test]
 1. McElhoe JA, Holland MM. 2020. Characterization of background noise in MiSeq MPS data when sequencing human mitochondrial DNA from various sample sources and library preparation methods. Mitochondrion XX:XXX-XXX. [Abstract](https://www.sciencedirect.com/science/article/abs/pii/S1567724919302028) [???]
+1. Nakewski J, *et al.* 2020. αvβ8 integrin-expression by BATF3-dependent dendritic cells facilitates early IgA responses to Rotavirus. MucosaImmunology XX:XXX-XXX. [Full Text](https://www.nature.com/articles/s41385-020-0276-8) [Dunn's Test]
 1. Neely BC, Koch JD, Gido KB, Chance-Ossowski CJ, Renner EA. 2020. Factors influencing Bluegill growth in small Kansas impoundments. Journal of Fish and Wildlife Management XX:XXX-XXX. [Full Text](https://www.fwspubs.org/doi/pdf/10.3996/082019-JFWM-065) [Growth]
 1. Oesterwind D, Bobowski BTC, Brunsch A, Laptikhovsky V, van Hal R, Sell AF, Pierce GJ. 2020. First evidence of a new spawning stock of *Illex coindetii* in the North Sea (NE-Atlantic). Fisheries Research 221:XXX-XXX. [Abstract](https://www.sciencedirect.com/science/article/pii/S0165783619302395) [Growth]
 1. Pellowe KE, Leslie HM. 2020. Size-selective fishing leads to trade-offs between fishery productivity and reproductive capacity. Ecosphere XX:XXX-XXX. [Full Text](https://esajournals.onlinelibrary.wiley.com/doi/pdf/10.1002/ecs2.3071) [General]
@@ -39,8 +40,9 @@ The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA
 1. Stypinska B, Wajda A, Walczuk E, Olesinska M, Lewandowska A, Walczyk M, Pardowska-Gorycka A. 2020. The serum cell-free microRNA expression profile in
 MCTD, SLE, SSc, and RA patients. Journal of Clinical Medicine XX:XXX-XXX. [Full Text](https://www.mdpi.com/2077-0383/9/1/161/pdf) [Dunn's Test]
 1. Taylor TN, Cross BK, Moore BC. 2020. Modeling Brook Trout carrying capacity in Owhi Lake, Washington, using bioenergetics. North American Journal of Fisheries Management. XX:XXX-XXX. [Abstract](https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1002/nafm.10378) [???]
-1. Yates MC, Glaser D, Post J, Cristescu ME, Fraser DJ, Derry AM. 2020. Allometric scaling strengthens the relationship between eDNA particle concentration and organism abundance in nature. bioRxiv XX:XXX-XXX. [Full Text](https://www.biorxiv.org/content/biorxiv/early/2020/01/18/2020.01.18.908251.full.pdf) [Mark-Recapture]
+1. Virgulino-Junior PCC, Carneiro N Naschimento Jr WR, Cougo MF, Fernandes MEB. 2020. Biomass and carbon estimation for scrub mangrove forests and examination of their allometric associated uncertainties. PLOS One XX:XXX-XXX. [Full Text](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0230008) [Dunn's Test]
 1. Wenker RP, Stevens BG. 2020. Sea whip coral *Leptogorgia virgulata* in the Mid-Atlantic Bight: Colony complexity, age, and growth. PeerJ: Aquatic Biology XX:XXX-XXX. [Full Text](https://peerj.com/articles/8372/) [Age-Length Key; Age-Bias; von Bertalanffy Growth]
+1. Yates MC, Glaser D, Post J, Cristescu ME, Fraser DJ, Derry AM. 2020. Allometric scaling strengthens the relationship between eDNA particle concentration and organism abundance in nature. bioRxiv XX:XXX-XXX. [Full Text](https://www.biorxiv.org/content/biorxiv/early/2020/01/18/2020.01.18.908251.full.pdf) [Mark-Recapture]
 
 -----
 <p style="text-align: center;"><a href="exposure-citations19.html">Goto 2019 citations</a></p>

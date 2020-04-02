@@ -5,7 +5,7 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">38</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">39</span> publications.
 
 1. Arntzen JW, Zuiderwijk A. 2020. Sampling efficiency, bias and shyness in funnel trapping aquatic newts. Amphibia-Reptilia XX:XXX-XXX. [Abstract](https://brill.com/view/journals/amre/aop/article-10.1163-15685381-bja10004/article-10.1163-15685381-bja10004.xml) [???]
 1. Barkalow SLC, Brandenburg MA, Platania SP. 2020. Otoliths reveal spawning ecology and early life history of sympatric catostomids. North American Journal of Fisheries Management XX:XXX-XXX. [Abstract](https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1002/nafm.10423) [???]
@@ -37,6 +37,7 @@ The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA
 1. Nakewski J, *et al.* 2020. αvβ8 integrin-expression by BATF3-dependent dendritic cells facilitates early IgA responses to Rotavirus. MucosaImmunology XX:XXX-XXX. [Full Text](https://www.nature.com/articles/s41385-020-0276-8) [Dunn's Test]
 1. Neely BC, Koch JD, Gido KB, Chance-Ossowski CJ, Renner EA. 2020. Factors influencing Bluegill growth in small Kansas impoundments. Journal of Fish and Wildlife Management XX:XXX-XXX. [Full Text](https://www.fwspubs.org/doi/pdf/10.3996/082019-JFWM-065) [Growth]
 1. Oesterwind D, Bobowski BTC, Brunsch A, Laptikhovsky V, van Hal R, Sell AF, Pierce GJ. 2020. First evidence of a new spawning stock of *Illex coindetii* in the North Sea (NE-Atlantic). Fisheries Research 221:XXX-XXX. [Abstract](https://www.sciencedirect.com/science/article/pii/S0165783619302395) [Growth]
+1. Okpei P, Aggrey-Fynn J, Okyere I. 2020. Growth, mortality, ovarian maturity, and exploitation of the Guinea shrimp, *Holthuispenaeopsis atlantica* (Balss, 1914) (Decapoda: Dendrobranchiata: Penaeidae) in inshore waters of Ghana, West Africa. Journal of Crustacean Biology XX:XXX-XXX. [Full Text](https://academic.oup.com/jcb/advance-article/doi/10.1093/jcbiol/ruaa010/5813135) [Maturity]
 1. Pellowe KE, Leslie HM. 2020. Size-selective fishing leads to trade-offs between fishery productivity and reproductive capacity. Ecosphere XX:XXX-XXX. [Full Text](https://esajournals.onlinelibrary.wiley.com/doi/pdf/10.1002/ecs2.3071) [General]
 1. Plon S, Heyns-Veale ER, Smale MJ, Froneman PW. 2020. Life history parameters and diet of Risso's dolphins, *Grampus griseus*, from southeastern South Africa. Marine Mammal Science XX:XXX-XXX. [Abstract](https://onlinelibrary.wiley.com/doi/abs/10.1111/mms.12675) [???]
 1. Ramirez-Gonzalez J, Mority N, Andrade-Vera S, Mackliff HR. 2020. Estimation of age and growth and mortality parameters of the sea cucumber *Isostichopus fuscus* (Ludwig, 1875) and implications for the management of its fishery in the Galapagos Marine Reserve. Aquaculture and Fisheries XX:XXX-XXX. [Full Text](https://www.sciencedirect.com/science/article/pii/S2468550X20300022) [Mortality]

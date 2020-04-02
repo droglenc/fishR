@@ -5,7 +5,7 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">37</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">38</span> publications.
 
 1. Arntzen JW, Zuiderwijk A. 2020. Sampling efficiency, bias and shyness in funnel trapping aquatic newts. Amphibia-Reptilia XX:XXX-XXX. [Abstract](https://brill.com/view/journals/amre/aop/article-10.1163-15685381-bja10004/article-10.1163-15685381-bja10004.xml) [???]
 1. Barkalow SLC, Brandenburg MA, Platania SP. 2020. Otoliths reveal spawning ecology and early life history of sympatric catostomids. North American Journal of Fisheries Management XX:XXX-XXX. [Abstract](https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1002/nafm.10423) [???]
@@ -15,6 +15,7 @@ The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA
 1. Bustos B, Cubillos LA, Claramunt G, Castro LR. 2020. Daily anchovy (*Engraulis ringens*) egg mortality rates in different spawning zones along the Chilean coast. Marine Science XX:XXX-XXX. [Abstract](https://www.sciencedirect.com/science/article/abs/pii/S2352485518304316) [???]
 1. Candida dos Santos Prestes NC, *et al.* 2020. Fire effects on understory forest regeneration in Southern Arizona. Frontiers in Forests and Global Change. XX:XXX-XXX. [Full Text](http://sites.exeter.ac.uk/tedfeldpausch/files/2020/02/Prestes_Fire-effects-understory-forest-regeneration-southern-Amazonia.pdf) [Dunn Test?]
 1. Chialva M, Ghignone S, Novero M, Hozzein WN, Lanfranco L, Bonfante P. 2020. Tomato RNA-seq data mining reveals the taxonomic and functional diversity of root-associated microbiota. Microorganisms 8:XXX-XXX. [Full Text](https://www.mdpi.com/2076-2607/8/1/38/pdf) [Dunn's Test]
+1. Chiarmonte LV, Meyer KA, Branigan PR, Reynolds JB. 2020. Effect of pulsed DC frequency on capture efficiency and spinal injury of trout in small streams. North American Journal of Fisheries Management XX:XXX-XXX. [Abstract](https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1002/nafm.10440) [Removal]
 1. Crawford LM, Janovick JL, Carrasquilla-Garcia N, Hatzakis E, Wang SC. 2020. Comparison of DNA analysis, targeted metabolite profiling, and non-targeted NMR fingerprinting for differentiating cultivars of processed olives. Food Control XX:XXX-XXX. [Abstract](https://www.sciencedirect.com/science/article/abs/pii/S0956713520301808) [Dunn's Test]
 1. da Silva Souza T, Lacerda D, Aguiar LL, Martins MNC, de Oliveira David JA. 2020. Toxic potential of sewage sludge: Histopathological effects on soil and aquatic bioindicators. Ecological Indicators 111:XXX-XXX. [Abstract](https://www.sciencedirect.com/science/article/abs/pii/S1470160X19309756) [???]
 1. Deemer BR, Stets EG, Yackulic CB. 2020. Calcite precipitation in Lake Powell reduces alkalinity and total salt loading to the Lower Colorado River Basin. Limnology and Oceanography XX:XXX-XXX. [Abstract](https://aslopubs.onlinelibrary.wiley.com/doi/abs/10.1002/lno.11399) [Dunn's Test]

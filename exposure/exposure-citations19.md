@@ -5,7 +5,7 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">169</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">170</span> publications.
 
 1. Achilleos K, Smith AM, Gordon DP. 2019. The articulated bryozoan genus *Cellaria* in the southern Zealandian Region: distribution and associated fauna. Marine Biodiversiety 49:2801-2812. [Abstract](https://link.springer.com/article/10.1007/s12526-019-01009-y) [???]
 1. Albert LT, Junge C, Myrlund MK. 2019. Young mums are rebuilding the Spurdog stock (*Squalus acanthias* L.) in Norwegian waters. ICES Journal of Marine Science 76:2193-2204. [Abstract](https://academic.oup.com/icesjms/advance-article-abstract/doi/10.1093/icesjms/fsz156/5543885) [???]
@@ -26,6 +26,7 @@ The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA
 1. Brunett NP, Koehl MAR. 2019. Mechanical properties of the wave-swept kelp, Egregia menziesii, change with season, growth rate, and herbivore wounds. Journal of Experimental Biology 222:jeb190595. [Abstract](http://jeb.biologists.org/content/early/2019/01/23/jeb.190595.abstract) [Dunn's Test]
 1. Buono V, Bissattini AM, Vignoli L. 2019. Can a cow save a newt? The role of cattle drinking troughs in amphibian conservation. Aquatic Conservation: Marine and Freshwater Ecosystems 29:964-975. [Abstract](https://onlinelibrary.wiley.com/doi/abs/10.1002/aqc.3126) [Removal]
 1. Bushon AM, Rash JM, Yow DL, Wheeler AP. 2019. Suitability of stocked Brown Trout and Rainbow Trout for trophy management in Apalachia Reservoir, North Carolina. Journal of the Southeastern Association of Fish and Wildlife Agencies 6:74–83. [Full Text](http://www.seafwa.org/Documents%20and%20Settings/46/Site%20Documents/2019%20Journal/J6_10%20Bushon%20et%20al%2074-83.pdf) [Slope Comparisons]
+1. Carillo-Colin LD. 2019. Demography and vulnerability of Cownose Ray *Rhinoptera steindachneri* in the Gulf of California. M.Sc. Thesis, Unidad Academica Mazatland. [Full Text](https://www.researchgate.net/publication/334029113_Demography_and_vulnerability_of_cownose_ray_Rhinoptera_steindachneri_in_the_gulf_of_California) [Mortality]
 1. Carroll J, Lowerre-Barbieri SK. 2019. Interactions of dimorphic growth, reproductive behavior, and a size-regulated fishery: a case study using Spotted Seatrout *Cynoscion nebulosus*. Marine Ecology Progress Series 608:233-245. [Abstract](https://www.int-res.com/abstracts/meps/v608/p233-245) [von Bertalanffy Growth]
 1. Carson HS, Morin DJ, Bouma TV, Ulrich M, Sizemore R. 2019. The survival of hatchery‐origin Pinto Abalone *Haliotis kamtschatkana* released into Washington waters. Aquatic Conservation: Marine and Freshwater Ecosystems XX:XXX-XXX. [Abstract](https://onlinelibrary.wiley.com/doi/abs/10.1002/aqc.3004) [von Bertalanffy Growth]
 1. Chadwick, DDA. 2019. Invasion of the signal crayfish, *Pacifastacus leniusculus*, in England: implications for the conservation of the white-clawed crayfish, *Austropotamobius pallipes*. Ph.D. Dissertation, University College London. [Full Text](http://discovery.ucl.ac.uk/10072844/1/D%20Chadwick%20Thesis.pdf) [Removal]

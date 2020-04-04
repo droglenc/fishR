@@ -5,7 +5,7 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">39</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">40</span> publications.
 
 1. Arntzen JW, Zuiderwijk A. 2020. Sampling efficiency, bias and shyness in funnel trapping aquatic newts. Amphibia-Reptilia XX:XXX-XXX. [Abstract](https://brill.com/view/journals/amre/aop/article-10.1163-15685381-bja10004/article-10.1163-15685381-bja10004.xml) [???]
 1. Barkalow SLC, Brandenburg MA, Platania SP. 2020. Otoliths reveal spawning ecology and early life history of sympatric catostomids. North American Journal of Fisheries Management XX:XXX-XXX. [Abstract](https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1002/nafm.10423) [???]
@@ -41,6 +41,7 @@ The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA
 1. Pellowe KE, Leslie HM. 2020. Size-selective fishing leads to trade-offs between fishery productivity and reproductive capacity. Ecosphere XX:XXX-XXX. [Full Text](https://esajournals.onlinelibrary.wiley.com/doi/pdf/10.1002/ecs2.3071) [General]
 1. Plon S, Heyns-Veale ER, Smale MJ, Froneman PW. 2020. Life history parameters and diet of Risso's dolphins, *Grampus griseus*, from southeastern South Africa. Marine Mammal Science XX:XXX-XXX. [Abstract](https://onlinelibrary.wiley.com/doi/abs/10.1111/mms.12675) [???]
 1. Ramirez-Gonzalez J, Mority N, Andrade-Vera S, Mackliff HR. 2020. Estimation of age and growth and mortality parameters of the sea cucumber *Isostichopus fuscus* (Ludwig, 1875) and implications for the management of its fishery in the Galapagos Marine Reserve. Aquaculture and Fisheries XX:XXX-XXX. [Full Text](https://www.sciencedirect.com/science/article/pii/S2468550X20300022) [Mortality]
+1. Roos NC, Taylor BM, Carvalho AR, Longo GO. 2020. Demography of the largest and most endangered Brazilian Parrotfish, *Scarus trispinosus*, reveals overfishing. Endangered Species Research 41:319-327. [Full Text](https://www.int-res.com/articles/esr2020/41/n041p319.pdf) [General]
 1. Sanchez-Gonzales JR, Arbones A, Casals F. 2020. Variation over time of length–weight relationships and condition factors for four exotic fish species from a restored shallow lake in NE Iberian Peninsula. Fishes XX:XXX-XXX. [Full Text](https://www.researchgate.net/publication/339022518_Variation_over_Time_of_Length-Weight_Relationships_and_Condition_Factors_for_Four_Exotic_Fish_Species_from_a_Restored_Shallow_Lake_in_NE_Iberian_Peninsula/references) [Condition]
 1. Sbrana A. *et al.* 2020. Spatial variability and influence of biological parameters on microplastic ingestion by *Boops boops* (L.) along the Italian coasts (Western Mediterranean Sea). Environmental Pollution 263(Part A):XXX-XXX. [Abstract](https://www.sciencedirect.com/science/article/pii/S0269749119363201) [???]
 1. Spence MA, Bannister HJ, Ball JE, Dolder PJ, Griffiths CA, Thorpe RB. 2020. LeMaRns: A length-based multi-species analysis by numerical simlation in R. PLOS ONE XX:XXX-XXX. [Full Text](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0227767) [Stock-Recruitment]

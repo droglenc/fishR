@@ -5,7 +5,7 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">40</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">42</span> publications.
 
 1. Arntzen JW, Zuiderwijk A. 2020. Sampling efficiency, bias and shyness in funnel trapping aquatic newts. Amphibia-Reptilia XX:XXX-XXX. [Abstract](https://brill.com/view/journals/amre/aop/article-10.1163-15685381-bja10004/article-10.1163-15685381-bja10004.xml) [???]
 1. Barkalow SLC, Brandenburg MA, Platania SP. 2020. Otoliths reveal spawning ecology and early life history of sympatric catostomids. North American Journal of Fisheries Management XX:XXX-XXX. [Abstract](https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1002/nafm.10423) [???]
@@ -20,6 +20,7 @@ The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA
 1. da Silva Souza T, Lacerda D, Aguiar LL, Martins MNC, de Oliveira David JA. 2020. Toxic potential of sewage sludge: Histopathological effects on soil and aquatic bioindicators. Ecological Indicators 111:XXX-XXX. [Abstract](https://www.sciencedirect.com/science/article/abs/pii/S1470160X19309756) [???]
 1. Deemer BR, Stets EG, Yackulic CB. 2020. Calcite precipitation in Lake Powell reduces alkalinity and total salt loading to the Lower Colorado River Basin. Limnology and Oceanography XX:XXX-XXX. [Abstract](https://aslopubs.onlinelibrary.wiley.com/doi/abs/10.1002/lno.11399) [Dunn's Test]
 1. Dietz MW, Salles JF, Hsu B-Y, Dijkstra C, Groothuis TGG, van der Velde M, Verkuil YI, Tieleman BI. 2019. Prenatal transfer of gut bacteria in Rock Pigeon. Microorganisms XX:XXX-XXX. [Full Text](https://www.mdpi.com/2076-2607/8/1/61/pdf) [Dunn's Test]
+1. dos Santos Virgilio C, *et al.* 2020. Metal concentrations and biological effects from one of the largest mining disasters in the world (Brumadinho, Minas Gerais, Brazil). Nature XX:XXX-XXX. [Full Text](https://www.nature.com/articles/s41598-020-62700-w) [Dunn's Test]
 1. Fagin TL. 2020. Dam effects on freshwater mussel growth and recruitment in a Midwestern stream. M.Sc. Thesis Eastern Illinois University. [Full Text](https://thekeep.eiu.edu/cgi/viewcontent.cgi?article=5769&context=theses) [Growth]
 1. Glassic HC, Graeta JW. 2020. The influence of multiyear drought and associated reduction in tributary connectivity on an adfluvial fish species. Ecology of Freshwater Fish XX:XXX-XXX. [Abstract](https://onlinelibrary.wiley.com/doi/abs/10.1111/eff.12535) [Age-Length Key]
 1. Hanscom RJ, Dinkelacker SA, McCall AJ, Parlin AF. 2020. Demographic traits of freshwater turtles in a maritime forest habitat. Herpetologica XX:XXX-XXX. [Abstract](https://www.hljournals.org/doi/abs/10.1655/Herpetologica-D-19-00037.1) [von Bertalanffy Growth??]
@@ -48,6 +49,7 @@ The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA
 1. Stypinska B, Wajda A, Walczuk E, Olesinska M, Lewandowska A, Walczyk M, Pardowska-Gorycka A. 2020. The serum cell-free microRNA expression profile in
 MCTD, SLE, SSc, and RA patients. Journal of Clinical Medicine XX:XXX-XXX. [Full Text](https://www.mdpi.com/2077-0383/9/1/161/pdf) [Dunn's Test]
 1. Taylor TN, Cross BK, Moore BC. 2020. Modeling Brook Trout carrying capacity in Owhi Lake, Washington, using bioenergetics. North American Journal of Fisheries Management. XX:XXX-XXX. [Abstract](https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1002/nafm.10378) [???]
+1. Teo A, Kristensen NP, Keuskamp JA, Evans TA, Foo M, Chisholm RA. 2020. Validation and extension of the tea bag index to collect decomposition data from termite-rich ecosystems. Pedobiologia. XX:XXX-XXX. [Abstract](https://www.sciencedirect.com/science/article/abs/pii/S0031405620300275) [Dunn's Test]
 1. Virgulino-Junior PCC, Carneiro N Naschimento Jr WR, Cougo MF, Fernandes MEB. 2020. Biomass and carbon estimation for scrub mangrove forests and examination of their allometric associated uncertainties. PLOS One XX:XXX-XXX. [Full Text](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0230008) [Dunn's Test]
 1. Wenker RP, Stevens BG. 2020. Sea whip coral *Leptogorgia virgulata* in the Mid-Atlantic Bight: Colony complexity, age, and growth. PeerJ: Aquatic Biology XX:XXX-XXX. [Full Text](https://peerj.com/articles/8372/) [Age-Length Key; Age-Bias; von Bertalanffy Growth]
 1. Yates MC, Glaser D, Post J, Cristescu ME, Fraser DJ, Derry AM. 2020. Allometric scaling strengthens the relationship between eDNA particle concentration and organism abundance in nature. bioRxiv XX:XXX-XXX. [Full Text](https://www.biorxiv.org/content/biorxiv/early/2020/01/18/2020.01.18.908251.full.pdf) [Mark-Recapture]

@@ -5,12 +5,13 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">50</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">51</span> publications.
 
 1. Almojil D. 2020. Male mate choice in the spot-tail shark *Carcharhinus sorrah*: are males choosy or opportunistic? Journal of Negative Results - Ecology & Evolutionary Biology. 13:1-11. [Full Text](http://jnr-eeb.org/index.php/jnr/article/viewFile/74/36) [Age Comparisons]
 1. Arntzen JW, Zuiderwijk A. 2020. Sampling efficiency, bias and shyness in funnel trapping aquatic newts. Amphibia-Reptilia XX:XXX-XXX. [Abstract](https://brill.com/view/journals/amre/aop/article-10.1163-15685381-bja10004/article-10.1163-15685381-bja10004.xml) [???]
 1. Barkalow SLC, Brandenburg MA, Platania SP. 2020. Otoliths reveal spawning ecology and early life history of sympatric catostomids. North American Journal of Fisheries Management XX:XXX-XXX. [Abstract](https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1002/nafm.10423) [???]
 1. Barnett SE, Youngblut ND, Buckley DH. 2020. Soil characteristics and land-use drive bacterial community assembly patterns. FEMS Microbial Ecology 96:XXX-XXX. [Abstract](https://academic.oup.com/femsec/advance-article-abstract/doi/10.1093/femsec/fiz194/5675623) [Dunn's Test]
+1. Briedis C, Baldock J, de Moraes JC, dos Santos JB, Milori DMBP. 2020. Strategies to improve the prediction of bulk soil and fraction organic carbon in Brazilian samples by using an Australian national mid-infrared spectral library. Geoderma 373:XXX-XXX. [Abstract](https://www.sciencedirect.com/science/article/abs/pii/S0016706119327545) [???]
 1. Burnett NP, Koehl MAR. 2020. Thallus pruning does not enhance survival or growth of a wave‑swept kelp. Marine Biology XX:XXX-XXX. [Full Text](https://www.nickburnettphd.com/uploads/1/2/9/9/129944637/burnett_and_koehl_2020_kelp_pruning.pdf) [Dunn's Test]
 1. Busawon DS *et al.* 2020. Evaluation of Atlantic Bluefin Tuna otolith ageing protocols. Collective Volume of Scientific Papers ICCAT 76:147-171. [Full Text](https://www.iccat.int/Documents/CVSP/CV076_2019/n_2/CV076020147.pdf) [Precision and Bias]
 1. Busbridge TAJ, Marshall CT, Mrkhipkin AI, Shcherbich Z, Marriott AL, Brickle P. 2020. Can otolith microstructure and elemental fingerprints elucidate the early life history stages of the gadoid southern blue whiting (*Micromesistius australis australis*)? Fisheries Research XX:XXX-XXX. [Abstract](https://www.sciencedirect.com/science/article/abs/pii/S0165783620300898) [Age Comparisons?]

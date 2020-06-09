@@ -5,7 +5,7 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">69</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">70</span> publications.
 
 1. Almojil D. 2020. Male mate choice in the spot-tail shark *Carcharhinus sorrah*: are males choosy or opportunistic? Journal of Negative Results - Ecology & Evolutionary Biology. 13:1-11. [Full Text](http://jnr-eeb.org/index.php/jnr/article/viewFile/74/36) [Age Comparisons]
 1. Arntzen JW, Zuiderwijk A. 2020. Sampling efficiency, bias and shyness in funnel trapping aquatic newts. Amphibia-Reptilia XX:XXX-XXX. [Abstract](https://brill.com/view/journals/amre/aop/article-10.1163-15685381-bja10004/article-10.1163-15685381-bja10004.xml) [???]

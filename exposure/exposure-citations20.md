@@ -5,7 +5,7 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">80</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">81</span> publications.
 
 1. Almojil D. 2020. Male mate choice in the spot-tail shark *Carcharhinus sorrah*: are males choosy or opportunistic? Journal of Negative Results - Ecology & Evolutionary Biology. 13:1-11. [Full Text](http://jnr-eeb.org/index.php/jnr/article/viewFile/74/36) [Age Comparisons]
 1. Arntzen JW, Zuiderwijk A. 2020. Sampling efficiency, bias and shyness in funnel trapping aquatic newts. Amphibia-Reptilia XX:XXX-XXX. [Abstract](https://brill.com/view/journals/amre/aop/article-10.1163-15685381-bja10004/article-10.1163-15685381-bja10004.xml) [???]
@@ -27,6 +27,7 @@ physical, chemical and biological responses. Water XX:XXX-XXX. [Full Text](https
 1. Crawford LM, Janovick JL, Carrasquilla-Garcia N, Hatzakis E, Wang SC. 2020. Comparison of DNA analysis, targeted metabolite profiling, and non-targeted NMR fingerprinting for differentiating cultivars of processed olives. Food Control XX:XXX-XXX. [Abstract](https://www.sciencedirect.com/science/article/abs/pii/S0956713520301808) [Dunn's Test]
 1. da Silva Souza T, Lacerda D, Aguiar LL, Martins MNC, de Oliveira David JA. 2020. Toxic potential of sewage sludge: Histopathological effects on soil and aquatic bioindicators. Ecological Indicators 111:XXX-XXX. [Abstract](https://www.sciencedirect.com/science/article/abs/pii/S1470160X19309756) [???]
 1. Deemer BR, Stets EG, Yackulic CB. 2020. Calcite precipitation in Lake Powell reduces alkalinity and total salt loading to the Lower Colorado River Basin. Limnology and Oceanography XX:XXX-XXX. [Abstract](https://aslopubs.onlinelibrary.wiley.com/doi/abs/10.1002/lno.11399) [Dunn's Test]
+1. Diaz-Salma J, Robert S, Keller C. 2020. Parameters influencing run-off on vegetated urban soils: A case study in Marseilles, France. Geoderma 376:XXX-XXX. [Abstract](https://www.sciencedirect.com/science/article/abs/pii/S0016706119323444) [Dunn's Test]
 1. Dietz MW, Salles JF, Hsu B-Y, Dijkstra C, Groothuis TGG, van der Velde M, Verkuil YI, Tieleman BI. 2019. Prenatal transfer of gut bacteria in Rock Pigeon. Microorganisms XX:XXX-XXX. [Full Text](https://www.mdpi.com/2076-2607/8/1/61/pdf) [Dunn's Test]
 1. Donadt CR. 2020. Trace element concentrations in riverine fish: relationships with body size, food web dynamics and trace element concentrations in surface water. MS Thesis, University of Alberta. [Full Text](https://era.library.ualberta.ca/items/4b6d3cdc-6c52-4f9d-bd29-45e5f9823057/view/12be40c7-ab90-4ce9-8ae8-8c6d6055fa00/Donadt_Caitlyn_202001_MSc.pdf) [Dunn's Test]
 1. dos Santos Virgilio C, *et al.* 2020. Metal concentrations and biological effects from one of the largest mining disasters in the world (Brumadinho, Minas Gerais, Brazil). Nature XX:XXX-XXX. [Full Text](https://www.nature.com/articles/s41598-020-62700-w) [Dunn's Test]

@@ -71,6 +71,7 @@ The following are instructions to install packages from within various ways to i
 * [swfscDAS](https://cran.r-project.org/web/packages/swfscDAS/index.html): *Southwest Fisheries Science Center shipboard DAS data processing*
 * [swfscMisc](https://cran.r-project.org/web/packages/swfscMisc/index.html) -- *Collection of conversion, analytical, geodesic, mapping, and plotting functions used by the Southwest Fisheries Science Center*
 * [tRophicPosition](https://cran.r-project.org/package=tRophicPosition) -- *Bayesian estimation of trophic position from consumer stable isotope ratios*
+* [VAST]() -- *estimate spatial variation in density using spatially referenced data, with the goal of habitat associations (correlations among species and with habitat) and estimating total abundance for a target species in one or more years*
 * [vmsbase](http://www.vmsbase.org/) -- *vessel monitoring system and logbook data management and analysis*
 * [X2R with FishGraph](https://cran.r-project.org/contrib/extra/x2r/00ReadMe-X2R.html) -- *import the structured output from a given numerical model written in a compiled language (e.g., ADMB, fortran) into R for postprocessing (graphing, further analysis)*
 * [ypr](https://poissonconsulting.github.io/ypr/index.html) -- *yield-per-recruit analysis*

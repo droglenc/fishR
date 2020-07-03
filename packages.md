@@ -39,16 +39,20 @@ The following are instructions to install packages from within various ways to i
 * [CatDyn](https://cran.r-project.org/web/packages/CatDyn/index.html) -- *population parameters from catch dynamics data*
 * [cuttlefish.model](https://cran.r-project.org/web/packages/cuttlefish.model/index.html) -- *Perform LPUE standardization and stock assessment of the English Channel cuttlefish stock using a two-stage biomass model*
 * [fecR](https://cran.r-project.org/web/packages/fecR/index.html) -- *Calculates fishing effort following the DG MARE Ad-Hoc Workshops on Transversal Variables in Zagreb (2015) and Nicosia (2016)*
+* [FESta](https://cran.r-project.org/web/packages/FESta/index.html): *Fishing effort standardization* 
 * [FSAWs](https://github.com/droglenc/FSAWs) -- *construct and validate standard weight (Ws) equations*
 * [fishMod](https://cran.r-project.org/web/packages/fishMod/index.html) -- *fits models to catch and effort data*
 * [fishmove](https://cran.r-project.org/web/packages/fishmove/index.html) -- *predict fish movement parameters*
+* [fishualize](https://cran.r-project.org/web/packages/fishualize/index.html): *Color palettes based on fish species*
 * [hafroAssmt](http://hafroassmt.r-forge.r-project.org/) -- *fisheries stock assessment at Hafro, the Marine Research Institute in Iceland*
 * [kobe](https://cran.r-project.org/web/packages/kobe/index.html) -- *methods for summarising results from stock assessments and Management Strategy Evaluations in the Kobe format*
 * [LBSPR: Length-Based Spawning Potential Ratio](https://cran.r-project.org/web/packages/LBSPR/index.html) -- *Simulate expected equilibrium length composition, YPR, and SPR using the LBSPR model. Fit the LBSPR model to length data to estimate selectivity, relative fishing mortality, and spawning potential ratio for data-limited fisheries.*
 * [LeMaRns](https://cran.r-project.org/web/packages/LeMaRns/index.html) -- Set-up, run, and explore the outputs of the Length-based Multi-species model (LeMans; [Hall et al. 2006](https://doi.org/10.1139/f06-039)), focused on the marine environment. [Introductory publication is here](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0227767).
-* [mapplots](https://cran.r-project.org/web/packages/mapplots/index.html) -- *Create simple maps; add sub-plots like pie plots to a map or any other plot; format, plot and export gridded data*
+* [mapplots](https://cran.r-project.org/web/packages/mapplots/index.html) -- *Create simple maps; add sub-plots like pie plots to a map or any other plot; format, plot and export gridded data
+* [marindicators](https://cran.r-project.org/web/packages/marindicators/index.html): *Functions to calculate indicators for four marine ecosystem attributes (Biodiversity, Ecosystem Structure and Functioning, Ecosystem Stability and Resistance to Perturbations, Resource Potential) and one marine ecosystem pressure (Fishing Pressure) from fishery independent trawl survey data and commercial landings data.*
 * [mixdist](http://ms.mcmaster.ca/peter/mix/mix.html) -- *fit mixture distributions — e.g., possibly separating age-classes from a length frequency*
 * [mizer](https://cran.r-project.org/web/packages/mizer/index.html) -- *multispecies, trait based and community size spectrum ecological models, focused on the marine environment*  See [Introduction to mizer](https://cran.r-project.org/web/packages/mizer/vignettes/mizer_vignette.pdf)
+* [MQMF](https://cran.r-project.org/web/packages/MQMF/index.html): *Companion for "Using R for Modelling and Quantitative Methods in Fisheries" book*
 * [ObsCovgTools](https://github.com/kacurtis/ObsCovgTools) -- Estimates minimum fisheries observer coverage required to achieve a specific objective. [Related Shiny app is here](https://kacurtis.shinyapps.io/obscov/).
 * [oceanmap](https://cran.r-project.org/web/packages/oceanmap/index.html) -- *Plotting toolbox for 2D oceanographic data*
 * [PBSmapping](https://cran.r-project.org/web/packages/PBSmapping/) -- *two-dimensional plotting features similar to those commonly available in a Geographic Information System*
@@ -62,10 +66,12 @@ The following are instructions to install packages from within various ways to i
 * [simecol](http://simecol.r-forge.r-project.org/) -- *implementation of dynamic simulation models*
 * [skewtools](http://cran.r-project.org/web/packages/skewtools/) -- *estimation of growth models parameters using the robust ECME method via heteroscedastic nonlinear regression growth model with scale mixture of skew-normal distributions*
 * [ss3sim](https://cran.r-project.org/web/packages/ss3sim/index.html) -- *framework for fisheries stock assessment simulation testing with Stock Synthesis 3*
+* [smartR](https://cran.r-project.org/web/packages/smartR/index.html): *Spatial management and assessment of demersal resources for trawl fisheries*
 * [stacomiR](https://cran.r-project.org/web/packages/stacomiR/index.html) -- *Graphical outputs and treatment for a database of fish pass monitoring*
+* [swfscDAS](https://cran.r-project.org/web/packages/swfscDAS/index.html): *Southwest Fisheries Science Center shipboard DAS data processing*
 * [swfscMisc](https://cran.r-project.org/web/packages/swfscMisc/index.html) -- *Collection of conversion, analytical, geodesic, mapping, and plotting functions used by the Southwest Fisheries Science Center*
 * [tRophicPosition](https://cran.r-project.org/package=tRophicPosition) -- *Bayesian estimation of trophic position from consumer stable isotope ratios*
-* [VMSBase](http://www.vmsbase.org/) -- *vessel monitoring system and logbook data management and analysis*
+* [vmsbase](http://www.vmsbase.org/) -- *vessel monitoring system and logbook data management and analysis*
 * [X2R with FishGraph](https://cran.r-project.org/contrib/extra/x2r/00ReadMe-X2R.html) -- *import the structured output from a given numerical model written in a compiled language (e.g., ADMB, fortran) into R for postprocessing (graphing, further analysis)*
 * [ypr](https://poissonconsulting.github.io/ypr/index.html) -- *yield-per-recruit analysis*
 
@@ -101,13 +107,15 @@ The following are instructions to install packages from within various ways to i
 
 ## Packages of Data
 * [FSAdata: Data for FSA](https://github.com/droglenc/FSAdata#readme) -- *Collection of many fisheries-related data sets*
-* [fishkirkko2015](https://cran.r-project.org/web/packages/fishkirkko2015/index.html) -- *Length and weight measurements of fish species at Kirkkojarvi Lake, Finland*
 * [fishdata](https://cran.r-project.org/web/packages/fishdata/index.html) -- *Four datasets (fish size and per-day growth history) of migratory fish, from 2015-2016, in the Wellington region of New Zealand*
+* [fishkirkko2015](https://cran.r-project.org/web/packages/fishkirkko2015/index.html) -- *Length and weight measurements of fish species at Kirkkojarvi Lake, Finland*
+* [fishbc](https://cran.r-project.org/web/packages/fishbc/index.html): *Raw and curated data on the codes, classification, and conservation status of freshwater fishes in British Columbia*
 
 ----
 
 ## Packages to Access Online Databases
 * [DATRAS](http://www.rforge.net/DATRAS/Tutorial.html) -- *read and manipulate trawl survey data from the [DATRAS database](http://www.ices.dk/marine-data/data-portals/Pages/DATRAS.aspx)*
+* [fishtree](https://cran.r-project.org/web/packages/fishtree/index.html): *interface to the Fish Tree of Life API to download taxonomies, phylogenies, fossil calibrations, and diversification rate information for ray-finned fishes*
 * [LTERdata](https://github.com/GLEON/LTERdata) -- *functions for retrieving NTL LTER data*
 * [ramlegacy](https://github.com/seananderson/ramlegacy) -- *Download, import, convert, and cache the RAM Legacy Stock Assessment Database*
 * [rfishbase](https://github.com/ropensci/rfishbase) -- *a programmatic interface to [fishbase.org](http://fishbase.org/)*

@@ -5,7 +5,7 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">105</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">106</span> publications.
 
 1. Akcay HG, Kabasakal B, Aksu D, Demir N, Oz M, Erdogan A. 2020. Automated bird counting with deep learning for regional bird distribution mappping. Animals XX:XXX-XXX. [Full Text](https://www.mdpi.com/2076-2615/10/7/1207/htm) [Dunn's Test]
 1. Almojil D. 2020. Male mate choice in the spot-tail shark *Carcharhinus sorrah*: are males choosy or opportunistic? Journal of Negative Results - Ecology & Evolutionary Biology. 13:1-11. [Full Text](http://jnr-eeb.org/index.php/jnr/article/viewFile/74/36) [Age Comparisons]

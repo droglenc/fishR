@@ -182,4 +182,4 @@ GIT microbial populations of broiler chickens. animals XX:XXX-XXX. [Full Text](h
 1. Yates MC, Glaser D, Post J, Cristescu ME, Fraser DJ, Derry AM. 2020. The relationship between eDNA particle concentration and organism abundance in nature is strengthened by allometric scaling. bioRxiv XX:XXX-XXX. [Full Text](https://www.biorxiv.org/content/10.1101/2020.01.18.908251v2.full) [Mark-Recapture]
 
 -----
-<p style="text-align: center;"><a href="exposure-citations19.html">Goto 2019 citations</a></p>
+<p style="text-align: center;"><a href="exposure-citations19.html">Goto 2019 citations</a>|<a href="exposure-citations21.html">Goto 2021 citations</a></p>

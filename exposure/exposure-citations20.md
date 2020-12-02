@@ -5,7 +5,7 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">182</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">183</span> publications.
 
 1. Akcay HG, Kabasakal B, Aksu D, Demir N, Oz M, Erdogan A. 2020. Automated bird counting with deep learning for regional bird distribution mappping. Animals XX:XXX-XXX. [Full Text](https://www.mdpi.com/2076-2615/10/7/1207/htm) [Dunn's Test]
 1. Almojil D. 2020. Male mate choice in the spot-tail shark *Carcharhinus sorrah*: are males choosy or opportunistic? Journal of Negative Results - Ecology & Evolutionary Biology. 13:1-11. [Full Text](http://jnr-eeb.org/index.php/jnr/article/viewFile/74/36) [Age Comparisons]
@@ -172,6 +172,7 @@ physical, chemical and biological responses. Water XX:XXX-XXX. [Full Text](https
 1. Studivan MS, Voss JD. 2020. Transcriptomic plasticity of mesophotic corals among natural populations and transplants of *Montastraea cavernosa* in the Gulf of Mexico and Belize. Molecular Ecology XX:XXX-XXX. [Abstract](https://onlinelibrary.wiley.com/doi/abs/10.1111/mec.15495) [Dunn's Test]
 1. Stuhlmacher M, Turner B, Frazier AE, Kim Y, Leffel J. 2020. Institutional shifts and landscape change: the impact of the Período Especial on Cuba’s land system architecture. Journal of Land Use Science XX:XXX-XXX. [Abstract](https://www.tandfonline.com/doi/abs/10.1080/1747423X.2020.1829119) [Dunn's Test]
 1. Stypinska B, Wajda A, Walczuk E, Olesinska M, Lewandowska A, Walczyk M, Pardowska-Gorycka A. 2020. The serum cell-free microRNA expression profile in MCTD, SLE, SSc, and RA patients. Journal of Clinical Medicine XX:XXX-XXX. [Full Text](https://www.mdpi.com/2077-0383/9/1/161/pdf) [Dunn's Test]
+1. Sullivan CJ, Weber MJ, Pierce CL, Wahl DH, Phelps QE, Colombo RE. 2020. Spatial variation in invasive silver carp population ecology throughout the upper Mississippi River basin. Ecology of Freshwater Fish XX:XXX-XXX. [Abstract](https://onlinelibrary.wiley.com/doi/abs/10.1111/eff.12591) [???]
 1. Sun R. *et al.* 2020. Detoxification of plant defensive glucosinolates by an herbivorous caterpillar is beneficial to its endoparasitic wasp. Molecular Ecology XX:XX-XXX. [Abstract](https://onlinelibrary.wiley.com/doi/abs/10.1111/mec.15613) [Dunn's Test]
 1. Tabacu LM, Watson SM, Chezar LC, Gable R, Oliveira CR, Lopes J. 2020. Looking for a pattern: Error analysis as a diagnostic assessment for making instructional decisions to promote academic success. Preventing School Failure: Alternative Education for Children and Youth XX:XXX-XXX. [Abstract](https://www.tandfonline.com/doi/abs/10.1080/1045988X.2020.1818180) [Dunn's Test]
 1. Tan J. *et al.* 2020. At the scene of the crime: New insights into the role of weakly pathogenic members of the fusarium head blight disease complex. Molecular Plant Pathology XX:XXX-XXX. [Full Text](https://bsppjournals.onlinelibrary.wiley.com/doi/pdf/10.1111/mpp.12996) [Dunn's Test?]

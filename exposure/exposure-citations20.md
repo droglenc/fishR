@@ -5,7 +5,7 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">185</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">186</span> publications.
 
 1. Akcay HG, Kabasakal B, Aksu D, Demir N, Oz M, Erdogan A. 2020. Automated bird counting with deep learning for regional bird distribution mappping. Animals XX:XXX-XXX. [Full Text](https://www.mdpi.com/2076-2615/10/7/1207/htm) [Dunn's Test]
 1. Almojil D. 2020. Male mate choice in the spot-tail shark *Carcharhinus sorrah*: are males choosy or opportunistic? Journal of Negative Results - Ecology & Evolutionary Biology. 13:1-11. [Full Text](http://jnr-eeb.org/index.php/jnr/article/viewFile/74/36) [Age Comparisons]
@@ -35,6 +35,7 @@ The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA
 1. Butler EC, *et al.* 2020. Do contemporary age-growth models overlook life-history complexities in protandrous fishes? A case study on the large protandrous polynemid, the giant African threadfin *Polydactylus quadrifilis*. Fisheries Research 233:XXX-XXX. [Full Text](https://www.sciencedirect.com/science/article/pii/S0165783620302873) [von Bertalanffy Growth]
 1. Caldero-Pascual M, de Eyto E, Jennings E, Dillane M, Andersen MR, Kelly S, Wilson HL, McCarthy V. 2020. Effects of consecutive extreme weather events on a temperate dystrophic lake: A detailed insight into
 physical, chemical and biological responses. Water XX:XXX-XXX. [Full Text](https://www.mdpi.com/2073-4441/12/5/1411/pdf) [Dunn's Test]
+1. Campbell JB, Dosh A, Hunt CM, Dotson EM, Benedict MQ, Rajamohan A, Rinehart JP. 2020. Physiological responses to cryoprotectant treatment in an early larval stage of the malaria mosquito, *Anopheles gambiae*. Cryobiology XX:XXX-XXX. [Abstract](https://www.sciencedirect.com/science/article/abs/pii/S0011224020306593) [???]
 1. Candida dos Santos Prestes NC, *et al.* 2020. Fire effects on understory forest regeneration in Southern Arizona. Frontiers in Forests and Global Change. XX:XXX-XXX. [Full Text](http://sites.exeter.ac.uk/tedfeldpausch/files/2020/02/Prestes_Fire-effects-understory-forest-regeneration-southern-Amazonia.pdf) [Dunn Test?]
 1. Card JT, Hasltr CT, Ruppert JLW, Donadt C, Poesch MS. 2020. A three-pass electrofishing removal strategy is not effective for eradication of Prussian Carp in a North American stream network. Journal of Fish and Wildlife Management XX:XXX-XXX. [Full Text](https://meridian.allenpress.com/jfwm/article/doi/10.1111/JFWM-20-031/442401/A-three-pass-electrofishing-removal-strategy-is) [Removal]
 1. Carni A, Zimmerman Z, Juvan N, Pausic A, Szabo G, Bartha S. 2020. An example of fast old field succession in a traditionally managed rural landscape on the Slovenian Karst. Hacquetia XX:XXX-XXX. [Abstract]() [Dunn's Test]

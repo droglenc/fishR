@@ -5,11 +5,13 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">4</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">6</span> publications.
 
 1. DeBoer JA, Thomas MC, Lamer JT, Casper AF, Delong MD. 2021. Complex to simple: Fish growth along the Illinois River network. Ecological Complexity 45:XXX-XXX. [Abstract](https://www.sciencedirect.com/science/article/pii/S1476945X20301719) [???]
 1. Ford, BM, Stewart BA, Tunbridge DJ, Tilbrook P. 2021. Paper chromatography: An inconsistent tool for assessing soil health. Geoderma 383:XXX-XXX. [Abstract](https://www.sciencedirect.com/science/article/abs/pii/S0016706120325386) [Dunn's Test?]
 1. Gomez-Martinez H, Bermejo A, Zuriaga E, Badenes ML. 2021. Polyphenol content in apricot fruits. Scientia Horticulturae 277:XXX-XXX. [Abstract](https://www.sciencedirect.com/science/article/abs/pii/S0304423820306567) [Dunn's Test?]
+1. Horn PL, Maolagain CO. 2021. The growth and age structure of Chilean jack mackerel (*Trachurus murphyi*) following its influx to New Zealand waters. Journal of Fish Biology XX:XXX-XXX. [Abstract](https://onlinelibrary.wiley.com/doi/abs/10.1111/jfb.14647) [???] 
+1. Rodman KC, Andrus RA, Veblen TT, Hart SJ. 2021. Disturbance detection in landsat time series is influenced by tree mortality agent and severity, not by prior disturbance. Remote Sensing of Environment 254:XXX-XXX. [Abstract](https://www.sciencedirect.com/science/article/abs/pii/S0034425720306179) [???]
 1. Vagenas G, Karachle PK. 2021. sBCB (standardized Burn-Crack-Burn): A standardized modification of burning method for otolith age estimation. Fisheries Research 233:XXX-XXX. [Abstract](https://www-sciencedirect-com.ezproxy.uwsp.edu/science/article/pii/S0165783620302848) [Age Comparisons]
 
 

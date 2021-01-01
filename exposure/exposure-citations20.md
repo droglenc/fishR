@@ -5,7 +5,7 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">201</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">202</span> publications.
 
 1. Akcay HG, Kabasakal B, Aksu D, Demir N, Oz M, Erdogan A. 2020. Automated bird counting with deep learning for regional bird distribution mappping. Animals XX:XXX-XXX. [Full Text](https://www.mdpi.com/2076-2615/10/7/1207/htm) [Dunn's Test]
 1. Almojil D. 2020. Male mate choice in the spot-tail shark *Carcharhinus sorrah*: are males choosy or opportunistic? Journal of Negative Results - Ecology & Evolutionary Biology. 13:1-11. [Full Text](http://jnr-eeb.org/index.php/jnr/article/viewFile/74/36) [Age Comparisons]
@@ -123,6 +123,7 @@ physical, chemical and biological responses. Water XX:XXX-XXX. [Full Text](https
 1. Mace III MM, Kimball ME, Elmo GM, Crane DP. 2020. Overwinter survival, age, and growth of juvenile tarpon (*Megalops atlanticus*) in a shallow, tidally-restricted habitat in South Carolina. Environmental Biology of Fishes XX:XXX-XXX. [Abstract](https://link.springer.com/article/10.1007/s10641-020-00998-1) [Back-Calculation]
 1. Maier SR, Bannister RJ, van Oevelen D, Kutti T. 2020. Seasonal controls on the diet, metabolic activity, tissue reserves and growth of the cold-water coral *Lophelia pertusa*. Coral Reefs XX:XXX-XXX. [Abstract](https://link.springer.com/article/10.1007/s00338-019-01886-6) [Dunn's Test]
 1. Mantino A, Volpi I, Micci M, Pecchioni G, Bosco S, Droagoni F, Mele M, Ragaglini G. 2019. Effect of tree presence and soil characteristics on soybean yield and quality in an innovative alley-cropping system. Agronomy XX:XXX-XXX. [Full Text](https://www.mdpi.com/2073-4395/10/1/52/pdf) [Dunn's Test]
+1. Marxsen J, Rutz NK, Schmidt SI. 2020. Organic carbon and nutrients drive prokaryote and metazoan communities in a floodplain aquifer. Basic and Applied Ecology XX:XXX-XXX. [Abstract](https://www.sciencedirect.com/science/article/abs/pii/S1439179120301377) [???]
 1. Mayes C. 2020. An ecosystem-based modeling approach towards the development of a predator-prey growth model for Bluefish, Striped Bass,a nd Menhaden. 
 1. McElhoe JA, Holland MM. 2020. Characterization of background noise in MiSeq MPS data when sequencing human mitochondrial DNA from various sample sources and library preparation methods. Mitochondrion XX:XXX-XXX. M.Sc. Thesis, Hampton University. [Abstract](https://search.proquest.com/openview/5ee4f91aa36805ac6cb5973f8e5df1ff/1?pq-origsite=gscholar&cbl=51922&diss=y) [???] [Abstract](https://www.sciencedirect.com/science/article/abs/pii/S1567724919302028) [???]
 1. McGuigan L, Fernandes P, Oakes A, Stewart K, Powell W. 2020. Transformation of American Chestnut (*Castanea dentata* (Marsh.) Borkh) using RITA® temporary immersion bioreactors and We Vitro containers. Forests XX:XXX-XXX. [Full Text](http://scholar.google.com/scholar_url?url=https://www.mdpi.com/1999-4907/11/11/1196/pdf&hl=en&sa=X&d=8719501453215927837&ei=2_SyX-_NH4WWyATL14TAAw&scisig=AAGBfm27L5zVKzqvLBHrEXwLcxob2zCyig&nossl=1&oi=scholaralrt&html=) [Summary Statistics]

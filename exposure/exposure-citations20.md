@@ -5,7 +5,7 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">202</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">203</span> publications.
 
 1. Akcay HG, Kabasakal B, Aksu D, Demir N, Oz M, Erdogan A. 2020. Automated bird counting with deep learning for regional bird distribution mappping. Animals XX:XXX-XXX. [Full Text](https://www.mdpi.com/2076-2615/10/7/1207/htm) [Dunn's Test]
 1. Almojil D. 2020. Male mate choice in the spot-tail shark *Carcharhinus sorrah*: are males choosy or opportunistic? Journal of Negative Results - Ecology & Evolutionary Biology. 13:1-11. [Full Text](http://jnr-eeb.org/index.php/jnr/article/viewFile/74/36) [Age Comparisons]
@@ -142,6 +142,7 @@ physical, chemical and biological responses. Water XX:XXX-XXX. [Full Text](https
 1. Nepal V, Fabrizio MC, Connelly WJ. Phenotypic plasticity in life-history characteristics of invasive Blue Catfish, *Ictalurus furcatus*. Fisheries Research XX:XXX-XXX. [Abstract](https://www.sciencedirect.com/science/article/abs/pii/S0165783620301673) [???]
 1. Nikolic N, *et al.* 2020. Connectivity and population structure of albacore tuna across southeast Atlantic and southwest Indian Oceans inferred from multidisciplinary methodology. Nature Research, Scientific Reports XX:XXX-XXX. [Full Text](https://www.nature.com/articles/s41598-020-72369-w) [Weight-Length]
 1. Nottestad L, Boge E, Ferter K. 2020. The comeback of Atlantic Bluefin Tuna (*Thunnus thynnus*) to Norwegian waters. Fisheries Research 231:XXX-XXX. [Full Text](https://www.sciencedirect.com/science/article/pii/S016578362030206X) [Age-Length Key]
+1. Nowak A, Swierszcz S, Nowak S, Nobis M. 2020. Classification of tall-forb vegetation in the Pamir-Alai and western Tian Shan Mountains (Tajikistan and Kyrgyzstan, Middle Asia. Vegetation Classification and Survey 1:191-217. [Full Text](https://vcs.pensoft.net/article/60848/download/pdf/&hl=en) [Dunn'S Test]
 1. O'Connell AR. 2020. Evaluation of methods for estimatin age and growth of Lake Sturgeon. M.Sc. Thesis University of Wisconsin-Stevens Point. [Full Text](https://minds.wisconsin.edu/bitstream/handle/1793/80875/OConnell%2C%20Aaron%20R.%202020%20Thesis.pdf?sequence=1&isAllowed=y) [Age Comparisons]
 1. Oesterwind D, Bobowski BTC, Brunsch A, Laptikhovsky V, van Hal R, Sell AF, Pierce GJ. 2020. First evidence of a new spawning stock of *Illex coindetii* in the North Sea (NE-Atlantic). Fisheries Research 221:XXX-XXX. [Abstract](https://www.sciencedirect.com/science/article/pii/S0165783619302395) [Growth]
 1. Okpei P, Aggrey-Fynn J, Okyere I. 2020. Growth, mortality, ovarian maturity, and exploitation of the Guinea shrimp, *Holthuispenaeopsis atlantica* (Balss, 1914) (Decapoda: Dendrobranchiata: Penaeidae) in inshore waters of Ghana, West Africa. Journal of Crustacean Biology XX:XXX-XXX. [Full Text](https://academic.oup.com/jcb/advance-article/doi/10.1093/jcbiol/ruaa010/5813135) [Maturity]

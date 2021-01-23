@@ -7,6 +7,7 @@ css: "/css/exposure-citation.css"
 
 The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">17</span> publications.
 
+1. Capezzuto F. *et al.* 2021. Comparison of trophic spectrum in the blackspot seabream, *Pagellus bogaraveo* (Brünnich, 1768), between cold-water coral habitats and muddy bottoms in the central Mediterranean. Deep Sea Research Part I: Oceanographic Research Papers XX:XXX-XXX. [Abstract](https://www.sciencedirect.com/science/article/pii/S0967063721000133) [???]
 1. DeBoer JA, Thomas MC, Lamer JT, Casper AF, Delong MD. 2021. Complex to simple: Fish growth along the Illinois River network. Ecological Complexity 45:XXX-XXX. [Abstract](https://www.sciencedirect.com/science/article/pii/S1476945X20301719) [???]
 1. Ford, BM, Stewart BA, Tunbridge DJ, Tilbrook P. 2021. Paper chromatography: An inconsistent tool for assessing soil health. Geoderma 383:XXX-XXX. [Abstract](https://www.sciencedirect.com/science/article/abs/pii/S0016706120325386) [Dunn's Test?]
 1. Gomez-Martinez H, Bermejo A, Zuriaga E, Badenes ML. 2021. Polyphenol content in apricot fruits. Scientia Horticulturae 277:XXX-XXX. [Abstract](https://www.sciencedirect.com/science/article/abs/pii/S0304423820306567) [Dunn's Test?]

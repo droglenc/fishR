@@ -5,8 +5,10 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">17</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">21</span> publications.
 
+1. Amador-Vargas S, Orribarra VS, Portugal-Loayza A, Fernandez-Marin H. 2021. Association patterns of swollen‐thorn acacias with three ant species and other organisms in a dry forest of Panama. Biotropica XX:XXX-XXX. [Abstract](https://onlinelibrary.wiley.com/doi/abs/10.1111/btp.12899) [Dunn's Test]
+1. Brigham RD, Pelini S, Xu Z, Vazquez-Ortega A. 2021. Assessing the effects of lake‐dredged sediments on soil health: Agricultural and environmental implications on Northwestern Ohio. Journal of Environmental Quality XX:XXX-XXX. [Abstract](https://acsess.onlinelibrary.wiley.com/doi/abs/10.1002/jeq2.20199) [???]
 1. Capezzuto F. *et al.* 2021. Comparison of trophic spectrum in the blackspot seabream, *Pagellus bogaraveo* (Brünnich, 1768), between cold-water coral habitats and muddy bottoms in the central Mediterranean. Deep Sea Research Part I: Oceanographic Research Papers XX:XXX-XXX. [Abstract](https://www.sciencedirect.com/science/article/pii/S0967063721000133) [???]
 1. DeBoer JA, Thomas MC, Lamer JT, Casper AF, Delong MD. 2021. Complex to simple: Fish growth along the Illinois River network. Ecological Complexity 45:XXX-XXX. [Abstract](https://www.sciencedirect.com/science/article/pii/S1476945X20301719) [???]
 1. Ford, BM, Stewart BA, Tunbridge DJ, Tilbrook P. 2021. Paper chromatography: An inconsistent tool for assessing soil health. Geoderma 383:XXX-XXX. [Abstract](https://www.sciencedirect.com/science/article/abs/pii/S0016706120325386) [Dunn's Test?]
@@ -23,8 +25,10 @@ The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA
 1. Sharma A, *et al.* 2021. Introduced, invaded and forgotten: allopatric and sympatric native snow trout life-histories indicate brown trout invasion effects in the Himalayan hinterlands. Biological Invastions XX:XXX-XXX. [Abstract](https://link.springer.com/article/10.1007/s10530-020-02454-8) [???]
 1. Stock BC, *et al.* 2021. Pulse recruitment and recovery of Cayman Islands Nassau Grouper (*Epinephelus striatus*) spawning aggregations revealed by *in situ* length-frequency data. ICES Journal of Marine Science XX:XXX-XXX. [Full Text](https://academic.oup.com/icesjms/advance-article/doi/10.1093/icesjms/fsaa221/6071467) [Mortality, Growth]
 1. Stypinska B, Lewandowska A, Felis-Giemza A, Olesinska M, Paradowska-Gorycka A. 2021. Association study between immune-related miRNAs and mixed connective tissue disease. Arthritis Research & Therapy 23:XXX-XXX. [Full Text](https://link.springer.com/article/10.1186/s13075-020-02403-9) [Dunn's Test???]
+1. Suca JJ, *et al.* 2021. Sensitivity of Sand Lance to shifting prey and hydrography indicates forthcoming change to the northeast US shelf forage fish complex. ICES Journal of Marine Science XX:XXX-XXX. [Full Text](https://academic.oup.com/icesjms/advance-article/doi/10.1093/icesjms/fsaa251/6120244) [Growth]
 1. Vagenas G, Karachle PK. 2021. sBCB (standardized Burn-Crack-Burn): A standardized modification of burning method for otolith age estimation. Fisheries Research 233:XXX-XXX. [Abstract](https://www-sciencedirect-com.ezproxy.uwsp.edu/science/article/pii/S0165783620302848) [Age Comparisons]
-1. Vilmi A. *et al.* 2020. Dispersal–niche continuum index: a new quantitative metric for assessing the relative importance of dispersal versus niche processes in community assembly. Ecography 44:XXX-XXX. [Full Text](https://onlinelibrary.wiley.com/doi/pdf/10.1111/ecog.05356) [Dunn's Test]
+1. Vaughan L, *et al.* 2021. Growth rates in a European Eel *Anguilla anguilla* (L., 1758) population show a complex relationship with temperature over a seven-decade otolith biochronology. ICES Journal of Marine Science XX:XXX-XXX. [Abstract](https://academic.oup.com/icesjms/advance-article-abstract/doi/10.1093/icesjms/fsaa253/6104621) [???]
+1. Vilmi A. *et al.* 2021. Dispersal–niche continuum index: a new quantitative metric for assessing the relative importance of dispersal versus niche processes in community assembly. Ecography 44:XXX-XXX. [Full Text](https://onlinelibrary.wiley.com/doi/pdf/10.1111/ecog.05356) [Dunn's Test]
 
 -----
 <p style="text-align: center;"><a href="exposure-citations20.html">Goto 2020 citations</a></p>

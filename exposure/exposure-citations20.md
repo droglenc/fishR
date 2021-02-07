@@ -5,7 +5,7 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">206</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">207</span> publications.
 
 1. Akcay HG, Kabasakal B, Aksu D, Demir N, Oz M, Erdogan A. 2020. Automated bird counting with deep learning for regional bird distribution mapping. Animals XX:XXX-XXX. [Full Text](https://www.mdpi.com/2076-2615/10/7/1207/htm) [Dunn's Test]
 1. Almojil D. 2020. Male mate choice in the spot-tail shark *Carcharhinus sorrah*: are males choosy or opportunistic? Journal of Negative Results - Ecology & Evolutionary Biology. 13:1-11. [Full Text](http://jnr-eeb.org/index.php/jnr/article/viewFile/74/36) [Age Comparisons]
@@ -114,6 +114,7 @@ physical, chemical and biological responses. Water XX:XXX-XXX. [Full Text](https
 1. Kludt NB. 2020. Cold-water prey fish monitoring and ecology in Lake Oahe. PhD Dissertation, South Dakota State University. [Abstract](https://search.proquest.com/openview/8b85e9f9f6e85eeb74deecee3912ef1c/1?pq-origsite=gscholar&cbl=18750&diss=y) [???]
 1. Kmentova N, Koblmuller S, Van Steenberge M, Artois T, Bukinga FM, N'sibula TM, Risasi DM, Mulungula PM, Gelnar M, Vanhove MPM. 2020. Failure to diverge in African Great Lakes: The case of *Dolicirroplectanum lacustre* gen. nov. comb. nov. (Monogenea, Diplectanidae) infecting latid hosts. Journal of Great Lakes Research XX:XXX-XXX. [Abstract](https://www.sciencedirect.com/science/article/abs/pii/S0380133019301844) [Dunn's Test]
 1. Knezevic A, Neblett R, Colovic P, Jermeic-Knezevic M, Bugarski-Ignjatovic V, Klasnja A, Pantelinac S, Pjevic M. 2020. Convergent and discriminant validity of the Serbian version of the Central Sensitization Inventory. PAIN Practice XX:XXX-XXX. [Abstract](https://onlinelibrary.wiley.com/doi/abs/10.1111/papr.12900) [Dunn's Test]
+1. Koob E. 2020. Otolith age validation and microchemical investigation of the northern stock of Atlantic Black Sea Bass (*Centropristis striata*). MS Thesis University of Massachusetts Boston. [Full Text](https://media.proquest.com/media/hms/PFT/2/esusH?_s=QHXFVWK4Gb1xgQ55skrKG2WB3XQ%3D) [Age Comparisons]
 1. Kristensen E, Sand-Jensen K, Martinsen KT, Madsen-Osterbye M, Kragh T. 2020. Fingerprinting pike: The use of image recognition to identify individual pikes. Fisheries Research 229:XXX-XXX. [Abstract](https://www.sciencedirect.com/science/article/abs/pii/S0165783620301399) [Mark-Recapture]
 1. Labbe M, Girard C, Vincent WF, Culley AI. 2020. Extreme viral partitioning in a marine-derived high Arctic lake. mSphere XX:XXX-XXX. [Full Text](https://msphere.asm.org/content/msph/5/3/e00334-20.full.pdf) [Dunn's Test]
 1. Lamb AD. 2020. Informing Common Carp (*Cyprinus carpio*) removal and submerged aquatic vegetation restoration in Lake Mattamuskeet. MSc Thesis, North Carolina State University. [Full Text](https://repository.lib.ncsu.edu/bitstream/handle/1840.20/38158/etd.pdf?sequence=1&isAllowed=y) [von Bertalanffy Growth; Mark-Recapture]

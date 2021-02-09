@@ -5,9 +5,10 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">26</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">27</span> publications.
 
 1. Amador-Vargas S, Orribarra VS, Portugal-Loayza A, Fernandez-Marin H. 2021. Association patterns of swollen‐thorn acacias with three ant species and other organisms in a dry forest of Panama. Biotropica XX:XXX-XXX. [Abstract](https://onlinelibrary.wiley.com/doi/abs/10.1111/btp.12899) [Dunn's Test]
+1. Araujo I, *et al.* 2021. Trees at the Amazonia-Cerrado transition are approaching high temperature thresholds. Environmental Research Letters XX:XX-XXX. [Full Text](https://iopscience.iop.org/article/10.1088/1748-9326/abe3b9/pdf) [Dunn's Test]
 1. Baldigo BP, George SD, Winterhalter D, McHale MR. 2021. Biological and chemical recovery of acidified Catskill Mountain streams in response to the 1990 Clean Air Act Amendments. Atmospheric Environment XX:XXX-XXX. [Full Text](https://www.sciencedirect.com/science/article/pii/S1352231021000534) [Removal]
 1. Bang NN, *et al.* 2021. Characteristics of cowsheds in Vietnamese smallholder dairy farms and their associations with microclimate — A preliminary study. Animals XX:XXX-XXX. [Full Text](http://scholar.google.com/scholar_url?url=https://www.mdpi.com/2076-2615/11/2/351/pdf&hl=en&sa=X&d=14185453621720314043&ei=xpkdYNzAIePKsQKYw5m4DA&scisig=AAGBfm2BeVTkYeiag3lbkjm4ry8B64WCMQ&nossl=1&oi=scholaralrt&html=) [Dunn's Test]
 1. Brigham RD, Pelini S, Xu Z, Vazquez-Ortega A. 2021. Assessing the effects of lake‐dredged sediments on soil health: Agricultural and environmental implications on Northwestern Ohio. Journal of Environmental Quality XX:XXX-XXX. [Abstract](https://acsess.onlinelibrary.wiley.com/doi/abs/10.1002/jeq2.20199) [???]

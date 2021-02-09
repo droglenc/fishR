@@ -34,6 +34,8 @@ The following are instructions to install packages from within various ways to i
 ## More Focused Packages
 * [ALKr](http://cran.r-project.org/web/packages/ALKr/index.html) -- *age-length keys* [**As of 16-Jan-19 this package has been archived on CRAN**]
 * [AnglerCreelSurveySimulation](https://cran.r-project.org/package=AnglerCreelSurveySimulation) -- *simulate creel survey data*
+* [AquaticLifeHistory](https://github.com/jonathansmart/AquaticLifeHistory) -- *fisheries life history analyses (e.g., length-at-age modelling using a multi-model approach, estimating age-at-maturity and length-at-maturity) using contemporary approaches as simple R functions.*
+* [BayesGrowth](https://github.com/jonathansmart/BayesGrowth) -- *combines length-at-age modelling for fisheries with MCMC implemented using Stan*.
 * [Bioenergetics 4.0](https://bioenergetics4.shinyapps.io/bioenergetics4/) -- *a shiny app for bioenergetics modeling*
 * [Bioenergetics at ISEMP](http://www.isemp.org/action.php?chi=14) -- *bioenergetics modeling as part of the Integrated Status and Monitoring Program*
 * [CatDyn](https://cran.r-project.org/web/packages/CatDyn/index.html) -- *population parameters from catch dynamics data*

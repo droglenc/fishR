@@ -5,7 +5,7 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">27</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">28</span> publications.
 
 1. Amador-Vargas S, Orribarra VS, Portugal-Loayza A, Fernandez-Marin H. 2021. Association patterns of swollen‐thorn acacias with three ant species and other organisms in a dry forest of Panama. Biotropica XX:XXX-XXX. [Abstract](https://onlinelibrary.wiley.com/doi/abs/10.1111/btp.12899) [Dunn's Test]
 1. Araujo I, *et al.* 2021. Trees at the Amazonia-Cerrado transition are approaching high temperature thresholds. Environmental Research Letters XX:XX-XXX. [Full Text](https://iopscience.iop.org/article/10.1088/1748-9326/abe3b9/pdf) [Dunn's Test]
@@ -29,6 +29,7 @@ The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA
 1. Saak AE, Wang T, Xu Z, Kolady D, Ulrich-Schad JD, Clay D. 2021. Duration of usage and farmer reported benefits of conservation tillage. Journal of Soil and Water Conservation January 76:65-75. [Abstract](https://www.jswconline.org/content/76/1/65.abstract) [???]
 1. Schur C., *et al.* 2021. Incubation in wastewater reduces the multigenerational effects of microplastics in *Daphnia magna*. Environmental Science and Technology XX:XXX-XXX. [Abstract](https://pubmed.ncbi.nlm.nih.gov/33538579/) [Growth]
 1. Sharma A, *et al.* 2021. Introduced, invaded and forgotten: allopatric and sympatric native snow trout life-histories indicate brown trout invasion effects in the Himalayan hinterlands. Biological Invastions XX:XXX-XXX. [Abstract](https://link.springer.com/article/10.1007/s10530-020-02454-8) [???]
+1. Smart JJ, Grammer GL. 2021. Modernising fish and shark growth curves with Bayesian length-at-age models. PLoS ONE 16(2):XXX-XXX. [Full Text](https://www.researchgate.net/publication/349139023_Modernising_fish_and_shark_growth_curves_with_Bayesian_length-at-age_models/references) [Growth]
 1. Stock BC, *et al.* 2021. Pulse recruitment and recovery of Cayman Islands Nassau Grouper (*Epinephelus striatus*) spawning aggregations revealed by *in situ* length-frequency data. ICES Journal of Marine Science XX:XXX-XXX. [Full Text](https://academic.oup.com/icesjms/advance-article/doi/10.1093/icesjms/fsaa221/6071467) [Mortality, Growth]
 1. Stypinska B, Lewandowska A, Felis-Giemza A, Olesinska M, Paradowska-Gorycka A. 2021. Association study between immune-related miRNAs and mixed connective tissue disease. Arthritis Research & Therapy 23:XXX-XXX. [Full Text](https://link.springer.com/article/10.1186/s13075-020-02403-9) [Dunn's Test???]
 1. Suca JJ, *et al.* 2021. Sensitivity of Sand Lance to shifting prey and hydrography indicates forthcoming change to the northeast US shelf forage fish complex. ICES Journal of Marine Science XX:XXX-XXX. [Full Text](https://academic.oup.com/icesjms/advance-article/doi/10.1093/icesjms/fsaa251/6120244) [Growth]

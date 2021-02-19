@@ -48,13 +48,13 @@ iPSDs <- prop.table(freq,margin=1)*100
 
 - Compute the SE for PSD-Q.
 ```{r}
-SEs <- sqrt(PSDs[,"quality"]*(100-iPSDs[,"quality"])/sums)
+SEs <- sqrt(PSDs[,"quality"]*(100-PSDs[,"quality"])/sums)
 round(SEs,1)
 ```
 
 - Repeat for other size indices.  For example, for PSD-P.
 ```{r}
-SEs <- sqrt(PSDs[,"preferred"]*(100-iPSDs[,"preferred"])/sums)
+SEs <- sqrt(PSDs[,"preferred"]*(100-PSDs[,"preferred"])/sums)
 round(SEs,1)
 ```
 

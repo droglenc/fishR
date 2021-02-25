@@ -5,7 +5,7 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">32</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">34</span> publications.
 
 1. Amador-Vargas S, Orribarra VS, Portugal-Loayza A, Fernandez-Marin H. 2021. Association patterns of swollen‐thorn acacias with three ant species and other organisms in a dry forest of Panama. Biotropica XX:XXX-XXX. [Abstract](https://onlinelibrary.wiley.com/doi/abs/10.1111/btp.12899) [Dunn's Test]
 1. Araujo I, *et al.* 2021. Trees at the Amazonia-Cerrado transition are approaching high temperature thresholds. Environmental Research Letters XX:XX-XXX. [Full Text](https://iopscience.iop.org/article/10.1088/1748-9326/abe3b9/pdf) [Dunn's Test]
@@ -18,8 +18,9 @@ The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA
 1. Emmons SM, D'Alberto BM, Smart JJ, Simpfendorfer CA. 2021. Age and growth of tiger shark (*Galeocerdo cuvier*) from Western Australia. Marine & Freshwater Research XX:XXX-XXX. [Abstract](https://www.publish.csiro.au/MF/MF20291) [???]
 1. Ford, BM, Stewart BA, Tunbridge DJ, Tilbrook P. 2021. Paper chromatography: An inconsistent tool for assessing soil health. Geoderma 383:XXX-XXX. [Abstract](https://www.sciencedirect.com/science/article/abs/pii/S0016706120325386) [Dunn's Test?]
 1. Gomez-Martinez H, Bermejo A, Zuriaga E, Badenes ML. 2021. Polyphenol content in apricot fruits. Scientia Horticulturae 277:XXX-XXX. [Abstract](https://www.sciencedirect.com/science/article/abs/pii/S0304423820306567) [Dunn's Test?]
+1. Haubrock PJ, *et al.* 2021. Spatio-temporal niche plasticity of a freshwater invader as a harbinger of impact variability. Science of the Total Environment XX:XXX-XXX. [Abstract](https://www.sciencedirect.com/science/article/abs/pii/S0048969721010147) [Weight-Length]
 1. Henderson RW, *et al.* 2021. Effects of body size, diet, and transience on the demography of the arboreal boid snake *Corallus grenadensis* on Carriacou (Grenada Grenadines, West Indies). Population Ecology XX:XXX-XXX. [Abstract](https://esj-journals.onlinelibrary.wiley.com/doi/abs/10.1002/1438-390X.12079) [Growth]
-1. Horn PL, Maolagain CO. 2021. The growth and age structure of Chilean jack mackerel (*Trachurus murphyi*) following its influx to New Zealand waters. Journal of Fish Biology XX:XXX-XXX. [Abstract](https://onlinelibrary.wiley.com/doi/abs/10.1111/jfb.14647) [???] 
+1. Horn PL, Maolagain CO. 2021. The growth and age structure of Chilean jack mackerel (*Trachurus murphyi*) following its influx to New Zealand waters. Journal of Fish Biology XX:XXX-XXX. [Abstract](https://onlinelibrary.wiley.com/doi/abs/10.1111/jfb.14647) [???]
 1. Kherif O. *et al.* 2021. Agroecological modeling of nitrogen and carbon transfers between decomposer micro-organisms, plant symbionts, soil and atmosphere in an intercropping system. Ecological Modeling 440:XXX-XXX. [Abstract](https://www.sciencedirect.com/science/article/abs/pii/S0304380020304543) [???]
 1. Liss SA, *et al.* 2021. From 95 to 59 millimeters: A new active acoustic tag size guideline for salmon. Canadian Journal of Fisheries and Aquatic Sciences XX:XXX-XXX. [Abstract](https://cdnsciencepub.com/doi/abs/10.1139/cjfas-2020-0222) [Dunn's Test]
 1. Lopez-Gappa J, Zelaya DG. 2021. Bryozoan assemblages on gastropod shells occupied by the hermit crab *Pagurus comptus*. Polar Biology XX:XXX-XXX. [Abstract](https://link.springer.com/article/10.1007/s00300-020-02796-y) [Dunn's Test]
@@ -40,6 +41,7 @@ The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA
 1. Vagenas G, Karachle PK. 2021. sBCB (standardized Burn-Crack-Burn): A standardized modification of burning method for otolith age estimation. Fisheries Research 233:XXX-XXX. [Abstract](https://www-sciencedirect-com.ezproxy.uwsp.edu/science/article/pii/S0165783620302848) [Age Comparisons]
 1. Vaughan L, *et al.* 2021. Growth rates in a European Eel *Anguilla anguilla* (L., 1758) population show a complex relationship with temperature over a seven-decade otolith biochronology. ICES Journal of Marine Science XX:XXX-XXX. [Abstract](https://academic.oup.com/icesjms/advance-article-abstract/doi/10.1093/icesjms/fsaa253/6104621) [???]
 1. Vilmi A. *et al.* 2021. Dispersal–niche continuum index: a new quantitative metric for assessing the relative importance of dispersal versus niche processes in community assembly. Ecography 44:XXX-XXX. [Full Text](https://onlinelibrary.wiley.com/doi/pdf/10.1111/ecog.05356) [Dunn's Test]
+1. Willmes M. *et al.* 2021. Geochemical tools identify the origins of Chinook Salmon returning to a restored creek. Fisheries XX:XXX-XXX. [Full Text](https://bibbase.org/service/mendeley/b32caa3a-a6aa-3875-9eaa-ba9f1eb70905/file/2ea6b31e-1452-8f79-341e-a9348f75eb8e/Willmes_et_al_2020_Geochemical_tools_identify_the_origins_of_Chinook_Salmon_returning_to_a_restored_creek2.pdf) [Age Comparisions]
 
 -----
 <p style="text-align: center;"><a href="exposure-citations20.html">Goto 2020 citations</a></p>

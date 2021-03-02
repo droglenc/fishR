@@ -5,7 +5,7 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">38</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">39</span> publications.
 
 1. Amador-Vargas S, Orribarra VS, Portugal-Loayza A, Fernandez-Marin H. 2021. Association patterns of swollen‐thorn acacias with three ant species and other organisms in a dry forest of Panama. Biotropica XX:XXX-XXX. [Abstract](https://onlinelibrary.wiley.com/doi/abs/10.1111/btp.12899) [Dunn's Test]
 1. Araujo I, *et al.* 2021. Trees at the Amazonia-Cerrado transition are approaching high temperature thresholds. Environmental Research Letters XX:XX-XXX. [Full Text](https://iopscience.iop.org/article/10.1088/1748-9326/abe3b9/pdf) [Dunn's Test]
@@ -45,6 +45,7 @@ The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA
 1. Vagenas G, Karachle PK. 2021. sBCB (standardized Burn-Crack-Burn): A standardized modification of burning method for otolith age estimation. Fisheries Research 233:XXX-XXX. [Abstract](https://www-sciencedirect-com.ezproxy.uwsp.edu/science/article/pii/S0165783620302848) [Age Comparisons]
 1. Vaughan L, *et al.* 2021. Growth rates in a European Eel *Anguilla anguilla* (L., 1758) population show a complex relationship with temperature over a seven-decade otolith biochronology. ICES Journal of Marine Science XX:XXX-XXX. [Abstract](https://academic.oup.com/icesjms/advance-article-abstract/doi/10.1093/icesjms/fsaa253/6104621) [???]
 1. Vilmi A. *et al.* 2021. Dispersal–niche continuum index: a new quantitative metric for assessing the relative importance of dispersal versus niche processes in community assembly. Ecography 44:XXX-XXX. [Full Text](https://onlinelibrary.wiley.com/doi/pdf/10.1111/ecog.05356) [Dunn's Test]
+1. Waller JD. *et al.* 2021. A comparison of the size at maturity of female American lobsters (*Homarus americanus*) over three decades and across coastal areas of the Gulf of Maine using ovarian staging. ICES Journal of Marine Science XX:XXX-XXX. [Abstract](https://www.researchgate.net/publication/349693973_A_comparison_of_the_size_at_maturity_of_female_American_lobsters_Homarus_americanus_over_three_decades_and_across_coastal_areas_of_the_Gulf_of_Maine_using_ovarian_staging) [???]
 1. Willmes M. *et al.* 2021. Geochemical tools identify the origins of Chinook Salmon returning to a restored creek. Fisheries XX:XXX-XXX. [Full Text](https://bibbase.org/service/mendeley/b32caa3a-a6aa-3875-9eaa-ba9f1eb70905/file/2ea6b31e-1452-8f79-341e-a9348f75eb8e/Willmes_et_al_2020_Geochemical_tools_identify_the_origins_of_Chinook_Salmon_returning_to_a_restored_creek2.pdf) [Age Comparisions]
 
 -----

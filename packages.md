@@ -32,6 +32,7 @@ The following are instructions to install packages from within various ways to i
 ----
 
 ## More Focused Packages
+* [actel](https://github.com/hugomflavio/actel) -- Standardised analysis of acoustic telemetry data from fish moving through receiver arrays.
 * [ALKr](http://cran.r-project.org/web/packages/ALKr/index.html) -- *age-length keys* [**As of 16-Jan-19 this package has been archived on CRAN**]
 * [AnglerCreelSurveySimulation](https://cran.r-project.org/package=AnglerCreelSurveySimulation) -- *simulate creel survey data*
 * [AquaticLifeHistory](https://github.com/jonathansmart/AquaticLifeHistory) -- *fisheries life history analyses (e.g., length-at-age modelling using a multi-model approach, estimating age-at-maturity and length-at-maturity) using contemporary approaches as simple R functions.*
@@ -40,6 +41,7 @@ The following are instructions to install packages from within various ways to i
 * [Bioenergetics at ISEMP](http://www.isemp.org/action.php?chi=14) -- *bioenergetics modeling as part of the Integrated Status and Monitoring Program*
 * [CatDyn](https://cran.r-project.org/web/packages/CatDyn/index.html) -- *population parameters from catch dynamics data*
 * [cuttlefish.model](https://cran.r-project.org/web/packages/cuttlefish.model/index.html) -- *Perform LPUE standardization and stock assessment of the English Channel cuttlefish stock using a two-stage biomass model*
+* [EGRET](http://usgs-r.github.io/EGRET/) -- *An R-package for the analysis of long-term changes in water quality and streamflow, including the water-quality method Weighted Regressions on Time, Discharge, and Season*
 * [fecR](https://cran.r-project.org/web/packages/fecR/index.html) -- *Calculates fishing effort following the DG MARE Ad-Hoc Workshops on Transversal Variables in Zagreb (2015) and Nicosia (2016)*
 * [FESta](https://cran.r-project.org/web/packages/FESta/index.html): *Fishing effort standardization* 
 * [FSAWs](https://github.com/droglenc/FSAWs) -- *construct and validate standard weight (Ws) equations*
@@ -72,6 +74,7 @@ The following are instructions to install packages from within various ways to i
 * [stacomiR](https://cran.r-project.org/web/packages/stacomiR/index.html) -- *Graphical outputs and treatment for a database of fish pass monitoring*
 * [swfscDAS](https://cran.r-project.org/web/packages/swfscDAS/index.html): *Southwest Fisheries Science Center shipboard DAS data processing*
 * [swfscMisc](https://cran.r-project.org/web/packages/swfscMisc/index.html) -- *Collection of conversion, analytical, geodesic, mapping, and plotting functions used by the Southwest Fisheries Science Center*
+* [toxEval](http://usgs-r.github.io/toxEval/) -- *functions to analyze, visualize, and organize measured concentration data as it relates to toxicity forecasting or other user-selected chemical-biological interaction benchmark data such as water quality criteria*
 * [tRophicPosition](https://cran.r-project.org/package=tRophicPosition) -- *Bayesian estimation of trophic position from consumer stable isotope ratios*
 * [VAST]() -- *estimate spatial variation in density using spatially referenced data, with the goal of habitat associations (correlations among species and with habitat) and estimating total abundance for a target species in one or more years*
 * [vmsbase](http://www.vmsbase.org/) -- *vessel monitoring system and logbook data management and analysis*

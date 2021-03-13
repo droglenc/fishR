@@ -5,7 +5,7 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">49</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">50</span> publications.
 
 1. Amador-Vargas S, Orribarra VS, Portugal-Loayza A, Fernandez-Marin H. 2021. Association patterns of swollen‐thorn acacias with three ant species and other organisms in a dry forest of Panama. Biotropica XX:XXX-XXX. [Abstract](https://onlinelibrary.wiley.com/doi/abs/10.1111/btp.12899) [Dunn's Test]
 1. Araujo I, *et al.* 2021. Trees at the Amazonia-Cerrado transition are approaching high temperature thresholds. Environmental Research Letters XX:XX-XXX. [Full Text](https://iopscience.iop.org/article/10.1088/1748-9326/abe3b9/pdf) [Dunn's Test]
@@ -31,6 +31,7 @@ The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA
 1. Horn PL, Maolagain CO. 2021. The growth and age structure of Chilean jack mackerel (*Trachurus murphyi*) following its influx to New Zealand waters. Journal of Fish Biology XX:XXX-XXX. [Abstract](https://onlinelibrary.wiley.com/doi/abs/10.1111/jfb.14647) [???]
 1. Kherif O. *et al.* 2021. Agroecological modeling of nitrogen and carbon transfers between decomposer micro-organisms, plant symbionts, soil and atmosphere in an intercropping system. Ecological Modeling 440:XXX-XXX. [Abstract](https://www.sciencedirect.com/science/article/abs/pii/S0304380020304543) [???]
 1. Kjeldgaard MK, Hewlett JA, Eubanks MD. 2021. Widespread variation in stable isotope trophic position estimates: patterns, causes, and potential consequences. Ecological Monographs X:XXX-XXX. [Abstract](https://esajournals.onlinelibrary.wiley.com/doi/abs/10.1002/ecm.1451) [Dunn's Test]
+1. Krause DJ, Hinke JT, Goebel ME, Perryman W. 2021. Drones minimize Antarctic predator responses relative to ground survey methods: An appeal for context in policy advice. Frontiers in Marine Science XX:XXX-XXX. [Abstract](https://www.researchgate.net/publication/349968780_Drones_Minimize_Antarctic_Predator_Responses_Relative_to_Ground_Survey_Methods_An_Appeal_for_Context_in_Policy_Advice) [Dunn's Test]
 1. Liss SA, *et al.* 2021. From 95 to 59 millimeters: A new active acoustic tag size guideline for salmon. Canadian Journal of Fisheries and Aquatic Sciences XX:XXX-XXX. [Abstract](https://cdnsciencepub.com/doi/abs/10.1139/cjfas-2020-0222) [Dunn's Test]
 1. Lopez-Gappa J, Zelaya DG. 2021. Bryozoan assemblages on gastropod shells occupied by the hermit crab *Pagurus comptus*. Polar Biology XX:XXX-XXX. [Abstract](https://link.springer.com/article/10.1007/s00300-020-02796-y) [Dunn's Test]
 1. Maugoust J, Orliac MJ. 2021. Endocranial cast anatomy of the extinct Hipposiderid bats *Palaeophyllophora* and *Hipposideros* (*Pseudorhinolophus*) (Mammalia: Chiroptera). Journal of Mammalian Evolution XX:XXX-XXX. [Abstract](https://link.springer.com/article/10.1007/s10914-020-09522-9) [???]

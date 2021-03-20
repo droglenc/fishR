@@ -5,7 +5,7 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">53</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">54</span> publications.
 
 1. Amador-Vargas S, Orribarra VS, Portugal-Loayza A, Fernandez-Marin H. 2021. Association patterns of swollen‐thorn acacias with three ant species and other organisms in a dry forest of Panama. Biotropica XX:XXX-XXX. [Abstract](https://onlinelibrary.wiley.com/doi/abs/10.1111/btp.12899) [Dunn's Test]
 1. Araujo I, *et al.* 2021. Trees at the Amazonia-Cerrado transition are approaching high temperature thresholds. Environmental Research Letters XX:XX-XXX. [Full Text](https://iopscience.iop.org/article/10.1088/1748-9326/abe3b9/pdf) [Dunn's Test]
@@ -55,6 +55,7 @@ The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA
 1. Stock BC, *et al.* 2021. Pulse recruitment and recovery of Cayman Islands Nassau Grouper (*Epinephelus striatus*) spawning aggregations revealed by *in situ* length-frequency data. ICES Journal of Marine Science XX:XXX-XXX. [Full Text](https://academic.oup.com/icesjms/advance-article/doi/10.1093/icesjms/fsaa221/6071467) [Mortality, Growth]
 1. Stypinska B, Lewandowska A, Felis-Giemza A, Olesinska M, Paradowska-Gorycka A. 2021. Association study between immune-related miRNAs and mixed connective tissue disease. Arthritis Research & Therapy 23:XXX-XXX. [Full Text](https://link.springer.com/article/10.1186/s13075-020-02403-9) [Dunn's Test???]
 1. Suca JJ, *et al.* 2021. Sensitivity of Sand Lance to shifting prey and hydrography indicates forthcoming change to the northeast US shelf forage fish complex. ICES Journal of Marine Science XX:XXX-XXX. [Full Text](https://academic.oup.com/icesjms/advance-article/doi/10.1093/icesjms/fsaa251/6120244) [Growth]
+1. Turan C. 2021. Data-limited stock assessment of two horse mackerel species (*Trachurus mediterraneus* and *T. trachurus*) from the Mediterranean coast of Turkey. Regional Studies in Marine Science 44:XXX-XXX. [Abstract](https://www.sciencedirect.com/science/article/abs/pii/S2352485521001249) [???]
 1. Vagenas G, Karachle PK. 2021. sBCB (standardized Burn-Crack-Burn): A standardized modification of burning method for otolith age estimation. Fisheries Research 233:XXX-XXX. [Abstract](https://www-sciencedirect-com.ezproxy.uwsp.edu/science/article/pii/S0165783620302848) [Age Comparisons]
 1. Vaughan L, *et al.* 2021. Growth rates in a European Eel *Anguilla anguilla* (L., 1758) population show a complex relationship with temperature over a seven-decade otolith biochronology. ICES Journal of Marine Science XX:XXX-XXX. [Abstract](https://academic.oup.com/icesjms/advance-article-abstract/doi/10.1093/icesjms/fsaa253/6104621) [???]
 1. Vilmi A. *et al.* 2021. Dispersal–niche continuum index: a new quantitative metric for assessing the relative importance of dispersal versus niche processes in community assembly. Ecography 44:XXX-XXX. [Full Text](https://onlinelibrary.wiley.com/doi/pdf/10.1111/ecog.05356) [Dunn's Test]

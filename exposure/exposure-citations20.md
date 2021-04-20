@@ -5,10 +5,11 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">209</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">210</span> publications.
 
 1. Akcay HG, Kabasakal B, Aksu D, Demir N, Oz M, Erdogan A. 2020. Automated bird counting with deep learning for regional bird distribution mapping. Animals XX:XXX-XXX. [Full Text](https://www.mdpi.com/2076-2615/10/7/1207/htm) [Dunn's Test]
 1. Almojil D. 2020. Male mate choice in the spot-tail shark *Carcharhinus sorrah*: are males choosy or opportunistic? Journal of Negative Results - Ecology & Evolutionary Biology. 13:1-11. [Full Text](http://jnr-eeb.org/index.php/jnr/article/viewFile/74/36) [Age Comparisons]
+1. Andrews T, Jeffrey CE, Gilker RE, Neher DA, Barlow JW. 2021. Survey design and implementation quantifying winter housing and bedding types used on Vermont organic dairy farms. Journal of Dairy Science XX:XXX-XXX. [Full Text](https://www.sciencedirect.com/science/article/pii/S0022030221005178) [Dunn's Test]
 1. Arnott SE, Celis-Salgado MP, Valleau R. DeSellas A, Paterson A, Yn N, Smol JP, Rusak J. 2020. Road salt impacts freshwater zooplankton at concentrations below current water quality guidelines. Environmental Science & Technology XX:XXX-XXX. [Abstract](https://pubs.acs.org/doi/abs/10.1021/acs.est.0c02396) [???]
 1. Arntzen JW, Zuiderwijk A. 2020. Sampling efficiency, bias and shyness in funnel trapping aquatic newts. Amphibia-Reptilia XX:XXX-XXX. [Abstract](https://brill.com/view/journals/amre/aop/article-10.1163-15685381-bja10004/article-10.1163-15685381-bja10004.xml) [???]
 1. Arthur DE. 2020. The reproductive biology of Yelloweye Rockfish (*Sebastes ruberrimus*) in Prince William Sound and the northern Gulf of Alaska. M.Sc. Thesis, University of Alaska Fairbanks. [Preview](https://search.proquest.com/openview/d4846b4b59b6d591c37727b3f1021062/1?pq-origsite=gscholar&cbl=18750&diss=y) [???]

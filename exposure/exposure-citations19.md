@@ -5,7 +5,7 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">171</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">172</span> publications.
 
 1. Achilleos K, Smith AM, Gordon DP. 2019. The articulated bryozoan genus *Cellaria* in the southern Zealandian Region: distribution and associated fauna. Marine Biodiversiety 49:2801-2812. [Abstract](https://link.springer.com/article/10.1007/s12526-019-01009-y) [???]
 1. Albert LT, Junge C, Myrlund MK. 2019. Young mums are rebuilding the Spurdog stock (*Squalus acanthias* L.) in Norwegian waters. ICES Journal of Marine Science 76:2193-2204. [Abstract](https://academic.oup.com/icesjms/advance-article-abstract/doi/10.1093/icesjms/fsz156/5543885) [???]
@@ -94,6 +94,7 @@ The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA
 1. Jacobs K, Wind L, Krometis L, Hession WC, Pruden A. 2019. Fecal indicator bacteria and antibiotic resistance genes in storm runoff from dairy manure and compost-amended vegetable plots. Journal of Environmental Quality Abstract - Environmental Microbiology XX:XXX-XXX. [Abstract](https://dl.sciencesocieties.org/publications/jeq/abstracts/48/4/1038) [Dunn's Test]
 1. Jahnes BC, Herrmann M, Sabree ZL. 2019. Conspecific coprophagy stimulates normal development in a germ-free model invertebrate. PeerJ XX:XXX-XXX. [Full Text](https://media.proquest.com/media/hms/PFT/1/zTuH9?_s=ZQ%2BDV9iCgVxvqdzRn7%2FuLDfWfPU%3D) [Dunn Test]
 1. Jankowska M, LapiedB, JankowskiW, Stankiewicz M. 2019. The unusual action of essential oil component, menthol, in potentiating the effect of the carbamate insecticide, bendiocarb. Pesticide Biochemistry and Physiology XX:XXX-XXX. [Abstract](https://www.sciencedirect.com/science/article/abs/pii/S0048357518304541) [Dunn Test]
+1. Jefferson, AE *et al.* 2019. Age and growth of Gray Triggerfish (*Balistes capriscus*) from a north-central Gulf of Mexico artificial reef zone. Bulletin Marine Science 95:177-195. [Full Text](http://coastal.msstate.edu/sites/coastal.msstate.edu/files/files/drymon/25.pdf) [Growth]
 1. Jones DA, Akbaripasand A, Nakagawa S, Closs GP. 2019. Landscape features determine Brown Trout population structure and recruitment dynamics. Ecology of Freshwater Fish XX:XXX-XXX. [Abstract](https://onlinelibrary.wiley.com/doi/abs/10.1111/eff.12474) [???]
 1. Kelson SJ, Carlson SM. 2019. Do precipitation extremes drive growth and migration timing of a Pacific salmonid fish in Mediterranean-climate streams? Ecosphere 10:XXX-XXX. [Abstract](https://www.researchgate.net/publication/331908792_Do_precipitation_extremes_drive_growth_and_migration_timing_of_a_Pacific_salmonid_fish_in_Mediterranean-climate_streams/references) [Depletion]
 1. Kessel KN. 2019. Regional distribution, life history, and morphometry of spawning-stage Capelin *Mallotus villosus*. M.Sc. Thesis, University of Alaska-Fairbanks. [Preview](https://search.proquest.com/openview/5d303d7ecbeb84cfcd8f0741f3606d97/1?pq-origsite=gscholar&cbl=18750&diss=y) [???] 

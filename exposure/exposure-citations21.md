@@ -5,7 +5,7 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">81</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">82</span> publications.
 
 1. Amador-Vargas S, Orribarra VS, Portugal-Loayza A, Fernandez-Marin H. 2021. Association patterns of swollen‐thorn acacias with three ant species and other organisms in a dry forest of Panama. Biotropica XX:XXX-XXX. [Abstract](https://onlinelibrary.wiley.com/doi/abs/10.1111/btp.12899) [Dunn's Test]
 1. Araujo I, *et al.* 2021. Trees at the Amazonia-Cerrado transition are approaching high temperature thresholds. Environmental Research Letters XX:XX-XXX. [Full Text](https://iopscience.iop.org/article/10.1088/1748-9326/abe3b9/pdf) [Dunn's Test]
@@ -39,6 +39,7 @@ The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA
 1. George SD, Stich DS, Baldigo BP. 2021. Considerations of variability and power for long-term monitoring of stream fish assemblages. Canadian Journal of Fisheries and Aquatic Sciences XX:XXX-XXX. [Full Text](https://cdnsciencepub.com/doi/pdf/10.1139/cjfas-2020-0013) [Removal]
 1. Godoy-Veiga M. *et al.*. 2021. The value of climate responses of individual trees to detect areas of climate-change refugia, a tree-ring study in the Brazilian seasonally dry tropical forests. Forest Ecology and Management 488:XXX-XXX. [Abstract](https://www.sciencedirect.com/science/article/abs/pii/S0378112721000608) [???]
 1. Gomez-Martinez H, Bermejo A, Zuriaga E, Badenes ML. 2021. Polyphenol content in apricot fruits. Scientia Horticulturae 277:XXX-XXX. [Abstract](https://www.sciencedirect.com/science/article/abs/pii/S0304423820306567) [Dunn's Test?]
+1. Gurjar UR, *et al.* 2021. Preliminary observation on the sustainability of White Sardine, *Escualosa thoracata* (Valenciennes, 1847), exploited from the central west coast of India. The Journal of Basic and Applied Zoology XX:XXX-XXX. [Full Text](https://www.researchgate.net/publication/351415478_s41936-021-00219-w) [General]
 1. Haubrock PJ, *et al.* 2021. Spatio-temporal niche plasticity of a freshwater invader as a harbinger of impact variability. Science of the Total Environment XX:XXX-XXX. [Abstract](https://www.sciencedirect.com/science/article/abs/pii/S0048969721010147) [Weight-Length]
 1. Henderson RW, *et al.* 2021. Effects of body size, diet, and transience on the demography of the arboreal boid snake *Corallus grenadensis* on Carriacou (Grenada Grenadines, West Indies). Population Ecology XX:XXX-XXX. [Abstract](https://esj-journals.onlinelibrary.wiley.com/doi/abs/10.1002/1438-390X.12079) [Growth]
 1. Herring AM, *et al.* 2021. Traceback of the *Psoroptes* outbreak in British Columbian bighorn sheep (*Ovis Canadensis*). International Journal for Parasitology: Parasites and Wildlife XX:XXX-XXX. [Full Text](https://www.sciencedirect.com/science/article/pii/S2213224421000316) [Dunn's Test]

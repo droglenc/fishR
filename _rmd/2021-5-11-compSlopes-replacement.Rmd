@@ -78,7 +78,7 @@ csfsa$comparisons
 
 For example, these results suggest that the slopes for 1996 and 1992 ARE statistically different (first row), but the slopes for 1999 and 1996 are NOT statistically different (last row).
 
-The `$slopes` component in this saved object contains results specific to each slope. The groups are under `level`, sample slopes under `slopes`, 95% confidence intervals for the slopes under `95% LCI` and `95% UCI`, and unadjusted and adjusted p-values for the test if the slope is different from 0 under `p.unadj` and `p.adj`, respectively.
+The `$slope` component in this saved object contains results specific to each slope. The groups are under `level`, sample slopes under `slopes`, 95% confidence intervals for the slopes under `95% LCI` and `95% UCI`, and unadjusted and adjusted p-values for the test if the slope is different from 0 under `p.unadj` and `p.adj`, respectively.
 
 ```{r}
 csfsa$slope
@@ -108,7 +108,7 @@ The `$contrasts` component in this saved object contains the results for compari
 css$contrasts
 ```
 
-Comparing these results to the `$comparison` component from `compSlopes()` shows that the sample slopes are the same, but that the confidence interval values and p-values are slightly different. Again, this is due to `emtrends()` and `compSlopes()` using different methods of adjusting for multiple comparisons. These differences did not result in different conclusions in this case, but they could, especially if the p-values are near the rejection criterion.
+Comparing these results to the `$comparison` component from `compSlopes()` shows that the difference in sample slopes are the same, but that the confidence interval values and p-values are slightly different. Again, this is due to `emtrends()` and `compSlopes()` using different methods of adjusting for multiple comparisons. These differences did not result in different conclusions in this case, but they could, especially if the p-values are near the rejection criterion.
 
 The `$emtrends` component contains results for each slope with the groups under the name of the factor variable (`year` in this example), the sample slopes under `xxx.trend` (where `xxx` is replaced with the name of the covariate variable, `weight` in this example), standard errors of the sample slopes under `SE`, degrees-of-freedom under `df`, 95% confidence intervals for the slope under `lower.CL` and `upper.CL`, and t test statistics and p-values adjusted for multiple comparisons for testing that the slope is not equal to zero under `t.ratio` and `p.adj`, respectively.
 
@@ -123,7 +123,7 @@ Here the results match exactly with those in the `$slopes` component of `compSlo
 ## Conclusion
 The `emtrends()` function in the `emmeans` package provides a more general solution to comparing multiple slopes than what was used in `compSlopes()` in the `FSA` package (prior to v0.9.0). Thus, `compSlopes()` will be removed from FSA with v0.9.0. You should use `emtrends()` instead.
 
-The `emmeans` package has extensive vignettes that further exaplain its use. For this use case see [this discussion](https://cran.r-project.org/web/packages/emmeans/vignettes/interactions.html#covariates). Their ["Basics" vignette](https://cran.r-project.org/web/packages/emmeans/vignettes/basics.html) is also useful.
+The `emmeans` package has extensive vignettes that further explain its use. For this use case see [this discussion](https://cran.r-project.org/web/packages/emmeans/vignettes/interactions.html#covariates). Their ["Basics" vignette](https://cran.r-project.org/web/packages/emmeans/vignettes/basics.html) is also useful.
 
 Note that this change to `FSA` does not affect anything in the published [Introductory Fisheries Analyses with R](https://derekogle.com/IFAR/) book. However, the specific analysis in [this supplement](http://derekogle.com/IFAR/supplements/weightlength/index.html) to the book will no longer work as described. The use of `compSlopes()` there will need to be replaced with `emtrends()`.
 

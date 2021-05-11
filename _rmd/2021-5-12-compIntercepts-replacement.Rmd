@@ -1,0 +1,168 @@
+---
+title: "Replace compIntercepts() with emmeans()"
+layout: post
+date: "May 12, 2021"
+output:
+  html_document
+tags:
+- R
+- FSA
+- linear_regressions
+
+---
+```{r eval=FALSE, echo=FALSE}
+## FOR COMPILING FOR THE WEBSITE
+## Make sure to setwd to source file location
+source("rmd2md.R")
+rmd2md("2021-5-12-compIntercepts-replacement")
+```
+
+```{r setup, echo=FALSE, results='hide', message=FALSE}
+library(knitr)
+knit_hooks$set(par1 = function(before, options, envir) {
+  if (before) par(mar=c(3.5,3.5,1,1),mgp=c(2.1,0.4,0),tcl=-0.2)
+})
+opts_chunk$set(dev="png",tidy=FALSE,fig.width=4,fig.height=4,par1=TRUE)
+options(show.signif.stars=FALSE)
+set.seed(343434344)
+```
+
+----
+
+## Introduction
+The `compIntercepts()` function in `FSA` (prior to v0.9.0) was used to statistically compare intercepts for all pairs of groups with the same slope in an indicator/dummy variable regression (I/DVR). However, the excellent `emmeans()` function in the `emmmeans` package is a more general approach that follows principals similar to those of `emtrends()`, which I demonstrated in [a post yesterday](http://derekogle.com/fishR/2021-05-11-compSlopes-replacement). As such, `compIntercepts()` will be removed from the next version (0.9.0) of `FSA`.
+
+In this post I demonstrate how to use `emmeans()` for the same purpose as `compIntercepts()` was used (prior to FSA v0.9.0). **Note, however, that the results will not be identical because `compSlopes()` and `emtrends()` use different methods to correct for multiple comparisons when comparing pairs of slopes.**
+
+&nbsp;
+
+The `Mirex` data described [here](http://derekogle.com/FSA/reference/Mirex.html), but filtered to include just three years, will be used in this post.[^filtered]
+
+```{r data, message=FALSE, warning=FALSE}
+library(FSA)
+data(Mirex)
+## reduce to three years ... only for simplicity in this post
+Mirex <- subset(Mirex,year<1990)
+## treat year as a factor for the IVR modeling
+Mirex$year <- factor(Mirex$year)
+```
+
+The `lm()` below fits the I/DVR to determine if the relationship between mirex concentration and weight of the salmon differs by year.
+
+```{r}
+lm1 <- lm(mirex~weight*year,data=Mirex)
+```
+
+The `weight:year` interaction term p-value suggests that the slopes (i.e., relationship between mirex concentration and salmon weight) do NOT differ among the three years. However, the `year` term p-value suggests that the *intercepts* of at least one pair of these parallel lines DO differ.[^slopes]
+
+```{r}
+anova(lm1)
+```
+
+A next step is to determine which pair(s) of intercepts differ significantly. In preparation for this next step, I fit a model that does not include the insignificant interaction term.[^nointeraction]
+
+```{r}
+lm1a <- lm(mirex~weight+year,data=Mirex)
+```
+
+
+&nbsp;
+
+## `compIntercepts()` from `FSA`
+The procedure coded in `compItercepts()` is described in more detail in [this supplement](http://derekogle.com/IFAR/supplements/weightlength/index.html#pinpointing-specific-differences-among-intercepts) to the [Introductory Fisheries Analyses with R book](https://derekogle.com/IFAR/). The results of `compIntercepts()` applied to the saved `lm()` object are assigned to an object below.[^print]
+
+```{r}
+cifsa <- compIntercepts(lm1a)
+```
+
+The `$comparisons` component in this saved object contains the results from comparing all pairs of intercepts. Each paired comparison is a row in these results with the groups being compared under `comparison`, the differences in sample intercepts under `diff`, 95% confidence intervals for the difference in intercepts under `95% LCI` and `95% UCI`, and adjusted (for multiple comparisons) p-values for the hypothesis test comparing the intercepts under `p.adj`.
+
+```{r}
+cifsa$comparisons
+```
+
+For example, these results suggest that the intercepts for 1982 and 1977 ARE statistically different (first row), but the intercepts for 1986 and 1982 are NOT statistically different (last row).
+
+The `$smeans` component in this saved object contains the mean value of the response variable predicted at the mean value of the covariate. For example, the results below show the predicted mean mirex concentration at the overall mean salmon weight (i.e., `r formatC(cifsa$common.cov,format="f",digits=6)` kg).
+
+```{r}
+cifsa$means
+```
+
+Because the lines are known to be parallel, differences in intercepts also represent differences in predicted means of the response at all other values of the covariate. `compIntercepts()` defaulted to show these means at the mean (i.e., center) of the covariate. This could be adjusted with `common.cov=` in `compIntercepts()`. For example, the actual intercepts are shown below.
+
+```{r}
+cifsa2 <- compIntercepts(lm1a,common.cov=0)
+cifsa2$means
+```
+
+&nbsp;
+
+## `emmeans()` from `emmeans`
+Similar results can be obtained with `emmeans()` from `emmeans` using the fitted `lm()` object (without the interaction term) as the first argument and a `specs=` argument with `pairwise~` followed by the name of the factor variable from the `lm()` model (`year` in this case).
+
+```{r}
+library(emmeans)
+ci <- emmeans(lm1a,specs=pairwise~year)
+```
+
+The object saved from `emmeans()` is then given as the first argument to `summary()`, which also requires `infer=TRUE` if you would like p-values to be calculated.[^pvalues]
+
+```{r}
+cis <- summary(ci,infer=TRUE)
+```
+
+The `$contrasts` component in this saved object contains the results for comparing all pairs of predicted means at the overall mean of the covariate. Each paired comparison is a row with the groups compared under `contrast`, the difference in predicted means under `estimate`, the standard error of the difference in predicted means under `SE`, the degrees-of-freedom under `df`, a 95% confidence interval for the difference in predicted means under `lower.CL` and `upper.CL`, and the t test statistic and p-value adjusted for multiple comparisons for testing a difference in predicted means under `t.ratio` and `p.value`, respectively.
+
+```{r}
+cis$contrasts
+```
+
+Comparing these results to the `$comparison` component from `compIntercepts()` shows that the difference in sample intercepts or predicted means are the same, though the signs differ because the subtraction was reversed. The confidence interval values and p-values are slightly different. Again, this is due to `emmeans()` and `compIntercepts()` using different methods of adjusting for multiple comparisons. These differences did not result in different conclusions in this case, but they could, especially if the p-values are near the rejection criterion.
+
+The `$emmeans` component contains results for predicted means for each group with the groups under the name of the factor variable (`year` in this example), the predicted means under `emmean`, standard errors of the predicted means under `SE`, degrees-of-freedom under `df`, 95% confidence intervals for the predicted mean under `lower.CL` and `upper.CL`, and t test statistics and p-values adjusted for multiple comparisons for testing that the predicted mean is not equal to zero under `t.ratio` and `p.adj`, respectively. While it is not obvious here, these predict means of the response variable are at the mean of the covariate, as they were for `compIntercepts()`.
+
+```{r}
+cis$emmeans
+```
+
+Here the predicted means match exactly (within rounding) with those in the `$means` component of `compIntercepts()`.
+
+The means can be predicted at any other "summary" value of the covariate using `cov.reduce=` in `emmeans()`. For example, the predicted values at the minimum value of the covariate are obtained below.
+
+```{r}
+ci2 <- emmeans(lm1a,specs=pairwise~year,cov.reduce=min)
+cis2 <- summary(ci2,infer=TRUE)
+cis2$emmeans
+```
+
+The following will compute predicted means that represent the actual intercepts.
+
+```{r}
+ci3 <- emmeans(lm1a,specs=pairwise~year,cov.reduce=function(x) 0)
+cis3 <- summary(ci3,infer=TRUE)
+cis3$emmeans
+```
+
+&nbsp;
+
+## Conclusion
+The `emmeans()` function in the `emmeans` package provides a more general solution to comparing multiple intercepts (or predicted means on parallel lines) than what was used in `compIntercepts()` in the `FSA` package (prior to v0.9.0). Thus, `compIntercepts()` will be removed from FSA with v0.9.0. You should use `emmeans()` instead.
+
+The `emmeans` package has extensive vignettes that further explain its use. Their ["Basics" vignette](https://cran.r-project.org/web/packages/emmeans/vignettes/basics.html) is very useful.
+
+Note that this change to `FSA` does not affect anything in the published [Introductory Fisheries Analyses with R](https://derekogle.com/IFAR/) book. However, the specific analysis in [this supplement](http://derekogle.com/IFAR/supplements/weightlength/index.html) to the book will no longer work as described. The use of `compIntercepts()` there will need to be replaced with `emmeans()`.
+
+In [a previous post](http://derekogle.com/fishR/2021-05-11-compSlopes-replacement) I demonstrated how to use `emtrends()` from the `emmeans` package to replace `compSlopes()`, which will also be removed from the next version of `FSA`.
+
+&nbsp;
+
+&nbsp;
+
+## Footnotes
+
+[^filtered]: I filtered the data to only three years to reduce the amount of output below to make it easier to follow the main concepts.
+[^slopes]: The `weight` term p-value suggests that there is a significant relationsip between mirex concentration and salmon weight, regardless of which year is considered.
+[^nointeraction]: Note that use of the additive '+' in this model formula rather than the multiplicative '*'.
+[^print]: `compIntercepts()` had a `print()` function for nicely printing the results. However, here we will look at each component separately to ease comparison with the `emtrends()` results.
+[^pvalues]: `emmeans` does not compute p-values by default.

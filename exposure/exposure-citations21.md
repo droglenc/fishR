@@ -5,7 +5,7 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">87</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">88</span> publications.
 
 1. Amador-Vargas S, Orribarra VS, Portugal-Loayza A, Fernandez-Marin H. 2021. Association patterns of swollen‐thorn acacias with three ant species and other organisms in a dry forest of Panama. Biotropica XX:XXX-XXX. [Abstract](https://onlinelibrary.wiley.com/doi/abs/10.1111/btp.12899) [Dunn's Test]
 1. Araujo I, *et al.* 2021. Trees at the Amazonia-Cerrado transition are approaching high temperature thresholds. Environmental Research Letters XX:XX-XXX. [Full Text](https://iopscience.iop.org/article/10.1088/1748-9326/abe3b9/pdf) [Dunn's Test]
@@ -17,6 +17,7 @@ The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA
 1. Borsetti S, HOllyman PR, Munroe D. 2021. Using a sclerochronological approach to determine a climate-growth relationship for Waved Whelk, *Buccinum undatum*, in the U.S. Mid-Atlantic. Estuarine, Coastal and Shelf Science XX:XXX-XXX. [Full Text](https://www.sciencedirect.com/science/article/pii/S0272771421000913) [Age Comparisons, Growth]
 1. Brigham RD, Pelini S, Xu Z, Vazquez-Ortega A. 2021. Assessing the effects of lake‐dredged sediments on soil health: Agricultural and environmental implications on Northwestern Ohio. Journal of Environmental Quality XX:XXX-XXX. [Abstract](https://acsess.onlinelibrary.wiley.com/doi/abs/10.1002/jeq2.20199) [???]
 1. Bruckerhoff LA, Kamees LK, Holycross AT, Painter CW. 2021. Patterns of survival of a communally overwintering rattlesnake using an artificial hibernaculum. Copeia 109:XXX-XXX. [Abstract](https://meridian.allenpress.com/copeia/article-abstract/109/1/64/463220) [von Bertalanaffy]
+1. Bruel R, Marsden JE, Pientka B, Staats N, Mihuc TB, Stockwell JD. 2021. Rainbow smelt population responses to species invasions and change in environmental condition. Journal of Great Lakes Research XX:XXX-XXX. [Abstract](https://www.researchgate.net/publication/351557999_Rainbow_smelt_population_responses_to_species_invasions_and_change_in_environmental_condition/references) [???]
 1. Brunner N, Kuhleitner M, Renner-Martin K. 2021. Bertalanffy-Putter models for avian growth. PLOS ONE XX:XXX-XXX. [Full Text](https://doi.org/10.1371/journal.pone.0250515) [Growth]
 1. Burbank J, Drake DAR, Power M. 2021. Urbanization correlates with altered growth and reduced survival of a small‐bodied, imperiled freshwater fish. Ecology of Freshwater Fish XX:XXX-XXX. [Abstract](https://onlinelibrary.wiley.com/doi/abs/10.1111/eff.12598) [???]
 1. Buttita VL, Rypel AL, Stanley EH. 2021. Environmental controls on long-term growth of freshwater mussels in an oligotrophic lake. Freshwater Science XX:XXX-XXX. [Abstract](https://www.journals.uchicago.edu/doi/abs/10.1086/714596?journalCode=fws) [Growth]

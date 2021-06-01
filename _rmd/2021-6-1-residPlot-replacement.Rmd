@@ -1,0 +1,332 @@
+---
+title: "Replace residPlot() with ggplot"
+layout: post
+date: "June 1, 2021"
+output:
+  html_document
+tags:
+- R
+- FSA
+- ggplot
+- linear_regressions
+- ANOVAs
+
+---
+```{r eval=FALSE, echo=FALSE}
+## FOR COMPILING FOR THE WEBSITE
+## Make sure to setwd to source file location
+source("rmd2md.R")
+rmd2md("2021-6-1-residPlot-replacement")
+```
+
+```{r setup, echo=FALSE, results='hide', message=FALSE}
+library(knitr)
+knit_hooks$set(par1 = function(before, options, envir) {
+  if (before) par(mar=c(3.5,3.5,1,1),mgp=c(2.1,0.4,0),tcl=-0.2)
+})
+opts_chunk$set(dev="png",tidy=FALSE,fig.width=4,fig.height=4,par1=TRUE)
+options(show.signif.stars=FALSE)
+set.seed(343434344)
+```
+
+----
+
+# Introduction
+We are deprecating `residPlot()` from the next version of FSA (v0.9.0). It will likely be removed at the end of the year 2001. We are taking this action to make `FSA` more focused on fisheries applications and to eliminate "black box" functions. `residPlot()` was originally designed for students to quickly visualize residuals from one- and two-way ANOVAs and simple, indicator variable, and logistic regressions.[^nls]
+
+We now feel that students are better served by learning how to create these visualizations using methods provided by `ggplot2`, which require more code, but are more modern, flexible, and transparent.
+
+The basic plots produced by `residPlot()` are recreated here using `ggplot2` to provide a resource to help users that relied on `residPlot()` transition to `ggplot2`.
+
+The examples below require the following additional packages.
+
+```{r message=FALSE, warning=FALSE}
+library(tidyverse)  # for dplyr and ggplot2
+library(FSA)        # fitPlot() code may not run after >v0.9.0
+library(patchwork)  # placing plots (in conclusion)
+```
+
+&nbsp;
+
+Most examples below use the `Mirex` data set from `FSA`, which contains the concentration of mirex in the tissue and the body weight of two species of salmon (`chinook` and `coho`) captured in six years. The `year` variable is converted to a factor below for modeling purposes. These same data were used in [this post](http://derekogle.com/fishR/2021-05-25-fitPlot-replacement) about depredating `fitPlot()`.
+
+```{r}
+Mirex$year <- factor(Mirex$year)
+Mirex$gt2 <- ifelse(Mirex$mirex>0.2,1,0)
+FSA::peek(Mirex,n=10)  # examine a portion of the data frame
+```
+
+&nbsp;
+
+# One-Way ANOVA
+The code below fits a one-way ANOVA model to examine if mean weight differs by species.
+
+```{r}
+aov1 <- lm(weight~species,data=Mirex)
+anova(aov1)
+```
+
+&nbsp;
+
+`residPlot()` from `FSA` (before v0.9.0) produces a boxplot of residuals by group (left) and a histogram of residuals (right).
+
+```{r residPlot_1way_A, fig.width=8, warning=FALSE}
+FSA::residPlot(aov1)
+```
+
+&nbsp;
+
+A data.frame of the two variables used in the ANOVA appended with the fitted values and residuals from the model fit must be made to construct this plot using `ggplot()`. Studentized residuals are included below in case you would prefer to plot them.[^sresids]
+
+```{r}
+tmp <- dplyr::select(Mirex,weight,species) %>%
+  dplyr::mutate(fits=fitted(aov1),
+                resids=resid(aov1),
+                sresids=rstudent(aov1))
+peek(tmp,n=8)
+```
+
+&nbsp;
+
+The histogram of residuals is constructed with `geom_histogram()` below. Note that the color of the histogram bars are modified and the bin width is set to better control the number of bars in the histogram. Finally, the bottom multiplier for the y-axis is set to zero so that that histogram bars do not "hover" above the x-axis.
+
+```{r residplot_1wayH}
+ggplot(data=tmp,mapping=aes(x=resids)) +
+  geom_histogram(color="gray30",fill="gray70",binwidth=0.5) +
+  scale_y_continuous(expand=expansion(mult=c(0,0.05)))
+```
+
+&nbsp;
+
+The boxplot of residuals by group (species in this case) is constructed with `geom_boxplot()` below (again controlling the colors of the boxplot).
+
+```{r residplot_1wayB}
+ggplot(data=tmp,mapping=aes(x=species,y=resids)) +
+  geom_boxplot(color="gray30",fill="gray70")
+```
+
+&nbsp;
+
+These plots can be further modified using methods typical for ggplot (see conclusion section).
+
+&nbsp;
+
+# Two-Way ANOVA
+The code below fits a two-way ANOVA model to examine if mean weight differs by species, by year, or by the interaction between species and year.
+
+```{r}
+aov2 <- lm(weight~year*species,data=Mirex)
+anova(aov2)
+```
+
+&nbsp;
+
+`residPlot()` from `FSA` (before v0.9.0) shows a boxplot of residuals by each combination of the two factor variables (left) and a histogram of the residuals (right).
+
+```{r residPlot_2way_A, fig.width=8, warning=FALSE}
+FSA::residPlot(aov2)
+```
+
+&nbsp;
+
+A data.frame of the three variables used in the ANOVA appended with the fitted values and residuals from the model fit must be constructed.
+
+```{r}
+tmp <- dplyr::select(Mirex,weight,species,year) %>%
+  dplyr::mutate(fits=fitted(aov2),
+                resids=resid(aov2),
+                sresids=rstudent(aov2))
+```
+
+&nbsp;
+
+The histogram of residuals is constructed exactly as before and won't be repeated here. The boxplot of residuals by group is constructed with one of the factor variables on the x-axis[^twoway_xaxis] and the other factor variable as separate facets.
+
+```{r residplot_2wayB,fig.width=7}
+ggplot(data=tmp,mapping=aes(x=year,y=resids)) +
+  geom_boxplot(color="gray30",fill="gray70") +
+  facet_wrap(vars(species))
+```
+
+&nbsp;
+
+# Simple Linear Regression
+The code below fits a simple linear regression for examining the relationship between mirex concentration and salmon weight.
+
+```{r}
+slr <- lm(mirex~weight,data=Mirex)
+anova(slr)
+```
+
+&nbsp;
+
+`residPlot()` from `FSA` (before v0.9.0) shows a scatterplot of residuals versus fitted values (left) and a histogram of residuals (right).
+
+```{r residPlot_SLR_A, fig.width=8, warning=FALSE, message=FALSE}
+FSA::residPlot(slr)
+```
+
+&nbsp;
+
+A data.frame of the two variables used in the ANOVA appended with the fitted values and residuals from the model fit must be constructed.
+
+```{r}
+tmp <- dplyr::select(Mirex,weight,mirex) %>%
+  dplyr::mutate(fits=fitted(slr),
+                resids=resid(slr),
+                sresids=rstudent(slr))
+```
+
+&nbsp;
+
+The histogram of residuals is constructed exactly as before and won't be repeated here. The scatterplot of residuals versus fitted values is constructed with `geom_point()` as below. Note that `geom_hline()` is used to place the horizontal line at 0 on the y-axis.
+
+```{r residplot_slrP}
+ggplot(data=tmp,mapping=aes(x=fits,y=resids)) +
+  geom_point() +
+  geom_hline(yintercept=0,linetype="dashed")
+```
+
+&nbsp;
+
+It is also possible to include a loess smoother to help identify a possible nonlinearity in this residual plot.
+
+```{r warning=FALSE, message=FALSE}
+ggplot(data=tmp,mapping=aes(x=fits,y=resids)) +
+  geom_point() +
+  geom_hline(yintercept=0,linetype="dashed") +
+  geom_smooth()
+```
+
+&nbsp;
+
+## Indicator Variable Regression
+The code below fits an indicator variable regression to examine if the relationship between mirex concentration and salmon weight differs betwen species.
+
+```{r}
+ivr <- lm(mirex~weight*species,data=Mirex)
+anova(ivr)
+```
+
+&nbsp;
+
+`residPlot()` from `FSA` (before v0.9.0) is the same for an IVR as for an SLR, except that the points on the residual plot (left) has different colors for the different groups.
+
+```{r residPlot_IVR_A, fig.width=8, warning=FALSE}
+FSA::residPlot(ivr)
+```
+
+&nbsp;
+
+A data.frame of the three variables used in the ANOVA appended with the fitted values and residuals from the model fit must be constructed.
+
+```{r}
+tmp <- dplyr::select(Mirex,weight,mirex,species) %>%
+  dplyr::mutate(fits=fitted(ivr),
+                resids=resid(ivr),
+                sresids=rstudent(ivr))
+```
+
+&nbsp;
+
+The histogram of residuals is constructed exactly as before and won't be repeated here. The scatterplot of residuals versus fitted values is constructed with `geom_point()`. Note that `color=` and `shape=` are both set equal to the factor variable to change the color and plotting character to represent the different groups.
+
+```{r residplot_ivrP, fig.width=5}
+ggplot(data=tmp,mapping=aes(x=fits,y=resids,color=species,shape=species)) +
+  geom_point() +
+  geom_hline(yintercept=0,linetype="dashed")
+```
+
+&nbsp;
+
+## Nonlinear Regression
+The following code fits a von Bertalanffy growth function (VBGF) to the total length and age data for spot found in the `SpotVA1` data frame built into `FSA`. Fitting the VBGF is [described in more detail here](http://derekogle.com/fishR/2019-12-31-ggplot-vonB-fitPlot-1).
+
+```{r}
+vb <- FSA::vbFuns()
+vbs <- FSA::vbStarts(tl~age,data=SpotVA1)
+nlreg <- nls(tl~vb(age,Linf,K,t0),data=SpotVA1,start=vbs)
+```
+
+&nbsp;
+
+`residPlot()` from `FSA` (before v0.9.0) produces plots excatly as for a simple linear regression.
+
+```{r residPlot_nls_A, fig.width=8, warning=FALSE}
+FSA::residPlot(nlreg)
+```
+
+&nbsp;
+
+A data.frame of the two variables used in the ANOVA appended with the fitted values and residuals from the model fit must be constructed. The `rstudent()` function does not work for non-linear models, but the Studentized residuals are computed with `nlsResiduals()` from `nlstools`. However, these values are "buried" in the `Standardized residuals` column of the `resi2` matrix returned by that function.
+
+```{r}
+tmp <- dplyr::select(SpotVA1,tl,age) %>%
+  dplyr::mutate(fits=fitted(nlreg),
+                resids=resid(nlreg),
+                sresids=nlstools::nlsResiduals(nlreg)$resi2[,"Standardized residuals"])
+peek(tmp,n=8)
+```
+
+&nbsp;
+
+Once this data frame is contstructed the residual plot and histogram of residuals are constructed exactly as before and won't be repeated here.
+
+&nbsp;
+
+## Conclusion
+The `residPlot()` function in `FSA` will be deprecated in v0.9.0 and will likely not exist after that. This post describes a more transparent (i.e., not a "black box") and flexible set of methods for constructing similar plots using `ggplot2` for those who will need to transition away from using `residPlot()`. It should also be noted that different "residual plot" functionality is available in `plot()` (from base R when given an object from `lm()`), [`car::residualPlots()`](https://rdrr.io/cran/car/man/residualPlots.html), [`DHARMa::plotResiduals()`](https://www.rdocumentation.org/packages/DHARMa/versions/0.4.1/topics/plotResiduals), and [`ggResidpanel::resid_panel()`](https://github.com/goodekat/ggResidpanel).
+
+As mentioned in the examples above, each plot can be modified further using typical methods for `ggplot2`. These changes were not illustrated above to minimize the amount of code shown in this post. However, as an example, the code below shows a possible modification of the IVR residual plot shown above. Note that the `patchwork` package is needed to place the plots side-by-side.
+
+```{r residPlot_Final, message=FALSE, fig.width=8}
+## Recreate the data frame of results for the IVR
+tmp <- dplyr::select(Mirex,weight,mirex,species) %>%
+  dplyr::mutate(fits=fitted(ivr),
+                resids=resid(ivr),
+                sresids=rstudent(ivr))
+
+## Create a general theme that can be applied to both plots
+theme_DHO <- theme_bw() +
+  theme(panel.grid.major=element_line(color="gray90",linetype="dashed"),
+        panel.grid.minor=element_blank(),
+        axis.title=element_text(size=rel(1.25)),
+        axis.text=element_text(size=rel(1.1)),
+        legend.position=c(0,1),
+        legend.justification=c(-0.05,1.02),
+        legend.title=element_blank(),
+        legend.text=element_text(size=rel(1.1)))
+
+## Construct the residual plot
+r1 <- ggplot(tmp,aes(x=fits,y=sresids,color=species)) +
+  geom_point(size=1.5,alpha=0.5) +
+  geom_hline(yintercept=0,linetype="dashed") +
+  geom_smooth(se=FALSE) +
+  scale_y_continuous(name="Studentized Residuals") +
+  scale_x_continuous(name="Fitted Values") +
+  scale_color_manual(values=c("#E69F00","#0072B2"),guide=FALSE) +
+  scale_fill_manual(values=c("#E69F00","#0072B2"),guide=FALSE) +
+  theme_DHO
+
+## Construct the histogram of residuals
+r2 <- ggplot(tmp,aes(x=sresids,color=species,fill=species)) +
+  geom_histogram(alpha=0.5,binwidth=0.25) +
+  scale_y_continuous(name="Frequency",expand=expansion(mult=c(0,0.05))) +
+  scale_x_continuous(name="Studentized Residuals") +
+  scale_color_manual(values=c("#E69F00","#0072B2")) +
+  scale_fill_manual(values=c("#E69F00","#0072B2")) +
+  theme_DHO
+
+## Put them side-by-side
+r1 + r2
+```
+
+&nbsp;
+
+&nbsp;
+
+## Footnotes
+
+[^nls]: Over time functionality for non-linear regressions was added.
+[^twoway_xaxis]: These two variables can, of course, be exchanged. However, I generally prefer to have the variable with more levels on the x-axis.
+[^sresids]: These are "internally" Studentized residuals. "Externally" Studentized residuals can be obtained with `rstandard()`.

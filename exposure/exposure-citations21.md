@@ -5,7 +5,7 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">107</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">108</span> publications.
 
 1. Amador-Vargas S, Orribarra VS, Portugal-Loayza A, Fernandez-Marin H. 2021. Association patterns of swollen‐thorn acacias with three ant species and other organisms in a dry forest of Panama. Biotropica XX:XXX-XXX. [Abstract](https://onlinelibrary.wiley.com/doi/abs/10.1111/btp.12899) [Dunn's Test]
 1. Araujo I, *et al.* 2021. Trees at the Amazonia-Cerrado transition are approaching high temperature thresholds. Environmental Research Letters XX:XX-XXX. [Full Text](https://iopscience.iop.org/article/10.1088/1748-9326/abe3b9/pdf) [Dunn's Test]
@@ -95,6 +95,7 @@ booklet to communicate and analyze decision-making of park visitors. Environment
 1. Sindt AR. 2021. Comparing Channel Catfish populations in the fragmented Minnesota River. North American Journal of Fisheries Management XX:XXX-XXX. [Abstract](https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1002/nafm.10586) [???]
 1. Sloan S, Jenvey CJ, Piedrafita D, Preston S, Stear MJ. 2021. Comparative evaluation of different molecular methods for DNA extraction from individual *Teladorsagia circumcincta* nematodes. BMC Biotechnology [Full Text](https://link.springer.com/article/10.1186/s12896-021-00695-6) [Dunn's Test]
 1. Smart JJ, Grammer GL. 2021. Modernising fish and shark growth curves with Bayesian length-at-age models. PLoS ONE 16(2):XXX-XXX. [Full Text](https://www.researchgate.net/publication/349139023_Modernising_fish_and_shark_growth_curves_with_Bayesian_length-at-age_models/references) [Growth]
+1. Stevens JR, Saunders R, Duffy W. 2021. Evidence of life cycle diversity of River Herring in the Penobscot River Estuary, Maine. Marine and Coastal Fisheries 13:263-276. [Full Text]() [Age-Length Key]
 1. Stock BC, *et al.* 2021. Pulse recruitment and recovery of Cayman Islands Nassau Grouper (*Epinephelus striatus*) spawning aggregations revealed by *in situ* length-frequency data. ICES Journal of Marine Science XX:XXX-XXX. [Full Text](https://academic.oup.com/icesjms/advance-article/doi/10.1093/icesjms/fsaa221/6071467) [Mortality, Growth]
 1. Strevick BC, Carson HS, Working O. 2021. The pace of harvest and recovery in Geoduck Clam stocks fifty years into the fishery. Fisheries Research 247:XXX-XXX. [Abstract](https://www.sciencedirect.com/science/article/abs/pii/S0165783621001466) [???]
 1. Stypinska B, Lewandowska A, Felis-Giemza A, Olesinska M, Paradowska-Gorycka A. 2021. Association study between immune-related miRNAs and mixed connective tissue disease. Arthritis Research & Therapy 23:XXX-XXX. [Full Text](https://link.springer.com/article/10.1186/s13075-020-02403-9) [Dunn's Test???]

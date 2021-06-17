@@ -5,7 +5,7 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">210</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">211</span> publications.
 
 1. Akcay HG, Kabasakal B, Aksu D, Demir N, Oz M, Erdogan A. 2020. Automated bird counting with deep learning for regional bird distribution mapping. Animals XX:XXX-XXX. [Full Text](https://www.mdpi.com/2076-2615/10/7/1207/htm) [Dunn's Test]
 1. Almojil D. 2020. Male mate choice in the spot-tail shark *Carcharhinus sorrah*: are males choosy or opportunistic? Journal of Negative Results - Ecology & Evolutionary Biology. 13:1-11. [Full Text](http://jnr-eeb.org/index.php/jnr/article/viewFile/74/36) [Age Comparisons]
@@ -215,6 +215,7 @@ GIT microbial populations of broiler chickens. animals XX:XXX-XXX. [Full Text](h
 1. Venneman J. **et al.** 2020. Evaluation of genome size and quantitative features of the dolipore septum as taxonomic predictors for the *Serendipita ‘williamsii’* species complex. Fungal Biology XX:XXX-XXX. [Abstract](https://www.sciencedirect.com/science/article/pii/S1878614620300921) [???]
 1. Vieira-Silva S, *et al.* 2020. Statin therapy is associated with lower prevalence of gut microbiota dysbiosis. Nature. XX:XXX-XXX. [Abstract](https://www.nature.com/articles/s41586-020-2269-x) [Dunn's Test?]
 1. Virgulino-Junior PCC, Carneiro N Naschimento Jr WR, Cougo MF, Fernandes MEB. 2020. Biomass and carbon estimation for scrub mangrove forests and examination of their allometric associated uncertainties. PLOS One XX:XXX-XXX. [Full Text](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0230008) [Dunn's Test]
+1. Walker KM, Penttila KM, Jarvis-Mason ET, Valle CF. 2020. Validated age and growth of Barred Sand Bass within the Southern California Bight. California Fish and Wildlife 106:205-220. [Full Text](https://www.researchgate.net/publication/352329993_Validated_age_and_growth_of_Barred_Sand_Bass_within_the_Southern_California_Bight/references) [???]
 1. Wenker RP, Stevens BG. 2020. Sea whip coral *Leptogorgia virgulata* in the Mid-Atlantic Bight: Colony complexity, age, and growth. PeerJ: Aquatic Biology XX:XXX-XXX. [Full Text](https://peerj.com/articles/8372/) [Age-Length Key; Age-Bias; von Bertalanffy Growth]
 1. Williams CT, McIvor AJ, Wallace EM, Jia LY, Berumen ML. 2020. Refining patterns of species distributions, genetic diversity, and life history traits in bonefish *Albula* spp. from the Red Sea. Journal of Fish Biology XX:XXX-XXX. [Abstract](https://onlinelibrary.wiley.com/doi/abs/10.1111/jfb.14638) [Growth]
 1. Wilmes M. *et al.* 2020. Geochemical tools identify the origins of Chinook Salmon returning to a restored creek. Fisheries XX:XXX-XXX. [Abstract](https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1002/fsh.10516) [???]

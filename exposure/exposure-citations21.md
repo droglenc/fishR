@@ -5,7 +5,7 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">162</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">161</span> publications.
 
 1. Abude RRS, Augusto M, Cardoso RS, Cabrini TMB. 2021. Spatiotemporal variability of solid waste on sandy beaches with different access restrictions. Marine Pollution Builletin 171:XXX-XXX. [Abstract](https://www.sciencedirect.com/science/article/abs/pii/S0025326X21007773) [???]
 1. Amador-Vargas S, Orribarra VS, Portugal-Loayza A, Fernandez-Marin H. 2021. Association patterns of swollen‐thorn acacias with three ant species and other organisms in a dry forest of Panama. Biotropica XX:XXX-XXX. [Abstract](https://onlinelibrary.wiley.com/doi/abs/10.1111/btp.12899) [Dunn's Test]
@@ -51,8 +51,7 @@ The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA
 1. dos Santos Schmidt TC, *et al.* 2021. Adult body growth and reproductive investment vary markedly within and across Atlantic and Pacific herring: a meta-analysis and review of 26 stocks. Reviews in Fish Biology and Fisheries XX:XXX-XXX. [Full Text](https://link.springer.com/article/10.1007/s11160-021-09665-9) [Growth]
 1. Dowiarz SA. 2021. Comparing the Hickory Shad (*Alosa mediocris*) and American Shad (*Alosa sapidissima*) sport fishery using age and spawning composition and social media. MS Thesis, East Carolina University. [Full Text](https://thescholarship.ecu.edu/bitstream/handle/10342/9055/DOWIARZ-MASTERSTHESIS-2021.pdf?sequence=1&isAllowed=y) [Age Comparisons; Age-Length Key]
 1. Dufour BP, Kerana IW, Ribeyre F. 2021. Population dynamics of *Hypothenemus hampei* (Ferrari) according to the phenology of *Coffea arabica* L. in equatorial conditions of North Sumatra. Crop Protection XX:XXX-XXX.  [Abstract](https://www.sciencedirect.com/science/article/abs/pii/S0261219421001095) [Dunn's Test]
-1. Dungan AM, *et al.* 2021. Development of a free radical scavenging bacterial
-consortium to mitigate oxidative stress in cnidarians. Microbial Technology XX:XXX-XXX. [Full Text](https://sfamjournals.onlinelibrary.wiley.com/doi/pdf/10.1111/1751-7915.13877) [Dunn's Test]
+1. Dungan AM, *et al.* 2021. Development of a free radical scavenging bacterial consortium to mitigate oxidative stress in cnidarians. Microbial Technology XX:XXX-XXX. [Full Text](https://sfamjournals.onlinelibrary.wiley.com/doi/pdf/10.1111/1751-7915.13877) [Dunn's Test]
 1. Elmo GM, Crane DP, Kimball ME, Williams KL, Stevens PW. 2021. Validity of daily and annual age estimation and back-calculation methods for early life stages of a subtropical-tropical species, the tarpon (*Megalops atlanticus*). Fisheries Research 243:XXX-XXX. [Abstract](https://www.sciencedirect.com/science/article/abs/pii/S0165783621001855) [???]
 1. Emmons SM, D'Alberto BM, Smart JJ, Simpfendorfer CA. 2021. Age and growth of tiger shark (*Galeocerdo cuvier*) from Western Australia. Marine & Freshwater Research XX:XXX-XXX. [Abstract](https://www.publish.csiro.au/MF/MF20291) [???]
 1. Erickson R. *et al.* Demographic rate variability of Bighead and Silver Carps along an invasion gradient. Journal of Fish and Wildlife Management XX:XXX-XXX. [Full Text](https://meridian.allenpress.com/jfwm/article/doi/10.3996/JFWM-20-070/465712/Demographic-rate-variability-of-bighead-and-silver) [Weight-Length]

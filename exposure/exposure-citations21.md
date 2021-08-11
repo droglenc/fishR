@@ -7,6 +7,7 @@ css: "/css/exposure-citation.css"
 
 The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">157</span> publications.
 
+1. Abude RRS, Augusto M, Cardoso RS, Cabrini TMB. 2021. Spatiotemporal variability of solid waste on sandy beaches with different access restrictions. Marine Pollution Builletin 171:XXX-XXX. [Abstract](https://www.sciencedirect.com/science/article/abs/pii/S0025326X21007773) [???]
 1. Amador-Vargas S, Orribarra VS, Portugal-Loayza A, Fernandez-Marin H. 2021. Association patterns of swollen‐thorn acacias with three ant species and other organisms in a dry forest of Panama. Biotropica XX:XXX-XXX. [Abstract](https://onlinelibrary.wiley.com/doi/abs/10.1111/btp.12899) [Dunn's Test]
 1. Araujo I, *et al.* 2021. Trees at the Amazonia-Cerrado transition are approaching high temperature thresholds. Environmental Research Letters XX:XX-XXX. [Full Text](https://iopscience.iop.org/article/10.1088/1748-9326/abe3b9/pdf) [Dunn's Test]
 1. Baerum KM, Finstad AG, Ulvan EM, Haugen TO. 2021. Population consequences of climate change through effects on functional traits of lentic brown trout in the sub-Arctic. Scientific Reports XX:XXX-XXX. [Full Text](https://www.nature.com/articles/s41598-021-94350-x) [Mortality]

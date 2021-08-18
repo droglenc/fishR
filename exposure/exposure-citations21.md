@@ -5,7 +5,7 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">170</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">171</span> publications.
 
 1. Abude RRS, Augusto M, Cardoso RS, Cabrini TMB. 2021. Spatiotemporal variability of solid waste on sandy beaches with different access restrictions. Marine Pollution Builletin 171:XXX-XXX. [Abstract](https://www.sciencedirect.com/science/article/abs/pii/S0025326X21007773) [???]
 1. Amador-Vargas S, Orribarra VS, Portugal-Loayza A, Fernandez-Marin H. 2021. Association patterns of swollen‐thorn acacias with three ant species and other organisms in a dry forest of Panama. Biotropica XX:XXX-XXX. [Abstract](https://onlinelibrary.wiley.com/doi/abs/10.1111/btp.12899) [Dunn's Test]
@@ -72,6 +72,7 @@ The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA
 1. Gurjar UR, *et al.* 2021. Preliminary observation on the sustainability of White Sardine, *Escualosa thoracata* (Valenciennes, 1847), exploited from the central west coast of India. The Journal of Basic and Applied Zoology XX:XXX-XXX. [Full Text](https://www.researchgate.net/publication/351415478_s41936-021-00219-w) [General]
 1. Gschwnd F, Hartmann M, Hug A, Eknerli J, Gubler A Frey B, Meuli RG, Widmer F. 2021. Long-term stability of soil bacterial and fungal community structures revealed in their abundant and rare fractions. Molecular Ecology XX:XXX-XXX. [Abstract](https://onlinelibrary.wiley.com/doi/abs/10.1111/mec.16036) [Dunn's Test]
 1. Haubrock PJ, *et al.* 2021. Spatio-temporal niche plasticity of a freshwater invader as a harbinger of impact variability. Science of the Total Environment XX:XXX-XXX. [Abstract](https://www.sciencedirect.com/science/article/abs/pii/S0048969721010147) [Weight-Length]
+1. Heller MR. 2021. Production of wild Bonneville Cutthroat Trout in Bear Lake: Evaluation of a harvest fishery. MS Thesis, University of Idaho. [Abstract](https://www.proquest.com/openview/1d4cb62c95368d3beeada570e286c3b4/1?pq-origsite=gscholar&cbl=18750&diss=y) [???]
 1. Henderson RW, *et al.* 2021. Effects of body size, diet, and transience on the demography of the arboreal boid snake *Corallus grenadensis* on Carriacou (Grenada Grenadines, West Indies). Population Ecology XX:XXX-XXX. [Abstract](https://esj-journals.onlinelibrary.wiley.com/doi/abs/10.1002/1438-390X.12079) [Growth]
 1. Hending D, Drew H, Holderied MW. 2021. Habitat use of constant frequency echolocating bats in North-West Madagascar with acoustic evidence for a possible new species. Acta Chiropterologica 23:153-164. [Abstract](https://bioone.org/journals/acta-chiropterologica/volume-23/issue-1/15081109ACC2021.23.1.012/Habitat-Use-of-Constant-Frequency-Echolocating-Bats-in-North-West/10.3161/15081109ACC2021.23.1.012.short) [Dunn's Test]
 1. Herigan GM. 2021. Development of a habitat model for an endemic leuciscid, the Sandhills Chub (*Semotilus lumbee*). MS Thesis, Coastal Carolina University. [Full Text](https://digitalcommons.coastal.edu/cgi/viewcontent.cgi?article=1184&context=etd) [Removal] 

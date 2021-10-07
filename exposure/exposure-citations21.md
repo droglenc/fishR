@@ -5,7 +5,7 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">217</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">216</span> publications.
 
 1. Abude RRS, Augusto M, Cardoso RS, Cabrini TMB. 2021. Spatiotemporal variability of solid waste on sandy beaches with different access restrictions. Marine Pollution Builletin 171:XXX-XXX. [Abstract](https://www.sciencedirect.com/science/article/abs/pii/S0025326X21007773) [???]
 1. Amador-Vargas S, Orribarra VS, Portugal-Loayza A, Fernandez-Marin H. 2021. Association patterns of swollen‐thorn acacias with three ant species and other organisms in a dry forest of Panama. Biotropica XX:XXX-XXX. [Abstract](https://onlinelibrary.wiley.com/doi/abs/10.1111/btp.12899) [Dunn's Test]
@@ -102,8 +102,7 @@ The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA
 1. Hons, M. 2021. Eradicating the American Bullfrog with the sterile triploid method: methods and application. MS Thesis, Inland Norway University. [Full Text](https://brage.inn.no/inn-xmlui/bitstream/handle/11250/2787063/Hons.pdf?sequence=1&isAllowed=y) [Depletion]
 1. Horn PL, Maolagain CO. 2021. The growth and age structure of Chilean jack mackerel (*Trachurus murphyi*) following its influx to New Zealand waters. Journal of Fish Biology XX:XXX-XXX. [Abstract](https://onlinelibrary.wiley.com/doi/abs/10.1111/jfb.14647) [???]
 1. Horsak M. *et al.* 2021. Spring water table depth mediates within-site variation of soil temperature in groundwater-fed mires. Hydrological Processes XX:XXX-XXX. [Abstract](https://onlinelibrary.wiley.com/doi/abs/10.1002/hyp.14293) [???]
-1. Howard S, Buttke DE, Lovejoy TE, Clark KA, Ashby EJ, Aguirre AA. 2021. The loop trail “Quest”: Use of a choice-based digital simulation, an interactive video, and a
-booklet to communicate and analyze decision-making of park visitors. Environmental Communication XX:XXX-XXX. [Full Text](https://www.tandfonline.com/doi/pdf/10.1080/17524032.2021.1927129) [Dunn's Test]
+1. Howard S, Buttke DE, Lovejoy TE, Clark KA, Ashby EJ, Aguirre AA. 2021. The loop trail “Quest”: Use of a choice-based digital simulation, an interactive video, and a booklet to communicate and analyze decision-making of park visitors. Environmental Communication XX:XXX-XXX. [Full Text](https://www.tandfonline.com/doi/pdf/10.1080/17524032.2021.1927129) [Dunn's Test]
 1. Jefferson AE, *et al.* 2021. Age, Growth, and Mortality of Atlantic Tripletail in the North-Central Gulf of Mexico. Marine and Coastal Fisheries: Dynamics, Management, and Ecosystem Science 13:183–199. [???](https://afspubs.onlinelibrary.wiley.com/doi/full/10.1002/mcf2.10146) [Growth, Mortality, Weight-Length, Age Comparisons]
 1. Jones DD, Hernandez JMR, Shervette VR. 2021. Princess Parrotfish *Scarus taeniopterus* age, growth, maturity, and transition. Environmental Biology of Fishes XX:XXX-XXX. [Abstract](https://link.springer.com/article/10.1007/s10641-021-01097-5) [???]
 1. Jones JMC, Guinel FC, Antunes PM. 2021. Carbonatite rock can enhance plant growth and nutrition depending on crop traits. Plant and Soil XX:XXX-XXX. [Abstract](https://link.springer.com/article/10.1007/s11104-021-05001-z) [Dunn's Test]

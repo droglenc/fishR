@@ -5,7 +5,7 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">240</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">241</span> publications.
 
 1. Abidin N, *et al.* 2021. Pathogenic variability of the Jackfruit-bronzing bacterium *Pantoea stewartii* subspecies *stewartii* infection to Jackfruit
 varieties and its pivotal plant hosts in Malaysia. Agronomy 11:XXX-XXX. [Full Text](https://scholar.google.com/scholar_url?url=https://www.mdpi.com/2073-4395/11/11/2113/pdf&hl=en&sa=X&d=4799109028650869994&ei=6Zd3YaKrMo65yQTj56XIAQ&scisig=AAGBfm3GUO-ujuOF4YW75TnFdyNKlA1McA&oi=scholaralrt&html=&folt=kw) [Dunn's Test]
@@ -113,7 +113,7 @@ varieties and its pivotal plant hosts in Malaysia. Agronomy 11:XXX-XXX. [Full Te
 1. Horsak M. *et al.* 2021. Spring water table depth mediates within-site variation of soil temperature in groundwater-fed mires. Hydrological Processes XX:XXX-XXX. [Abstract](https://onlinelibrary.wiley.com/doi/abs/10.1002/hyp.14293) [???]
 1. Howard S, Buttke DE, Lovejoy TE, Clark KA, Ashby EJ, Aguirre AA. 2021. The loop trail “Quest”: Use of a choice-based digital simulation, an interactive video, and a booklet to communicate and analyze decision-making of park visitors. Environmental Communication XX:XXX-XXX. [Full Text](https://www.tandfonline.com/doi/pdf/10.1080/17524032.2021.1927129) [Dunn's Test]
 1. Jansen L, Wichern F, Gebauer J. 2021. Effect of different mechanical seed scarification methods on germination and emergence dynamics of baobab (*Adansonia digitata* L.). Journal of Agriculture and Rural Development in the Tropics and Subtropics 122:183–192. [Full Text](https://kobra.uni-kassel.de/bitstream/handle/123456789/13340/JARTSVol122No2S183.pdf?sequence=1&isAllowed=y) [Dunn's Test]
-1. Jefferson AE, *et al.* 2021. Age, Growth, and Mortality of Atlantic Tripletail in the North-Central Gulf of Mexico. Marine and Coastal Fisheries: Dynamics, Management, and Ecosystem Science 13:183–199. [???](https://afspubs.onlinelibrary.wiley.com/doi/full/10.1002/mcf2.10146) [Growth, Mortality, Weight-Length, Age Comparisons]
+1. Jefferson AE, *et al.* 2021. Age, Growth, and Mortality of Atlantic Tripletail in the North-Central Gulf of Mexico. Marine and Coastal Fisheries: Dynamics, Management, and Ecosystem Science 13:183–199. [Full Text](https://afspubs.onlinelibrary.wiley.com/doi/full/10.1002/mcf2.10146) [Growth, Mortality, Weight-Length, Age Comparisons]
 1. Jones DD, Hernandez JMR, Shervette VR. 2021. Princess Parrotfish *Scarus taeniopterus* age, growth, maturity, and transition. Environmental Biology of Fishes XX:XXX-XXX. [Abstract](https://link.springer.com/article/10.1007/s10641-021-01097-5) [???]
 1. Jones JMC, Guinel FC, Antunes PM. 2021. Carbonatite rock can enhance plant growth and nutrition depending on crop traits. Plant and Soil XX:XXX-XXX. [Abstract](https://link.springer.com/article/10.1007/s11104-021-05001-z) [Dunn's Test]
 1. Kalb V, Seewald T, Hofmann T, Granvogl M. 2021. The malting parameters: steeping, germination, withering, and kilning temperature and aeration rate as possibilities for styrene mitigation in wheat beer. European Food Research and Technology XX:XXX-XXX. [Full Text](https://link.springer.com/article/10.1007/s00217-021-03852-5) [Dunn's Test]

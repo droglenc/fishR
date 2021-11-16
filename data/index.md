@@ -9,4 +9,4 @@ The [**FSA**](https://github.com/droglenc/FSA) and [**FSAdata**](https://github.
 * [Categorized by major fisheries topic](byTopic)
 * [Categorized by R package](byPackage)
 
-Please <a href="mailto:derek@derekogle.com?subject=FSA%20Data">contact me</a> if you have any questions or would like to contribute a data set to the **FSAdata** package and this webpage.
+Please <a href="mailto:DerekOgle51@gmail.com?subject=FSA%20Data">contact me</a> if you have any questions or would like to contribute a data set to the **FSAdata** package and this webpage.

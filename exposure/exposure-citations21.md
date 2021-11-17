@@ -5,7 +5,7 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">241</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">242</span> publications.
 
 1. Abidin N, *et al.* 2021. Pathogenic variability of the Jackfruit-bronzing bacterium *Pantoea stewartii* subspecies *stewartii* infection to Jackfruit
 varieties and its pivotal plant hosts in Malaysia. Agronomy 11:XXX-XXX. [Full Text](https://scholar.google.com/scholar_url?url=https://www.mdpi.com/2073-4395/11/11/2113/pdf&hl=en&sa=X&d=4799109028650869994&ei=6Zd3YaKrMo65yQTj56XIAQ&scisig=AAGBfm3GUO-ujuOF4YW75TnFdyNKlA1McA&oi=scholaralrt&html=&folt=kw) [Dunn's Test]
@@ -192,6 +192,7 @@ in urban streams. Water 13:XXX-XXX. [Full Text](https://www.researchgate.net/pub
 1. Rummey RHM, Preston MD, Jones T, Basiliko N, Gunn J. 2021. Soil amendment improves carbon sequestration by trees on severely damaged acid and metal impacted landscape, but total storage remains low. Forest Ecology and Management 483:XXX-XXX. [Abstract](https://www.sciencedirect.com/science/article/abs/pii/S0378112720316650) [???]
 1. Runde BJ. 2021. Investigating Challenges and Solutions for Management and Assessment of Reef Fishes off the Southeastern U.S.A. PhD Dissertation, North Carolina State University. [Full Text](https://repository.lib.ncsu.edu/bitstream/handle/1840.20/38886/etd.pdf?sequence=1) [Mortality]
 1. Saak AE, Wang T, Xu Z, Kolady D, Ulrich-Schad JD, Clay D. 2021. Duration of usage and farmer reported benefits of conservation tillage. Journal of Soil and Water Conservation January 76:65-75. [Abstract](https://www.jswconline.org/content/76/1/65.abstract) [???]
+1. Salamon S, Zok J, Gromadzka K, Blaszczyk L. 2021. Expression patterns of miR398, miR167, and miR159 in the interaction between Bread Wheat (*Triticum aestivum* L.) and pathogenic *Fusarium culmorum* and Beneficial *Trichoderma* Fungi. Pathogens XX:XXX-XXX. [Full Text](https://scholar.google.com/scholar_url?url=https://www.mdpi.com/2076-0817/10/11/1461/pdf&hl=en&sa=X&d=5336971146997482094&ei=RQuTYdLBGtCN6rQPjOGM4AU&scisig=AAGBfm0ZMFFWfJyNyM2fv79_rgHit9uZVg&oi=scholaralrt&html=&folt=kw) [Dunn's Test]
 1. Salazar V, *et al.* 2021. The effect of Largemouth Bass virus on bass populations in Kansas impoundments. Journal of Aquatic Animal Health XX:XXX-XXX. [Abstract](https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1002/aah.10147) [???]
 1. Sameoto JA, Hall K, Gass SE, Keith D, Kirschoff S, Brown CJ. 2021. Conservation implications of demographic changes in the horse mussel Modiolus modiolus population of the inner Bay of Fundy. Marine Ecology Progress Series 670:93-104. [Abstract](https://www.int-res.com/abstracts/meps/v670/p93-104/) [???]
 1. Sargunaraj F, *et al.* 2021. Positive association between experimental cortisol increases and cage-measures of feeding behavior in wild-caught gerbils. Israel Journal of Ecology and Evolution XX:XXX-XXX. [Abstract](https://brill.com/view/journals/ijee/aop/article-10.1163-22244662-bja10014/article-10.1163-22244662-bja10014.xml) [???]

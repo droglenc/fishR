@@ -5,7 +5,7 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">242</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">243</span> publications.
 
 1. Abidin N, *et al.* 2021. Pathogenic variability of the Jackfruit-bronzing bacterium *Pantoea stewartii* subspecies *stewartii* infection to Jackfruit
 varieties and its pivotal plant hosts in Malaysia. Agronomy 11:XXX-XXX. [Full Text](https://scholar.google.com/scholar_url?url=https://www.mdpi.com/2073-4395/11/11/2113/pdf&hl=en&sa=X&d=4799109028650869994&ei=6Zd3YaKrMo65yQTj56XIAQ&scisig=AAGBfm3GUO-ujuOF4YW75TnFdyNKlA1McA&oi=scholaralrt&html=&folt=kw) [Dunn's Test]
@@ -66,6 +66,7 @@ varieties and its pivotal plant hosts in Malaysia. Agronomy 11:XXX-XXX. [Full Te
 1. DeBoer JA, Thomas MC, Lamer JT, Casper AF, Delong MD. 2021. Complex to simple: Fish growth along the Illinois River network. Ecological Complexity 45:XXX-XXX. [Abstract](https://www.sciencedirect.com/science/article/pii/S1476945X20301719) [???]
 1. DeColli L, *et al.* 2021. Natural co-occurrence of multiple mycotoxins in unprocessed oats grown in Ireland with various production systems. toxins XX:XXX-XXX. [Full Text](https://www.mdpi.com/2072-6651/13/3/188/pdf) [Dunn's Test]
 1. Dibner RR, *et al.* 2021. Time outweighs the effect of host developmental stage on microbial community composition. FEMS Microbiology Ecology XX:XXX-XXX. [Abstract](https://academic.oup.com/femsec/advance-article-abstract/doi/10.1093/femsec/fiab102/6321163) [???]
+1. Diel P, Rabus M, Laforsch C. 2021. Pricklier with the proper predator? Predator-induced smallscale changes of spinescence in *Daphnia*. Ecology and Evoluation XX:XXX-XXX. [Full Text](https://onlinelibrary.wiley.com/doi/pdf/10.1002/ece3.8346) [Dunn's Test]
 1. Diepstraten J, Willie J. 2021. Assessing the structure and drivers of biological sounds along a disturbance gradient. Global Ecology and Conservation XX:XXX-XXX. [Full Text](https://www.sciencedirect.com/science/article/pii/S2351989421003693) [Dunn's Test]
 1. Dolan TE *et al.* 2021. Winter Flounder navigate the postsettlement gauntlet with a bet-hedging strategy. Marine and Coastal Fisheries 13:435-449. [Full Text](https://afspubs.onlinelibrary.wiley.com/doi/full/10.1002/mcf2.10168) [Mortality]
 1. Dominquez JA, Sautua FJ, Carmona MA. 2021. Sensitivity of *Bipolaris sorokiniana* to strobilurin, triazole, and carboxamide premixes. Archives of Phytopathology and Plant Protection XX:XXX-XXX. [Abstract](https://www.tandfonline.com/doi/abs/10.1080/03235408.2021.1938920?tab=permissions&scroll=top) [Dunn's Test]

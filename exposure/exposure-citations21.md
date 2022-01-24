@@ -5,7 +5,7 @@ subtitle: fishR and FSA is Being Used!!
 css: "/css/exposure-citation.css"
 ---
 
-The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">254</span> publications.
+The [**IFAR** book](http://derekogle.com/IFAR/), **fishR** website, or the **FSA** package were cited in the following <span id="contact-div">255</span> publications.
 
 1. Abidin N, *et al.* 2021. Pathogenic variability of the Jackfruit-bronzing bacterium *Pantoea stewartii* subspecies *stewartii* infection to Jackfruit varieties and its pivotal plant hosts in Malaysia. Agronomy 11:XXX-XXX. [Full Text](https://scholar.google.com/scholar_url?url=https://www.mdpi.com/2073-4395/11/11/2113/pdf&hl=en&sa=X&d=4799109028650869994&ei=6Zd3YaKrMo65yQTj56XIAQ&scisig=AAGBfm3GUO-ujuOF4YW75TnFdyNKlA1McA&oi=scholaralrt&html=&folt=kw) [Dunn's Test]
 1. Abude RRS, Augusto M, Cardoso RS, Cabrini TMB. 2021. Spatiotemporal variability of solid waste on sandy beaches with different access restrictions. Marine Pollution Builletin 171:XXX-XXX. [Abstract](https://www.sciencedirect.com/science/article/abs/pii/S0025326X21007773) [???]
@@ -213,6 +213,7 @@ in urban streams. Water 13:XXX-XXX. [Full Text](https://www.researchgate.net/pub
 1. Schwartzkopf BD, Ciannelli L, Garza JC, Hellell SA. 2021. Growth of juvenile black rockfish (*Sebastes melanops*) during estuarine residence. Environmental Biology of Fishes 104:851-865. [Abstract](https://link.springer.com/article/10.1007/s10641-021-01106-7) [???]
 1. Shane KD, Page KS, Pritt JJ, Conroy JD, Marschall EA. 2021. Season and discharge predict downstream emigration rates for reservoir sport fish populations. North American Journal of Fisheries Managment XX:XXX-XXX. [Abstract](https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1002/nafm.10700) [Growth]
 1. Sharma A, *et al.* 2021. Introduced, invaded and forgotten: allopatric and sympatric native snow trout life-histories indicate brown trout invasion effects in the Himalayan hinterlands. Biological Invastions XX:XXX-XXX. [Abstract](https://link.springer.com/article/10.1007/s10530-020-02454-8) [???]
+1. Shrovnal JS. Estimating mortality of Lake Sturgeon in the Lake Winnebao system using traditional age-based approaches and capture-recapture methods. MS Thesis, Univesity of Wisconsin - Stevens Point. [Full Text](https://minds.wisconsin.edu/bitstream/handle/1793/82598/Shrovnal.pdf?sequence=1&isAllowed=y) [Mortality]
 1. Sindt AR. 2021. Comparing Channel Catfish populations in the fragmented Minnesota River. North American Journal of Fisheries Management XX:XXX-XXX. [Abstract](https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1002/nafm.10586) [???]
 1. Sloan S, Jenvey CJ, Piedrafita D, Preston S, Stear MJ. 2021. Comparative evaluation of different molecular methods for DNA extraction from individual *Teladorsagia circumcincta* nematodes. BMC Biotechnology [Full Text](https://link.springer.com/article/10.1186/s12896-021-00695-6) [Dunn's Test]
 1. Smalling KL, *et al.* 2021. Assessing the ecological functionality and integrity of natural ponds, excavated ponds and stormwater basins for conserving amphibian diversity. Global Ecology and Conservation XX:XXX-XXX. [Full Text](https://www.sciencedirect.com/science/article/pii/S2351989421003152) [Dunn's Test]

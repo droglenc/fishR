@@ -59,11 +59,14 @@ The following are instructions to install packages from within various ways to i
 * [MQMF](https://cran.r-project.org/web/packages/MQMF/index.html): *Companion for "Using R for Modelling and Quantitative Methods in Fisheries" book*
 * [ObsCovgTools](https://github.com/kacurtis/ObsCovgTools) -- Estimates minimum fisheries observer coverage required to achieve a specific objective. [Related Shiny app is here](https://kacurtis.shinyapps.io/obscov/).
 * [oceanmap](https://cran.r-project.org/web/packages/oceanmap/index.html) -- *Plotting toolbox for 2D oceanographic data*
+* [optistock](https://cran.r-project.org/web/packages/optistock/index.html) -- Functions that aid calculating the optimum time to stock hatchery-reared fish into a body of water given the growth, mortality, and cost of raising a particular number of individuals to a certain length.
 * [PBSmapping](https://cran.r-project.org/web/packages/PBSmapping/) -- *two-dimensional plotting features similar to those commonly available in a Geographic Information System*
 * [PBSmodelling](https://cran.r-project.org/web/packages/PBSmodelling/index.html) -- *facilitates the design, testing, and operation of computer models; focused on tools that make it easy to construct and edit a customized graphical user interface*
 * [RchivalTag](https://cran.r-project.org/web/packages/RchivalTag/index.html) -- *functions to generate, access and analyze standard data products from archival tagging data*
+* [rct3](https://cran.r-project.org/web/packages/rct3/index.html) -- Predict fish year-class strength by calibration regression analysis of multiple recruitment index series.
 * [r4ss](https://github.com/r4ss/r4ss) -- *analyze and plot the output from Stock Synthesis version 3, a fisheries stock assessment model written in ADMB*
 * [RFishBC](http://derekogle.com/RFishBC/) -- *helps fisheries scientists collect growth data from calcified structures and back-calculate estimated lengths at previous ages*
+* [rfishdraw](https://cran.r-project.org/web/packages/rfishdraw/index.html) -- Automatic generation of fish drawings based on JavaScript library.
 * [scape](https://cran.r-project.org/web/packages/scape/) -- *import and plot results from statistical catch-at-age models; generally used to connect with ADMB.*
 * [select](https://www.stat.auckland.ac.nz/~millar/selectware/code.html) -- *a flexible and user-extendable framework for size-selectivity via the SELECT model*
 * [shapeR](https://github.com/lisalibungan/shapeR) -- *study otolith shape variation among fish populations*

@@ -21,7 +21,7 @@ The following are instructions to install packages from within various ways to i
 ----
 
 ## General Packages
-* [FSA: Fisheries Stock Assessment](http://derekogle.com/FSA/)
+* [FSA: Fisheries Stock Assessment](https://fishr-core-team.github.io/FSA/)
 * [DLMtool: Data-Limited Methods Toolkit](https://cran.r-project.org/web/packages/DLMtool/index.html) -- *Implementation of management procedures for data-limited fisheries*
 * [fishmethods: Fisheries Methods and Models in R](https://cran.r-project.org/web/packages/fishmethods/index.html)
 * [fishdynr: Fisheries Science Related Population Dynamics Models](https://github.com/marchtaylor/fishdynr#readme)

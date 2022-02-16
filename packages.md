@@ -65,7 +65,7 @@ The following are instructions to install packages from within various ways to i
 * [RchivalTag](https://cran.r-project.org/web/packages/RchivalTag/index.html) -- *functions to generate, access and analyze standard data products from archival tagging data*
 * [rct3](https://cran.r-project.org/web/packages/rct3/index.html) -- Predict fish year-class strength by calibration regression analysis of multiple recruitment index series.
 * [r4ss](https://github.com/r4ss/r4ss) -- *analyze and plot the output from Stock Synthesis version 3, a fisheries stock assessment model written in ADMB*
-* [RFishBC](http://derekogle.com/RFishBC/) -- *helps fisheries scientists collect growth data from calcified structures and back-calculate estimated lengths at previous ages*
+* [RFishBC](https://fishr-core-team.github.io/RFishBC/) -- *helps fisheries scientists collect growth data from calcified structures and back-calculate estimated lengths at previous ages*
 * [rfishdraw](https://cran.r-project.org/web/packages/rfishdraw/index.html) -- Automatic generation of fish drawings based on JavaScript library.
 * [scape](https://cran.r-project.org/web/packages/scape/) -- *import and plot results from statistical catch-at-age models; generally used to connect with ADMB.*
 * [select](https://www.stat.auckland.ac.nz/~millar/selectware/code.html) -- *a flexible and user-extendable framework for size-selectivity via the SELECT model*
@@ -115,7 +115,7 @@ The following are instructions to install packages from within various ways to i
 ----
 
 ## Packages of Data
-* [FSAdata: Data for FSA](https://github.com/droglenc/FSAdata#readme) -- *Collection of many fisheries-related data sets*
+* [FSAdata: Data for FSA](https://github.com/fishR-core-team/FSAdata#readme) -- *Collection of many fisheries-related data sets*
 * [fishdata](https://cran.r-project.org/web/packages/fishdata/index.html) -- *Four datasets (fish size and per-day growth history) of migratory fish, from 2015-2016, in the Wellington region of New Zealand*
 * [fishkirkko2015](https://cran.r-project.org/web/packages/fishkirkko2015/index.html) -- *Length and weight measurements of fish species at Kirkkojarvi Lake, Finland*
 * [fishbc](https://cran.r-project.org/web/packages/fishbc/index.html): *Raw and curated data on the codes, classification, and conservation status of freshwater fishes in British Columbia*

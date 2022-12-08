@@ -1,11 +1,13 @@
 ---
 layout: page
-title: R for Fisheries Analyses
+title: We Are Moving!!
 ---
 
-The **fishR** website provides examples and resources for fisheries-related analyses performed in [R](https://www.r-project.org/).  It is my hope that these resources will help you to either use R or expand your knowledge of [R](https://www.r-project.org/) for fisheries-related analyses.  Take a look around!!
+**fishR** is moving to a new permanent home at https://fishr-core-team.github.io/fishR/.
 
-[R is an environment](https://www.r-project.org/) for statistical analyses and graphics that is rapidly gaining popularity with fisheries scientists.  See [Inside-R](http://www.inside-r.org/what-is-r) and [R-project](https://www.r-project.org/about.html) for two descriptions of R.
+To date the [packages](https://fishr-core-team.github.io/fishR/pages/packages.html) and [data](https://fishr-core-team.github.io/fishR/pages/data_fishR_alpha.html) pages have been moved and updated (and thus deleted from here). We are in the process of **updating** and moving most of the [old blog entries](http://derekogle.com/fishR/blog/) to [here](https://fishr-core-team.github.io/fishR/blog/). The [old examples](examples/index.html) will ultimately be updated and rolled into the new blog. The old [courses list](courses.html), [exposure page](exposure/index.html), and [contact page](contact.html) will ultimately be deleted. A [new books page](https://fishr-core-team.github.io/fishR/pages/books.html) has been added to the new site.
+
+Once everything is moved, this site will be taken down ... so please update your links to the new page.
 
 <div style="width=auto; max-width:450px; margin-left:auto; margin-right:auto;text-align:center">
   <img src="img/fishRlogoTight.jpg" alt="fishR logo" width="100%">
